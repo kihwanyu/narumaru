@@ -70,7 +70,7 @@
 	</style>
 </head>
 <body>
-	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application" />
+ 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
 	<jsp:include page="../common/topmenu.jsp"/>
 		
 	<div id="band_middle">
