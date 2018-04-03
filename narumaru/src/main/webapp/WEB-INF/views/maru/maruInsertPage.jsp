@@ -123,8 +123,14 @@
 		<br>
 		<div id="btndiv" align="center">
 			<button>취소</button>&nbsp;
-			<button>완료</button>
+			<button onclick="insertDetail();">완료</button>
 		</div>
 	</div><!-- 컨텐츠 -->
+	
+	<script>
+		function insertDetail(){
+			location.href="${contextPath}/insertDetail.ma";               
+		}
+	</script>
 </body>
 </html>

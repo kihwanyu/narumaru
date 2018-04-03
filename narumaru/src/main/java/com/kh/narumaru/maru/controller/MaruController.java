@@ -8,9 +8,21 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes("loginUser")
 public class MaruController {
 	
-	@RequestMapping(value="maruInsertView.ma")
+	@RequestMapping("maruInsertView.ma")
 	public String showMaruInsertView(){
 		   
 		return "maru/maruInsertPage";
+	}
+	
+	@RequestMapping("maruChannelView.ma")
+	public String showMaruChannelView(){
+		   
+		return "maru/maruChannelPage";
+	}
+	
+	@RequestMapping("insertDetail.ma")
+	public String showmaruInsertDetail(){
+	      
+		return "maru/maruInsertDetail";
 	}
 }

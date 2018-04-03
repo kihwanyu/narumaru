@@ -42,16 +42,14 @@
 			margin-right:20px;
 		}
 		#middle_box li a{
-		color:#000000;
+			color:#000000;
 		}
 		#middle_box li:hover{
 			border-bottom:1px solid black;
 		}
 		#middle_box{
 			float:right;
-
 		}
-		
 		.bottom_object{
 			box-shadow:0 1px 2px 0 rgba(0,0,0,.12);
 			width:488px;
@@ -142,66 +140,14 @@
 			<div style='clear:both;margin-top:20px;'>
 				<h2>이런 밴드는 어때요</h2>
 				<h6 style="float:right;margin-top:-20px;"><a href=#>더보기 ></a></h6>
+				<c:forEach var="i" begin="1" end="12">
 					<div style="width:500px;height:80px;float:left;font-size:13px;margin-top:10px;">
-					<img src="${contextPath }/resources/images/dummy.png" style="width:80;height:80px;float:left;margin-right:10px;">
-					<p style="margin-top:5px;"><strong>밴드이름</strong></p>
-					<p style="color:#666;margin-top:5px;margin-bottom:5px;">밴드설명</p>
+						<img src="${contextPath }/resources/images/dummy.png" style="width:80;height:80px;float:left;margin-right:10px;">
+						<p style="margin-top:5px;"><strong>밴드이름</strong></p>
+						<p style="color:#666;margin-top:5px;margin-bottom:5px;">밴드설명</p>
 						<a href="#"><div class="bottom_box" style="float:left;height:23px;border-radius:12px;padding:3px 5px 3px 5px;background-color:#ffffff;">더보기 ></div></a>
-				</div>
-				<div style="width:500px;height:80px;float:left;font-size:13px;margin-top:10px;">
-					<img src="${contextPath }/resources/images/dummy.png" style="width:80;height:80px;float:left;margin-right:10px;">
-					<p style="margin-top:5px;"><strong>밴드이름</strong></p>
-					<p style="color:#666;margin-top:5px;margin-bottom:5px;">밴드설명</p>
-						<a href="#"><div class="bottom_box" style="float:left;height:23px;border-radius:12px;padding:3px 5px 3px 5px;background-color:#ffffff;">더보기 ></div></a>
-				</div>
-				<div style="width:500px;height:80px;float:left;font-size:13px;margin-top:10px;">
-					<img src="${contextPath }/resources/images/dummy.png" style="width:80;height:80px;float:left;margin-right:10px;">
-					<p style="margin-top:5px;"><strong>밴드이름</strong></p>
-					<p style="color:#666;margin-top:5px;margin-bottom:5px;">밴드설명</p>
-						<a href="#"><div class="bottom_box" style="float:left;height:23px;border-radius:12px;padding:3px 5px 3px 5px;background-color:#ffffff;">더보기 ></div></a>
-				</div>
-				<div style="width:500px;height:80px;float:left;font-size:13px;margin-top:10px;">
-					<img src="${contextPath }/resources/images/dummy.png" style="width:80;height:80px;float:left;margin-right:10px;">
-					<p style="margin-top:5px;"><strong>밴드이름</strong></p>
-					<p style="color:#666;margin-top:5px;margin-bottom:5px;">밴드설명</p>
-						<a href="#"><div class="bottom_box" style="float:left;height:23px;border-radius:12px;padding:3px 5px 3px 5px;background-color:#ffffff;">더보기 ></div></a>
-				</div>
-				<div style="width:500px;height:80px;float:left;font-size:13px;margin-top:10px;">
-					<img src="${contextPath }/resources/images/dummy.png" style="width:80;height:80px;float:left;margin-right:10px;">
-					<p style="margin-top:5px;"><strong>밴드이름</strong></p>
-					<p style="color:#666;margin-top:5px;margin-bottom:5px;">밴드설명</p>
-						<a href="#"><div class="bottom_box" style="float:left;height:23px;border-radius:12px;padding:3px 5px 3px 5px;background-color:#ffffff;">더보기 ></div></a>
-				</div>
-				<div style="width:500px;height:80px;float:left;font-size:13px;margin-top:10px;">
-					<img src="${contextPath }/resources/images/dummy.png" style="width:80;height:80px;float:left;margin-right:10px;">
-					<p style="margin-top:5px;"><strong>밴드이름</strong></p>
-					<p style="color:#666;margin-top:5px;margin-bottom:5px;">밴드설명</p>
-						<a href="#"><div class="bottom_box" style="float:left;height:23px;border-radius:12px;padding:3px 5px 3px 5px;background-color:#ffffff;">더보기 ></div></a>
-				</div>
-				<div style="width:500px;height:80px;float:left;font-size:13px;margin-top:10px;">
-					<img src="${contextPath }/resources/images/dummy.png" style="width:80;height:80px;float:left;margin-right:10px;">
-					<p style="margin-top:5px;"><strong>밴드이름</strong></p>
-					<p style="color:#666;margin-top:5px;margin-bottom:5px;">밴드설명</p>
-						<a href="#"><div class="bottom_box" style="float:left;height:23px;border-radius:12px;padding:3px 5px 3px 5px;background-color:#ffffff;">더보기 ></div></a>
-				</div>
-				<div style="width:500px;height:80px;float:left;font-size:13px;margin-top:10px;">
-					<img src="${contextPath }/resources/images/dummy.png" style="width:80;height:80px;float:left;margin-right:10px;">
-					<p style="margin-top:5px;"><strong>밴드이름</strong></p>
-					<p style="color:#666;margin-top:5px;margin-bottom:5px;">밴드설명</p>
-						<a href="#"><div class="bottom_box" style="float:left;height:23px;border-radius:12px;padding:3px 5px 3px 5px;background-color:#ffffff;">더보기 ></div></a>
-				</div>
-				<div style="width:500px;height:80px;float:left;font-size:13px;margin-top:10px;">
-					<img src="${contextPath }/resources/images/dummy.png" style="width:80;height:80px;float:left;margin-right:10px;">
-					<p style="margin-top:5px;"><strong>밴드이름</strong></p>
-					<p style="color:#666;margin-top:5px;margin-bottom:5px;">밴드설명</p>
-						<a href="#"><div class="bottom_box" style="float:left;height:23px;border-radius:12px;padding:3px 5px 3px 5px;background-color:#ffffff;">더보기 ></div></a>
-				</div>
-				<div style="width:500px;height:80px;float:left;font-size:13px;margin-top:10px;">
-					<img src="${contextPath }/resources/images/dummy.png" style="width:80;height:80px;float:left;margin-right:10px;">
-					<p style="margin-top:5px;"><strong>밴드이름</strong></p>
-					<p style="color:#666;margin-top:5px;margin-bottom:5px;">밴드설명</p>
-						<a href="#"><div class="bottom_box" style="float:left;height:23px;border-radius:12px;padding:3px 5px 3px 5px;background-color:#ffffff;">더보기 ></div></a>
-				</div>
+					</div>
+				</c:forEach>
 			</div>
 		</div>
 	</div>

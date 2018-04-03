@@ -11,12 +11,11 @@
 		color:#000000;
 	}
 	#band_top{
-			width:100%;
-			height:50px;
-			background-color:#ffffff;
-			position:fixed;
-			top:0px;
-			
+		width:100%;
+		height:50px;
+		background-color:#ffffff;
+		position:fixed;
+		top:0px;
 	}
 	#wrap{
 			width:100%;
@@ -67,6 +66,15 @@
 	.top_news{
 		border:1px solid transparent;
 	}
+	.dropdown-content {
+		top:45px;
+	    display: none;
+	    position: absolute;
+	    background-color: #f1f1f1;
+	    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	    z-index: 1;
+	    left-margin:0px;
+	}
 </style>
 	<div id="wrap">
 		<div id="band_top">
@@ -74,9 +82,12 @@
 				<img src="${contextPath }/resources/images/logo.png" style="width:70px;height:26px;float:left;">
 				<div style="float:left;width:290px;height:26px;border:1px solid #8e8e8e;background-color:rgba(0,0,0,.03);border-radius:15px;margin-left:20px;">
 					<input style="border:none;width:240px;margin-left:20px;height:24px;margin-top:1px;background:none;" type="text" id="input_search_view83" class="_gnbInputSearch" role="search" title="밴드, 게시글 검색하기" placeholder="밴드, 게시글을 검색해 보세요" autocomplete="off">
-					<img src="${contextPath }/resources/images/images/magnifying-glass-481818_640.png" style="float:Right;width:15px;height:15px;margin-top:5px;margin-right:7px;cursor:pointer;">
+					<img src="${contextPath }/resources/images/find.png" style="float:Right;width:15px;height:15px;margin-top:5px;margin-right:7px;cursor:pointer;">
 				</div>
-				<div style="float:left;margin-left:300px;padding:5px 12px 5px 12px;cursor:pointer;width:65px;" class="top_news">
+				<div style="float:left;width:50px;height:26px;margin-left:10px;">
+					<a href="maruChannelView.ma">채널</a>
+				</div>
+				<div style="float:left;margin-left:240px;padding:5px 12px 5px 12px;cursor:pointer;width:65px;" class="top_news">
 					<p style="color:#333;font-size:14px;text-align:center;" >새글 피드</p>
 				</div>
 			
@@ -91,11 +102,32 @@
 				<div id="talk">
 					
 				</div>
-				<div id="profile">
-
+				<div id="profile"  onclick="clickProfile(this)">
+					<div id="pArea" class="dropdown-content" style="display:none;">
+		                <ul>
+		                    <li><a href="#">마이 페이지 </a></li>
+		                    <li><a href="#">초대코드 입력</a></li>
+		                    <li><a href="#">공지사항</a></li>
+		                    <li><a href="#">이메일 알림 설정</a></li>
+		                    <li><a href="#">설정</a></li>
+		                    <li><a href="#" class="_btnLogout">로그아웃</a></li>
+		               	</ul>
+	               </div>
 				</div>
 			</div>
 					
 
 		</div>
 	</div>
+	<script src="http://code.jquery.com/jquery-1.7.2.min.js" type="text/javascript"></script>
+	<script>
+		function clickProfile(div){
+			var con = document.getElementById("pArea");
+			
+		    if(con.style.display=='none'){
+		        con.style.display = 'block';
+		    }else{
+		        con.style.display = 'none';
+		    }
+		}
+	</script>
