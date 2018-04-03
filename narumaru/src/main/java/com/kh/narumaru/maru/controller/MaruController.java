@@ -13,4 +13,11 @@ public class MaruController {
 		   
 		return "maru/maruInsertPage";
 	}
+	
+	@RequestMapping("insertDetail.ma")
+	public String showmaruInsertDetail(){
+		
+		return "maru/maruInsertDetail";
+	}
+	
 }
