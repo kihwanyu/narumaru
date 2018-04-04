@@ -17,7 +17,7 @@ public class MaruController {
 	@RequestMapping("insertDetail.ma")
 	public String showmaruInsertDetail(){
 		
-		return "maru/maruInsertDetail";
+		return "maru/maruBoard";
 	}
 	
 }
