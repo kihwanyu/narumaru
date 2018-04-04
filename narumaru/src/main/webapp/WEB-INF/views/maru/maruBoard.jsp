@@ -69,6 +69,7 @@
 				<div class="boardInsertcontent">
 					<textArea class="textArea">
 						
+						
 					</textArea>
 				</div>
 				<div class="boardInsertTab">					
