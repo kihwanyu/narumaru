@@ -8,17 +8,12 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 		<style>
-			
-			div {
-				padding:20px;
-				
-				/* border:1px solid #8C8E8D; */
-			}
 			#container {
 				width:60%;
 				height:700px;
 				margin:0 auto;
 				background: #F7EEE7;
+				padding:20px;
 			}
 			#header {
 				padding:20px;
@@ -30,6 +25,7 @@
 				margin-bottom: 20px;
 				background: #8C8E8D;
 				color: #FFFFFF;
+				padding:20px;
 			}
 			#left-sidebar {
 				width: 30%;
@@ -38,6 +34,7 @@
 				margin-right: 20px;
 				background: #8C8E8D;
 				color: #FFFFFF;
+				padding:20px;
 			}
 			#footer {
 				clear:both;			
@@ -64,8 +61,8 @@
 		<!-- #FCC3C0 #F7EEE7 #8C8E8D -->
 	</head>
 	<body>
-		<div id="container">
-			
+	<jsp:include page="../../common/topmenu.jsp"/>	
+		<div id="container" style="margin-top: 50px;">
 			<div id="left-sidebar">
 				<ul>
 					<li>항목1</li>
