@@ -92,10 +92,28 @@
 					
 				</div>
 				<div id="profile">
-
+					<button onclick="goNaru();">나루~호도</button>				
 				</div>
 			</div>
-					
+						
 
 		</div>
 	</div>
+	
+	
+	<script>
+		function goNaru(){
+			location.href="${contextPath}/naruMain.na";
+			
+		}
+	</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
