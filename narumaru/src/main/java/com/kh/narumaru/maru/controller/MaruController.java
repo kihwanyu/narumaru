@@ -14,6 +14,12 @@ public class MaruController {
 		return "maru/maruInsertPage";
 	}
 	
+	@RequestMapping("maruChannelView.ma")
+	public String showMaruChannelView(){
+		   
+		return "maru/maruChannelPage";
+	}
+	
 	@RequestMapping("insertDetail.ma")
 	public String showmaruInsertDetail(){
 		
