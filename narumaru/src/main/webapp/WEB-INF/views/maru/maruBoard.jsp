@@ -25,6 +25,7 @@
 		width:500px;
 		height:150px;
 		border:1px solid lightgray;
+		
 	}
 	.textArea{
 		width:99%;
