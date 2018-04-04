@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <style>
 	*{
-		margin:0 auto;
 		list-style:none;
 		text-decoration:none;
+		margin:0 auto;
 	}
 	a{
 		color:#000000;
@@ -16,6 +17,9 @@
 		background-color:#ffffff;
 		position:fixed;
 		top:0px;
+	}
+	#wrap *{
+		margin:0 auto;
 	}
 	#wrap{
 			width:100%;
@@ -70,10 +74,16 @@
 		top:45px;
 	    display: none;
 	    position: absolute;
-	    background-color: #f1f1f1;
-	    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	    background-color: white;
 	    z-index: 1;
 	    left-margin:0px;
+	    padding-right:10px;
+	    padding-top:10px;
+	    padding-bottom:10px;
+	    text-align:left;
+	}
+	.dropdown-content ul{
+		padding-left:10px;
 	}
 </style>
 	<div id="wrap">
@@ -87,12 +97,12 @@
 				<div style="float:left;width:50px;height:26px;margin-left:10px;">
 					<a href="maruChannelView.ma">채널</a>
 				</div>
-				<div style="float:left;margin-left:240px;padding:5px 12px 5px 12px;cursor:pointer;width:65px;" class="top_news">
-					<p style="color:#333;font-size:14px;text-align:center;" >새글 피드</p>
+				<div style="float:left;margin-left:240px;padding:5px 12px 5px 12px;cursor:pointer;width:80px;" class="top_news">
+					<p style="color:#333;font-size:12px;text-align:center;" >새글 피드</p>
 				</div>
 			
-				<div style="padding:5px 12px 5px 12px;cursor:pointer;width:65px;float:left;" class="top_news">
-					<p style="color:#333;font-size:14px;text-align:center;">밴드 찾기</p>
+				<div style="padding:5px 12px 5px 12px;cursor:pointer;width:80px;float:left;" class="top_news">
+					<p style="color:#333;font-size:12px;text-align:center;">마루 찾기</p>
 				</div>
 				<div id="alram">
 					<div style="width:18px;height:18px;border-radius:20px;color:#ffffff;background-color:#ff2200;color:10px;font-size:12px;position:relative;right:-10px;top:-5px;text-align:center;">
@@ -105,12 +115,12 @@
 				<div id="profile"  onclick="clickProfile(this)">
 					<div id="pArea" class="dropdown-content" style="display:none;">
 		                <ul>
-		                    <li><a href="#">마이 페이지 </a></li>
-		                    <li><a href="#">초대코드 입력</a></li>
-		                    <li><a href="#">공지사항</a></li>
-		                    <li><a href="#">이메일 알림 설정</a></li>
-		                    <li><a href="#">설정</a></li>
-		                    <li><a href="#" class="_btnLogout">로그아웃</a></li>
+		                    <li>마이 페이지 </li>
+		                    <li>초대코드 입력</li>
+		                    <li>공지사항</li>
+		                    <li>이메일 알림 설정</li>
+		                    <li>설정</li>
+		                    <li class="_btnLogout">로그아웃</li>
 		               	</ul>
 	               </div>
 				</div>

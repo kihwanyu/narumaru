@@ -39,6 +39,7 @@
 		padding:20px;
 	}
 	.board-context{
+		padding-top:5px;
 		width:100%;
 		height:100%;
 		background:white;
@@ -64,10 +65,10 @@
 			<span><a href="#">만화</a></span>
 		</div>
 		<br>
-		<div class="board-list">
+		<div class="board-list" align="center" style="margin-left:100px;">
 		<c:forEach var="i" begin="1" end="16">
 			<div class="board-inner">
-				<div class="board-context">
+				<div class="board-context" style="text-align:center">
 					<img src="${contextPath}/resources/images/cosmos.jpg" style="width:90%;">
 					<br>
 					글설명들어갈곳

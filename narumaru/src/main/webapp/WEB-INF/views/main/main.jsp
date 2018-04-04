@@ -74,11 +74,7 @@
 	<div id="band_middle">
 		<div id="binb">
 			<h2>내 밴드 <span>2</span></h2>
-			<ul id="middle_box">
-				<li><a href="#"><img src="${contextPath }/resources/images/image/톱니"> 목록 편집</a></li>
-				<li><a href="#"><img src="${contextPath }/resources/images/image/책"> 밴드 가이드</a></li>
-				<li><a href="#"><img src="${contextPath }/resources/images/image/다운로드"> 데스크탑버전 다운로드</a></li>
-			</ul>
+			
 		<div style="margin-top:20px;">
 			<div style="width:180px;height:200px;background:#ffffff;float:left;margin-top:20px;margin-right:30px;">
 				<a href="maruInsertView.ma">
@@ -104,7 +100,7 @@
 		<div id="band_bottom">
 		<div id="binbb">
 			<h2>공개밴드 인기글</h2>
-			<h6 style="float:right;margin-top:-20px;">더보기 ></h6>
+			<!-- <h6 style="float:right;margin-top:-20px;">더보기 ></h6> -->
 			<div id="object_list">
 			<div class="bottom_object" style='margin-bottom:20px;'>
 				<div style="width:468px;height:30px;border-bottom:1px solid #f5f5f5;padding-left:20px;font-size:15px;padding-top:10px;">

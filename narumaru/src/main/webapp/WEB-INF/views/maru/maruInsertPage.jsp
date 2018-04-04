@@ -38,7 +38,7 @@
 		display:table;
 		background:white;
 		border:1px solid lightgray;
-		width:76%;
+		width:90%;
 		float:left;
 		padding: 20px 20px;
 	}
@@ -51,7 +51,7 @@
 		font-size:13px;
 	}
 	#maru-name{
-		width:80%;
+		width:90%;
 		line-height: 54px;
 	    font-size: 30px;
 	    font-weight: 400;
@@ -92,6 +92,7 @@
 				</c:forEach>
 			</div>
 		</div> <!-- 마루 대표사진 -->
+		<br>
 		
 		<div id="middle-marutype">
 			<h4>마루 공개 설정</h4>
@@ -120,6 +121,10 @@
 				</li>
 			</ul>
 		</div> <!-- 마루 공개설정 -->
+		<br>
+		<br>
+		<br>
+		<br>
 		<br>
 		<div id="btndiv" align="center">
 			<button>취소</button>&nbsp;
