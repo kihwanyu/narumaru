@@ -24,8 +24,7 @@
 		background:white;
 		width:500px;
 		height:150px;
-		border:1px solid lightgray;
-		
+		border:1px solid lightgray;			
 	}
 	.textArea{
 		width:99%;
@@ -51,12 +50,55 @@
 		float:right;
 		height:100%;
 	}
+	.board{
+		border:1px solid lightgray;
+		margin-top:10px;
+		background:white;
+	}
+	.boardInfo{
+		padding:10px;
+		height:50px;
+	}
+	.writerPhoto{
+		height:40px;
+		width:40px;
+		border:1px solid lightgray;
+		display:inline-block;	
+	}
+	.boardBtn{
+		height:40px;
+		width:40px;
+		float:right;
+		border:1px solid lightgray;
+	}
+	.boardContent{
+		padding:20px;
+	}
+	.boardfoot{
+		height:50px;
+		bottom:0px;
+	}
+	.footUl{
+		margin-left:auto;
+		martgin-right:auto;
+	}
+	.footUl li{
+		float:left;
+	}
+	.insertReply{
+		padding:auto;
+	}
+	.insertReplyBtn{
+		float:right;
+	}	
 </style>
 </head>
 <body>
 	<jsp:include page="../common/topmenu.jsp"/>
+	<jsp:include page="../common/middleMenu.jsp"/>
+	<jsp:include page="../common/innerMenu.jsp"/>
 	<div class="wrap">
-		<jsp:include page="../common/innerMenu.jsp"/>
+		
 		<div class="dumi">
 			
 		</div>
@@ -84,6 +126,32 @@
 					</ul>			
 					<button class="inertBoardBtn">작성</button>
 				</div>
+				
+				
+				<div class="board">
+					<div class="boardInfo">
+						<div class="writerPhoto">사진</div>
+						<label>이름</label>
+						<label>날짜</label>
+						<div class="boardBtn">버튼</div>
+					</div>
+					<div class="boardContent">
+						내용
+					</div>
+					<div class="boardfoot">
+						<hr>
+						<ul class="footUl">
+							<li>이모티콘</li>
+							<li>댓글쓰기</li>
+							<li>공유하기</li>
+						</ul>
+					</div>
+					<div class="insertReply">
+						<input type="text" name="insertReply" style="background:none; width:440px; height:40px;">
+						<button class="insertReplyBtn"><img src="${contextPath }/resources/images/magnifying-glass-481818_640.png" style="width:35px; height:35px;"></button>
+					</div>
+				</div>
+				
 			</div>	
 		</div>
 	</div>
