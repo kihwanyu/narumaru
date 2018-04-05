@@ -25,6 +25,7 @@
 			<div class="maruSetting">
 			<hr>
 				마루 설정
+				
 			</div>
 		</div>
 		

@@ -118,6 +118,7 @@
 		width:25px;
 		height:25px;
 	}
+	
 	.content{
 		/* background:lightyellow; */
 		width:500px;

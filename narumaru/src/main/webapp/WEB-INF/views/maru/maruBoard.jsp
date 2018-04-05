@@ -127,6 +127,7 @@
 					<button class="inertBoardBtn">작성</button>
 				</div>
 				
+				
 				<div class="board">
 					<div class="boardInfo">
 						<div class="writerPhoto">사진</div>
