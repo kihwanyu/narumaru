@@ -18,6 +18,7 @@ public class MemberController {
 	public String showInsertMember(){
 		System.out.println("로그인!!!!!!!");
 		
+		
 		return "member/memberInsertForm";
 	}
 	
