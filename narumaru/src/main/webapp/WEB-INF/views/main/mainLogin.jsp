@@ -31,7 +31,7 @@ $font-default: 'Roboto', sans-serif;
 	  right: 0;
 	  width: 50%;
 	  height: 100%;
-	  background: orangered;
+	  background: #8C8E8D;
 	}
 	
 	.backLeft {
@@ -39,7 +39,7 @@ $font-default: 'Roboto', sans-serif;
 	  left: 0;
 	  width: 50%;
 	  height: 100%;
-	  background: skyblue;
+	  background: #F7EEE7;
 	}
 	
 	#back {
@@ -82,7 +82,7 @@ $font-default: 'Roboto', sans-serif;
 	}
 	
 	input {
-	  background-color: yellow;
+	  background-color: white;
 	  border: 0;
 	  outline: 0;
 	  font-size: 1em;
@@ -308,46 +308,46 @@ $font-default: 'Roboto', sans-serif;
 	  <div class="topLayer">
 	    <div class="left">
 	      <div class="content">
-	        <h2>Sign Up</h2>
-	        <form id="form-signup" method="post" onsubmit="return false;">
+	        <h2>회원가입</h2>
+	        <form action="insertMember.me" method="post"><!--  onsubmit="return false;" -->
 	          <div class="form-element form-stack">
-	            <label for="email" class="form-label">Email</label>
+	            <label for="email" class="form-label">이메일</label>
 	            <input id="email" type="email" name="email">
 	          </div>
 	          <div class="form-element form-stack">
-	            <label for="username-signup" class="form-label">Username</label>
+	            <label for="username-signup" class="form-label">이름</label>
 	            <input id="username-signup" type="text" name="username">
 	          </div>
 	          <div class="form-element form-stack">
-	            <label for="password-signup" class="form-label">Password</label>
+	            <label for="password-signup" class="form-label">비밀번호</label>
 	            <input id="password-signup" type="password" name="password">
 	          </div>
 	          <div class="form-element form-checkbox">
 	            <input id="confirm-terms" type="checkbox" name="confirm" value="yes" class="checkbox">
-	            <label for="confirm-terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+	            <label for="confirm-terms"><a href="#">서비스 약관</a> 및 <a href="#">개인정보 정책</a></label>
 	          </div>
 	          <div class="form-element form-submit">
-	            <button id="signUp" class="signup" type="submit" name="signup">Sign up</button>
-	            <button id="goLeft" class="signup off">Log In</button> 
+	            <button id="signUp" class="signup" type="submit" name="signup">회원가입</button>
+	            <button id="goLeft" class="signup off" type="button">로그인</button> 
 	          </div>
 	        </form>
 	      </div>
 	    </div>
 	    <div class="right">
 	      <div class="content">
-	        <h2>Login</h2>
+	        <h2>로그인</h2>
 	        <form action="login.me" method="post"> <!-- onsubmit="return false;"> -->
 	          <div class="form-element form-stack">
-	            <label for="username-login" class="form-label">Username</label>
+	            <label for="username-login" class="form-label">이메일</label>
 	            <input id="username-login" type="text" name="username">
 	          </div>
 	          <div class="form-element form-stack">
-	            <label for="password-login" class="form-label">Password</label>
+	            <label for="password-login" class="form-label">비밀번호</label>
 	            <input id="password-login" type="password" name="password">
 	          </div>
 	          <div class="form-element form-submit">
-	            <button id="logIn" class="login" type="submit" name="login">Log In</button>
-	            <button id="goRight" class="login off" name="signup" type="button">Sign Up</button>
+	            <button id="logIn" class="login" type="submit" name="login">로그인</button>
+	            <button id="goRight" class="login off" name="signup" type="button">회원가입</button>
 	          </div>
 	        </form>
 	      </div>
