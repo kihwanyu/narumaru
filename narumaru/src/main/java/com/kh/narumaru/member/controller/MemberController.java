@@ -14,5 +14,13 @@ public class MemberController {
 		return "main/main";
 	}
 	
+	@RequestMapping(value="insertMember.me", method=RequestMethod.POST)
+	public String showInsertMember(){
+		System.out.println("로그인!!!!!!!");
+		
+		return "member/memberInsertForm";
+	}
+	
+	
 	
 }
