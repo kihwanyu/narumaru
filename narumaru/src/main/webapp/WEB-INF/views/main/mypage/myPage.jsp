@@ -8,9 +8,14 @@
 			<meta name="viewport" content="width=device-width, initial-scale=1">
 			<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+			<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<style>
+			* {
+				font-family: 'Nanum Gothic', sans-serif;
+				font-weight: bold;
+			}
 			#container {
 				width:60%;
 				height:660px;
@@ -23,20 +28,22 @@
 				margin-bottom:20px;
 			}
 			#contents {
-				width: 70%;
+				width: 64%;
 				float: left;
 				margin-bottom: 20px;
 				background: #8C8E8D;
 				color: #FFFFFF;
 				padding:20px;
+				box-shadow:1px 1px 10px #000;
+				margin-left: 20px;
 			}
+			
 			#left-sidebar {
-				width: 30%;
+				width: 25%;
 				float: left;
 				margin-bottom: 20px;
-				
 				color: #FFFFFF;
-				/* padding:20px; */
+				box-shadow:1px 1px 10px #000;
 			}
 			#footer {
 				clear:both;			
@@ -59,11 +66,7 @@
 				text-align: center;
 				color: #FCC3C0;
 			}
-			.selected-li {
-				padding: 10px;
-				text-align: center;
-				color: #FCC3C0;
-			}	
+			
 			.myInfo {
 				margin-top: 10px;
 				margin-bottom: 20px;
@@ -175,12 +178,36 @@
 				margin-bottom: 20px;
 			}
 			#menu {
+				background:white;
 				position:absolute;
 				left:50%;
 				top: 133px;
-				width: 100px;
-				height: 500px;
+				width: 150px;
+				height: 400px;
 				margin-left: 520px;
+				box-shadow:1px 1px 10px #000;
+			}
+			.help-div {
+				border-bottom: solid 1px black; 
+				padding-top: 5px; 
+				padding-bottom: 5px;
+				font-size: 20px;
+			}
+			.left-sidebar-li {
+				float: left; 
+				width: 66%; 
+				text-align: left;
+			}
+			.selected-li {
+				padding: 10px;
+				text-align: center;
+				color: #FCC3C0;
+				
+			}	
+			#profileImg {
+				height:80px;
+				width:80px;
+				margin:5px;
 			}
 		</style>
 		<!-- #FCC3C0 #F7EEE7 #8C8E8D -->
@@ -194,16 +221,40 @@
 		<div id="container" style="margin-top: 50px;">
 			<div id="left-sidebar">
 				<ul>
-					<li class="selected-li" style="background: #8C8E8D;">내 정보</li>
-					<li>항목2</li>
-					<li>항목3</li>
-					<li>항목4</li>
-					<li>항목3</li>
-					<li>항목4</li>
-					<li>항목3</li>
-					<li>항목4</li>
-					<li>항목3</li>
-					<li>항목4</li>
+					<li class="selected-li" style="background: #8C8E8D;">
+					<!-- 스타일이 적용안되서 배경색을 인라인으로 적용 -->
+						<div class="left-sidebar-li">
+							내 정보
+						</div>
+						<div align="right">
+							<img src="resources/images/right_arrow.png" height="20px">
+						</div>
+					</li>
+					<li>
+						<div class="left-sidebar-li">
+							내 정보
+						</div>
+						<div align="right">
+							<img src="resources/images/right_arrow.png" height="20px">
+						</div>
+					</li>
+					<li>
+						<div class="left-sidebar-li">
+							내 정보
+						</div>
+						<div align="right">
+							<img src="resources/images/right_arrow.png" height="20px">
+						</div>
+					</li>
+					<li>
+						<div class="left-sidebar-li">
+							내 정보
+						</div>
+						<div align="right">
+							<img src="resources/images/right_arrow.png" height="20px">
+						</div>
+					</li>
+					
 				</ul>
 			</div>
 			
@@ -213,7 +264,11 @@
 					<tbody>
 						<tr height="100px;">
 							<td width="20%">사용중인 프로필 </td>
-							<td width="60%"><img src="" height="80px" width="60px;" style="margin: 5px; "></td>
+							<td width="60%" style="vertical-align: middle;">
+								<div id="profileArea">
+									<img src="resources/images/profile_defalt.png" id="profileImg">
+								</div>
+							</td>
 							<td width="15%">
 								<div align="center" style="padding: 20px; padding-top: 40px; padding-bottom: 40px;">
 									<input type="button" value="변경" class="btn btn-default">
@@ -385,15 +440,36 @@
 				</form>
 			</div>
 		</div>
-		<div id="menu" style="background: green;">
-			우측베너
+		<div id="menu">
+			<div class="help-div" align="center">
+				Help
+			</div>
 		</div>
+		<input type="file" id="profile-file" name="profile-file" onchange="LoadImg(this);">
 		<script type="text/javascript">
-			var menuTop = parseInt($("#menu").css("top"));
-			
-			$(window).scroll(function(){
-				$("#menu").stop().animate({"top":$(window).scrollTop()+menuTop+"px"},500);
+			$(function(){
+				var menuTop = parseInt($("#menu").css("top"));
+				
+				$(window).scroll(function(){
+					$("#menu").stop().animate({"top":$(window).scrollTop()+menuTop+"px"},500);
+				});
+				
+				$("#profile-file").hide();
+				$("#profileImg").click(function(){
+					$("#profile-file").click();
+					console.log($("#profile").val());
+				});
 			});
+			function LoadImg(value) {
+				if(value.files && value.files[0]){
+					
+					var reader = new FileReader();
+					reader.onload = function(e) {
+						$("#profileImg").attr("src", e.target.result);
+					}
+				reader.readAsDataURL(value.files[0]);
+				}
+			}
 		</script>
 	</body>
 </html>
