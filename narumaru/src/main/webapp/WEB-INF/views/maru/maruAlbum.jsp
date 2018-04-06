@@ -25,6 +25,7 @@
 				<div class="albumContent">
 				<hr>
 					앨범 내용
+					
 				</div>
 			</div>
 		</div>

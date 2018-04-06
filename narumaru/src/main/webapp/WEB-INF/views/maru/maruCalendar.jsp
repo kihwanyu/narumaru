@@ -28,7 +28,7 @@
 	 	calendarEvent();
 	});
 	
-	function calendarEvent(){
+	function calendarEvent(eventData){
 		 $("#calender").html("");
 		 var date = new Date();
 		 var d = date.getDate();
@@ -64,6 +64,7 @@
 			  timeFormat : "HH:mm"
 		 });
 	}
+	
 </script>
 </body>
 </html>

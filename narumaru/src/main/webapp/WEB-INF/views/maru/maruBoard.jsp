@@ -97,6 +97,7 @@
 
 		</div>
 	</div>
+	
 	<script>
 		$(".insertReplyShow").click(function(){
 			$(this).parent().parent().siblings(".insertReply").toggle();

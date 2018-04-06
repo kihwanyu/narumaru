@@ -20,6 +20,7 @@ public class MaruController {
 		return "maru/maruChannelPage";
 	}
 	
+	
 	@RequestMapping("insertDetail.ma")
 	public String showmaruInsertDetail(){
 		
