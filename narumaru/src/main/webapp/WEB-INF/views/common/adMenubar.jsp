@@ -38,7 +38,7 @@
 			<!-- menu profile quick info -->
 			<div class="profile clearfix">
 				<div class="profile_pic">
-					<img src="${ contextPath }/resources/images/img.jpg" alt="..." class="img-circle profile_img">
+					<img src="${ contextPath }/resources/images/Maneger.png" alt="..." class="img-circle profile_img">
 				</div>
 				<div class="profile_info">
 					<span>Welcome,</span>
@@ -59,7 +59,7 @@
 							<ul class="nav child_menu">
 								<li><a href="adMemberView.ad"> 회원 관리 </a></li>
 								<li><a href="adNaruView.ad"> 나루 관리</a></li>
-								<li><a href="index3.html"> 마루 관리 </a></li>
+								<li><a href="adMaruView.ad"> 마루 관리 </a></li>
 							</ul></li>
 
 						
@@ -81,7 +81,7 @@
 							</ul>
 						</li>
 						<li><a><i class="fa fa-table"></i> 신고 게시판(자세히 보기)</a></li>
-						<li><a><i class="fa fa-edit"></i> 로그인 기록 관리</a></li>
+						<li><a href="adLoginManagView.ad"><i class="fa fa-edit"></i> 로그인 기록 관리</a></li>
 					</ul>
 				</div>
 			</div>
@@ -101,7 +101,7 @@
 					<li class="">
 						<!-- 우측상단 관리자 정보 설정 --> 
 						<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> 
-						<img src="${ contextPath }/resources/images/img.jpg" alt="">JY Kim <span class="fa fa-angle-down"></span>
+						<img src="${ contextPath }/resources/images/Maneger.png" alt="">JY Kim <span class="fa fa-angle-down"></span>
 					</a>
 						<ul class="dropdown-menu dropdown-usermenu pull-right">
 							<li><a href="javascript:;"> Profile</a></li>
@@ -123,28 +123,28 @@
 						<ul id="menu1" class="dropdown-menu list-unstyled msg_list"
 							role="menu">
 							<li><a> <span class="image"><img
-										src="${ contextPath }/resources/images/img.jpg"
+										src="${ contextPath }/resources/images/Maneger.png"
 										alt="Profile Image" /></span> <span> <span>John Smith</span>
 										<span class="time">3 mins ago</span>
 								</span> <span class="message"> Film festivals used to be
 										do-or-die moments for movie makers. They were where... </span>
 							</a></li>
 							<li><a> <span class="image"><img
-										src="${ contextPath }/resources/images/img.jpg"
+										src="${ contextPath }/resources/images/Maneger.png"
 										alt="Profile Image" /></span> <span> <span>John Smith</span>
 										<span class="time">3 mins ago</span>
 								</span> <span class="message"> Film festivals used to be
 										do-or-die moments for movie makers. They were where... </span>
 							</a></li>
 							<li><a> <span class="image"><img
-										src="${ contextPath }/resources/images/img.jpg"
+										src="${ contextPath }/resources/images/Maneger.png"
 										alt="Profile Image" /></span> <span> <span>John Smith</span>
 										<span class="time">3 mins ago</span>
 								</span> <span class="message"> Film festivals used to be
 										do-or-die moments for movie makers. They were where... </span>
 							</a></li>
 							<li><a> <span class="image"><img
-										src="${ contextPath }/resources/images/img.jpg"
+										src="${ contextPath }/resources/images/Maneger.png"
 										alt="Profile Image" /></span> <span> <span>John Smith</span>
 										<span class="time">3 mins ago</span>
 								</span> <span class="message"> Film festivals used to be
@@ -220,5 +220,7 @@
 
     <!-- Custom Theme Scripts -->
     <script src="${ contextPath }/resources/admin/build/js/custom.min.js"></script>
+    
+    <!-- 이럴수가!!  -->
 </body>
 </html>

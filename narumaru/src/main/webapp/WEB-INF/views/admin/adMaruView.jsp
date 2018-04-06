@@ -22,7 +22,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>나루관리 <small>Naru</small></h3>
+                <h3>마루관리 <small>Maru</small></h3>
               </div>
 
               <div class="title_right">
@@ -43,7 +43,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>나루목록 <small>Users</small></h2>
+                    <h2>마루목록 <small>Users</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -552,7 +552,7 @@
           <div class="clearfix"></div>
         </footer>
     <!-- /footer content -->
-	
 	<!-- 이럴수가!!  -->
+	
 </body>
 </html>

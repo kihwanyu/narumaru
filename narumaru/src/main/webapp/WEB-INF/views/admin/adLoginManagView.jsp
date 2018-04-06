@@ -22,7 +22,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>나루관리 <small>Naru</small></h3>
+                <h3>로그인기록관리 <small>LoginManagement</small></h3>
               </div>
 
               <div class="title_right">
@@ -43,7 +43,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>나루목록 <small>Users</small></h2>
+                    <h2>로그인기록 <small>LoginReport</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -68,12 +68,12 @@
                     <table id="datatable" class="table table-striped table-bordered">
                       <thead>
                         <tr>
-                          <th>UserId</th>
-                          <th>UserName</th>
-                          <th>BirthDay</th>
-                          <th>Email</th>
-                          <th>Address</th>
-                          <th>Phone</th>
+                          <th>회원 아이디</th>
+                          <th>회원 이름</th>
+                          <th>최근 접속일자</th>
+                          <th>접속 IP</th>
+                          <th>접속 국가</th>
+                          <th>remove</th>
                         </tr>
                       </thead>
 
@@ -553,6 +553,6 @@
         </footer>
     <!-- /footer content -->
 	
-	<!-- 이럴수가!!  -->
+	<!-- 이럴수가... -->
 </body>
 </html>
