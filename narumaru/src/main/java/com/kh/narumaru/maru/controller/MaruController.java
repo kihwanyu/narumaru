@@ -25,5 +25,20 @@ public class MaruController {
 		
 		return "maru/maruBoard";
 	}
+	@RequestMapping("showBoardAlbum.ma")
+	public String showmaruBoardAlbum(){
+		
+		return "maru/maruAlbum";
+	}
+	@RequestMapping("showBoardCalendar.ma")
+	public String showmaruBoardCalendar(){
+		
+		return "maru/maruCalendar";
+	}
+	@RequestMapping("showBoardMember.ma")
+	public String showmaruBoardMember(){
+		
+		return "maru/maruMember";
+	}
 	
 }
