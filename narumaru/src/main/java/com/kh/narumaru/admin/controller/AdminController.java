@@ -39,4 +39,6 @@ public class AdminController {
 		return "admin/adLoginManagView";
 	}
 	
+//이럴수가!!
+	
 }
