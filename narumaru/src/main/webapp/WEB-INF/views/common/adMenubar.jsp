@@ -72,15 +72,25 @@
 								<li><a href="typography.html"> 1:1 문의 </a></li>
 							</ul></li>
 
-						<li><a><i class="fa fa-bar-chart-o"></i> 포인트 관리 <span
-								class="fa fa-chevron-down"></span></a>
+						<li><a>
+								<i class="fa fa-bar-chart-o"></i> 포인트 관리 
+								<span class="fa fa-chevron-down"></span>
+							</a>
 							<ul class="nav child_menu">
 								<li><a href="chartjs.html">환급 신청 내역</a></li>
 								<li><a href="chartjs2.html">수익 분석</a></li>
 
 							</ul>
 						</li>
-						<li><a><i class="fa fa-table"></i> 신고 게시판(자세히 보기)</a></li>
+						<li><a>
+								<i class="fa fa-table"></i> 신고 게시판
+								<span class="fa fa-chevron-down"></span></a>
+							<ul class="nav child_menu">
+								<li><a href="adDeclare.ad">최근 신고 내역</a></li>
+								<li><a href="chartjs2.html">총 신고 내역</a></li>
+
+							</ul>
+						</li>
 						<li><a><i class="fa fa-edit"></i> 로그인 기록 관리</a></li>
 					</ul>
 				</div>
@@ -101,7 +111,7 @@
 					<li class="">
 						<!-- 우측상단 관리자 정보 설정 --> 
 						<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> 
-						<img src="${ contextPath }/resources/images/img.jpg" alt="">JY Kim <span class="fa fa-angle-down"></span>
+						<img src="${ contextPath }/resources/images/img.png" alt="">JY Kim <span class="fa fa-angle-down"></span>
 					</a>
 						<ul class="dropdown-menu dropdown-usermenu pull-right">
 							<li><a href="javascript:;"> Profile</a></li>
@@ -123,28 +133,28 @@
 						<ul id="menu1" class="dropdown-menu list-unstyled msg_list"
 							role="menu">
 							<li><a> <span class="image"><img
-										src="${ contextPath }/resources/images/img.jpg"
+										src="${ contextPath }/resources/images/img.png"
 										alt="Profile Image" /></span> <span> <span>John Smith</span>
 										<span class="time">3 mins ago</span>
 								</span> <span class="message"> Film festivals used to be
 										do-or-die moments for movie makers. They were where... </span>
 							</a></li>
 							<li><a> <span class="image"><img
-										src="${ contextPath }/resources/images/img.jpg"
+										src="${ contextPath }/resources/images/img.png"
 										alt="Profile Image" /></span> <span> <span>John Smith</span>
 										<span class="time">3 mins ago</span>
 								</span> <span class="message"> Film festivals used to be
 										do-or-die moments for movie makers. They were where... </span>
 							</a></li>
 							<li><a> <span class="image"><img
-										src="${ contextPath }/resources/images/img.jpg"
+										src="${ contextPath }/resources/images/img.png"
 										alt="Profile Image" /></span> <span> <span>John Smith</span>
 										<span class="time">3 mins ago</span>
 								</span> <span class="message"> Film festivals used to be
 										do-or-die moments for movie makers. They were where... </span>
 							</a></li>
 							<li><a> <span class="image"><img
-										src="${ contextPath }/resources/images/img.jpg"
+										src="${ contextPath }/resources/images/img.png"
 										alt="Profile Image" /></span> <span> <span>John Smith</span>
 										<span class="time">3 mins ago</span>
 								</span> <span class="message"> Film festivals used to be
@@ -217,6 +227,11 @@
     <script src="${ contextPath }/resources/admin/jszip/dist/jszip.min.js"></script>
     <script src="${ contextPath }/resources/admin/pdfmake/build/pdfmake.min.js"></script>
     <script src="${ contextPath }/resources/admin/pdfmake/build/vfs_fonts.js"></script>
+
+	
+	
+ 	<!-- ECharts -->
+    <script src="${ contextPath }/resources/admin/echarts/dist/echarts.min.js"></script>
 
     <!-- Custom Theme Scripts -->
     <script src="${ contextPath }/resources/admin/build/js/custom.min.js"></script>
