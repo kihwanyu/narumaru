@@ -30,14 +30,24 @@
 		</div>
 		
 		<aside class="rightArea">
-			<div class="chat">
+			<div class="rightmenu chat">
 				<div class="rightTitle">
 					채팅
-					<div class="newChat">새 채팅<div class="chatSub"><ul><li>비공개 채팅</li><li>공개 채팅</li></ul></div></div>
+					<div class="newChat">새 채팅<div class="sub chatSub"><ul><li>비공개 채팅</li><li>공개 채팅</li></ul></div></div>
 				</div>
 				<div class="chatContent">
 					<div class="chatPhoto"></div>
 					<label>채팅방 이름</label>
+				</div>
+			</div>
+			
+			<div class="rightmenu album" style="top:200px;">
+				<div class="rightTitle">
+					앨범
+					<div class="moreAlbum">더보기</div>
+				</div>
+				<div class="albumContent">
+					<div class="photoThumb"></div>
 				</div>
 			</div>
 		</aside>

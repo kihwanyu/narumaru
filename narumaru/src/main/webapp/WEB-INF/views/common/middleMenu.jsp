@@ -91,10 +91,10 @@
 		border:1px solid lightgray;
 		padding:10px;
 	}
-	.chat{
+	.rightMenu{
 		width:240px;
 		background:white;
-		top:100px;
+		margin-top:50px;
 		position:fixed;
 	}
 	.chatContent{
@@ -105,7 +105,7 @@
 		float:right;
 		cursor:pointer;
 	}
-	.chatSub{
+	.sub{
 		position:absolute;
 		width:150px;
 		background:white;
@@ -128,15 +128,109 @@
 		margin-left:auto;	
 	}
 </style>
+<style>
+	.dumi{
+		height:50px;
+	}
+	.content{
+		height:2000px;
+	}
+	.searchArea{	
+		background:white;	
+		padding:auto;
+	}
+	.searchBtn{
+		float:right;
+	}
+	.boardInsert{
+		background:white;
+		width:500px;
+		height:150px;
+		border:1px solid lightgray;			
+	}
+	.textArea{
+		width:99%;
+		height:90%;
+		resize:none;
+	}
+	.boardInsert li{
+		margin-right:20px;
+	}
+	.boardInsertcontent{
+		height:100px;
+	}
+	.boardInsertTab{
+		height:50px;
+		background:gray;
+		bottom:0px;
+	}
+	.boardInsertUl{
+		float:left;
+		width:400px;
+	}
+	.inertBoardBtn{
+		float:right;
+		height:100%;
+	}
+	.boardInfo{
+		padding:10px;
+		height:50px;
+	}
+	.writerPhoto{
+		height:40px;
+		width:40px;
+		border:1px solid lightgray;
+		display:inline-block;	
+	}
+	.boardBtn{
+		height:40px;
+		width:40px;
+		float:right;
+		border:1px solid lightgray;
+	}
+	.boardContent{
+		padding:20px;
+	}
+	.boardfoot{
+		height:50px;
+		bottom:0px;
+	}
+	.footUl{
+		margin-left:auto;
+		martgin-right:auto;
+	}
+	.footUl li{
+		float:left;
+		margin-right:20px;
+	}
+	.insertReply{
+		display:none;
+		padding:auto;
+	}
+	.insertReplyBtn{
+		float:right;
+	}
+	.content > div{
+		margin-top:10px;
+		background:white;
+		border:1px solid lightgray;
+	}
+	.createAlbum{
+		float:right;
+	}
+	.modify{
+		float:right;	
+	}	
+</style>
 </head>
 <body>
 	<div class="innerTop">
 		<div class="innerTopMenu">
 			<ul class="ul innerTopUl">
-				<li>전체글</li>
-				<li>사진첩</li>
-				<li>일정</li>
-				<li>멤버</li>
+				<li><a href="insertDetail.ma">전체글</a></li>
+				<li><a href="showBoardAlbum.ma">사진첩</a></li>
+				<li><a href="showBoardCalendar.ma">일정</a></li>
+				<li><a href="showBoardMember.ma">멤버</a></li>
 			</ul>
 		</div>
 	</div>
