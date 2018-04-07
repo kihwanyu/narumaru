@@ -16,6 +16,7 @@
 		background-color:#ffffff;
 		position:fixed;
 		top:0px;
+		z-index:5;
 	}
 	#wrap{
 			width:100%;
