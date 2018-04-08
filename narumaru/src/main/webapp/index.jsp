@@ -8,7 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
 	<jsp:forward page="WEB-INF/views/maru/maruSearchResultDetail.jsp"/>
 	<jsp:forward page="WEB-INF/views/main/.jsp"/>

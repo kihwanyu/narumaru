@@ -1,0 +1,27 @@
+@CHARSET "UTF-8";
+<!-- #FCC3C0 #F7EEE7 #8C8E8D -->
+* {
+	font-family: 'Nanum Gothic', sans-serif;
+	font-weight: bold;
+}
+#container {
+	width:65%;
+	height:660px;
+	margin:0 auto;
+	padding:20px;
+	margin-bottom: 100px;
+}
+#header {
+	padding:20px;
+	margin-bottom:20px;
+}
+#contents {
+	width: 64%;
+	float: left;
+	margin-bottom: 20px;
+	background: #8C8E8D;
+	color: #FFFFFF;
+	padding:20px;
+	box-shadow:1px 1px 10px #000;
+	margin-left: 20px;
+}
