@@ -1,0 +1,119 @@
+@CHARSET "UTF-8";
+.myInfo {
+	margin-top: 10px;
+	margin-bottom: 20px;
+	font-size: 20px;
+}
+.modal-q {
+	opacity: 0;
+	visibility: hidden;
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	text-align: left;
+	background: rgba(0,0,0, .6);
+	transition: opacity .25s ease;
+}
+.modal-q_bg {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	cursor: pointer;
+}
+.modal-q-state {
+	display: none;
+}
+.modal-q-state:checked + .modal-q {
+	opacity: 1;
+	visibility: visible;
+}
+
+.modal-q-state:checked + .modal-q .modal-q__inner {
+	top: 0;
+}
+
+.modal-q_inner {
+	transition: top .25s ease;
+	position: absolute;
+	top: -20%;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: 50%;
+	margin: auto;
+	overflow: auto;
+	background: #fff;
+	border-radius: 5px;
+	padding: 1em 2em;
+	height: 50%;
+}
+
+.modal-q_close {
+	position: absolute;
+	right: 1em;
+	top: 1em;
+	width: 1.1em;
+	height: 1.1em;
+	cursor: pointer;
+}
+
+.modal-q_close:after,
+.modal-q_close:before {
+	content: '';
+	position: absolute;
+	width: 2px;
+	height: 1.5em;
+	background: #ccc;
+	display: block;
+	transform: rotate(45deg);
+	left: 50%;
+	margin: -3px 0 0 -1px;
+	top: 0;
+}
+
+.modal-q_close:hover:after,
+.modal-q_close:hover:before {
+	background: #aaa;
+}
+
+.modal-q_close:before {
+	transform: rotate(-45deg);
+}
+
+@media screen and (max-width: 768px) {
+	
+  .modal-q_inner {
+	width: 90%;
+	height: 90%;
+	box-sizing: border-box;
+  }
+}
+.btn_label {
+	cursor: pointer;
+	background: white;
+	display: inline-block;
+	padding: .5em 1em;
+	color: black;
+	border-radius: 3px;
+}
+.btn {
+	font-family: 'Nanum Gothic', sans-serif;
+	font-weight: bold;
+}
+.btn_label:hover,
+.btn_label:focus {
+	background: rightgray;
+}
+.password-div {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+#profileImg {
+	height:80px;
+	width:80px;
+	margin:5px;
+}

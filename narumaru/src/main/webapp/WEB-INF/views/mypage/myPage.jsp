@@ -5,258 +5,24 @@
 <html>
 	<head>
 		<title>myPage</title>
-			<meta name="viewport" content="width=device-width, initial-scale=1">
-			<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-			<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<style>
-			* {
-				font-family: 'Nanum Gothic', sans-serif;
-				font-weight: bold;
-			}
-			#container {
-				width:60%;
-				height:660px;
-				margin:0 auto;
-				padding:20px;
-				margin-bottom: 100px;
-			}
-			#header {
-				padding:20px;
-				margin-bottom:20px;
-			}
-			#contents {
-				width: 64%;
-				float: left;
-				margin-bottom: 20px;
-				background: #8C8E8D;
-				color: #FFFFFF;
-				padding:20px;
-				box-shadow:1px 1px 10px #000;
-				margin-left: 20px;
-			}
-			
-			#left-sidebar {
-				width: 25%;
-				float: left;
-				margin-bottom: 20px;
-				color: #FFFFFF;
-				box-shadow:1px 1px 10px #000;
-			}
-			#footer {
-				clear:both;			
-			}
-			#left-sidebar ul{
-				list-style:none;
-			    margin:0;
-			    padding:0;
-			}
-			#left-sidebar li{
-				padding: 10px;
-				/* margin: 3px; */
-				background: #FCC3C0;
-				text-align: center;
-			}	
-			#left-sidebar li:hover{
-				padding: 10px;
-				/* margin: 3px; */
-				background: #8C8E8D;
-				text-align: center;
-				color: #FCC3C0;
-			}
-			
-			.myInfo {
-				margin-top: 10px;
-				margin-bottom: 20px;
-				font-size: 20px;
-			}
-			.modal-q {
-				opacity: 0;
-				visibility: hidden;
-				position: fixed;
-				top: 0;
-				right: 0;
-				bottom: 0;
-				left: 0;
-				text-align: left;
-				background: rgba(0,0,0, .6);
-				transition: opacity .25s ease;
-			}
-			.modal-q_bg {
-				position: absolute;
-				top: 0;
-				right: 0;
-				bottom: 0;
-				left: 0;
-				cursor: pointer;
-			}
-			.modal-q-state {
-				display: none;
-			}
-			.modal-q-state:checked + .modal-q {
-				opacity: 1;
-				visibility: visible;
-			}
-			
-			.modal-q-state:checked + .modal-q .modal-q__inner {
-				top: 0;
-			}
-			
-			.modal-q_inner {
-				transition: top .25s ease;
-				position: absolute;
-				top: -20%;
-				right: 0;
-				bottom: 0;
-				left: 0;
-				width: 50%;
-				margin: auto;
-				overflow: auto;
-				background: #fff;
-				border-radius: 5px;
-				padding: 1em 2em;
-				height: 50%;
-			}
-			
-			.modal-q_close {
-				position: absolute;
-				right: 1em;
-				top: 1em;
-				width: 1.1em;
-				height: 1.1em;
-				cursor: pointer;
-			}
-			
-			.modal-q_close:after,
-			.modal-q_close:before {
-				content: '';
-				position: absolute;
-				width: 2px;
-				height: 1.5em;
-				background: #ccc;
-				display: block;
-				transform: rotate(45deg);
-				left: 50%;
-				margin: -3px 0 0 -1px;
-				top: 0;
-			}
-			
-			.modal-q_close:hover:after,
-			.modal-q_close:hover:before {
-				background: #aaa;
-			}
-			
-			.modal-q_close:before {
-				transform: rotate(-45deg);
-			}
-			
-			@media screen and (max-width: 768px) {
-				
-			  .modal-q_inner {
-				width: 90%;
-				height: 90%;
-				box-sizing: border-box;
-			  }
-			}
-			.btn_label {
-				cursor: pointer;
-				background: white;
-				display: inline-block;
-				padding: .5em 1em;
-				color: black;
-				border-radius: 3px;
-			}
-			
-			.btn_label:hover,
-			.btn_label:focus {
-				background: rightgray;
-			}
-			.password-div {
-				margin-top: 20px;
-				margin-bottom: 20px;
-			}
-			#menu {
-				background:white;
-				position:absolute;
-				left:50%;
-				top: 133px;
-				width: 150px;
-				height: 400px;
-				margin-left: 520px;
-				box-shadow:1px 1px 10px #000;
-			}
-			.help-div {
-				border-bottom: solid 1px black; 
-				padding-top: 5px; 
-				padding-bottom: 5px;
-				font-size: 20px;
-			}
-			.left-sidebar-li {
-				float: left; 
-				width: 66%; 
-				text-align: left;
-			}
-			.selected-li {
-				padding: 10px;
-				text-align: center;
-				color: #FCC3C0;
-				
-			}	
-			#profileImg {
-				height:80px;
-				width:80px;
-				margin:5px;
-			}
-		</style>
-		<!-- #FCC3C0 #F7EEE7 #8C8E8D -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="resources/css/mypage.css"> <!-- mypageCss -->
+		<link rel="stylesheet" type="text/css" href="resources/css/mypage_myInfo.css"> <!-- myInfoCss -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</head>
 	<body>
 	<!--  -->
-	<jsp:include page="../../common/topmenu.jsp"/>	
+	<jsp:include page="../common/topmenu.jsp"/>	
 		<br>
 		<br>
 		<br>
 		<div id="container" style="margin-top: 50px;">
-			<div id="left-sidebar">
-				<ul>
-					<li class="selected-li" style="background: #8C8E8D;">
-					<!-- 스타일이 적용안되서 배경색을 인라인으로 적용 -->
-						<div class="left-sidebar-li">
-							내 정보
-						</div>
-						<div align="right">
-							<img src="resources/images/right_arrow.png" height="20px">
-						</div>
-					</li>
-					<li>
-						<div class="left-sidebar-li">
-							내 정보
-						</div>
-						<div align="right">
-							<img src="resources/images/right_arrow.png" height="20px">
-						</div>
-					</li>
-					<li>
-						<div class="left-sidebar-li">
-							내 정보
-						</div>
-						<div align="right">
-							<img src="resources/images/right_arrow.png" height="20px">
-						</div>
-					</li>
-					<li>
-						<div class="left-sidebar-li">
-							내 정보
-						</div>
-						<div align="right">
-							<img src="resources/images/right_arrow.png" height="20px">
-						</div>
-					</li>
-					
-				</ul>
-			</div>
+		<c:set var="pageValue" value="myInfo" scope="request" />
+		<jsp:include page="../common/myPage_LeftSideBar.jsp"/>	
 			
 			<div id="contents">
 				<div class="myInfo">내정보</div>
@@ -287,7 +53,7 @@
 						
 							<td width="15%">
 								<div align="center" class="birthday-div-true">
-									<input type="button" value="변경" class="btn btn-default" id="birthdayCheage">
+									<input type="button" value="변경" class="btn btn-default" id="birthdayChange">
 								</div>
 								<div align="center" class="birthday-div-false" style="display: none;">
 									<input type="button" value="확인" class="btn btn-default" id="birthdaySubmit" style="margin-bottom: 10px;">
@@ -319,11 +85,27 @@
 							</td>
 						</tr>
 						<tr>
-							<td width="30%" style="vertical-align: middle;">휴대폰번호&nbsp;&nbsp;&nbsp;010-4803-4471 </td>
-							<td width="15%">
-								<div align="center">
-									<input type="button" value="변경" class="btn btn-default">
+							<td width="30%" style="vertical-align: middle;">
+								<div class="phone-div-true">
+									휴대폰번호&nbsp;&nbsp;&nbsp;010-4803-4471
 								</div>
+								<div class="phone-div-false" style="display: none;">
+									<div style="float: left; width: 30%; padding-top: 5px; padding-bottom: 5px;">
+										휴대폰번호&nbsp;
+									</div>
+									<div style="float: left; width: 67%;">
+										<input type="tel" name="phone" value="" class="form-control">
+									</div>
+								</div>	
+							</td>
+							<td width="15%">
+								<div class="phone-div-true" align="center">
+									<input type="button" value="변경" class="btn btn-default" id="phoneChange">
+								</div>
+								<div class="phone-div-false" style="display: none;" align="center">
+									<input type="button" value="확인" class="btn btn-default" id="phoneSubmit" style="margin-bottom: 10px;">
+									<input type="button" value="취소" class="btn btn-default" id="phoneCancel">
+								</div>	
 							</td>
 						</tr>
 						<tr>
@@ -390,7 +172,7 @@
 				</table>
 				<script type="text/javascript">
 					$(function(){
-						$("#birthdayCheage").click(function(){
+						$("#birthdayChange").click(function(){
 							$(".birthday-div-true").hide();
 							$(".birthday-div-false").show();
 						});
@@ -413,6 +195,18 @@
 						$("#genderCancel").click(function(){
 							$(".gender-div-true").show();
 							$(".gender-div-false").hide();
+						});
+						$("#phoneChange").click(function(){
+							$(".phone-div-true").hide();
+							$(".phone-div-false").show();
+						});
+						$("#phoneSubmit").click(function(){
+							$(".phone-div-true").show();
+							$(".phone-div-false").hide();
+						});
+						$("#phoneCancel").click(function(){
+							$(".phone-div-true").show();
+							$(".phone-div-false").hide();
 						});
 					});
 				</script>
@@ -440,36 +234,7 @@
 				</form>
 			</div>
 		</div>
-		<div id="menu">
-			<div class="help-div" align="center">
-				Help
-			</div>
-		</div>
-		<input type="file" id="profile-file" name="profile-file" onchange="LoadImg(this);">
-		<script type="text/javascript">
-			$(function(){
-				var menuTop = parseInt($("#menu").css("top"));
-				
-				$(window).scroll(function(){
-					$("#menu").stop().animate({"top":$(window).scrollTop()+menuTop+"px"},500);
-				});
-				
-				$("#profile-file").hide();
-				$("#profileImg").click(function(){
-					$("#profile-file").click();
-					console.log($("#profile").val());
-				});
-			});
-			function LoadImg(value) {
-				if(value.files && value.files[0]){
-					
-					var reader = new FileReader();
-					reader.onload = function(e) {
-						$("#profileImg").attr("src", e.target.result);
-					}
-				reader.readAsDataURL(value.files[0]);
-				}
-			}
-		</script>
+		<jsp:include page="../common/myPage_RightSideBar.jsp"/>
+		<!--  -->
 	</body>
 </html>
