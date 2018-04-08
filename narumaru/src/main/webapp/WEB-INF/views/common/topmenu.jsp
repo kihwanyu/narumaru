@@ -16,7 +16,7 @@
 		background-color:#ffffff;
 		position:fixed;
 		top:0px;
-		z-index:5;
+		z-index:99;
 	}
 	#wrap{
 			width:100%;
@@ -155,6 +155,8 @@
 		function clickProfile(div){
 			var con = document.getElementById("pArea");
 			
+			document.getElementById("aArea").style.display = 'none';
+			
 		    if(con.style.display=='none'){
 		        con.style.display = 'block';
 		    }else{
@@ -164,6 +166,8 @@
 		
 		function clickAlram(div){
 			var con = document.getElementById("aArea");
+			
+			document.getElementById("pArea").style.display = 'none';
 			
 		    if(con.style.display=='none'){
 		        con.style.display = 'block';

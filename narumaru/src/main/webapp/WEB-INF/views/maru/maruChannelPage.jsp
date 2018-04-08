@@ -13,8 +13,6 @@
 		border-top:1px solid lightgray;
 		border-bottom:1px solid lightgray;
 		align:center;
-		padding-right: 200px;
-		padding-left: 140px;
 		margin-top:50px;
 	}
 	.maru-content span{
@@ -30,7 +28,7 @@
 	.board-list{
 		margin-top:30px;
 		width: 100%;
-		margin-left:200px;
+		margin-left:10%;
 		text-align:center; 
 	}
 	.board-inner{
