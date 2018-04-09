@@ -28,7 +28,14 @@
 					<img src="resources/images/right_arrow.png" height="20px">
 				</div>
 			</li>
-			<li>
+			<c:choose>
+				<c:when test="${pageValue == 'myboard'}">
+					<li ${selected_li }>
+				</c:when>
+				<c:otherwise>
+					<li>
+				</c:otherwise>
+			</c:choose>
 				<div class="left-sidebar-li">
 					내가 쓴 글
 				</div>
