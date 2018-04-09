@@ -68,12 +68,12 @@
                     <table id="datatable" class="table table-striped table-bordered">
                       <thead>
                         <tr>
-                          <th>UserId</th>
-                          <th>UserName</th>
-                          <th>BirthDay</th>
-                          <th>Email</th>
-                          <th>Address</th>
-                          <th>Phone</th>
+                          <th>나루 이름</th>
+                          <th>나루 관리자</th>
+                          <th>구독자 수</th>
+                          <th>나루수익</th>
+                          <th>remove</th>
+                          <th>remove</th>
                         </tr>
                       </thead>
 

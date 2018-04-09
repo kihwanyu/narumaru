@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
 <!-- Custom Theme Style -->
-<link href="${ contextPath }/resources/admin/build/css/custom.min.css" rel="stylesheet">
+
 </head>
 <c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application" />
 <body class="nav-md">
