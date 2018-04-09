@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,10 +14,10 @@
 	<jsp:include page="../common/innerMenu.jsp"/>
 	<div class="wrap">	
 		<div class="dumi"></div>
-		<div class="content">
+		<div class="marginAuto content">
 			<div class="searchArea">
 				<input type="text" name="search" style="background:none; width:440px; height:40px;">
-				<button class="searchBtn"><img src="${contextPath }/resources/images/find.png" style="width:35px; height:35px;"></button>
+				<button class="floatRight searchBtn"><img src="${contextPath }/resources/images/find.png" style="width:35px; height:35px;"></button>
 			</div>
 			<br>
 			<div class="boardInsert">
@@ -36,7 +36,7 @@
 						<li>탭5</li>
 						<li>탭6</li>
 					</ul>			
-					<button class="inertBoardBtn">작성</button>
+					<button class="floatRight inertBoardBtn">작성</button>
 				</div>
 			</div>
 
@@ -44,7 +44,7 @@
 				<div class="boardInfo">
 					<div class="writerPhoto">사진</div>
 					<label>이름</label> <label>날짜</label>
-					<div class="showSub boardBtn">
+					<div class="showSub floatRight boardBtn">
 						버튼
 						<div class="sub boardSub">
 							<ul>
@@ -82,7 +82,7 @@
 					</button>
 					<input type="text" name="insertReply"
 						style="background: none; width: 400px; height: 40px;">
-					<button class="insertReplyBtn">
+					<button class="floatRight insertReplyBtn">
 						<img src="${contextPath }/resources/images/find.png"
 							style="width: 35px; height: 35px;">
 					</button>
