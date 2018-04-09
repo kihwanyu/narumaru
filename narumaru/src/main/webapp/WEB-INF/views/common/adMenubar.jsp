@@ -72,8 +72,8 @@
 								<li><a href="typography.html"> 1:1 문의 </a></li>
 							</ul></li>
 
-					<li><a><i class="fa fa-bar-chart-o"></i> 포인트 관리 <span
-						class="fa fa-chevron-down"></span></a>
+						<li><a><i class="fa fa-bar-chart-o"></i> 포인트 관리 <span
+							class="fa fa-chevron-down"></span></a>
 							<ul class="nav child_menu">
 								<li><a href="chartjs.html">환급 신청 내역</a></li>
 								<li><a href="chartjs2.html">수익 분석</a></li>
