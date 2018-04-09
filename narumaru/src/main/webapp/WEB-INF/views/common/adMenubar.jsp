@@ -102,7 +102,7 @@
 						<!-- 우측상단 관리자 정보 설정 --> 
 						<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> 
 						<img src="${ contextPath }/resources/images/img.jpg" alt="">JY Kim <span class="fa fa-angle-down"><span>
-							</a>
+					</a>
 						<ul class="dropdown-menu dropdown-usermenu pull-right">
 							<li><a href="javascript:;"> Profile</a></li>
 							<li><a href="javascript:;"> <span
