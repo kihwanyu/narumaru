@@ -31,4 +31,5 @@ public class NoticeController {
 		
 		return "notice/FAQ";
 	}
+	//씨발 ................. 좆 됐따 
 }

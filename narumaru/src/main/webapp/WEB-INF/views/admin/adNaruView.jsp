@@ -8,7 +8,7 @@
 <!-- Meta, title, CSS, favicons, etc. -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Insert title here</title>
+<title>:: naru? maru! :: Admin</title>
 <!-- Custom Theme Style -->
 <link href="${ contextPath }/resources/admin/build/css/custom.min.css" rel="stylesheet">
 </head>

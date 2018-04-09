@@ -72,6 +72,6 @@
 			<button type="button" class="btn btn-primary" onclick = "location.href='question.no'"> 1:1 문의 </button>
 		</div>
 	</div>	
-
+	<!-- 씨발 ................. 좆 됐따  -->
 </body>
 </html>

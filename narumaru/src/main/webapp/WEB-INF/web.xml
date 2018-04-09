@@ -98,4 +98,5 @@
 		<servlet-name>notice</servlet-name>
 		<url-pattern>*.no</url-pattern>
 	</servlet-mapping>
+	<!-- 씨발 ................. 좆 됐따  -->
 </web-app>
