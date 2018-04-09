@@ -218,12 +218,8 @@
     <script src="${ contextPath }/resources/admin/pdfmake/build/pdfmake.min.js"></script>
     <script src="${ contextPath }/resources/admin/pdfmake/build/vfs_fonts.js"></script>
 
-	
-	
- 	<!-- ECharts -->
-    <script src="${ contextPath }/resources/admin/echarts/dist/echarts.min.js"></script>
-
-    <!-- Custom Theme Scripts -->
-    <script src="${ contextPath }/resources/admin/build/js/custom.min.js"></script>
-</body>
-</html>
+ <!-- Custom Theme Scripts -->	     <!-- Custom Theme Scripts -->
+     <script src="${ contextPath }/resources/admin/build/js/custom.min.js"></script>	     
+	<script src="${ contextPath }/resources/admin/build/js/custom.min.js"></script>
+ </body>	 </body>
+-</html> 
