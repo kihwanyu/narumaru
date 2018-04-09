@@ -144,7 +144,7 @@
 			            			</div>
 			            			<div style="padding-top: 10px; border-top: solid 1px gray;">
 										<div style="float: left;">
-											댓글<img src="resources/images/comment_down.png" id="commentToggle" height="20px;" width="20px;" onclick="commentViews(this,1);">
+											댓글<img src="resources/images/comments_down.png" id="commentToggle" height="20px;" width="20px;" onclick="commentViews(this,1);">
 											<!-- 번호 전달할때 게시글의 번호 값 전달. -->
 										</div>
 										<div style="float: right;">
@@ -208,12 +208,12 @@
 			        function commentViews(toggle, number){
 		        		if(img_bool == 0){
 				        	console.log(toggle);
-				        	toggle.setAttribute('src', 'resources/images/comment_down.png');
+				        	toggle.setAttribute('src', 'resources/images/comments_up.png');
 				        	$("#comments"+number).show();
 				        	img_bool = 1;
 		        		} else {
 		        			console.log(toggle);
-				        	toggle.setAttribute('src', 'resources/images/comment_up.png');
+				        	toggle.setAttribute('src', 'resources/images/comments_down.png');
 				        	$("#comments"+number).hide();
 				        	img_bool = 0;
 		        		}
