@@ -22,24 +22,34 @@ public class MaruController {
 	
 	
 	@RequestMapping("insertDetail.ma")
-	public String showmaruInsertDetail(){
+	public String showMaruInsertDetail(){
 		
 		return "maru/maruBoard";
 	}
-	@RequestMapping("showBoardAlbum.ma")
-	public String showmaruBoardAlbum(){
+	@RequestMapping("showMaruAlbum.ma")
+	public String showMaruBoardAlbum(){
 		
 		return "maru/maruAlbum";
 	}
-	@RequestMapping("showBoardCalendar.ma")
-	public String showmaruBoardCalendar(){
+	@RequestMapping("showMaruCalendar.ma")
+	public String showMaruBoardCalendar(){
 		
 		return "maru/maruCalendar";
 	}
-	@RequestMapping("showBoardMember.ma")
-	public String showmaruBoardMember(){
+	@RequestMapping("showMaruMember.ma")
+	public String showMaruBoardMember(){
 		
 		return "maru/maruMember";
+	}
+	@RequestMapping("showMaruMemberInvate.ma")
+	public String showMaruBoardMemberInvate(){
+		
+		return "maru/maruMemberInvate";
+	}
+	@RequestMapping("showMaruSetting.ma")
+	public String showMaruSetting(){
+		
+		return "maru/maruSetting";
 	}
 	
 }

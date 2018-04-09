@@ -14,10 +14,7 @@
 	}
 	.wrap{	
 		/* background:red; */
-		width:1000px;
-		margin-right:auto;
-		margin-left:auto;
-		
+		width:1000px;		
 	}
 	.ul li{
 		display:inline-block;
@@ -26,8 +23,6 @@
 		/* background:yellow; */
 		width:1000px;
 		margin-top:50px;
-		margin-right:auto;
-		margin-left:auto;
 		position:relative;			
 	}
 	.innerTop{
@@ -41,14 +36,6 @@
 		/* background:green; */
 		width:500px;
 		height:100%;
-		margin-right:auto;
-		margin-left:auto;
-	}
-	.innerTopUl{
-		/* border:1px solid black; */
-		/* background:lightgray; */
-		margin-right:auto;
-		margin-left:auto;
 	}
 	.innerTopUl li{
 		/* border:1px solid black; */
@@ -82,7 +69,6 @@
 	}
 	.rightArea{	
 		border:1px solid lightgray;
-		float:right;
 		width:240px;
 		top:100px;
 		/* position:fixed; */
@@ -101,8 +87,7 @@
 		padding:10px;
 		border:1px solid lightgray;
 	}
-	.newChat{
-		float:right;
+	.pointer{
 		cursor:pointer;
 	}
 	.sub{
@@ -120,27 +105,16 @@
 	}
 	
 	.content{
-		/* background:lightyellow; */
 		width:500px;
-		/* position:relative; */
-		top:100px;
-		margin-right:auto;
-		margin-left:auto;	
+		top:100px;	
 	}
-</style>
-<style>
+
 	.dumi{
 		height:50px;
-	}
-	.content{
-		height:2000px;
 	}
 	.searchArea{	
 		background:white;	
 		padding:auto;
-	}
-	.searchBtn{
-		float:right;
 	}
 	.boardInsert{
 		background:white;
@@ -169,7 +143,6 @@
 		width:400px;
 	}
 	.inertBoardBtn{
-		float:right;
 		height:100%;
 	}
 	.boardInfo{
@@ -185,7 +158,6 @@
 	.boardBtn{
 		height:40px;
 		width:40px;
-		float:right;
 		border:1px solid lightgray;
 	}
 	.boardContent{
@@ -195,7 +167,7 @@
 		height:50px;
 		bottom:0px;
 	}
-	.footUl{
+	.marginAuto{
 		margin-left:auto;
 		martgin-right:auto;
 	}
@@ -207,30 +179,38 @@
 		display:none;
 		padding:auto;
 	}
-	.insertReplyBtn{
-		float:right;
-	}
 	.content > div{
 		margin-top:10px;
 		background:white;
 		border:1px solid lightgray;
 	}
-	.createAlbum{
+	.floatRight{
 		float:right;
 	}
-	.modify{
-		float:right;	
+	.albumContent{
+		height:400px;
 	}	
+	#calendar {
+    	max-width: 900px;
+    	margin: 0 auto;
+    	height:500px;
+  	}
+  	.inlineBlock{
+  		display:inline-block;
+  	}
+  	.memberList{
+  		
+  	}
 </style>
 </head>
 <body>
 	<div class="innerTop">
-		<div class="innerTopMenu">
-			<ul class="ul innerTopUl">
+		<div class="marginAuto innerTopMenu">
+			<ul class="ul innerTopUl marginAuto">
 				<li><a href="insertDetail.ma">전체글</a></li>
-				<li><a href="showBoardAlbum.ma">사진첩</a></li>
-				<li><a href="showBoardCalendar.ma">일정</a></li>
-				<li><a href="showBoardMember.ma">멤버</a></li>
+				<li><a href="showMaruAlbum.ma">사진첩</a></li>
+				<li><a href="showMaruCalendar.ma">일정</a></li>
+				<li><a href="showMaruMember.ma">멤버</a></li>
 			</ul>
 		</div>
 	</div>

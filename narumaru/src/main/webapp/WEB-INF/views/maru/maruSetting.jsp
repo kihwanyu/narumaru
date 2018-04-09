@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,20 +12,21 @@
 	<jsp:include page="../common/topmenu.jsp"/>
 	<jsp:include page="../common/middleMenu.jsp"/>
 	<jsp:include page="../common/innerMenu.jsp"/>
-	<div class="marginAuto wrap">	
+	<div class="wrap">	
 		<div class="dumi"></div>
 		<div class="marginAuto content">
-			<div class="album">
-				<div class="albumTitle">앨범<div class="floatRight createAlbum">앨범 만들기</div></div>
-				<div class="albumBar">
-				<hr>
-					<span class="sort">정렬</span>
-					<div class="floatRight modify">관리</div>
+			<div class="settingContent">
+				<div class="settingTitle">
+					마루 설정
 				</div>
-				<div class="albumContent">
 				<hr>
-					앨범 내용
-					
+				<div class="maruMaster">
+					<div class="writerPhoto">사진</div>
+					<label>이름</label>
+				</div>
+				<hr>
+				<div class="settingBody">
+					설정 내용
 				</div>
 			</div>
 		</div>
