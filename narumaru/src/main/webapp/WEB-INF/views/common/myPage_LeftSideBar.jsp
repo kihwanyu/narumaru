@@ -28,6 +28,7 @@
 					<img src="resources/images/right_arrow.png" height="20px">
 				</div>
 			</li>
+			<!--  -->
 			<c:choose>
 				<c:when test="${pageValue == 'myboard'}">
 					<li ${selected_li }>
