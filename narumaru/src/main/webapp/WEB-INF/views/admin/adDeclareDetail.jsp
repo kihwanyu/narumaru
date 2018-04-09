@@ -8,7 +8,7 @@
 <!-- Meta, title, CSS, favicons, etc. -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Insert title here</title>
+<title>:: naru? maru! :: Admin</title>
 <!-- Custom Theme Style -->
 <link href="${ contextPath }/resources/admin/build/css/custom.min.css" rel="stylesheet">
 </head>
@@ -43,7 +43,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>나루목록 <small>Users</small></h2>
+                    <h2>전체 신고 목록 <small>Users</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -69,10 +69,10 @@
                       <thead>
                         <tr>
                           <th>피 신고 유저</th>
+                          <th>신고 내용</th>
                           <th>신고 유저</th>
-                          <th></th>
                           <th>Email</th>
-                          <th>Address</th>
+                          <th>신고 일자</th>
                           <th>Phone</th>
                         </tr>
                       </thead>

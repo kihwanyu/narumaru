@@ -28,7 +28,7 @@
 	}
 </style>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>:: naru? maru! :: Admin</title>
 <c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application" />
 
 </head>
@@ -87,8 +87,9 @@
                               <h4 class="heading">신고 한 유저 아이디</h4> 
                               <blockquote class="message">
                               		<p> 피 신고 유저 : 송_재상  </p>   
-                              		<p> 신고 누적 횟수: 9435</p>
-                              		<p> 경고 횟수 : 0</p>
+                              		<p> 계정 신고 누적 횟수: 9435</p>
+                              		<p> 계정 경고 횟수 : 0</p>
+                              		<p> 신고 게시물 또는 댓글 번호 : </p>
                               		<p> 신고 종류 : 선정적인 언행</p>
                               </blockquote>
                               <br/>

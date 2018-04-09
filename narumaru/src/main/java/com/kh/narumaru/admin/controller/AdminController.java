@@ -13,16 +13,19 @@ public class AdminController {
 	/*@Autowired
 	private AdminService as;*/
 	
+	//최근 신고 게시판
 	@RequestMapping(value="adDeclare.ad")
 	public String showAdminDeclareView(){
 		
 		return "admin/adDeclare";
 	}
 	
+	//신고내용 자세히 보기
 	@RequestMapping(value="adDeclareDetail.ad")
 	public String showAdminDeclareDetailView(){
 		
 		return "admin/adDeclareDetail";
 	}
+	
 	
 }
