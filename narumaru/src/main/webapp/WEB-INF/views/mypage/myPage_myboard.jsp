@@ -87,7 +87,18 @@
 			padding-top: 10px; 
 			padding-bottom: 10px; 
 			font-size: 15px;
-			
+		}
+		.board-menu-down {
+		    display: none;
+		    width:100px;
+		    position: absolute;
+		    background-color: white;
+		    border:1px solid lightgray;
+		    z-index: 1;
+		    margin-left:0px;
+		}
+		.profile-dropdown ul{
+			padding:15px;
 		}
 		</style>
 		
@@ -126,6 +137,19 @@
 			            			<div style="width: 40px; height: 40px; float: left; margin-right: 10px;">
 			            				<img src="resources/images/profile_defalt.png" style="width: 100%; height: 100%">
 			            			</div>
+			            			<c:set var="number" value="1"/>
+			            				<!-- div id에 게시판의 번호를 달아준다.  -->
+			            			<div style="float: right; width: 40px; height: 40px; margin-right: 20px;" onclick="clickMenu(${number});">
+										<img alt="" src="resources/images/menu.png" style="width: 100%; height: 100%;">			            			
+			            				<div id="board-menu-down${number }" class="board-menu-down">
+											<ul>
+												<li><a href="#">글 수정 </a></li>
+												<li><a href="#">공지등록</a></li>
+												<li><a href="#">삭제</a></li>
+											</ul>
+										</div>
+			            			</div>
+									
 			            			<div style="margin-top: 20px;">
 			            				<span>유기환<br></span>
 			            				<span>2018.04.09</span>
@@ -153,15 +177,27 @@
 									</div>
 									<br>
 									<!-- div의 id를 comments(게시글 번호로 줄 것.) id="comments"+ -->
-									<c:set var="number" value="1"/>
+									<%-- <c:set var="number" value="1"/> --%>
 									<div id="comments${number}" style="margin-top:20px; padding-top: 10px; border-top: solid 1px gray; display: none;" >
 										<div style="margin-bottom: 20px; -webkit-box-shadow: 1px 1px 5px gray;
 											-moz-box-shadow: 1px 1px 5px gray; padding-top: 20px; padding-bottom: 20px;">
 					            			<div style="width: 40px; height: 40px; float: left; margin-right: 10px; " >
 					            				<img src="resources/images/profile_defalt.png" style="width: 100%; height: 100%">
 					            			</div>
+					            			<c:set var="number" value="1"/>
+					            				<!-- div id에 게시판의 번호를 달아준다.  -->
+					            			<div style="float: right; width: 40px; height: 40px; margin-right: 20px;" onclick="clickMenuComment(${number});">
+												<img alt="" src="resources/images/menu.png" style="width: 100%; height: 100%;">			            			
+					            				<div id="board-comment-menu-down${number }" class="board-menu-down">
+													<ul>
+														<li><a href="#">댓글 수정 </a></li>
+														<li><a href="#">댓글 삭제 </a></li>
+													</ul>
+												</div>
+					            			</div>
 					            			<div style="margin-top: 10px; padding-bottom:10px; border: solid 1px white;">
 					            				<span>유기환<br><br></span>
+					            				
 					            				<div style="padding-left: 10px; padding-right: 10px;">
 					            				생명을 너의 천고에 길을 대한 노래하며 것이다. 생명을 거선의 있는 뭇 풍부하게 두기 이상의 청춘이 운다. 
 												광야에서 품에 인생에 구하지 소금이라 피고, 스며들어 얼마나 있는가? 희망의 충분히 사랑의 대중을 그들을 구하기 목숨을 힘있다. 
@@ -204,20 +240,32 @@
 			            </ul>
 			        </div>
 			        <script type="text/javascript">
-			       	var img_bool = 0;
 			        function commentViews(toggle, number){
-		        		if(img_bool == 0){
+		        		if(toggle.getAttribute('src') === 'resources/images/comments_down.png'){
 				        	console.log(toggle);
 				        	toggle.setAttribute('src', 'resources/images/comments_up.png');
 				        	$("#comments"+number).show();
-				        	img_bool = 1;
 		        		} else {
 		        			console.log(toggle);
 				        	toggle.setAttribute('src', 'resources/images/comments_down.png');
 				        	$("#comments"+number).hide();
-				        	img_bool = 0;
 		        		}
 			        }
+			        function clickMenu(number){
+						if($("#board-menu-down"+number).css("display") == 'none'){
+							$("#board-menu-down"+number).show();
+						} else {
+							$("#board-menu-down"+number).hide();
+						}
+					}
+			        function clickMenuComment(number){
+						//
+						if($("#board-comment-menu-down"+number).css("display") == 'none'){
+							$("#board-comment-menu-down"+number).show();
+						} else {
+							$("#board-comment-menu-down"+number).hide();
+						}
+					}
 			        </script>
 			        <!-- #tab1 -->
 			        <div id="tab2" class="tab_content">2222Mortal Kombat returns after a lengthy hiatus and puts players back into the Tournament for 2D fighting with gruesome combat.</div>
