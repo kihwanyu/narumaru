@@ -80,8 +80,8 @@
 
 							</ul>
 						</li>
-			<li><a><i class="fa fa-table"></i> 신고 게시판(자세히 보기)</a></li>		
-			<li><a><i class="fa fa-edit"></i> 로그인 기록 관리</a></li>
+					<li><a><i class="fa fa-table"></i> 신고 게시판(자세히 보기)</a></li>		
+					<li><a><i class="fa fa-edit"></i> 로그인 기록 관리</a></li>
 					</ul>
 				</div>
 			</div>
