@@ -75,8 +75,8 @@
 						<li><a><i class="fa fa-bar-chart-o"></i> 포인트 관리 <span
 								class="fa fa-chevron-down"></span></a>
 							<ul class="nav child_menu">
-								<li><a href="chartjs.html">환급 신청 내역</a></li>
-								<li><a href="chartjs2.html">수익 분석</a></li>
+								<li><a href="adMoneyView.ad">환급 신청 내역</a></li>
+								<li><a href="adRevenueView.ad">수익 분석</a></li>
 
 							</ul>
 						</li>
@@ -173,7 +173,7 @@
     <!-- NProgress -->
     <script src="${ contextPath }/resources/admin/nprogress/nprogress.js"></script>
     <!-- Chart.js -->
-    <script src="${contextPath }/resources/admin/nprogress/nprogress.js"></script>
+    <script src="${ contextPath }/resources/admin/Chart.js/dist/Chart.min.js"></script>
     <!-- gauge.js -->
     <script src="${contextPath }/resources/admin/gauge.js/dist/gauge.min.js"></script>
      <!-- bootstrap-progressbar -->

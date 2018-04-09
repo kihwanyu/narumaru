@@ -39,6 +39,18 @@ public class AdminController {
 		return "admin/adLoginManagView";
 	}
 	
+	@RequestMapping("adMoneyView.ad")
+	public String showmAdminMoneyView(){
+		
+		return "admin/adMoneyView";
+	}
+	
+	@RequestMapping("adRevenueView.ad")
+	public String showmAdminRevenueView(){
+		
+		return "admin/adRevenueView";
+	}
+	
 //이럴수가!!
 	
 }
