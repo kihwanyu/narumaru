@@ -103,7 +103,7 @@
 			</div>
 		</div>
 	</div>
-		<div id="band_bottom">
+	<div id="band_bottom">
 		<div id="binbb">
 			<h2>공개밴드 인기글</h2>
 			<h6 style="float:right;margin-top:-20px;">더보기 ></h6>
@@ -205,5 +205,7 @@
 			</div>
 		</div>
 	</div>
+	
+	<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>  
