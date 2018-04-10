@@ -9,8 +9,11 @@
 </head>
 <body>
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
-	<jsp:forward page="WEB-INF/views/naru/naruInsertBoard.jsp"/>
-	<jsp:forward page="WEB-INF/views/naru/modalTest.jsp"/>
+	<jsp:forward page="WEB-INF/views/main/mainLogin.jsp"/>
+	<jsp:forward page="WEB-INF/views/member/findMember.jsp"/>
 	<jsp:forward page="WEB-INF/views/main/.jsp"/>
 </body>
 </html>
+
+
+
