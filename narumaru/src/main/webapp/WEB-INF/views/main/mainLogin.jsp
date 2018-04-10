@@ -347,14 +347,14 @@ $font-default: 'Roboto', sans-serif;
 	    <div class="right">
 	      <div class="content">
 	        <h2>로그인</h2>
-	        <form action="login.me" method="post"> <!-- onsubmit="return false;"> -->
+	        <form action="login.me" method="post">
 	          <div class="form-element form-stack">
 	            <label for="username-login" class="form-label">이메일</label>
-	            <input id="username-login" type="text" name="username">
+	            <input id="username-login" type="text" name="Email">
 	          </div>
 	          <div class="form-element form-stack">
 	            <label for="password-login" class="form-label">비밀번호</label>
-	            <input id="password-login" type="password" name="password">
+	            <input id="password-login" type="password" name="userPwd">
 	          </div>
 	          <div class="form-element form-submit">
 	            <button id="logIn" class="login" type="submit" name="login">로그인</button>
