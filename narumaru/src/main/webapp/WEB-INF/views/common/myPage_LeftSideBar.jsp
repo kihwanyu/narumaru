@@ -28,7 +28,6 @@
 					<img src="resources/images/right_arrow.png" height="20px">
 				</div>
 			</li>
-			<!--  -->
 			<c:choose>
 				<c:when test="${pageValue == 'myboard'}">
 					<li ${selected_li }>
@@ -44,7 +43,14 @@
 					<img src="resources/images/right_arrow.png" height="20px">
 				</div>
 			</li>
-			<li>
+			<c:choose>
+				<c:when test="${pageValue == 'loginRecord'}">
+					<li ${selected_li }>
+				</c:when>
+				<c:otherwise>
+					<li>
+				</c:otherwise>
+			</c:choose>
 				<div class="left-sidebar-li">
 					로그인 기록
 				</div>
@@ -52,7 +58,14 @@
 					<img src="resources/images/right_arrow.png" height="20px">
 				</div>
 			</li>
-			<li>
+			<c:choose>
+				<c:when test="${pageValue == 'resisteredMaru'}">
+					<li ${selected_li }>
+				</c:when>
+				<c:otherwise>
+					<li>
+				</c:otherwise>
+			</c:choose>
 				<div class="left-sidebar-li">
 					가입 신청중인 마루
 				</div>
@@ -60,7 +73,14 @@
 					<img src="resources/images/right_arrow.png" height="20px">
 				</div>
 			</li>
-			<li>
+			<c:choose>
+				<c:when test="${pageValue == 'invitedMaru'}">
+					<li ${selected_li }>
+				</c:when>
+				<c:otherwise>
+					<li>
+				</c:otherwise>
+			</c:choose>
 				<div class="left-sidebar-li">
 					초대 받은 마루
 				</div>
@@ -68,7 +88,14 @@
 					<img src="resources/images/right_arrow.png" height="20px">
 				</div>
 			</li>
-			<li>
+			<c:choose>
+				<c:when test="${pageValue == 'NaruNeighborList'}">
+					<li ${selected_li }>
+				</c:when>
+				<c:otherwise>
+					<li>
+				</c:otherwise>
+			</c:choose>
 				<div class="left-sidebar-li">
 					나루 구독자 목록
 				</div>
