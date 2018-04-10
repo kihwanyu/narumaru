@@ -121,12 +121,11 @@
 					
 					<div id="aArea" class="alram-dropdown" style="display:none;">
 		               <h4 style="margin:15px;">새 소식</h4>
-		               <hr>
+		               <hr style="margin-bottom:0;">
 		               <c:forEach var="i" begin="1" end="5">
-		               <div id="new-innerdiv" style="vertical-align:middle;">
-		               		<img src="${contextPath}/resources/images/cosmos.jpg" style="margin:5px;width:50px; height:50px; border-radius: 150px;"/>&nbsp;<label style="top:-25px; position:relative;">맞짱 신청을 받았습니다</label>
+		               <div id="new-innerdiv" style="vertical-align:middle;border-bottom:1px solid lightgray;">
+		               		<img src="${contextPath}/resources/images/cosmos.jpg" style="margin:5px;width:50px; height:50px; border-radius: 150px;"/>&nbsp;<label style="position:relative;">맞짱 신청을 받았습니다</label>
 		               </div>
-		               <hr>
 		               </c:forEach>
 		            </div>
 				</div>
