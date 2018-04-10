@@ -151,10 +151,16 @@
 		height:50px;
 	}
 	.writerPhoto{
-		height:40px;
-		width:40px;
+		height:70px;
+		width:70px;
 		border:1px solid lightgray;
 		display:inline-block;	
+		float:left;
+		margin-right:10px;
+	}
+	.size100per{
+		height:100%;
+		width:100%;	
 	}
 	.boardBtn{
 		height:40px;
@@ -180,6 +186,9 @@
 	.insertReply{
 		display:none;
 		padding:auto;
+	}
+	.replyArea{
+		padding:10px;
 	}
 	.content > div{
 		margin-top:10px;

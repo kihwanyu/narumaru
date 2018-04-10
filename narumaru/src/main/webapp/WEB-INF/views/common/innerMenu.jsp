@@ -12,7 +12,7 @@
 	<div class="marginAuto innerMenu">
 		<div class="leftArea">
 			<div class="maruProfile">
-				마루 프로필 사진
+				<img src="resources/images/profile_defalt.png" class="size100per">
 			</div>
 			<br>
 			<div class="maruName">

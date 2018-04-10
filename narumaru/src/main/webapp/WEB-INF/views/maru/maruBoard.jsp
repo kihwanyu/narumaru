@@ -43,10 +43,10 @@
 
 			<div class="board">
 				<div class="boardInfo">
-					<div class="writerPhoto">사진</div>
-					<label>이름</label> <label>날짜</label>
+					<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
+					<div style="display:inline-block;"><label>이름</label><br><label>날짜</label></div>
 					<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">
-						버튼
+						<img src="resources/images/menu.png" class="modifyMenu size100per">
 						<div class="sub boardSub">
 							<ul>
 								<li>주소복사</li>
@@ -89,19 +89,19 @@
 					</button>
 					<div class="replyArea">
 						<hr>
-						<div class="writerPhoto">사진</div>
+						<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
 						<label>이름</label> <label>날짜</label>
-						<div class="replyContent">내용</div>
+						<div class="replyContent" style="clear:both;">내용</div>
 					</div>
 				</div>
-			</div>		
+			</div>	
 			
 			<div class="board">
 				<div class="boardInfo">
-					<div class="writerPhoto">사진</div>
-					<label>이름</label> <label>날짜</label>
+					<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
+					<div style="display:inline-block;"><label>이름</label><br><label>날짜</label></div>
 					<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">
-						버튼
+						<img src="resources/images/menu.png" class="modifyMenu size100per">
 						<div class="sub boardSub">
 							<ul>
 								<li>주소복사</li>
@@ -144,121 +144,68 @@
 					</button>
 					<div class="replyArea">
 						<hr>
-						<div class="writerPhoto">사진</div>
+						<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
 						<label>이름</label> <label>날짜</label>
-						<div class="replyContent">내용</div>
+						<div class="replyContent" style="clear:both;">내용</div>
 					</div>
 				</div>
-			</div>
-			<div class="board">
-				<div class="boardInfo">
-					<div class="writerPhoto">사진</div>
-					<label>이름</label> <label>날짜</label>
-					<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">
-						버튼
-						<div class="sub boardSub">
-							<ul>
-								<li>주소복사</li>
-								<li>공유하기</li>
-								<li>북마크</li>
-								<li>신고하기</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="boardContent">내용</div>
-				<div class="boardfoot">
-					<hr>
-					<ul class="footUl">
-						<li class="showSub emotionBtn" onclick="submenuOpen(this);"><span>이모티콘</span>
-							<div class="sub emotionSub">이모티콘</div>
-						</li>
-						<li class="insertReplyShow" onclick="replyOpen(this);"><span>댓글보기()</span></li>
-						<li class="showSub shereBtn" onclick="submenuOpen(this);"><span>공유하기</span>
-							<div class="sub shereSub">개발중인 기능입니다</div>
-						</li>
-					</ul>
-				</div>
-				<div class="insertReply">
-					<hr>
-					<button class="showSub attachBtn" onclick="submenuOpen(this);">
-						+
-						<div class="sub attachSub">
-							<ul>
-								<li>사진</li>
-								<li>파일</li>
-							</ul>
-						</div>
-					</button>
-					<input type="text" name="insertReply"
-						style="background: none; width: 400px; height: 40px;">
-					<button class="floatRight insertReplyBtn">
-						<img src="${contextPath }/resources/images/find.png"
-							style="width: 35px; height: 35px;">
-					</button>
-					<div class="replyArea">
-						<hr>
-						<div class="writerPhoto">사진</div>
-						<label>이름</label> <label>날짜</label>
-						<div class="replyContent">내용</div>
-					</div>
-				</div>
-			</div>
-			<div class="board">
-				<div class="boardInfo">
-					<div class="writerPhoto">사진</div>
-					<label>이름</label> <label>날짜</label>
-					<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">
-						버튼
-						<div class="sub boardSub">
-							<ul>
-								<li>주소복사</li>
-								<li>공유하기</li>
-								<li>북마크</li>
-								<li>신고하기</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="boardContent">내용</div>
-				<div class="boardfoot">
-					<hr>
-					<ul class="footUl">
-						<li class="showSub emotionBtn" onclick="submenuOpen(this);"><span>이모티콘</span>
-							<div class="sub emotionSub">이모티콘</div>
-						</li>
-						<li class="insertReplyShow" onclick="replyOpen(this);"><span>댓글보기()</span></li>
-						<li class="showSub shereBtn" onclick="submenuOpen(this);"><span>공유하기</span>
-							<div class="sub shereSub">개발중인 기능입니다</div>
-						</li>
-					</ul>
-				</div>
-				<div class="insertReply">
-					<hr>
-					<button class="showSub attachBtn" onclick="submenuOpen(this);">
-						+
-						<div class="sub attachSub">
-							<ul>
-								<li>사진</li>
-								<li>파일</li>
-							</ul>
-						</div>
-					</button>
-					<input type="text" name="insertReply"
-						style="background: none; width: 400px; height: 40px;">
-					<button class="floatRight insertReplyBtn">
-						<img src="${contextPath }/resources/images/find.png"
-							style="width: 35px; height: 35px;">
-					</button>
-					<div class="replyArea">
-						<hr>
-						<div class="writerPhoto">사진</div>
-						<label>이름</label> <label>날짜</label>
-						<div class="replyContent">내용</div>
-					</div>
-				</div>
-			</div>
+			</div>	
 			
+			<div class="board">
+				<div class="boardInfo">
+					<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
+					<div style="display:inline-block;"><label>이름</label><br><label>날짜</label></div>
+					<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">
+						<img src="resources/images/menu.png" class="modifyMenu size100per">
+						<div class="sub boardSub">
+							<ul>
+								<li>주소복사</li>
+								<li>공유하기</li>
+								<li>북마크</li>
+								<li>신고하기</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="boardContent">내용</div>
+				<div class="boardfoot">
+					<hr>
+					<ul class="footUl">
+						<li class="showSub emotionBtn" onclick="submenuOpen(this);"><span>이모티콘</span>
+							<div class="sub emotionSub">이모티콘</div>
+						</li>
+						<li class="insertReplyShow" onclick="replyOpen(this);"><span>댓글보기()</span></li>
+						<li class="showSub shereBtn" onclick="submenuOpen(this);"><span>공유하기</span>
+							<div class="sub shereSub">개발중인 기능입니다</div>
+						</li>
+					</ul>
+				</div>
+				<div class="insertReply">
+					<hr>
+					<button class="showSub attachBtn" onclick="submenuOpen(this);">
+						+
+						<div class="sub attachSub">
+							<ul>
+								<li>사진</li>
+								<li>파일</li>
+							</ul>
+						</div>
+					</button>
+					<input type="text" name="insertReply"
+						style="background: none; width: 400px; height: 40px;">
+					<button class="floatRight insertReplyBtn">
+						<img src="${contextPath }/resources/images/find.png"
+							style="width: 35px; height: 35px;">
+					</button>
+					<div class="replyArea">
+						<hr>
+						<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
+						<label>이름</label> <label>날짜</label>
+						<div class="replyContent" style="clear:both;">내용</div>
+					</div>
+				</div>
+			</div>	
+		
 		</div>
 			<div align="center" class="loadingArea" style="display: none;;">
 				<img alt="" src="resources/images/lodingImg.gif">
@@ -291,10 +238,10 @@
 		            for(var i = 0; i < 5; i++) {
 		            	$(".content").append('<div class="board">'
 						+'<div class="boardInfo">'
-						+'<div class="writerPhoto">사진</div>'
+						+'<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
 						+'<label>이름</label> <label>날짜</label>'
 						+'<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">'
-						+'	버튼'
+						+'	<img src="resources/images/menu.png" class="modifyMenu size100per">'
 						+'		<div class="sub boardSub">'
 						+'			<ul>'
 						+'				<li>주소복사</li>'
@@ -337,9 +284,9 @@
 						+'	</button>'
 						+'	<div class="replyArea">'
 						+'		<hr>'
-						+'		<div class="writerPhoto">사진</div>'
+						+'		<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
 						+'		<label>이름</label> <label>날짜</label>'
-						+'		<div class="replyContent">내용</div>'
+						+'		<div class="replyContent" style="clear:both;">내용</div>'
 						+'	</div>'
 						+'	</div>'
 						+'</div>');
