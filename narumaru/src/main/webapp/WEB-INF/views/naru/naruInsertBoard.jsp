@@ -7,222 +7,14 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="resources/css/naruInsertBoard.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 <style>
-	* {
-		font-family: 'Nanum Gothic', sans-serif;
-		font-weight: bold;
-    }
-	.maru-content{
-		height:56px;
-		background-color:white;
-		align:center;
-		margin-top:50px;
+	#searchTopMaru span{
+		float:left; 
+		top:16px; 
+		position:relative;
 	}
-	.maru-content span{
-		font-size: 16px;
-		line-height: 50px;
-		padding:15px 15px;
-		color:#757575;
-	}
-	.maru-content span:hover{
-		color:#6666ff;
-		border-bottom:2px solid;
-	}
-	.board-div{
-		width:100%;
-		height:100%;
-		margin-top:50px;
-	}
-	.board-inner{
-		width:700px;
-		height:100%;
-		margin:0 auto;
-		padding-top:10px;
-	}
-	#title-area{
-		width:100%;
-		line-height: 54px;
-	    font-size: 30px;
-	    font-weight: 400;
-	    border: none;
-	    border-bottom: 1px solid #ccc;
-	    padding: 0;
-	    background: 0 0;
-	    color: #333;
-	}
-	#title-area::placeholder{
-		color:black;
-		font-weight:bold;
-	}
-	textarea.autosize { min-height: 50px; }
-	#content-area textarea{
-		width:100%;
-		resize:none;
-		font-size:1.3em;
-		border:0px;
-		padding:10px;
-		padding-left:0px;
-		overflow-y: hidden;
-	}
-	#hidden-content-area textarea{
-		width:100%;
-		resize:none;
-		font-size:1.3em;
-		border:0px;
-		padding:10px;
-		padding-left:0px;
-		overflow-y: hidden;
-	}
-	*:focus{
-		outline:none;
-	}
-	#payline{
-		width:100%;
-		height:30px;
-		background:#808088;
-		border-radius:5px;
-		color:white;
-		text-align:center;
-		vertical-align:middle;
-		padding-top:5px;
-	}
-	.board-option{
-		border-top:1px solid lightgray;
-		border-bottom:1px solid lightgray;
-		position:fixed;
-		background:white;
-		z-index:1;
-		width:100%;
-	}
-	
-	
-	.modal {
-  		opacity: 0;
-  		visibility: hidden;
-  		position: fixed;
-  		top: 0;
-  		right: 0;
-  		bottom: 0;
-  		left: 0;
-  		text-align: left;
-  		background: rgba(0,0,0, .6);
-  		transition: opacity .25s ease;
-  		z-index:100;
-	}
-	.modal_bg {
-  		position: absolute;
-  		top: 0;
-  		right: 0;
-  		bottom: 0;
-  		left: 0;
-  		cursor: pointer;
-	}
-	.modal-state {
-	  	display: none;
-	}
-	.modal-state:checked + .modal {
-  		opacity: 1;
-  		visibility: visible;
-	}
-
-.modal-state:checked + .modal .modal__inner {
-  top: 0;
-}
-
-.modal_inner {
-  transition: top .25s ease;
-  position: absolute;
-  top: -10%;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 30%;
-  margin: auto;
-  overflow: auto;
-  background: #fff;
-  border-radius: 5px;
-  padding: 1em 2em;
-  height: 60%;
-}
-
-.modal_close {
-  position: absolute;
-  right: 1em;
-  top: 1em;
-  width: 1.1em;
-  height: 1.1em;
-  cursor: pointer;
-}
-
-.modal_close:after,
-.modal_close:before {
-  content: '';
-  position: absolute;
-  width: 2px;
-  height: 1.5em;
-  background: #ccc;
-  display: block;
-  transform: rotate(45deg);
-  left: 50%;
-  margin: -3px 0 0 -1px;
-  top: 0;
-}
-
-.modal_close:hover:after,
-.modal_close:hover:before {
-  background: #aaa;
-}
-
-.modal_close:before {
-  transform: rotate(-45deg);
-}
-
-@media screen and (max-width: 768px) {
-	
-.modal_inner {
-    width: 90%;
-    height: 90%;
-    box-sizing: border-box;
-  }
-}
-
-.btn_label {
-  cursor: pointer;
-  background: #27ae60;
-  display: inline-block;
-  padding: .5em 1em;
-  color: #fff;
-  border-radius: 3px;
-}
-.btn_label:hover,
-.btn_label:focus {
-  background: #2ecc71;
-}
-.row{
-	height:60px;
-}
-.modal-leftlabel{
-	float:left; 
-	top:2.5px;
-	position:relative;
-	font-size:1em;
-}
-.row select{
-	float:right; 
-	width:80%; 
-	height:30px;
-}
-#pointLabel{
-	position:relative;
-	width:15%; 
-	height:26px;
-	text-align:center;
-	vertical-align:middle; 
-	border:1px solid #a9a9a9;
-	border-left:0px;
-	float:right;
-	background:lightgray;
-}
 </style>
 </head>
 <body style="background:white;">
@@ -231,7 +23,8 @@
 		<div class="board-option" align="center">
 			<span>여기에 볼드랑 뭐랑 이것저것 들어갈걸</span>
 			&nbsp;
-			<label class="btn btn_label" for="open-pop" onclick="checkHidden()">123</label>
+			<label class="btn_label" for="open-pop" onclick="checkHidden()">작성하기</label>
+			<label class="btn_label" for="open-pop2">나루 관리</label>
 		</div>
 		<br>
 		<div class="board-div">
@@ -250,16 +43,102 @@
 		</div>
 	</div>
 	
+	<!-- 이하 모달창(나루 관리) -->
+	<input class="modal-state2" id="open-pop2" type="checkbox" /> <!-- 안보이는 체크박스, 이게 체크되면 모달창이 나옴 -->
+	<div class="modal2" style="font-size:0.9em;">
+		<label class="modal_bg" for="open-pop2"></label>
+		<!-- 기본 -->
+		<div class="modal_inner" id="modal_default">
+			<div class="row">
+				<label class="btn_label modify-basic"><b>기본</b></label>
+				<label class="btn_label modify-theme">테마</label>
+				<label class="btn_label modify-category">카테고리</label>
+				<label class="btn_label modify-neighbor">이웃</label>
+				<label class="modal_close" for="open-pop2"></label>
+			</div>
+			<div class="row">
+				<label class="modal-leftlabel">나루 대표사진</label>
+				<input type="file" style="width:70%; float:right;">
+			</div>
+			<div class="row">
+				<label class="modal-leftlabel">나루 제목</label>
+				<input type="text" style="width:79.1%; float:right; height:25px;">
+			</div>
+			<div class="row">
+				<label class="modal-leftlabel">소개 문구</label>
+				<textarea style="width:78.7%; float:right; height:40px; resize:none;"></textarea>
+			</div>
+	 	</div>
+	 	<!-- 테마  -->
+	 	<div class="modal_inner" id="modal_theme" style="display:none;">
+			<div class="row">
+				<label class="btn_label modify-basic">기본</label>
+				<label class="btn_label modify-theme"><b>테마</b></label>
+				<label class="btn_label modify-category">카테고리</label>
+				<label class="btn_label modify-neighbor">이웃</label>
+				<label class="modal_close" for="open-pop2"></label>
+			</div>
+			<div class="row">
+				<label class="modal-leftlabel">테마 색상</label>
+				<select>
+					<option>기본</option>
+					<option>구매한 색상1</option>
+					<option>구매한 색상2</option>
+				</select>
+			</div>
+			<div class="row">
+				<label class="modal-leftlabel">폰트</label>
+				<select style="margin-left:31px;">
+					<option>기본</option>
+					<option>구매한 폰트1</option>
+					<option>구매한 폰트22</option>
+				</select>
+			</div>
+			<div class="row">
+				<label class="modal-leftlabel">소개 문구</label>
+				<textarea style="width:78.7%; float:right; height:40px; resize:none;"></textarea>
+			</div>
+	 	 </div>
+	 	 <!-- 카테고리 -->
+	 	 <div class="modal_inner" id="modal_category" style="display:none;">
+			<div class="row">
+				<label class="btn_label modify-basic">기본</label>
+				<label class="btn_label modify-theme">테마</label>
+				<label class="btn_label modify-category">카테고리</label>
+				<label class="btn_label modify-neighbor">이웃</label>
+				<label class="modal_close" for="open-pop2"></label>
+			</div>
+			<label class="btn_label" id="addCateBtn" style="margin-bottom:15px;">카테고리 추가</label>
+		 </div>
+		 <!-- 이웃목록 -->
+		 <div class="modal_inner" id="modal_neighbor" style="display:none;">
+			<div class="row">
+				<label class="btn_label modify-basic">기본</label>
+				<label class="btn_label modify-theme">테마</label>
+				<label class="btn_label modify-category">카테고리</label>
+				<label class="btn_label modify-neighbor">이웃</label>
+				<label class="modal_close" for="open-pop2"></label>
+			</div>
+			<c:forEach var="i" begin="1" end="4">
+			<div style="margin-bottom:40px;">
+				<img src="${contextPath}/resources/images/cosmos.jpg" style="width:35px;height:35px;float:left;margin-right:5px; border-radius: 5px;">
+				<span style="top:5px; position:relative;"><a href="#">${i}번째 마루</a></span>
+			</div>
+			</c:forEach>
+		 </div>
+	</div>
+	
 	<!-- 이하 모달창 (작성하기 버튼) -->
 	<input class="modal-state" id="open-pop" type="checkbox" /> <!-- 안보이는 체크박스, 이게 체크되면 모달창이 나옴 -->
-	<div class="modal">
+	<div class="modal1" style="font-size:0.9em;">
 		<label class="modal_bg" for="open-pop"></label>
 		<div class="modal_inner">
 			<div class="row">
+				<h2>게시글 작성</h2>
 				<label class="modal_close" for="open-pop"></label>
 			</div>
 			<div class="row">
-				<label class="modal-leftlabel">카테고리</label>
+				<label class="modal-leftlabel">카테고리&nbsp;</label>
 				<select>
 					<option>선택 안 함</option>
 					<option>카테고리1</option>
@@ -276,38 +155,35 @@
 				</select>
 			</div>
 			<div class="row" id="payamount">
-				<label class="modal-leftlabel">판매가격</label>
+				<label class="modal-leftlabel">판매 가격</label>
 				
-				<label id="pointLabel" style="padding-top:3px;">포인트</label>
 				<input type="number" value="100" min="100" step="100" style="width:64.2%; float:right; height:25px;"/>
-				<label style="color:gray; font-size:10px; float:right;">이 항목은 결제선 아래에 작성한 글이 있을 때만 표시됩니다.</label>
+				<label id="pointLabel">포인트</label>
+				<label style="color:gray; font-size:10px; float:right; margin-right:0;">이 항목은 결제선 아래에 작성한 글이 있을 때만 표시됩니다.</label>
 			</div>
 			<div class="row">
-				<label class="modal-leftlabel">공개설정</label>
-				<ul style="margin-left:55px;">
+				<label class="modal-leftlabel">공개 설정</label>
+				<ul>
 					<li><input type="radio" name="openLevel" id="open1" value="open"><label for="open1">전체 공개</label></li>
 					<li><input type="radio" name="openLevel" id="open2" value="noopen"><label for="open2">비공개</label></li>
 				</ul>
 			</div>
 			<div class="row" style="border-bottom:1px solid lightgray;">
 				<label class="modal-leftlabel">댓글 권한</label>
-				<ul style="margin-left:55px;">
+				<ul>
 					<li><input type="radio" name="replyLevel" id="replylevel1" value="all"><label for="replylevel1">제한 없음</label></li>
 					<li><input type="radio" name="replyLevel" id="replylevel2" value="buyer"><label for="replylevel2">구매자만</label></li>
 				</ul>
 			</div>
 			<div class="row" style="padding-top:15px;">
-				<label class="btn_label" style=" float:left;" style="background:lightgray;">취소</label>
-				<label class="btn_label" style="float:right;">작성하기</label>
+				<label class="btn_label" for="open-pop" style="float:left; background:lightgray; margin-left:20px;">취소</label>
+				<label class="btn_label" style="float:right; margin-right:20px;">작성하기</label>
 			</div>
 	 	 </div>
 	</div>
 	
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script>
-		/* $(function(){
-			$("#payamount").css({'display':'none'});
-		}) */
 		//엔터키 누를때 텍스트에어리어 사이즈 자동 조절
 		function resize(obj) {
 		  obj.style.height = "1px";
@@ -324,6 +200,46 @@
 				$("#payamount").css({'display':''});
 			}
 		}
+  </script>
+  <script>
+  	$(function(){
+		// 수정 - 기본버튼
+		$(".modify-basic").click(function(){
+			$("#modal_default").css("display","");
+			$("#modal_theme").css("display","none");
+			$("#modal_category").css("display","none");
+			$("#modal_neighbor").css("display","none");
+		})
+		
+		// 수정 - 테마버튼
+		$(".modify-theme").click(function(){
+			$("#modal_default").css("display","none");
+			$("#modal_theme").css("display","");
+			$("#modal_category").css("display","none");
+			$("#modal_neighbor").css("display","none");
+		})
+		
+		// 수정 - 카테고리버튼
+		$(".modify-category").click(function(){
+			$("#modal_default").css("display","none");
+			$("#modal_theme").css("display","none");
+			$("#modal_category").css("display","");
+			$("#modal_neighbor").css("display","none");
+		})
+		
+		// 카테고리 - 카테고리 추가 버튼
+		$("#addCateBtn").click(function(){
+			$("#modal_category").append("<div class='row' style='height:50px;'><input type='text' value='앙 기모띠' id='addedCategory'><span id='categoryDelete'></span></div>");
+		})
+		
+		// 수정 - 이웃버튼
+		$(".modify-neighbor").click(function(){
+			$("#modal_default").css("display","none");
+			$("#modal_theme").css("display","none");
+			$("#modal_category").css("display","none");
+			$("#modal_neighbor").css("display","");
+		})
+	})
   </script>
 	
 </body>
