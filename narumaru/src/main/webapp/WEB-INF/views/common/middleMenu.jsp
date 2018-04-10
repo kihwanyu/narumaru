@@ -123,9 +123,8 @@
 		border:1px solid lightgray;			
 	}
 	.textArea{
-		width:99%;
+		width:100%;
 		height:90%;
-		resize:none;
 	}
 	.boardInsert li{
 		margin-right:20px;
@@ -141,6 +140,12 @@
 	.boardInsertUl{
 		float:left;
 		width:400px;
+	}
+	.boardInsertUl li{
+		margin-top:9px;
+		width:30px;
+		height:30px;
+		border:1px solid lightgray;
 	}
 	.inertBoardBtn{
 		height:100%;
@@ -173,7 +178,8 @@
 	}
 	.footUl li{
 		float:left;
-		margin-right:20px;
+		margin-left:50px;
+		cursor:pointer;
 	}
 	.insertReply{
 		display:none;
@@ -198,8 +204,11 @@
   	.inlineBlock{
   		display:inline-block;
   	}
-  	.memberList{
-  		
+  	.photoThumb{
+  		width:150px;
+  		height:100px;
+  		border:1px solid lightgray;
+  		margin:10px;
   	}
 </style>
 </head>

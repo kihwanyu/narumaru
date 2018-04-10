@@ -22,10 +22,10 @@
 			<br>
 			<div class="boardInsert">
 				<div class="boardInsertcontent">
-					<textArea class="textArea">
+					<input type="text" class="textArea">
 						
 						
-					</textArea>
+					</input>
 				</div>
 				<div class="boardInsertTab">					
 					<ul class="ul boardInsertUl">
@@ -60,11 +60,11 @@
 				<div class="boardfoot">
 					<hr>
 					<ul class="footUl">
-						<li class="showSub emotionBtn">이모티콘
+						<li class="showSub emotionBtn"><span>이모티콘</span>
 							<div class="sub emotionSub">이모티콘</div>
 						</li>
-						<li class="insertReplyShow">댓글보기()</li>
-						<li class="showSub shereBtn">공유하기
+						<li class="insertReplyShow"><span>댓글보기()</span></li>
+						<li class="showSub shereBtn"><span>공유하기</span>
 							<div class="sub shereSub">개발중인 기능입니다</div>
 						</li>
 					</ul>
@@ -104,7 +104,7 @@
 			
 		});
 		$(".showSub").click(function(){
-			$(this).children().toggle();
+			$(this).children(".sub").toggle();
 			
 		});
 	</script>
