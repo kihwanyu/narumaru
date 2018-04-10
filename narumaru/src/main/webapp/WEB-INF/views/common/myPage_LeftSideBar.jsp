@@ -103,7 +103,14 @@
 					<img src="resources/images/right_arrow.png" height="20px">
 				</div>
 			</li>
-			<li>
+			<c:choose>
+				<c:when test="${pageValue == 'pointPaymentList'}">
+					<li ${selected_li }>
+				</c:when>
+				<c:otherwise>
+					<li>
+				</c:otherwise>
+			</c:choose>
 				<div class="left-sidebar-li">
 					포인트 결제/사용 내역
 				</div>
