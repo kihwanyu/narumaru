@@ -67,7 +67,7 @@
 						<li><a><i class="fa fa-desktop"></i> 공지사항 <span
 								class="fa fa-chevron-down"></span></a>
 							<ul class="nav child_menu">
-								<li><a href="general_elements.html"> 공지사항 </a></li>
+								<li><a href="Notice.no"> 공지사항 </a></li>
 								<li><a href="media_gallery.html"> FAQ </a></li>
 								<li><a href="typography.html"> 1:1 문의 </a></li>
 							</ul></li>

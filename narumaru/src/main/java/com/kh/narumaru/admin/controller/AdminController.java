@@ -51,6 +51,20 @@ public class AdminController {
 		return "admin/adRevenueView";
 	}
 	
+	
+	//신고하기
+	@RequestMapping(value="adDeclare.ad")
+	public String showAdminDeclareView(){
+		
+		return "admin/adDeclare";
+	}
+	
+	//신고내용 자세히 보기
+	@RequestMapping(value="adDeclareDetail.ad")
+	public String showAdminDeclareDetailView(){
+		
+		return "admin/adDeclareDetail";
+	}
 //이럴수가!!
 	
 }
