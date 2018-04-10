@@ -6,14 +6,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	/* div{
-		border:1px solid black;
-	} */
 	body{
 		background: #eef0f3;
 	}
 	.wrap{	
-		/* background:red; */
 		width:1000px;		
 	}
 	.ul li{

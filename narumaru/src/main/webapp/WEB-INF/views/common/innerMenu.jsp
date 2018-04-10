@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!DOCTYPE html>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -33,8 +33,8 @@
 			</div>
 		</div>
 		
-		<aside class="floatRight rightArea">
-			<div class="rightmenu chat">
+		<div class="floatRight rightArea">
+			<div class="rightMenu chat">
 				<div class="rightTitle">
 					채팅
 					<div class="pointer floatRight newChat">새 채팅<div class="sub chatSub"><ul><li>비공개 채팅</li><li>공개 채팅</li></ul></div></div>
@@ -45,7 +45,7 @@
 				</div>
 			</div>
 			
-			<div class="rightmenu album" style="top:200px;">
+			<div class="rightMenu album" style="top:200px;">
 				<div class="rightTitle">
 					앨범
 					<div class="floatRight pointer moreAlbum"><a href="showMaruAlbum.ma">더보기</a></div>
@@ -54,7 +54,7 @@
 					<div class="photoThumb"></div>
 				</div>
 			</div>
-		</aside>
+		</div>
 	</div>
 	<script>
 	$(".newChat").click(function(){
