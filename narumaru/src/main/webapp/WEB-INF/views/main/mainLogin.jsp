@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
 <link href='https://fonts.googleapis.com/css?family=Roboto:300,400' rel='stylesheet' type='text/css'>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.11.3/paper-full.min.js"></script>
@@ -25,6 +26,16 @@ $font-default: 'Roboto', sans-serif;
 	  box-sizing: border-box;
 	  font-family: $font-default;
 	}
+	
+	* {
+            font-family: 'Nanum Gothic', sans-serif;
+            font-weight: bold;
+         }
+         
+    h2{
+    	 font-family: 'Nanum Gothic', sans-serif;
+            font-weight: bold;
+    }
 	
 	.backRight {
 	  position: absolute;

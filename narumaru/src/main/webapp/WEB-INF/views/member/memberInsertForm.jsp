@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <head>
 <style>
@@ -11,6 +12,17 @@
 		margin:0;
 		
 	}
+	h1 {
+		font-family: 'Nanum Gothic', sans-serif;
+            font-weight: bold;
+		
+	}
+	
+	* {
+            font-family: 'Nanum Gothic', sans-serif;
+            font-weight: bold;
+         }
+	
 	
 	.mifh{
 		margin-top:0;
