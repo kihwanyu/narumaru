@@ -24,8 +24,7 @@
 				</div>
 				<div class="albumContent">
 				<hr>
-					앨범 내용
-					
+					<div class="photoThumb">사진</div>					
 				</div>
 			</div>
 		</div>
