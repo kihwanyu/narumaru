@@ -65,6 +65,20 @@ public class AdminController {
 		
 		return "admin/adDeclareDetail";
 	}
-//이럴수가!!
+
+	
+	// 관리자 1:1 문의 게시판
+	@RequestMapping(value="adAnswer.ad")
+	public String showAdminAnswerView(){
+		
+		return "admin/adAnswer";
+	}
+	
+	//관리자 공지글쓰기
+	@RequestMapping(value="adAnnouncement.ad")
+	public String showAdminAnnouncementView(){
+		
+		return "admin/adAnnouncement";
+	}
 	
 }

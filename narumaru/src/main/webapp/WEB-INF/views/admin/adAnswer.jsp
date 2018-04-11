@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
+<!DOCTYPE html >
 <html>
 <head>
 <meta charset="UTF-8">
 <!-- Meta, title, CSS, favicons, etc. -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>:: naru? maru! :: Admin</title>
+<title> :: naru ? maru ! :: Admin 1:1 게시판</title>
+</head>
 <!-- Custom Theme Style -->
 <link href="${ contextPath }/resources/admin/build/css/custom.min.css" rel="stylesheet">
 </head>

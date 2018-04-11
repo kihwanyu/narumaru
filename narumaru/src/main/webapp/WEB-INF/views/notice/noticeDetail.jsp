@@ -32,21 +32,6 @@
 	.noHead img{
 		margin-top: 20px;
 	}
-	.btn-group-vertical{
-		width: 187px;
-		background:yellow;
-		top:0px;
-		display:inline-block;
-		float:left
-	}
-	.btn-group-vertical button{
-		background:#8C8E8D;
-	    height: 50px;
-	    border: 1px solid lightgray;
-	    text-align: left;
-	    font-size:15px;
-	}
-	
 
 	.NoticeServiceView{
 		display:inline-block;
@@ -104,7 +89,7 @@
 				<div  class ="noTitle">
 					<label> 공지 사항</label>
 					
-					<div style = "float:right; width:80px;"><img src="${ contextPath }/resources/images/noticeList.jpg" class = "listBtnImg"><a href = "Notice.ad"> 목록 </a></div>
+					<div style = "float:right; width:80px;"><img src="${ contextPath }/resources/images/noticeList.jpg" class = "listBtnImg"><a href = "Notice.no"> 목록 </a></div>
 				</div>
 				 
 				<ul class = "noticeContent">
@@ -134,7 +119,7 @@
 					
 				</ul>
 		</div>	
-		<!-- 씨발 ................. 좆 됐따  -->
+	
 	
 </body>
 </html>

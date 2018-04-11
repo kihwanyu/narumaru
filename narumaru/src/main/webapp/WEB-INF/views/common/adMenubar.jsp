@@ -67,9 +67,11 @@
 						<li><a><i class="fa fa-desktop"></i> 공지사항 <span
 								class="fa fa-chevron-down"></span></a>
 							<ul class="nav child_menu">
+								<li><a gref="Announcement.ad"> 공지 글쓰기 </a></li>
 								<li><a href="Notice.no"> 공지사항 </a></li>
-								<li><a href="media_gallery.html"> FAQ </a></li>
-								<li><a href="typography.html"> 1:1 문의 </a></li>
+								<li><a href="FAQ.no"> FAQ </a></li>
+								<li><a href="adAnswer.ad"> 1:1 문의 </a></li>
+								
 							</ul></li>
 
 						<li><a><i class="fa fa-bar-chart-o"></i> 포인트 관리 <span
@@ -80,7 +82,7 @@
 
 							</ul>
 						</li>
-						<li><a><i class="fa fa-table"></i> 신고 게시판(자세히 보기)</a></li>
+						<li><a href="adDeclare.ad"><i class="fa fa-table"></i> 신고 게시판(자세히 보기)</a></li>
 						<li><a href="adLoginManagView.ad"><i class="fa fa-edit"></i> 로그인 기록 관리</a></li>
 					</ul>
 				</div>
