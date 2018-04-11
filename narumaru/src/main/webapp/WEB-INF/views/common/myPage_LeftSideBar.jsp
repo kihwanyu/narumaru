@@ -120,15 +120,6 @@
 			</li>
 			<li>
 				<div class="left-sidebar-li">
-					상품 구매 내역
-					<!-- 이모티콘, 테마, 글꼴 -->
-				</div>
-				<div align="right">
-					<img src="resources/images/right_arrow.png" height="20px">
-				</div>
-			</li>
-			<li>
-				<div class="left-sidebar-li">
 					포인트 환급 및 내역
 					<!-- 이모티콘, 테마, 글꼴 -->
 				</div>

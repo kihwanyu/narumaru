@@ -9,7 +9,7 @@
 <!--  -->
 </head>
 <body>
-	<div id="menu">
+	<div id="menu" style="margin-left: 520px;">
 		<div class="help-div" align="center">
 			Help
 		</div>

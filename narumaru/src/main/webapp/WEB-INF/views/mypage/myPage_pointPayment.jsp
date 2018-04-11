@@ -193,8 +193,71 @@
 							</div>
 				        </div>
 				         <!-- #tab1 -->
-				        <div id="tab2" class="tab_content">
-				        	
+				        <div id="tab2" class="tab_content" style="color: black;">
+				        	<div>
+								<table class="table">
+									<thead>
+										<tr>
+											<th width="30%">사용일</th>
+											<th width="20%">구분</th>
+											<th width="30%">사용 내용</th>
+											<th width="20%">사용 포인트</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>2017.04.10 AM 09:00</td>
+											<td>포인트 사용</td>
+											<td>결제선 - 고강호(300P)</td>
+											<td>300P</td>
+										</tr>
+										<tr>
+											<td>2017.04.10 AM 09:00</td>
+											<td>포인트 사용</td>
+											<td>결제선 - 고강호(300P)</td>
+											<td>300P</td>
+										</tr>
+										<tr>
+											<td>2017.04.10 AM 09:00</td>
+											<td>포인트 사용</td>
+											<td>결제선 - 고강호(300P)</td>
+											<td>300P</td>
+										</tr>
+										<tr>
+											<td>2017.04.10 AM 09:00</td>
+											<td>포인트 사용</td>
+											<td>결제선 - 고강호(300P)</td>
+											<td>300P</td>
+										</tr>
+										<tr>
+											<td>2017.04.10 AM 09:00</td>
+											<td>포인트 사용</td>
+											<td>결제선 - 고강호(300P)</td>
+											<td>300P</td>
+										</tr>
+									</tbody>
+									<tfoot>
+										<tr>
+											<td colspan="2"></td>
+											<td>사용 포인트 : </td>
+											<td>40,000</td>
+										</tr>
+									</tfoot>
+								</table>
+							</div>    
+							<div style="color: gray; margin-left: 120px;">
+								<ul class="pagination">
+									<li><a href="#"><<</a></li>
+									<li><a href="#"><</a></li>
+									<li><a href="#">1</a></li>
+									<li class="active"><a href="#">2</a></li>
+									<li><a href="#">3</a></li>
+									<li><a href="#">4</a></li>
+									<li><a href="#">5</a></li>
+									<li><a href="#">></a></li>
+									<li><a href="#">>></a></li>
+								</ul>
+							</div>
 				       	</div>
 				        <!-- #tab2 -->
 				    </div>
