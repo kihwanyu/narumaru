@@ -34,9 +34,10 @@
 					<div class="memberBody"></div>
 						<div class="memberInfo">
 						<hr>
-							<div class="writerPhoto">사진</div>
+							<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
 							<label>이름</label>
-							<div class="floatRight">버튼</div>
+							<div class="floatRight boardBtn"><img src="resources/images/menu.png" class="modifyMenu size100per"></div>
+							<hr style="clear:both;">
 						<hr>
 						</div>
 				</div>

@@ -25,7 +25,7 @@
 					<label>이름</label>
 				</div>
 				<hr>
-				<div class="settingBody">
+				<div class="settingBody" style="clear:both">
 					설정 내용
 				</div>
 			</div>
