@@ -126,6 +126,7 @@
 					<li>
 				</c:otherwise>
 			</c:choose>
+			<li>
 				<div class="left-sidebar-li">
 					포인트 환급 및 내역
 					<!-- 이모티콘, 테마, 글꼴 -->

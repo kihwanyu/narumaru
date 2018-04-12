@@ -67,9 +67,11 @@
 						<li><a><i class="fa fa-desktop"></i> 공지사항 <span
 								class="fa fa-chevron-down"></span></a>
 							<ul class="nav child_menu">
+								<li><a href="adAnnouncement.ad"> 공지 글쓰기 </a></li>
 								<li><a href="Notice.no"> 공지사항 </a></li>
-								<li><a href="media_gallery.html"> FAQ </a></li>
-								<li><a href="typography.html"> 1:1 문의 </a></li>
+								<li><a href="FAQ.no"> FAQ </a></li>
+								<li><a href="adAnswer.ad"> 1:1 문의 </a></li>
+								
 							</ul></li>
 
 						<li><a><i class="fa fa-bar-chart-o"></i> 포인트 관리 <span
@@ -80,7 +82,7 @@
 
 							</ul>
 						</li>
-						<li><a><i class="fa fa-table"></i> 신고 게시판(자세히 보기)</a></li>
+						<li><a href="adDeclare.ad"><i class="fa fa-table"></i> 신고 게시판(자세히 보기)</a></li>
 						<li><a href="adLoginManagView.ad"><i class="fa fa-edit"></i> 로그인 기록 관리</a></li>
 					</ul>
 				</div>
@@ -201,6 +203,9 @@
     <!-- bootstrap-daterangepicker -->
     <script src="${contextPath }/resources/admin/moment/min/moment.min.js"></script>
     <script src="${contextPath }/resources/admin/bootstrap-daterangepicker/daterangepicker.js"></script>
+    
+    
+    
     <!-- Datatables -->
     <script src="${ contextPath }/resources/admin/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="${ contextPath }/resources/admin/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
@@ -218,6 +223,28 @@
     <script src="${ contextPath }/resources/admin/pdfmake/build/pdfmake.min.js"></script>
     <script src="${ contextPath }/resources/admin/pdfmake/build/vfs_fonts.js"></script>
 
+
+	<!-- 글쓰기 -->
+	<!-- bootstrap-wysiwyg -->
+    <script src="${ contextPath }/resources/admin/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+    <script src="${ contextPath }/resources/admin/jquery.hotkeys/jquery.hotkeys.js"></script>
+    <script src="${ contextPath }/resources/admin/google-code-prettify/src/prettify.js"></script>
+    <!-- jQuery Tags Input -->
+    <script src="${ contextPath }/resources/admin/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+    <!-- Switchery -->
+    <script src="${ contextPath }/resources/admin/switchery/dist/switchery.min.js"></script>
+    <!-- Select2 -->
+    <script src="${ contextPath }/resources/admin/select2/dist/js/select2.full.min.js"></script>
+    <!-- Parsley -->
+    <script src="${ contextPath }/resources/admin/parsleyjs/dist/parsley.min.js"></script>
+    <!-- Autosize -->
+    <script src="${ contextPath }/resources/admin/autosize/dist/autosize.min.js"></script>
+    <!-- jQuery autocomplete -->
+    <script src="${ contextPath }/resources/admin/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
+    <!-- starrr -->
+    <script src="${ contextPath }/resources/admin/starrr/dist/starrr.js"></script>
+
+	
     <!-- Custom Theme Scripts -->
     <script src="${ contextPath }/resources/admin/build/js/custom.min.js"></script>
     

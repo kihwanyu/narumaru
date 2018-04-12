@@ -53,18 +53,32 @@ public class AdminController {
 	
 	
 	//신고하기
-	@RequestMapping(value="adDeclare.ad")
+	@RequestMapping("adDeclare.ad")
 	public String showAdminDeclareView(){
 		
 		return "admin/adDeclare";
 	}
 	
 	//신고내용 자세히 보기
-	@RequestMapping(value="adDeclareDetail.ad")
+	@RequestMapping("adDeclareDetail.ad")
 	public String showAdminDeclareDetailView(){
 		
 		return "admin/adDeclareDetail";
 	}
-//이럴수가!!
+
+	
+	// 관리자 1:1 문의 게시판
+	@RequestMapping(value="adAnswer.ad")
+	public String showAdminAnswerView(){
+		
+		return "admin/adAnswer";
+	}
+	
+	//관리자 공지글쓰기
+	@RequestMapping(value="adAnnouncement.ad")
+	public String showAdminAnnouncementView(){
+		
+		return "admin/adAnnouncement";
+	}
 	
 }

@@ -30,5 +30,13 @@ public class NoticeController {
 		
 		return "notice/FAQ";
 	}
-	//씨발 ................. 좆 됐따 
+	
+	//1:1 문의하기
+	@RequestMapping(value = "question.no")
+	public String showquestionView(){
+		
+		return "notice/question";
+	}
+	
+
 }

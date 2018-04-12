@@ -61,15 +61,17 @@
 
 <body>
 	<!-- 꼭대기 이미지 -->
-	<div class = "noHead" align="center">
+	<div class = "noHead" align="center" >
 		<img src="${ contextPath }/resources/images/logo.png"/>
 	</div>
-	
+
 	<div class = "container">
 		<div class="btn-group-vertical">
 			<button type="button" class="btn btn-primary" onclick ="location.href='Notice.no'" > 공지사항 </button>
 			<button type="button" class="btn btn-primary" onclick = "location.href='FAQ.no'"> FAQ </button>
 			<button type="button" class="btn btn-primary" onclick = "location.href='question.no'"> 1:1 문의 </button>
+			
+			
 		</div>
 	</div>	
 
