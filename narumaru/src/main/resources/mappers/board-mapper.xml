@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="Board">
+	
+	<resultMap type="Board" id="boardResultSet">
+		<id property="bno" column="BNO"/>
+		<result property="bTno" column="B_TNO"/>
+		<result property="bType" column="B_TYPE"/>
+		<result property="bTitle" column="B_TITLE"/>
+		<result property="bContent" column="B_CONTENT"/>
+		<result property="bHidden" column="B_HIDDEN"/>
+		<result property="mno" column="MNO"/>
+		<result property="createDate" column="CRATE_DATE"/>
+		<result property="modifyDate" column="MODIFY_DATE"/>
+		<result property="status" column="STATUS"/>
+		<result property="nmno" column="NMNO"/>
+		<result property="cano" column="CANO"/>
+		<result property="cno" column="CNO"/>
+	</resultMap>
+	
+	<select id="selectBoardListAll" resultMap="boardResultSet" parameterType="Board">
+		SELECT * FROM BOARD WHERE NMNO = #{nmno} AND STATUS='y';
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  

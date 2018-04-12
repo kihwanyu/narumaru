@@ -107,11 +107,11 @@
 				<div style="float:left;width:50px;height:26px;margin-left:10px;">
 					<a href="maruChannelView.ma">채널</a>
 				</div>
-				<div style="float:left;margin-left:240px;padding:5px 12px 5px 12px;cursor:pointer;width:65px;" class="top_news">
+				<div style="float:left;margin-left:150px;padding:5px 12px 5px 12px;cursor:pointer;width:100px;" class="top_news">
 					<p style="color:#333;font-size:14px;text-align:center;" >새글 피드</p>
 				</div>
 			
-				<div style="padding:5px 12px 5px 12px;cursor:pointer;width:65px;float:left;" class="top_news">
+				<div style="padding:5px 12px 5px 12px;cursor:pointer;width:100px;float:left;" class="top_news">
 					<p style="color:#333;font-size:14px;text-align:center;">밴드 찾기</p>
 				</div>
 				<div id="alram" onclick="clickAlram(this)">
@@ -123,8 +123,8 @@
 		               <h4 style="margin:15px;">새 소식</h4>
 		               <hr style="margin-bottom:0;">
 		               <c:forEach var="i" begin="1" end="5">
-		               <div id="new-innerdiv" style="vertical-align:middle;border-bottom:1px solid lightgray;">
-		               		<img src="${contextPath}/resources/images/cosmos.jpg" style="margin:5px;width:50px; height:50px; border-radius: 150px;"/>&nbsp;<label style="position:relative;">맞짱 신청을 받았습니다</label>
+		               <div id="new-innerdiv" style="vertical-align:middle;border-bottom:1px solid lightgray; line-height:60px; height:60px;">
+		               		<img src="${contextPath}/resources/images/cosmos.jpg" style="margin:5px; width:50px; height:50px; border-radius: 150px;"/>&nbsp;<label style="position:absolute;">맞짱 신청을 받았습니다</label>
 		               </div>
 		               </c:forEach>
 		            </div>
