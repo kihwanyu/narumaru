@@ -118,6 +118,14 @@
 					<img src="resources/images/right_arrow.png" height="20px">
 				</div>
 			</li>
+			<c:choose>
+				<c:when test="${pageValue == 'refund'}">
+					<li ${selected_li }>
+				</c:when>
+				<c:otherwise>
+					<li>
+				</c:otherwise>
+			</c:choose>
 			<li>
 				<div class="left-sidebar-li">
 					포인트 환급 및 내역
