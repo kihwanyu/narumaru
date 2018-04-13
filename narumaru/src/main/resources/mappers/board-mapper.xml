@@ -13,7 +13,8 @@
 		<result property="bContent" column="B_CONTENT"/>
 		<result property="bHidden" column="B_HIDDEN"/>
 		<result property="mno" column="MNO"/>
-		<result property="createDate" column="CRATE_DATE"/>
+		<result property="bWriter" column="NICNAME"/>
+		<result property="createDate" column="CREATE_DATE"/>
 		<result property="modifyDate" column="MODIFY_DATE"/>
 		<result property="status" column="STATUS"/>
 		<result property="nmno" column="NMNO"/>
@@ -21,8 +22,12 @@
 		<result property="cno" column="CNO"/>
 	</resultMap>
 	
-	<select id="selectBoardListAll" resultMap="boardResultSet" parameterType="Board">
-		SELECT * FROM BOARD WHERE NMNO = #{nmno} AND STATUS='y';
+	<select id="selectBoardListAll" resultMap="boardResultSet" parameterType="_int">
+		SELECT BNO, B_TNO, B_TYPE, B_TITLE, B_CONTENT, B_HIDDEN, b.MNO, M.NICNAME, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, NMNO, CANO, CNO
+		FROM BOARD B
+		JOIN MEMBER M ON(B.NMNO = M.MNO)
+		WHERE NMNO = #{nmno} AND B.STATUS = 'y'
+		ORDER BY BNO DESC
 	</select>
 	
 </mapper>

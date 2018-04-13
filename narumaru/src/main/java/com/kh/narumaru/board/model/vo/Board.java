@@ -10,6 +10,7 @@ public class Board implements java.io.Serializable {
 	public String bContent;
 	public String bHidden;
 	public int mno;
+	public String bWriter;
 	public Date createDate;
 	public Date modifyDate;
 	public String status;
@@ -19,8 +20,8 @@ public class Board implements java.io.Serializable {
 	
 	public Board(){}
 
-	public Board(int bno, int bTno, int bType, String bTitle, String bContent, String bHidden, int mno, Date createDate,
-			Date modifyDate, String status, int nmno, int cano, int cno) {
+	public Board(int bno, int bTno, int bType, String bTitle, String bContent, String bHidden, int mno, String bWriter,
+			Date createDate, Date modifyDate, String status, int nmno, int cano, int cno) {
 		super();
 		this.bno = bno;
 		this.bTno = bTno;
@@ -29,6 +30,7 @@ public class Board implements java.io.Serializable {
 		this.bContent = bContent;
 		this.bHidden = bHidden;
 		this.mno = mno;
+		this.bWriter = bWriter;
 		this.createDate = createDate;
 		this.modifyDate = modifyDate;
 		this.status = status;
@@ -93,6 +95,14 @@ public class Board implements java.io.Serializable {
 		this.mno = mno;
 	}
 
+	public String getbWriter() {
+		return bWriter;
+	}
+
+	public void setbWriter(String bWriter) {
+		this.bWriter = bWriter;
+	}
+
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -144,9 +154,10 @@ public class Board implements java.io.Serializable {
 	@Override
 	public String toString() {
 		return "Board [bno=" + bno + ", bTno=" + bTno + ", bType=" + bType + ", bTitle=" + bTitle + ", bContent="
-				+ bContent + ", bHidden=" + bHidden + ", mno=" + mno + ", createDate=" + createDate + ", modifyDate="
-				+ modifyDate + ", status=" + status + ", nmno=" + nmno + ", cano=" + cano + ", cno=" + cno + "]";
-	};
-	
+				+ bContent + ", bHidden=" + bHidden + ", mno=" + mno + ", bWriter=" + bWriter + ", createDate="
+				+ createDate + ", modifyDate=" + modifyDate + ", status=" + status + ", nmno=" + nmno + ", cano=" + cano
+				+ ", cno=" + cno + "]";
+	}
+
 	
 }
