@@ -12,6 +12,8 @@
 	<mappers>
 		<mapper resource="mappers/member-mapper.xml"/>
 		<mapper resource="mappers/board-mapper.xml"/>
+		<mapper resource="mappers/declaration-mapper.xml"/>
+		<mapper resource="mappers/payment-mapper.xml"/>
 	</mappers>
 	
 </configuration>

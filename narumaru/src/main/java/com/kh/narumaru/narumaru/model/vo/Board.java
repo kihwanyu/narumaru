@@ -1,28 +1,28 @@
-package com.kh.narumaru.board.model.vo;
+package com.kh.narumaru.narumaru.model.vo;
 
 import java.sql.Date;
 
+//나루마루 게시글
 public class Board implements java.io.Serializable {
-	public int bno;
-	public int bTno;
-	public int bType;
-	public String bTitle;
-	public String bContent;
-	public String bHidden;
-	public int mno;
-	public String bWriter;
-	public Date createDate;
-	public Date modifyDate;
-	public String status;
-	public int nmno;
-	public int cano;
-	public int cno;
+	private int bno;
+	private int bTno;
+	private int bType;
+	private String bTitle;
+	private String bContent;
+	private String bHidden;
+	private int mno;
+	private String bWriter;
+	private Date createDate;
+	private Date modifyDate;
+	private String status;
+	private int nmno;
+	private int cano;
+	private int cno;
 	
 	public Board(){}
 
 	public Board(int bno, int bTno, int bType, String bTitle, String bContent, String bHidden, int mno, String bWriter,
 			Date createDate, Date modifyDate, String status, int nmno, int cano, int cno) {
-		super();
 		this.bno = bno;
 		this.bTno = bTno;
 		this.bType = bType;
