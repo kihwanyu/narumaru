@@ -29,7 +29,6 @@
 		WHERE NMNO = #{nmno} AND B.STATUS = 'Y'
 		ORDER BY BNO DESC
 	</select>
-	
 </mapper>
 
 

@@ -16,7 +16,7 @@
 		<result property="enroll_date" column="ENROLL_DATE"/>
 		<result property="modify_date" column="MODIFY_DATE"/>
 		<result property="status" column="STATUS"/>
-	</resultMap>
+	</resultMap> 
 	
 	<select id="loginCheck" resultMap="memberResultSet" parameterType="Member">
 		<!-- SELECT * FROM MEMBER WHERE USER_ID=#{userId} AND USER_PWD=#{userPwd} AND STATUS = 'Y' -->

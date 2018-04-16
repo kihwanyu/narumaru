@@ -7,15 +7,15 @@
 	<typeAliases>
 		<typeAlias alias="Member" type="com.kh.narumaru.member.model.vo.Member"/>
 		<typeAlias alias="Board" type="com.kh.narumaru.narumaru.model.vo.Board"/>
-		<typeAlias alias="Declaration" type="com.kh.narumaru.declaration.model.vo.Declaration"/>
-		<typeAlias alias="Payment" type="com.kh.narumaru.payment.model.vo.Payment"/>
 	</typeAliases>
-	
+	 
 	<mappers>
 		<mapper resource="mappers/member-mapper.xml"/>
 		<mapper resource="mappers/board-mapper.xml"/>
 		<mapper resource="mappers/declaration-mapper.xml"/>
 		<mapper resource="mappers/payment-mapper.xml"/>
+		<mapper resource="mappers/narumaru-mapper.xml"/>
+		<mapper resource="mappers/maru-mapper.xml"/>
 	</mappers>
 	
 </configuration>
