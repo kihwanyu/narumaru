@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 public class Member implements java.io.Serializable{
 	
 	private int mid;
-	private String Email;
+	private String email;
 	private String userPwd;
 	private String nickName;
-	private String fileName;
+	private String profileName;
 	private String gender;
 	private String phone;
 	private Date enroll_date;
@@ -20,14 +20,14 @@ public class Member implements java.io.Serializable{
 	
 	public Member(){}
 
-	public Member(int mid, String email, String userPwd, String nickName, String fileName, String gender, String phone,
-			Date enroll_date, Date modify_date, String status) {
+	public Member(int mid, String email, String userPwd, String nickName, String profileName, String gender,
+			String phone, Date enroll_date, Date modify_date, String status) {
 		super();
 		this.mid = mid;
-		Email = email;
+		this.email = email;
 		this.userPwd = userPwd;
 		this.nickName = nickName;
-		this.fileName = fileName;
+		this.profileName = profileName;
 		this.gender = gender;
 		this.phone = phone;
 		this.enroll_date = enroll_date;
@@ -44,11 +44,11 @@ public class Member implements java.io.Serializable{
 	}
 
 	public String getEmail() {
-		return Email;
+		return email;
 	}
 
 	public void setEmail(String email) {
-		Email = email;
+		this.email = email;
 	}
 
 	public String getUserPwd() {
@@ -67,12 +67,12 @@ public class Member implements java.io.Serializable{
 		this.nickName = nickName;
 	}
 
-	public String getFileName() {
-		return fileName;
+	public String getProfileName() {
+		return profileName;
 	}
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
+	public void setProfileName(String profileName) {
+		this.profileName = profileName;
 	}
 
 	public String getGender() {
@@ -117,12 +117,10 @@ public class Member implements java.io.Serializable{
 
 	@Override
 	public String toString() {
-		return "Member [mid=" + mid + ", Email=" + Email + ", userPwd=" + userPwd + ", nickName=" + nickName
-				+ ", fileName=" + fileName + ", gender=" + gender + ", phone=" + phone + ", enroll_date=" + enroll_date
-				+ ", modify_date=" + modify_date + ", status=" + status + "]";
+		return "Member [mid=" + mid + ", email=" + email + ", userPwd=" + userPwd + ", nickName=" + nickName
+				+ ", profileName=" + profileName + ", gender=" + gender + ", phone=" + phone + ", enroll_date="
+				+ enroll_date + ", modify_date=" + modify_date + ", status=" + status + "]";
 	}
-
-	
 	
 	
 }

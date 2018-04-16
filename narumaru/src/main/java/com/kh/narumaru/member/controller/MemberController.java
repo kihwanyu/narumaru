@@ -1,6 +1,11 @@
 package com.kh.narumaru.member.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.AnnotatedTypeVariable;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.junit.runner.Request;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,23 +95,33 @@ public class MemberController {
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	//마이페이지 Info start//
 	
-	
+	@RequestMapping(value="profileChange.me", method=RequestMethod.POST)
+	public ModelAndView profileChange(ModelAndView mv,  @RequestParam(name="profile-file", required=false) MultipartFile profile, HttpServletRequest request){
+
+		System.out.println("profile : " + profile.getOriginalFilename());
+		
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String filePath = root + "\\memberprofile";
+		
+		System.out.println(filePath);
+		
+		try {
+			System.out.println("profile : " + profile);
+			profile.transferTo(new File(filePath + "\\" + profile.getOriginalFilename()));
+		} catch (IllegalStateException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		//mv.setViewName("jsonView");
+		
+		return mv;
+	}
 	//마이페이지 Info end//
 	
 	// 마이페이지 페이지 이동 start

@@ -235,11 +235,10 @@
 				</form>
 			</div>
 		</div>
-		<form role="profile" action="" enctype="multipart/form-data">
+		<form id="profileChage-form" method="post" action="profileChange.me" enctype="multipart/form-data">
 			<input type="file" id="profile-file" name="profile-file" onchange="LoadImg(this);">
 		</form>
 		<jsp:include page="../common/myPage_RightSideBar.jsp"/>
-		<!--  -->
 		<script type="text/javascript">
 		$(function(){
 			$("#profile-file").hide();
@@ -247,15 +246,18 @@
 				$("#profile-file").click();
 			});
 			$("#profile-change-btn").click(function(){
+				var form = $('#profileChage-form')[0];
 				
-				//https://blog.naver.com/passion97/220554657075
-				//formData 까지 만듬.. Controller 만들어야됨
-				var formDate = new FormData($("form[role='profile']"));
+				var formData = new FormData(form);
+				
+				console.log(formData);
+				
 				$.ajax({
 					url:"profileChange.me",
-					type:"post",
-					dataType:"JSON",
-					data:formDate,
+					processData:false,
+					contentType:false,
+					data:formData,
+					type:"POST",
 					success:function(data){
 						console.log(data);
 						//console.log(data.member.userId);
