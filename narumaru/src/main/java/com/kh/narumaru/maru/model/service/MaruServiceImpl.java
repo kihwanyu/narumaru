@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 import com.kh.narumaru.maru.exception.MaruException;
 import com.kh.narumaru.maru.model.dao.MaruDao;
 import com.kh.narumaru.maru.model.vo.MaruMember;
-import com.kh.narumaru.member.model.vo.Member;
 
 @Service
 public class MaruServiceImpl implements MaruService{
 	@Autowired
 	private MaruDao md;
+	
 	@Override
 	public ArrayList<MaruMember> selectMaruMemberList(int nmno) {
 		// TODO Auto-generated method stub

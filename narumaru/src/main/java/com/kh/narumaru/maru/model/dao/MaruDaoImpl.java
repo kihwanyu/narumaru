@@ -1,7 +1,6 @@
 package com.kh.narumaru.maru.model.dao;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.narumaru.maru.exception.MaruException;
 import com.kh.narumaru.maru.model.vo.MaruMember;
-import com.kh.narumaru.member.model.vo.Member;
 
 @Repository
 public class MaruDaoImpl implements MaruDao{

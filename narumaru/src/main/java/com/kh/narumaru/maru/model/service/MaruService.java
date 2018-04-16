@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.kh.narumaru.maru.exception.MaruException;
 import com.kh.narumaru.maru.model.vo.MaruMember;
-import com.kh.narumaru.member.model.vo.Member;
 
 public interface MaruService {
 	ArrayList<MaruMember> selectMaruMemberList(int nmno); // 특정 마루의 회원 리스트
