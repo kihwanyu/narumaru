@@ -28,7 +28,7 @@
 	</select>
 	
 	<insert id="insertMember">
-		INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, #{email}, #{userPwd}, #{nickName}, NULL, #{gender}, #{phone}, SYSDATE, SYSDATE, default)
+		INSERT INTO MEMBER VALUES(SEQ_MNO.NEXTVAL, #{email}, #{userPwd}, #{nickName}, NULL, #{gender}, #{phone}, SYSDATE, SYSDATE, default)
 	</insert>
 	
 	<insert id="insertBoard">
