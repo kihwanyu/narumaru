@@ -251,18 +251,26 @@
 				var formData = new FormData(form);
 				
 				console.log(formData);
+				if($("#profile-file").val() == ""){
+					alert("프로필 사진을 선택해주세요.");
+				} else {
+					$.ajax({
+						url:"profileChange.me",
+						processData:false,
+						contentType:false,
+						data:formData,
+						type:"POST",
+						success:function(data){
+							console.log(data);
+							if(data == "true"){
+								alert("사진이 변경되었습니다.");
+							} else {
+								alert("사진 변경을 실패하였습니다.");
+							}
+						}
+					});
+				}
 				
-				$.ajax({
-					url:"profileChange.me",
-					processData:false,
-					contentType:false,
-					data:formData,
-					type:"POST",
-					success:function(data){
-						console.log(data);
-						//console.log(data.member.userId);
-					}
-				});
 			});
 		});
 		
