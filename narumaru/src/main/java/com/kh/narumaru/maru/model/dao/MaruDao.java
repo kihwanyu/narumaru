@@ -13,5 +13,5 @@ public interface MaruDao {
 	
 	void insertMaruMember(MaruMember mm) throws MaruException;
 	
-	void deleteMaruMember(int nmno, int mno);
+	void deleteMaruMember(int nmno, int mno); 
 }

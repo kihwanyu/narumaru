@@ -14,7 +14,7 @@
 		<result property="createDate" column="CREATE_DATE"/>
 		<result property="isOpen" column="IS_OPEN"/>
 		<result property="status" column="STATUS"/>
-	</resultMap>
+	</resultMap> 
 
 	<insert id="insertNarumaru" useGeneratedKeys="true" keyProperty="nmno">
 		<selectKey keyProperty="nmno" resultType="int" order="BEFORE">

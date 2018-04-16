@@ -35,7 +35,7 @@ public class NarumaruServiceImpl implements NarumaruService {
 	}
 
 	@Override
-	public void insertCategory(int nmno, Category c) {
+	public void insertCategory(int nmno, Category c) { 
 		// TODO Auto-generated method stub
 		
 	}

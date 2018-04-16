@@ -18,7 +18,7 @@ public class MaruDaoImpl implements MaruDao{
 	
 	@Override
 	public ArrayList<MaruMember> selectMaruMemberList(int nmno) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub 
 		return null;
 	}
 

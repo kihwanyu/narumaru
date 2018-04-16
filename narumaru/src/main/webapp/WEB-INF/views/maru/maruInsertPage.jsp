@@ -62,7 +62,7 @@
 	    color: #333;
 	}
 	#maru-name:focus{
-		outline:none;
+		outline:none; 
 	}
 	#marucover-select img{
 		float:left;

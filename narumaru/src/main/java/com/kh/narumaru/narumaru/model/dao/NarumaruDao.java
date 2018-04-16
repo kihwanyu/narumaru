@@ -20,4 +20,4 @@ public interface NarumaruDao {
 	void deleteCategory(int nmno, int cano);
 
 	Narumaru insertNarumaru(SqlSessionTemplate sqlSession, Narumaru nm) throws NarumaruException;
-}
+} 

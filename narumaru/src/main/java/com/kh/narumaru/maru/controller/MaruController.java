@@ -64,7 +64,7 @@ public class MaruController {
 	public ModelAndView insertMaruMameber(MaruMember mm, ModelAndView mv){
 		try {
 			ms.insertMaruMember(mm);
-			
+			 
 		} catch (MaruException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

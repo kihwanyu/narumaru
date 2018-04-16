@@ -17,5 +17,5 @@ public interface NarumaruService {
 	
 	void deleteCategory(int nmno, int cano);
 	
-	Narumaru insertNarumaru(Narumaru nm) throws NarumaruException;
+	Narumaru insertNarumaru(Narumaru nm) throws NarumaruException; 
 }

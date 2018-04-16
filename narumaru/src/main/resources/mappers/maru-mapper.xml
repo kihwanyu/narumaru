@@ -17,7 +17,7 @@
 
 	<insert id="insertMaruMember">
 		INSERT INTO MARU_MEMBER VALUES(SEQ_CONNO.NEXTVAL, #{mno}, #{conLevel}, SYSDATE, NULL, 'Y', #{nmno})
-	</insert>
+	</insert> 
 </mapper>
 
 

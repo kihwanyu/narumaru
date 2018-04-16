@@ -35,7 +35,7 @@ public class NarumaruController {
 		ArrayList<Board> list = nms.selectBoardList(nmno); 
 		
 		mv.addObject("list", list);
-		mv.setViewName("naru/naruBoard");
+		mv.setViewName("naru/naruBoard"); 
 		
 		return mv;
 	}

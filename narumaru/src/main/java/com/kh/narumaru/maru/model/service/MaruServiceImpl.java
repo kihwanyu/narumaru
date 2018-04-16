@@ -27,7 +27,7 @@ public class MaruServiceImpl implements MaruService{
 	}
 
 	@Override
-	public void insertMaruMember(MaruMember mm) throws MaruException {
+	public void insertMaruMember(MaruMember mm) throws MaruException { 
 		md.insertMaruMember(mm);
 		
 	}

@@ -10,7 +10,7 @@ public class MaruMember implements java.io.Serializable{
 	private int mno;
 	private int conLevel;
 	private Date enrollDate;
-	private Date deleteDate;
+	private Date deleteDate; 
 	private String status;
 	private int nmno;
 	

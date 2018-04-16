@@ -29,7 +29,7 @@ public class NarumaruDaoImpl implements NarumaruDao {
 	@Override
 	public ArrayList<Category> selectCategoryList(int nmno) {
 		// TODO Auto-generated method stub
-		return null;
+		return null; 
 	}
 
 	@Override
