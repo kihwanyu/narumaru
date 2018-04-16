@@ -10,7 +10,7 @@
 		<result property="Email" column="EMAIL"/>
 		<result property="userPwd" column="PASSWORD"/>
 		<result property="nickName" column="NICNAME"/>
-		<result property="fno" column="FNO"/>
+		<result property="profileName" column="PROFILENAME"/>
 		<result property="gender" column="GENDER"/>
 		<result property="phone" column="PHONE"/>
 		<result property="enroll_date" column="ENROLL_DATE"/>

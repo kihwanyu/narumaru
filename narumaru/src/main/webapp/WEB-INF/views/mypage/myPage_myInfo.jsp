@@ -37,7 +37,7 @@
 							</td>
 							<td width="15%">
 								<div align="center" style="padding: 20px; padding-top: 40px; padding-bottom: 40px;">
-									<input type="button" value="변경" class="btn btn-default">
+									<input type="button" value="변경" class="btn btn-default" id="profile-chage">
 								</div>
 							</td>
 						</tr>
@@ -235,7 +235,40 @@
 				</form>
 			</div>
 		</div>
+		<input type="file" id="profile-file" name="profile-file" onchange="LoadImg(this);">
 		<jsp:include page="../common/myPage_RightSideBar.jsp"/>
 		<!--  -->
+		<script type="text/javascript">
+		$(function(){
+			$("#profile-file").hide();
+			$("#profileImg").click(function(){
+				$("#profile-file").click();
+			});
+			$("#profile-chage").click(function(){
+				var profileName = $("#profile-file").val();
+				console.log(fileName);
+				
+				$.ajax({
+					url:"profileChage.me",
+					type:"post",
+					data:{profileName:profileName},
+					success:function(data){
+						console.log(data);
+						//console.log(data.member.userId);
+					}
+				});
+			});
+		});
+		function LoadImg(value) {
+			if(value.files && value.files[0]){
+				
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					$("#profileImg").attr("src", e.target.result);
+				}
+			reader.readAsDataURL(value.files[0]);
+			}
+		}
+		</script>
 	</body>
 </html>
