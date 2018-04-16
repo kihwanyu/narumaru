@@ -1,11 +1,17 @@
 package com.kh.narumaru.member.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.junit.runner.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.narumaru.member.model.service.MemberService;
@@ -61,6 +67,43 @@ public class MemberController {
 		
 		return "member/memberInsertForm";
 	}
+	
+	@RequestMapping(value="memberInsert.me")
+	public String memberInsert(Member m, Model model, HttpServletRequest request){
+		
+		System.out.println("컨트롤러 회원가입: " + m);
+		
+		if(m.getGender().equals("M")){
+			m.setGender("남");
+		}else{
+			m.setGender("여");
+		}
+		
+		try{
+			ms.insertMember(m);
+			
+			return "main/mainLogin";
+			
+		}catch (Exception e) {
+			model.addAttribute("message", "회원가입실패!");
+			return "common/errorPage";
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	//마이페이지 Info start//
 	
