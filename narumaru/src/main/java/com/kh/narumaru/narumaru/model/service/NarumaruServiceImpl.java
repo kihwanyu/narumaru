@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
 
+import com.kh.narumaru.narumaru.exception.NarumaruException;
 import com.kh.narumaru.narumaru.model.dao.NarumaruDao;
 import com.kh.narumaru.narumaru.model.vo.Board;
 import com.kh.narumaru.narumaru.model.vo.Category;
+import com.kh.narumaru.narumaru.model.vo.Narumaru;
 
 @Service
 public class NarumaruServiceImpl implements NarumaruService {
@@ -41,6 +43,12 @@ public class NarumaruServiceImpl implements NarumaruService {
 	@Override
 	public void deleteCategory(int nmno, int cano) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Narumaru insertNarumaru(Narumaru nm) throws NarumaruException {
+		return nmd.insertNarumaru(sqlSession, nm);	
 		
 	}
 }

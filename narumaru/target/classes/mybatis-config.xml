@@ -6,12 +6,20 @@
 <configuration>
 	<typeAliases>
 		<typeAlias alias="Member" type="com.kh.narumaru.member.model.vo.Member"/>
-		<typeAlias alias="Board" type="com.kh.narumaru.board.model.vo.Board"/>
+		<typeAlias alias="Board" type="com.kh.narumaru.narumaru.model.vo.Board"/>
+		<typeAlias alias="Narumaru" type="com.kh.narumaru.narumaru.model.vo.Narumaru"/>
+		<typeAlias alias="Declaration" type="com.kh.narumaru.declaration.model.vo.Declaration"/>
+		<typeAlias alias="Payment" type="com.kh.narumaru.payment.model.vo.Payment"/>
+		<typeAlias alias="MaruMember" type="com.kh.narumaru.maru.model.vo.MaruMember"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="mappers/member-mapper.xml"/>
 		<mapper resource="mappers/board-mapper.xml"/>
+		<mapper resource="mappers/declaration-mapper.xml"/>
+		<mapper resource="mappers/payment-mapper.xml"/>
+		<mapper resource="mappers/narumaru-mapper.xml"/>
+		<mapper resource="mappers/maru-mapper.xml"/>
 	</mappers>
 	
 </configuration>

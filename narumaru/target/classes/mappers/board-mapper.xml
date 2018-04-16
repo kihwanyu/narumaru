@@ -22,14 +22,13 @@
 		<result property="cno" column="CNO"/>
 	</resultMap>
 	
-	<select id="selectBoardListAll" resultMap="boardResultSet" parameterType="_int">
+	<select id="selectBoardList" resultMap="boardResultSet" parameterType="_int">
 		SELECT BNO, B_TNO, B_TYPE, B_TITLE, B_CONTENT, B_HIDDEN, b.MNO, M.NICNAME, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, NMNO, CANO, CNO
 		FROM BOARD B
 		JOIN MEMBER M ON(B.NMNO = M.MNO)
 		WHERE NMNO = #{nmno} AND B.STATUS = 'Y'
 		ORDER BY BNO DESC
 	</select>
-	
 </mapper>
 
 

@@ -2,8 +2,10 @@ package com.kh.narumaru.narumaru.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.narumaru.narumaru.exception.NarumaruException;
 import com.kh.narumaru.narumaru.model.vo.Board;
 import com.kh.narumaru.narumaru.model.vo.Category;
+import com.kh.narumaru.narumaru.model.vo.Narumaru;
 
 public interface NarumaruService {
 
@@ -14,4 +16,6 @@ public interface NarumaruService {
 	void insertCategory(int nmno, Category c);
 	
 	void deleteCategory(int nmno, int cano);
+	
+	Narumaru insertNarumaru(Narumaru nm) throws NarumaruException;
 }

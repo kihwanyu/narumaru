@@ -98,21 +98,21 @@
 			<br>
 			<ul id="marutype-inner">
 				<li>
-					<input type="radio" value="type1" name="maruType" id="maruType1">
+					<input type="radio" value="비공개" name="maruType" id="maruType1" checked>
 					<label for="maruType1">
 						<strong>비공개 마루</strong><br>
 						<span>밴드와 게시글이 공개되지 않습니다. 초대를 통해서만 가입할 수 있습니다.</span>
 					</label>
 				</li>
 				<li>
-					<input type="radio" value="type2" name="maruType" id="maruType2">
+					<input type="radio" value="이름공개" name="maruType" id="maruType2">
 					<label for="maruType2">
 						<strong>마루명 공개 마루</strong><br>
 						<span>누구나 마루를 검색해 찾을 수 있지만, 게시물은 멤버만 볼 수 있습니다.</span>
 					</label>
 				</li>
 				<li>
-					<input type="radio" value="type3" name="maruType" id="maruType3">
+					<input type="radio" value="공개" name="maruType" id="maruType3">
 					<label for="maruType3">
 						<strong>공개 마루</strong><br>
 						<span>누구나 마루를 검색해 찾을 수 있고, 게시물을 볼 수 있습니다.</span>
@@ -126,7 +126,7 @@
 			<button onclick="insertDetail();">완료</button>
 			<script>
 				function insertDetail(){
-					location.href="${contextPath}/insertDetail.ma";					
+					location.href="${contextPath}/insertNarumaru.nm?nmCategory=1&nmTitle="+$("#maru-name").val() + "&isOpen=" + $(":checked").val() +"&nmIntro=${loginUser.nickName}님의 마루입니다";					
 				}
 			</script>
 			

@@ -39,7 +39,6 @@ public class MemberController {
 			/*return "main/main";*/
 			
 			mv.addObject("loginUser", loginUser);
-			status.setComplete();
 			mv.setViewName("main/main");
 			
 		} catch (LoginException e) {

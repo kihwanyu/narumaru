@@ -1,12 +1,20 @@
 package com.kh.narumaru.maru.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.kh.narumaru.maru.exception.MaruException;
+import com.kh.narumaru.maru.model.service.MaruService;
+import com.kh.narumaru.maru.model.vo.MaruMember;
 
 @Controller
 @SessionAttributes("loginUser")
 public class MaruController {
+	@Autowired
+	private MaruService ms;
 	
 	@RequestMapping(value="maruInsertView.ma")
 	public String showMaruInsertView(){
@@ -52,4 +60,16 @@ public class MaruController {
 		return "maru/maruSetting";
 	}
 	
+	@RequestMapping("insertMaruMember.ma")
+	public ModelAndView insertMaruMameber(MaruMember mm, ModelAndView mv){
+		try {
+			ms.insertMaruMember(mm);
+			
+		} catch (MaruException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return mv;
+	}
 }
