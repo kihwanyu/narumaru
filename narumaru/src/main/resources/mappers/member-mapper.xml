@@ -7,7 +7,7 @@
 	
 	<resultMap type="Member" id="memberResultSet">
 		<id property="mid" column="MNO"/>
-		<result property="Email" column="EMAIL"/>
+		<result property="email" column="email"/>
 		<result property="userPwd" column="PASSWORD"/>
 		<result property="nickName" column="NICNAME"/>
 		<result property="profileName" column="PROFILENAME"/>
@@ -20,15 +20,15 @@
 	
 	<select id="loginCheck" resultMap="memberResultSet" parameterType="Member">
 		<!-- SELECT * FROM MEMBER WHERE USER_ID=#{userId} AND USER_PWD=#{userPwd} AND STATUS = 'Y' -->
-		SELECT * FROM MEMBER WHERE EMAIL = #{Email} AND STATUS='Y'
+		SELECT * FROM MEMBER WHERE email = #{email} AND STATUS='Y'
 	</select>
 	
 	<select id="selectPwd" resultType="java.lang.String" parameterType="java.lang.String">
-		SELECT PASSWORD FROM MEMBER WHERE EMAIL = #{Email} AND STATUS = 'Y'
+		SELECT PASSWORD FROM MEMBER WHERE email = #{email} AND STATUS = 'Y'
 	</select>
 	
 	<insert id="insertMember">
-		INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, #{Email}, #{userPwd}, #{nickName}, NULL, #{gender}, #{phone}, SYSDATE, SYSDATE, 'Y')
+		INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, #{email}, #{userPwd}, #{nickName}, NULL, #{gender}, #{phone}, SYSDATE, SYSDATE, default)
 	</insert>
 	
 	<insert id="insertBoard">
