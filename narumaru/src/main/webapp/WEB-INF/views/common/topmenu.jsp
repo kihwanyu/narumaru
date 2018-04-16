@@ -136,7 +136,7 @@
 				<div id="profile"  onclick="clickProfile(this)">
 					<div id="pArea" class="profile-dropdown" style="display:none;">
 		                <ul>
-		                    <li><a href="#">마이 페이지 </a></li>
+		                    <li><a href="myInfoView.me">마이 페이지 </a></li>
 		                    <li><a href="#">초대코드 입력</a></li>
 		                    <li><a href="#">공지사항</a></li>
 		                    <li><a href="#">이메일 알림 설정</a></li>
