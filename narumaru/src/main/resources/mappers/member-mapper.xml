@@ -28,13 +28,12 @@
 	</select>
 	
 	<insert id="insertMember">
-		INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, #{userId}, #{userPwd}, #{userName}, #{email}, #{birthDay}, #{gender}, #{phone}, #{address}, SYSDATE, SYSDATE, DEFAULT)
+		INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, #{Email}, #{userPwd}, #{nickName}, NULL, #{gender}, #{phone}, SYSDATE, SYSDATE, 'Y')
 	</insert>
 	
 	<insert id="insertBoard">
 		INSERT INTO BOARD(BID) VALUES(SEQ_BID.NEXTVAL)
 	</insert>
-	
 	
 			
 </mapper>
