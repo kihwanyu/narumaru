@@ -11,10 +11,10 @@
 <body>
 	<c:set var="selected_li" value="class=\"selected-li\" style=\"background: #8C8E8D;\"" scope="page"/>
 	
-	<%-- <c:if test="${empty loginUser}">
+	<c:if test="${empty loginUser}">
 		<c:set var="message" value="잘못된 접근입니다. 로그인 후 이용해주세요." scope="request"/>
 		<jsp:forward page="../common/errorPage.jsp"/>
-	</c:if> --%>
+	</c:if>
 	<div id="left-sidebar">
 		<ul>
 			<c:choose>
@@ -27,7 +27,7 @@
 			</c:choose>
 			<!-- 스타일이 적용안되서 배경색을 인라인으로 적용 -->
 				<div class="left-sidebar-li" id="myInfo-div">
-					내 정보 ${empty loginUser }
+					내 정보
 				</div>
 				<div align="right">
 					<img src="resources/images/right_arrow.png" height="20px">

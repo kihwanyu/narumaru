@@ -39,7 +39,7 @@ public class MemberController {
 			/*return "main/main";*/
 			
 			mv.addObject("loginUser", loginUser);
-			status.setComplete();
+			//status.setComplete();
 			mv.setViewName("main/main");
 			
 		} catch (LoginException e) {
@@ -62,6 +62,68 @@ public class MemberController {
 		return "member/memberInsertForm";
 	}
 	
+	//마이페이지 Info start//
 	
+	
+	//마이페이지 Info end//
+	
+	// 마이페이지 페이지 이동 start
+	@RequestMapping(value="myInfoView.me")
+	public ModelAndView myInfoForward(ModelAndView mv){
+		
+		mv.setViewName("mypage/myPage_myInfo");
+		
+		return mv;
+	}
+	@RequestMapping(value="myboardView.me")
+	public ModelAndView myBoardForward(ModelAndView mv){
+		
+		mv.setViewName("mypage/myPage_myboard");
+		
+		return mv;
+	}
+	@RequestMapping(value="myLoginView.me")
+	public ModelAndView myLoginForward(ModelAndView mv){
+		
+		mv.setViewName("mypage/myPage_loginRecord");
+		
+		return mv;
+	}
+	@RequestMapping(value="invitedMaruView.me")
+	public ModelAndView invitedMaruForward(ModelAndView mv){
+		
+		mv.setViewName("mypage/myPage_invitedMaru");
+		
+		return mv;
+	}
+	@RequestMapping(value="resisteredMaruView.me")
+	public ModelAndView resisteredMaruForward(ModelAndView mv){
+		
+		mv.setViewName("mypage/myPage_resisteredMaru");
+		
+		return mv;
+	}
+	@RequestMapping(value="naruNeighborListView.me")
+	public ModelAndView NaruNeighborListForward(ModelAndView mv){
+		
+		mv.setViewName("mypage/myPage_NaruNeighborList");
+		
+		return mv;
+	}
+	@RequestMapping(value="pointPaymentView.me")
+	public ModelAndView pointPaymentForward(ModelAndView mv){
+		
+		mv.setViewName("mypage/myPage_pointPayment");
+		
+		return mv;
+	}
+	@RequestMapping(value="refundView.me")
+	public ModelAndView RefundForward(ModelAndView mv){
+		
+		mv.setViewName("mypage/myPage_refund");
+		
+		return mv;
+	}
+	// 마이페이지 페이지 이동 end
 	
 }
