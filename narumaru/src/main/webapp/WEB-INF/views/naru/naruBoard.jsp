@@ -41,8 +41,8 @@
 			<c:set var="beginPage" value="0"/>
 			<!-- 먼저 불러온 갯수를 계산한다. -->
 			<c:choose>
-				<c:when test="${list.size() > 4}">
-					<c:set var="newPage" value="4"/>
+				<c:when test="${list.size() > 9}">
+					<c:set var="newPage" value="9"/>
 				</c:when>
 				<c:otherwise>
 					<c:set var="newPage" value="${list.size()}"/>
@@ -53,7 +53,7 @@
 			<div class="board">
 				<div class="boardInfo">
 					<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
-					<div style="display:inline-block;"><label>${b.bTitle}${i.count}</label><br><label>${b.createDate}</label></div>
+					<div style="display:inline-block;"><label>${b.bno}</label><br><label>${b.createDate}</label></div>
 					<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">
 						<img src="resources/images/menu.png" class="modifyMenu size100per">
 						<div class="sub boardSub">
@@ -146,16 +146,22 @@
 		            
 		        if(Math.ceil(scrollHeight) == parseInt(documentHeight)) { //문서의 맨끝에 도달했을때 내용 추가 올림처리 정확하게 표시
 		        	//새로 불러올 id계산
-		        	newPage = newPage + 5;
-		        	<c:set var="newPage" value="${newPage + 5}"/>
+		        	newPage = newPage + 10;
+		        	console.log("1 : " + newPage);
+		        	<c:set var="newPage" value="${newPage + 10}"/>
+		        	console.log("1re : " + newPage);
+		        	console.log("2 : ${newPage}");
 		        	
 		        	//새로 불러올게 페이지가 들고있는 글 갯수를 넘으면 안되니까 사이즈 재조정
 		        	if(newPage >= listSize){
-		        		<c:set var="newPage" value="${list.size()}"/>
+		        		<c:if test="${newPage >= list.size()}">
+		        			<c:set var="newPage" value="${list.size()}"/>
+		        		</c:if>
 		        		newPage = listSize;
 		        		isEnd = true;
-		        		clearTimeout(reload);
+		        		/* clearTimeout(reload); */
 		        	}
+		        	
 		        	
 		        	//페이지 한번 클리어
 		        	$(".content").html("");
@@ -181,6 +187,7 @@
 					+	'<button class="floatRight inertBoardBtn">작성</button>'
 					+	'</div>'
 					+	'</div>')
+					
 		        	
 		        	//페이지 전부 다시불러옴
 		        	<c:forEach var="b" begin="0" end="${list.size()}" items="${list}" varStatus="i">
@@ -192,7 +199,7 @@
 		        		$(".content").append('<div class="board">'
 								+'<div class="boardInfo">'
 								+'<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
-								+'<label>${b.bTitle}</label><br><label>${b.createDate}</label>'
+								+'<label>${b.bno}</label><br><label>${b.createDate}</label>'
 								+'<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">'
 								+'	<img src="resources/images/menu.png" class="modifyMenu size100per">'
 								+'		<div class="sub boardSub">'
@@ -247,7 +254,7 @@
 		        	</c:forEach>
 		        	
 		        }
-			}, 3000);
+			}, 2000);
 		});
 		function replyOpen(btn){
 			$(btn).parent().parent().siblings(".insertReply").toggle();			
