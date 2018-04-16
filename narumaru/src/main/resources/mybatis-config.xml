@@ -22,4 +22,4 @@
 		<mapper resource="mappers/maru-mapper.xml"/>
 	</mappers>
 	
-</configuration>
+</configuration> 
