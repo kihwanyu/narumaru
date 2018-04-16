@@ -18,11 +18,14 @@ public class Board implements java.io.Serializable {
 	private int nmno;
 	private int cano;
 	private int cno;
+	private int bLevel;
+	private int targetBno;
 	
 	public Board(){}
 
 	public Board(int bno, int bTno, int bType, String bTitle, String bContent, String bHidden, int mno, String bWriter,
-			Date createDate, Date modifyDate, String status, int nmno, int cano, int cno) {
+			Date createDate, Date modifyDate, String status, int nmno, int cano, int cno, int bLevel, int targetBno) {
+		super();
 		this.bno = bno;
 		this.bTno = bTno;
 		this.bType = bType;
@@ -37,6 +40,8 @@ public class Board implements java.io.Serializable {
 		this.nmno = nmno;
 		this.cano = cano;
 		this.cno = cno;
+		this.bLevel = bLevel;
+		this.targetBno = targetBno;
 	}
 
 	public int getBno() {
@@ -151,13 +156,31 @@ public class Board implements java.io.Serializable {
 		this.cno = cno;
 	}
 
+	public int getbLevel() {
+		return bLevel;
+	}
+
+	public void setbLevel(int bLevel) {
+		this.bLevel = bLevel;
+	}
+
+	public int getTargetBno() {
+		return targetBno;
+	}
+
+	public void setTargetBno(int targetBno) {
+		this.targetBno = targetBno;
+	}
+
 	@Override
 	public String toString() {
 		return "Board [bno=" + bno + ", bTno=" + bTno + ", bType=" + bType + ", bTitle=" + bTitle + ", bContent="
 				+ bContent + ", bHidden=" + bHidden + ", mno=" + mno + ", bWriter=" + bWriter + ", createDate="
 				+ createDate + ", modifyDate=" + modifyDate + ", status=" + status + ", nmno=" + nmno + ", cano=" + cano
-				+ ", cno=" + cno + "]";
+				+ ", cno=" + cno + ", bLevel=" + bLevel + ", targetBno=" + targetBno + "]";
 	}
+
+	
 
 	
 }

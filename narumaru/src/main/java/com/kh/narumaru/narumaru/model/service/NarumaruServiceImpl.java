@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.narumaru.narumaru.model.dao.NarumaruDao;
 import com.kh.narumaru.narumaru.model.vo.Board;
 import com.kh.narumaru.narumaru.model.vo.Category;
+import com.kh.narumaru.narumaru.model.vo.Narumaru;
 
 @Service
 public class NarumaruServiceImpl implements NarumaruService {
@@ -42,5 +43,10 @@ public class NarumaruServiceImpl implements NarumaruService {
 	public void deleteCategory(int nmno, int cano) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Narumaru selectNarumaruOne(int nmno) {
+		return nmd.selectNarumaruOne(nmno);
 	}
 }

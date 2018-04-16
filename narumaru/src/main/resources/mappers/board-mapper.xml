@@ -20,6 +20,19 @@
 		<result property="nmno" column="NMNO"/>
 		<result property="cano" column="CANO"/>
 		<result property="cno" column="CNO"/>
+		<result property="bLevel" column="B_LEVEL"/>
+		<result property="targetBno" column="TARGET_BNO"/>
+	</resultMap>
+	
+	<resultMap type="Narumaru" id="narumaruResultSet">
+		<id property="nmno" column="NMNO"/>
+		<result property="nmCategory" column="NM_CATEGORY"/>
+		<result property="cno" column="CNO"/>
+		<result property="nmTitle" column="NM_TITLE"/>
+		<result property="nmIntro" column="NM_INTRO"/>
+		<result property="createDate" column="CREATE_DATE"/>
+		<result property="isOpen" column="IS_OPEN"/>
+		<result property="status" column="STATUS"/>
 	</resultMap>
 	
 	<select id="selectBoardList" resultMap="boardResultSet" parameterType="_int">
@@ -28,6 +41,11 @@
 		JOIN MEMBER M ON(B.NMNO = M.MNO)
 		WHERE NMNO = #{nmno} AND B.STATUS = 'Y'
 		ORDER BY BNO DESC
+	</select>
+	
+	<select id="selectNarumaruOne" resultMap="narumaruResultSet" parameterType="Narumaru">
+		SELECT * FROM NARUMARU
+		WHERE NMNO = #{nmno} AND STATUS = 'Y'
 	</select>
 	
 </mapper>

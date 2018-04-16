@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.narumaru.narumaru.model.vo.Board;
 import com.kh.narumaru.narumaru.model.vo.Category;
+import com.kh.narumaru.narumaru.model.vo.Narumaru;
 
 @Repository
 public class NarumaruDaoImpl implements NarumaruDao {
@@ -40,6 +41,16 @@ public class NarumaruDaoImpl implements NarumaruDao {
 	public void deleteCategory(int nmno, int cano) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Narumaru selectNarumaruOne(int nmno) {
+		
+		Narumaru nm = (Narumaru)sqlSession.selectOne("Board.selectNarumaruOne", nmno);
+		
+		System.out.println("narumarudao : " + nm);
+		
+		return nm;
 	}
 
 }
