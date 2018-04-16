@@ -5,7 +5,7 @@
 
 <configuration>
 	<typeAliases>
-		<typeAlias alias="Member" type="com.kh.narumaru.member.model.vo.Member"/>
+		<typeAlias alias="Member" type="com.kh.narumaru.member.model.vo.Member"/>  
 		<typeAlias alias="Board" type="com.kh.narumaru.narumaru.model.vo.Board"/>
 	</typeAliases>
 	 
@@ -18,4 +18,4 @@
 		<mapper resource="mappers/maru-mapper.xml"/>
 	</mappers>
 	
-</configuration>
+</configuration> 
