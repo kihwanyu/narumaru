@@ -7,10 +7,6 @@
 	<typeAliases>
 		<typeAlias alias="Member" type="com.kh.narumaru.member.model.vo.Member"/>
 		<typeAlias alias="Board" type="com.kh.narumaru.narumaru.model.vo.Board"/>
-		<typeAlias alias="Narumaru" type="com.kh.narumaru.narumaru.model.vo.Narumaru"/>
-		<typeAlias alias="Declaration" type="com.kh.narumaru.declaration.model.vo.Declaration"/>
-		<typeAlias alias="Payment" type="com.kh.narumaru.payment.model.vo.Payment"/>
-		<typeAlias alias="MaruMember" type="com.kh.narumaru.maru.model.vo.MaruMember"/>
 	</typeAliases>
 	 
 	<mappers>

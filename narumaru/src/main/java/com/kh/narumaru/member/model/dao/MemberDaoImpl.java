@@ -34,4 +34,11 @@ public class MemberDaoImpl implements MemberDao{
 		return member;
 	}
 
+
+	@Override
+	public int insertMember(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.insert("Member.insertMember", m);
+	}
+
 }

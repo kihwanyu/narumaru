@@ -36,7 +36,9 @@
 float: left; 
 width: 66%; 
 text-align: left;
+cursor: pointer;
 }
+
 .selected-li {
 	padding: 10px;
 	text-align: center;

@@ -7,4 +7,6 @@ public interface MemberService {
 
 	Member loginMember(Member m) throws LoginException;
 
+	void insertMember(Member m);
+
 }
