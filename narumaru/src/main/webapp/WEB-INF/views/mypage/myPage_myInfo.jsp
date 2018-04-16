@@ -37,7 +37,7 @@
 							</td>
 							<td width="15%">
 								<div align="center" style="padding: 20px; padding-top: 40px; padding-bottom: 40px;">
-									<input type="button" value="변경" class="btn btn-default" id="profile-chage">
+									<input type="button" value="변경" class="btn btn-default" id="profile-change-btn">
 								</div>
 							</td>
 						</tr>
@@ -235,7 +235,9 @@
 				</form>
 			</div>
 		</div>
-		<input type="file" id="profile-file" name="profile-file" onchange="LoadImg(this);">
+		<form role="profile" action="" enctype="multipart/form-data">
+			<input type="file" id="profile-file" name="profile-file" onchange="LoadImg(this);">
+		</form>
 		<jsp:include page="../common/myPage_RightSideBar.jsp"/>
 		<!--  -->
 		<script type="text/javascript">
@@ -244,14 +246,16 @@
 			$("#profileImg").click(function(){
 				$("#profile-file").click();
 			});
-			$("#profile-chage").click(function(){
-				var profileName = $("#profile-file").val();
-				console.log(fileName);
+			$("#profile-change-btn").click(function(){
 				
+				//https://blog.naver.com/passion97/220554657075
+				//formData 까지 만듬.. Controller 만들어야됨
+				var formDate = new FormData($("form[role='profile']"));
 				$.ajax({
-					url:"profileChage.me",
+					url:"profileChange.me",
 					type:"post",
-					data:{profileName:profileName},
+					dataType:"JSON",
+					data:formDate,
 					success:function(data){
 						console.log(data);
 						//console.log(data.member.userId);
@@ -259,6 +263,7 @@
 				});
 			});
 		});
+		
 		function LoadImg(value) {
 			if(value.files && value.files[0]){
 				
