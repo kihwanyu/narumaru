@@ -19,6 +19,12 @@
 		<result property="status" column="STATUS"/>
 	</resultMap> 
 	
+	<resultMap type="Chanel" id="chanelResultSet">
+		<id property="cno" column="CNO"/>
+		<result property="cname" column="CNAME"/>
+		<result property="cphoto" column="CPHOTO"/>
+	</resultMap> 
+	
 	<select id="loginCheck" resultMap="memberResultSet" parameterType="Member">
 		<!-- SELECT * FROM MEMBER WHERE USER_ID=#{userId} AND USER_PWD=#{userPwd} AND STATUS = 'Y' -->
 		SELECT * FROM MEMBER WHERE EMAIL = #{email} AND STATUS='Y'
