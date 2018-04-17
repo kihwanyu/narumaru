@@ -1,10 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.net.URLEncoder" %>
+<%@ page import="java.security.SecureRandom" %>
+<%@ page import="java.math.BigInteger" %>
+
 <!DOCTYPE html>
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
 <link href='https://fonts.googleapis.com/css?family=Roboto:300,400' rel='stylesheet' type='text/css'>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.11.3/paper-full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.11.5/paper-full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <html>
 <head>
 <style>
@@ -311,10 +319,6 @@ $font-default: 'Roboto', sans-serif;
 </div>
 
 
-
-
-
-
 	<div id="slideBox">
 	  <div class="topLayer">
 	    <div class="left">
@@ -322,8 +326,79 @@ $font-default: 'Roboto', sans-serif;
 	        <h2>회원가입</h2>
 	        <form action="insertMember.me" method="post"><!--  onsubmit="return false;" -->
 	          <div class="form-element form-stack">
-	            <label for="email" class="form-label">이메일</label>
-	            <input id="email" type="email" name="email">
+	            
+	           <%--  <%
+				    String clientId = "X5Nvd2AMVmO6GqWemA5v";//애플리케이션 클라이언트 아이디값";
+				    String redirectURI = URLEncoder.encode("http://127.0.0.1:8011/narumaru/naverLogin.me", "UTF-8");
+				    SecureRandom random = new SecureRandom();
+				    String state = new BigInteger(130, random).toString();
+				    String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
+				    apiURL += "&client_id=" + clientId;
+				    apiURL += "&redirect_uri=" + redirectURI;
+				    apiURL += "&state=" + state;
+				    session.setAttribute("state", state);
+				 %>
+				  <a href="<%=apiURL%>"><img height="50" src="http://static.nid.naver.com/oauth/small_g_in.PNG"/></a> --%>
+				  
+				<!-- 네이버아이디로로그인 버튼 노출 영역 -->
+				  <!-- <div id="naver_id_login"></div> -->
+				  <!-- //네이버아이디로로그인 버튼 노출 영역 -->
+				 <!--  <script type="text/javascript">
+				  	var naver_id_login = new naver_id_login("X5Nvd2AMVmO6GqWemA5v", "http://127.0.0.1:8011/narumaru/naverLogin.me");
+				  	var state = naver_id_login.getUniqState();
+				  	naver_id_login.setButton("white", 2,40);
+				  	naver_id_login.setDomain("http://127.0.0.1:8011/narumaru");
+				  	naver_id_login.setState(state);
+				  	naver_id_login.setPopup();
+				  	naver_id_login.init_naver_id_login();
+				  </script> -->
+				  
+				  
+				  
+				  
+				  <a id="kakao-login-btn"></a>
+			    	<a href="http://developers.kakao.com/logout"></a>
+				    <script type='text/javascript'>
+						  //<![CDATA[
+						    // 사용할 앱의 JavaScript 키를 설정해 주세요.
+						    Kakao.init('8cdd2bce65bbe02b9ed32992538361cc');
+						    // 카카오 로그인 버튼을 생성합니다.
+						    Kakao.Auth.createLoginButton({
+						      container: '#kakao-login-btn',
+						      success: function(authObj) {
+						        // 로그인 성공시, API를 호출합니다.
+						        Kakao.API.request({
+						          url: '/v1/user/me',
+						          success: function(res) {
+						            console.log(JSON.stringify(res));
+						            
+						           /*  kaccount_email
+						            nickname */
+						            var email = res.kaccount_email;
+						            var nickName = res.properties.nickname;
+						            console.log(email);
+						            console.log(nickName);
+									
+						            location.href='${contextPath}/kakaoLogin.me?email='+email+'&nickname='+nickName;
+						            
+						          },
+						          fail: function(error) {
+						            alert(JSON.stringify(error));
+						          }
+						        });
+						      },
+						      fail: function(err) {
+						        alert(JSON.stringify(err));
+						      }
+						    });
+						  //]]>
+						</script>
+				  
+				  
+				  
+				
+				  
+				  
 	          </div>
 	          <div class="form-element form-stack">
 	            <label for="username-signup" class="form-label">이름</label>
@@ -350,7 +425,7 @@ $font-default: 'Roboto', sans-serif;
 	        <form action="login.me" method="post">
 	          <div class="form-element form-stack">
 	            <label for="username-login" class="form-label">이메일</label>
-	            <input id="username-login" type="text" name="Email">
+	            <input id="username-login" type="text" name="email">
 	          </div>
 	          <div class="form-element form-stack">
 	            <label for="password-login" class="form-label">비밀번호</label>

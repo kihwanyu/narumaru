@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,7 +71,6 @@ public class MemberController {
 	
 	@RequestMapping(value="insertMember.me", method=RequestMethod.POST)
 	public String showInsertMember(){
-		System.out.println("로그인!!!!!!!");
 		
 		return "member/memberInsertForm";
 	}
@@ -97,6 +97,39 @@ public class MemberController {
 		}
 		
 	}
+	
+	/*@RequestMapping(value="naverLogin.me")
+	public String naverLogin(){
+		
+		return "main/callback";
+	}
+	*/
+	
+	@RequestMapping(value="kakaoLogin.me")
+	public ModelAndView kakaoLogin(HttpServletRequest request, HttpServletResponse response, ModelAndView mv){
+		
+		System.out.println("여기?????????????");
+		
+		String email = request.getParameter("email");
+		String nickname = request.getParameter("nickname");
+		
+		Member m = new Member();
+		m.setEmail(email);
+		m.setNickName(nickname);
+		
+		mv.addObject("member", m);
+		mv.setViewName("member/memberInsertForm");
+		
+		return mv;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	//마이페이지 Info start//
 	

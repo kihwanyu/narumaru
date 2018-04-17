@@ -1,10 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.kh.narumaru.member.model.vo.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%-- <%@ page import="java.net.URLEncoder" %>
+<%@ page import="java.net.URL" %>
+<%@ page import="java.net.HttpURLConnection" %>
+<%@ page import="java.io.BufferedReader" %>
+<%@ page import="java.io.InputStreamReader" %> --%>
+
+
 <!DOCTYPE html>
 <html>
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <head>
 <style>
 	body{
@@ -42,6 +50,67 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+				<%-- <%
+					    String clientId = "X5Nvd2AMVmO6GqWemA5v";//애플리케이션 클라이언트 아이디값";
+					    String clientSecret = "yf8f2GtrEs";//애플리케이션 클라이언트 시크릿값";
+					    String code = request.getParameter("code");
+					    String state = request.getParameter("state");
+					    String redirectURI = URLEncoder.encode("YOUR_CALLBACK_URL", "UTF-8");
+					    String apiURL;
+					    apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
+					    apiURL += "client_id=" + clientId;
+					    apiURL += "&client_secret=" + clientSecret;
+					    apiURL += "&redirect_uri=" + redirectURI;
+					    apiURL += "&code=" + code;
+					    apiURL += "&state=" + state;
+					    String access_token = "";
+					    String refresh_token = "";
+					    System.out.println("apiURL="+apiURL);
+					    try {
+					      URL url = new URL(apiURL);
+					      HttpURLConnection con = (HttpURLConnection)url.openConnection();
+					      con.setRequestMethod("GET");
+					      int responseCode = con.getResponseCode();
+					      BufferedReader br;
+					      System.out.print("responseCode="+responseCode);
+					      if(responseCode==200) { // 정상 호출
+					        br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+					      } else {  // 에러 발생
+					        br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+					      }
+					      String inputLine;
+					      StringBuffer res = new StringBuffer();
+					      while ((inputLine = br.readLine()) != null) {
+					        res.append(inputLine);
+					      }
+					      br.close();
+					      if(responseCode==200) {
+					        //out.println(res.toString());
+					      }
+					    } catch (Exception e) {
+					      System.out.println(e);
+					    }
+  			%> --%>
+  
+  
+			<!-- <script type="text/javascript">
+			  var naver_id_login = new naver_id_login("X5Nvd2AMVmO6GqWemA5v", "http://127.0.0.1:8011/narumaru/naverLogin.me");
+			  // 접근 토큰 값 출력
+			  alert(naver_id_login.oauthParams.access_token);
+			  // 네이버 사용자 프로필 조회
+			  naver_id_login.get_naver_userprofile("naverSignInCallback()");
+			  // 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
+			  function naverSignInCallback() {
+			    alert(naver_id_login.getProfileData('email'));
+			    alert(naver_id_login.getProfileData('nickname'));
+			    alert(naver_id_login.getProfileData('age'));
+	 			 }
+			  </script> -->
+	
+	
+
+
 	<div align="center" class="mifh">
 		<img src="${contextPath }/resources/images/logo.png" style="width:70px;height:26px; margin-top:20px;"/>
 	</div>
@@ -97,7 +166,7 @@
             <div class="form-group" id="divId">
                 <label for="inputId" class="col-lg-2 control-label">아이디</label>
                 <div class="col-lg-10">
-                    <input type="text" name="email" class="form-control onlyAlphabetAndNumber" id="id" data-rule-required="true" placeholder="30자이내의 알파벳, 언더스코어(_), 숫자만 입력 가능합니다." maxlength="30">
+                    <input type="text" name="email" value="${member.email} " class="form-control onlyAlphabetAndNumber" id="id" data-rule-required="true" placeholder="30자이내의 알파벳, 언더스코어(_), 숫자만 입력 가능합니다." maxlength="30">
                 </div>
             </div>
             <div class="form-group" id="divPassword">
@@ -116,10 +185,15 @@
             <div class="form-group" id="divNickname">
                 <label for="inputNickname" class="col-lg-2 control-label">별명</label>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control" id="nickname" name="nickName" data-rule-required="true" placeholder="별명" maxlength="15">
+                    <input type="text" class="form-control" id="nickname" name="nickName" data-rule-required="true" placeholder="별명" maxlength="15" value="${member.nickName }">
                 </div>
             </div>
-             
+            <div class="form-group" id="divBirthDay">
+                <label class="col-lg-2 control-label">생일</label>
+                <div class="col-lg-10">
+                    <input type="date" class="form-control" id="birthDay" name="birthDay">
+                </div>
+            </div> 
             <div class="form-group" id="divPhoneNumber">
                 <label for="inputPhoneNumber" class="col-lg-2 control-label">휴대폰 번호</label>
                 <div class="col-lg-10">

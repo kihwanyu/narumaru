@@ -7,11 +7,12 @@
 	
 	<resultMap type="Member" id="memberResultSet">
 		<id property="mid" column="MNO"/>
-		<result property="email" column="email"/>
+		<result property="email" column="EMAIL"/>
 		<result property="userPwd" column="PASSWORD"/>
 		<result property="nickName" column="NICNAME"/>
 		<result property="profileName" column="PROFILENAME"/>
 		<result property="gender" column="GENDER"/>
+		<result property="birthDay" column="BIRTHDAY"/>
 		<result property="phone" column="PHONE"/>
 		<result property="enroll_date" column="ENROLL_DATE"/>
 		<result property="modify_date" column="MODIFY_DATE"/>
@@ -20,15 +21,18 @@
 	
 	<select id="loginCheck" resultMap="memberResultSet" parameterType="Member">
 		<!-- SELECT * FROM MEMBER WHERE USER_ID=#{userId} AND USER_PWD=#{userPwd} AND STATUS = 'Y' -->
-		SELECT * FROM MEMBER WHERE email = #{email} AND STATUS='Y'
+		SELECT * FROM MEMBER WHERE EMAIL = #{email} AND STATUS='Y'
 	</select>
 	
 	<select id="selectPwd" resultType="java.lang.String" parameterType="java.lang.String">
-		SELECT PASSWORD FROM MEMBER WHERE email = #{email} AND STATUS = 'Y'
+		<!-- SELECT PASSWORD FROM MEMBER WHERE EMAIL=#{email} AND STATUS = 'Y' -->
+		SELECT PASSWORD FROM MEMBER WHERE EMAIL like #{email}||'%' AND STATUS = 'Y'
 	</select>
 	
 	<insert id="insertMember">
+
 		INSERT INTO MEMBER VALUES(SEQ_MNO.NEXTVAL, #{email}, #{userPwd}, #{nickName}, NULL, #{gender}, #{phone}, SYSDATE, SYSDATE, default)
+
 	</insert>
 	
 	<insert id="insertBoard">
