@@ -19,7 +19,7 @@
 		<result property="status" column="STATUS"/>
 	</resultMap> 
 	
-	<resultMap type="Chanel" id="chanelResultSet">
+	<resultMap type="Channel" id="channelResultSet">
 		<id property="cno" column="CNO"/>
 		<result property="cname" column="CNAME"/>
 		<result property="cphoto" column="CPHOTO"/>
@@ -35,10 +35,12 @@
 		SELECT PASSWORD FROM MEMBER WHERE EMAIL like #{email}||'%' AND STATUS = 'Y'
 	</select>
 	
+	<select id="selectAllChanel" resultMap="channelResultSet">
+		SELECT CNO, CNAME FROM CHANNEL
+	</select>
+	
 	<insert id="insertMember">
-
 		INSERT INTO MEMBER VALUES(SEQ_MNO.NEXTVAL, #{email}, #{userPwd}, #{nickName}, NULL, #{gender}, #{phone}, SYSDATE, SYSDATE, default)
-
 	</insert>
 	
 	<insert id="insertBoard">

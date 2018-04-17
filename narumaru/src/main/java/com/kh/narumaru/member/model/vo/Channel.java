@@ -3,16 +3,16 @@ package com.kh.narumaru.member.model.vo;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Chanel {
+public class Channel {
 	private int cno;
 	private String cname;
 	private String cphoto;
 	
-	public Chanel() {
+	public Channel() {
 		super();
 	}
 	
-	public Chanel(int cno, String cname, String cphoto) {
+	public Channel(int cno, String cname, String cphoto) {
 		super();
 		this.cno = cno;
 		this.cname = cname;

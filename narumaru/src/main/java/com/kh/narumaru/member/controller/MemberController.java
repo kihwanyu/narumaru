@@ -3,6 +3,7 @@ package com.kh.narumaru.member.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,12 +21,15 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.narumaru.member.model.service.ChannelService;
 import com.kh.narumaru.member.model.service.MemberService;
+import com.kh.narumaru.member.model.vo.Channel;
 import com.kh.narumaru.member.model.vo.Member;
 
 
 import com.kh.narumaru.member.model.exception.LoginException;
 import com.kh.narumaru.member.model.exception.ProfileChangeException;
+import com.kh.narumaru.member.model.exception.selectChanelException;
 
 
 @Controller
@@ -35,6 +39,8 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService ms;
+	@Autowired
+	private ChannelService cs;
 	
 	@RequestMapping(value="login.me", method=RequestMethod.POST)
 	public ModelAndView showMainView(Member m, ModelAndView mv, SessionStatus status ){
@@ -195,7 +201,16 @@ public class MemberController {
 	@RequestMapping(value="myInfoView.me")
 	public ModelAndView myInfoForward(ModelAndView mv){
 		
-		mv.setViewName("mypage/myPage_myInfo");
+		ArrayList<Channel> cList = null;
+		try {
+			cList = cs.selectAllChannel();
+			System.out.println("cList : " + cList);
+			mv.addObject("cList", cList);
+			mv.setViewName("mypage/myPage_myInfo");
+		} catch (selectChanelException e) {
+			mv.addObject("message", e.getMessage());
+			mv.setViewName("common/errorPage.jsp");
+		}
 		
 		return mv;
 	}
