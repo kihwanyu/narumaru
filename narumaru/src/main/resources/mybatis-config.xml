@@ -9,6 +9,7 @@
 		<typeAlias alias="Board" type="com.kh.narumaru.narumaru.model.vo.Board"/>
 		<typeAlias alias="Declaration" type="com.kh.narumaru.declaration.model.vo.Declaration"/>
 		<typeAlias alias="Payment" type="com.kh.narumaru.payment.model.vo.Payment"/>
+		<typeAlias alias="Admin" type="com.kh.narumaru.member.model.vo.Member"/>
 	</typeAliases>
 	
 	<mappers>
@@ -16,6 +17,7 @@
 		<mapper resource="mappers/board-mapper.xml"/>
 		<mapper resource="mappers/declaration-mapper.xml"/>
 		<mapper resource="mappers/payment-mapper.xml"/>
+		<mapper resource="mappers/admin-mapper.xml"/>
 	</mappers>
 	
 </configuration>

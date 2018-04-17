@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="Admin">
+	
+	<resultMap type="Member" id="memberResultSet">
+		<id property="mid" column="MNO"/>
+		<result property="Email" column="EMAIL"/>
+		<result property="userPwd" column="PASSWORD"/>
+		<result property="nickName" column="NICNAME"/>
+		<result property="fno" column="FNO"/>
+		<result property="gender" column="GENDER"/>
+		<result property="phone" column="PHONE"/>
+		<result property="enroll_date" column="ENROLL_DATE"/>
+		<result property="modify_date" column="MODIFY_DATE"/>
+		<result property="status" column="STATUS"/>
+	</resultMap>
+	
+	<select id="selectEnroll" resultMap="memberResultSet" parameterType="Member">
+		SELECT ENROLL_DATE FROM MEMBER
+	</select>
+	
+</mapper>
