@@ -6,7 +6,7 @@
 <configuration>
    <typeAliases>
       <typeAlias alias="Member" type="com.kh.narumaru.member.model.vo.Member"/>
-      <typeAlias alias="Chanel" type="com.kh.narumaru.member.model.vo.Member"/>
+      <typeAlias alias="Channel" type="com.kh.narumaru.member.model.vo.Channel"/>
       <typeAlias alias="Board" type="com.kh.narumaru.narumaru.model.vo.Board"/>
       <typeAlias alias="Narumaru" type="com.kh.narumaru.narumaru.model.vo.Narumaru"/>
       <typeAlias alias="Declaration" type="com.kh.narumaru.declaration.model.vo.Declaration"/>
