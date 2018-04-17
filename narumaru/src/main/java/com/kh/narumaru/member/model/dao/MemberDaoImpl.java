@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.narumaru.member.model.exception.LoginException;
 import com.kh.narumaru.member.model.exception.ProfileChangeException;
+import com.kh.narumaru.member.model.exception.birthdayChangeException;
+import com.kh.narumaru.member.model.exception.nameChangeException;
 import com.kh.narumaru.member.model.vo.Member;
 
 
@@ -61,6 +63,27 @@ public class MemberDaoImpl implements MemberDao{
 		
 		if(result <= 0){
 			throw new ProfileChangeException("회원 프로필 변경 실패!!");
+		}
+	}
+
+
+	@Override
+	public void birthdayChange(SqlSessionTemplate sqlSession, Member m) throws birthdayChangeException {
+		
+		int result = sqlSession.update("Member.birthdayChange", m);
+		
+		if(result <= 0){
+			throw new birthdayChangeException("생년월일 변경 실패!!");
+		}
+	}
+
+
+	@Override
+	public void nameChange(SqlSessionTemplate sqlSession, Member m) throws nameChangeException {
+		int result = sqlSession.update("Member.nameChange", m);
+		
+		if(result <= 0){
+			throw new nameChangeException("이름 변경 실패!!");
 		}
 	}
 

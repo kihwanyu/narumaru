@@ -29,6 +29,8 @@ import com.kh.narumaru.member.model.vo.Member;
 
 import com.kh.narumaru.member.model.exception.LoginException;
 import com.kh.narumaru.member.model.exception.ProfileChangeException;
+import com.kh.narumaru.member.model.exception.birthdayChangeException;
+import com.kh.narumaru.member.model.exception.nameChangeException;
 import com.kh.narumaru.member.model.exception.selectChanelException;
 
 
@@ -138,6 +140,52 @@ public class MemberController {
 	
 	
 	//마이페이지 Info start//
+	@RequestMapping(value="nickChange.me", method=RequestMethod.POST)
+	public void nickNameChange(Member m, HttpSession session, HttpServletResponse response){
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		//System.out.println("m : " + m);
+		
+		m.setMid(loginUser.getMid());
+		
+		try {
+			ms.nameChange(m);
+			response.getWriter().print("true");
+		} catch (nameChangeException e) {
+			try {
+				response.getWriter().print("false");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(value="birthdayChange.me", method=RequestMethod.POST)
+	public void birthdayChange(Member m, HttpSession session, HttpServletResponse response){
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		//System.out.println("m : " + m);
+		
+		m.setMid(loginUser.getMid());
+		
+		try {
+			ms.birthdayChange(m);
+			response.getWriter().print("true");
+		} catch (birthdayChangeException e) {
+			try {
+				response.getWriter().print("false");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	@RequestMapping(value="profileChange.me", method=RequestMethod.POST)
 	public void profileChange(@RequestParam(name="profile-file", required=false) MultipartFile profile

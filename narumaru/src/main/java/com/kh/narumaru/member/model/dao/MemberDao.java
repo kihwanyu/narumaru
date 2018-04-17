@@ -4,6 +4,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.narumaru.member.model.exception.LoginException;
 import com.kh.narumaru.member.model.exception.ProfileChangeException;
+import com.kh.narumaru.member.model.exception.birthdayChangeException;
+import com.kh.narumaru.member.model.exception.nameChangeException;
 import com.kh.narumaru.member.model.vo.Member;
 
 public interface MemberDao {
@@ -13,6 +15,10 @@ public interface MemberDao {
 	int insertMember(SqlSessionTemplate sqlSession, Member m);
 
 	void profileChange(SqlSessionTemplate sqlSession, Member m) throws ProfileChangeException;
+
+	void birthdayChange(SqlSessionTemplate sqlSession, Member m) throws birthdayChangeException;
+
+	void nameChange(SqlSessionTemplate sqlSession, Member m) throws nameChangeException;
 
 
 }
