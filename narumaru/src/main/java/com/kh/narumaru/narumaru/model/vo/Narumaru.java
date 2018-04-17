@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class Narumaru implements java.io.Serializable{
 	private int nmno;
-	private String nmCategory;
+	private int nmCategory;
 	private int cno;
 	private String nmTitle;
 	private String nmIntro;
@@ -14,7 +14,7 @@ public class Narumaru implements java.io.Serializable{
 	
 	public Narumaru(){}
 
-	public Narumaru(int nmno, String nmCategory, int cno, String nmTitle, String nmIntro, Date createDate,
+	public Narumaru(int nmno, int nmCategory, int cno, String nmTitle, String nmIntro, Date createDate,
 			String isOpen, String status) {
 		super();
 		this.nmno = nmno;
@@ -35,11 +35,11 @@ public class Narumaru implements java.io.Serializable{
 		this.nmno = nmno;
 	}
 
-	public String getNmCategory() {
+	public int getNmCategory() {
 		return nmCategory;
 	}
 
-	public void setNmCategory(String nmCategory) {
+	public void setNmCategory(int nmCategory) {
 		this.nmCategory = nmCategory;
 	}
 

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="Maru">
+	
+	<resultMap type="MaruMember" id="MaruResultSet">
+		<id property="conno" column="CONNO"/>
+		<result property="mno" column="MNO"/>
+		<result property="conLevel" column="CON_LEVEL"/>
+		<result property="enrollDate" column="ENROLL_DATE"/>
+		<result property="deleteDate" column="DELETE_DATE"/>
+		<result property="status" column="STATUS"/>
+		<result property="nmno" column="NMNO"/>
+	</resultMap>
+
+	<insert id="insertMaruMember">
+		INSERT INTO MARU_MEMBER VALUES(SEQ_CONNO.NEXTVAL, #{mno}, #{conLevel}, SYSDATE, NULL, 'Y', #{nmno})
+	</insert> 
+	
+	<select id="countMaruMember" resultType="_int">
+		SELECT COUNT(*) FROM MARU_MEMBER WHERE NMNO=#{nmno}
+	</select>
+	
+	<select id="selectMaruList" resultMap="MaruResultSet">
+		SELECT NMNO FROM MARU_MEMBER WHERE MNO=#{mno}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  

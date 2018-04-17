@@ -20,6 +20,8 @@
 		<result property="nmno" column="NMNO"/>
 		<result property="cano" column="CANO"/>
 		<result property="cno" column="CNO"/>
+		<result property="bLevel" column="B_LEVEL"/>
+		<result property="targetBno" column="TARGET_BNO"/>
 	</resultMap>
 	
 	<select id="selectBoardList" resultMap="boardResultSet" parameterType="_int">
@@ -29,7 +31,6 @@
 		WHERE NMNO = #{nmno} AND B.STATUS = 'Y'
 		ORDER BY BNO DESC
 	</select>
-	
 </mapper>
 
 

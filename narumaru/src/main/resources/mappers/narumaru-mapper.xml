@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="Narumaru">
+	
+	<resultMap type="Narumaru" id="NarumaruResultSet">
+		<id property="nmno" column="NMNO"/>
+		<result property="nmCategory" column="NM_CATEGORY"/>
+		<result property="cno" column="CNO"/>
+		<result property="nmTitle" column="NM_TITLE"/>
+		<result property="nmIntro" column="NM_INTRO"/>
+		<result property="createDate" column="CREATE_DATE"/>
+		<result property="isOpen" column="IS_OPEN"/>
+		<result property="status" column="STATUS"/>
+	</resultMap> 
+
+	<insert id="insertNarumaru" useGeneratedKeys="true" keyProperty="nmno">
+		<selectKey keyProperty="nmno" resultType="int" order="BEFORE">
+			SELECT SEQ_NMNO.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO NARUMARU VALUES(#{nmno}, #{nmCategory}, #{cno}, #{nmTitle}, #{nmIntro}, SYSDATE, #{isOpen}, 'Y')
+	</insert>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  

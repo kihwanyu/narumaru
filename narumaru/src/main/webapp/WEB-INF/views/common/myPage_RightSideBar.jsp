@@ -53,7 +53,6 @@
 			</div>
 		</div>
 	</div>
-	<input type="file" id="profile-file" name="profile-file" onchange="LoadImg(this);">
 	<script type="text/javascript">
 		$(function(){
 			var menuTop = parseInt($("#menu").css("top"));
@@ -62,22 +61,7 @@
 				$("#menu").stop().animate({"top":$(window).scrollTop()+menuTop+"px"},500);
 			});
 			
-			$("#profile-file").hide();
-			$("#profileImg").click(function(){
-				$("#profile-file").click();
-				console.log($("#profile").val());
-			});
 		});
-		function LoadImg(value) {
-			if(value.files && value.files[0]){
-				
-				var reader = new FileReader();
-				reader.onload = function(e) {
-					$("#profileImg").attr("src", e.target.result);
-				}
-			reader.readAsDataURL(value.files[0]);
-			}
-		}
 	</script>
 </body>
 </html>

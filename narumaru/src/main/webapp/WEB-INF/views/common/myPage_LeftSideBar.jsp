@@ -10,6 +10,11 @@
 </head>
 <body>
 	<c:set var="selected_li" value="class=\"selected-li\" style=\"background: #8C8E8D;\"" scope="page"/>
+	
+	<c:if test="${empty loginUser}">
+		<c:set var="message" value="잘못된 접근입니다. 로그인 후 이용해주세요." scope="request"/>
+		<jsp:forward page="../common/errorPage.jsp"/>
+	</c:if>
 	<div id="left-sidebar">
 		<ul>
 			<c:choose>
@@ -36,7 +41,7 @@
 					<li>
 				</c:otherwise>
 			</c:choose>
-				<div class="left-sidebar-li">
+				<div class="left-sidebar-li" id="myboard-div">
 					내가 쓴 글
 				</div>
 				<div align="right">
@@ -51,7 +56,7 @@
 					<li>
 				</c:otherwise>
 			</c:choose>
-				<div class="left-sidebar-li">
+				<div class="left-sidebar-li" id="myLogin-div">
 					로그인 기록
 				</div>
 				<div align="right">
@@ -66,7 +71,7 @@
 					<li>
 				</c:otherwise>
 			</c:choose>
-				<div class="left-sidebar-li">
+				<div class="left-sidebar-li" id="resisteredMaru-div">
 					가입 신청중인 마루
 				</div>
 				<div align="right">
@@ -81,7 +86,7 @@
 					<li>
 				</c:otherwise>
 			</c:choose>
-				<div class="left-sidebar-li">
+				<div class="left-sidebar-li" id="invitedMaru-div">
 					초대 받은 마루
 				</div>
 				<div align="right">
@@ -96,7 +101,7 @@
 					<li>
 				</c:otherwise>
 			</c:choose>
-				<div class="left-sidebar-li">
+				<div class="left-sidebar-li" id="naruNeighborList-div">
 					나루 구독자 목록
 				</div>
 				<div align="right">
@@ -111,7 +116,7 @@
 					<li>
 				</c:otherwise>
 			</c:choose>
-				<div class="left-sidebar-li">
+				<div class="left-sidebar-li" id="pointPayment-div">
 					포인트 결제/사용 내역
 				</div>
 				<div align="right">
@@ -126,8 +131,7 @@
 					<li>
 				</c:otherwise>
 			</c:choose>
-			<li>
-				<div class="left-sidebar-li">
+				<div class="left-sidebar-li" id="refund-div">
 					포인트 환급 및 내역
 					<!-- 이모티콘, 테마, 글꼴 -->
 				</div>
@@ -141,8 +145,29 @@
 	
 	<script type="text/javascript">
 	$(function(){
-		$("myInfo-div").click(function(){
-			location.replace('');
+		$("#myInfo-div").click(function(){
+			location.replace('myInfoView.me');
+		});
+		$("#myboard-div").click(function(){
+			location.replace('myboardView.me');
+		});
+		$("#myLogin-div").click(function(){
+			location.replace('myLoginView.me');
+		});
+		$("#invitedMaru-div").click(function(){
+			location.replace('invitedMaruView.me');
+		});
+		$("#resisteredMaru-div").click(function(){
+			location.replace('resisteredMaruView.me');
+		});
+		$("#naruNeighborList-div").click(function(){
+			location.replace('naruNeighborListView.me');
+		});
+		$("#pointPayment-div").click(function(){
+			location.replace('pointPaymentView.me');
+		});
+		$("#refund-div").click(function(){
+			location.replace('refundView.me');
 		});
 	});
 	</script>

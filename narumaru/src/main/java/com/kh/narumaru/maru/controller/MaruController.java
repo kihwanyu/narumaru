@@ -1,12 +1,27 @@
 package com.kh.narumaru.maru.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.Gson;
+import com.kh.narumaru.maru.exception.MaruException;
+import com.kh.narumaru.maru.model.service.MaruService;
+import com.kh.narumaru.maru.model.vo.MaruMember;
 
 @Controller
 @SessionAttributes("loginUser")
 public class MaruController {
+	@Autowired
+	private MaruService ms;
 	
 	@RequestMapping(value="maruInsertView.ma")
 	public String showMaruInsertView(){
@@ -50,6 +65,52 @@ public class MaruController {
 	public String showMaruSetting(){
 		
 		return "maru/maruSetting";
+	}
+	
+	@RequestMapping("insertMaruMember.ma")
+	public ModelAndView insertMaruMameber(MaruMember mm, ModelAndView mv){
+		try {
+			ms.insertMaruMember(mm);
+			 
+		} catch (MaruException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("countMaruMember.ma")
+	public void countMaruMamber(int nmno, HttpServletResponse response){
+		try {
+			int result = ms.countMaruMember(nmno);
+			response.getWriter().print(result);
+		} catch (MaruException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("selectMaruList.ma")
+	public void selectMaruList(int mno, HttpServletResponse response){
+		System.out.println(mno);
+		
+		try {
+			ArrayList maruList = ms.selectMaruList(mno);
+			System.out.println(maruList);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			new Gson().toJson(maruList, response.getWriter());
+		} catch (MaruException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

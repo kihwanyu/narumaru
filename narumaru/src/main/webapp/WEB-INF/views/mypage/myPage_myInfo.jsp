@@ -37,7 +37,7 @@
 							</td>
 							<td width="15%">
 								<div align="center" style="padding: 20px; padding-top: 40px; padding-bottom: 40px;">
-									<input type="button" value="변경" class="btn btn-default">
+									<input type="button" value="변경" class="btn btn-default" id="profile-change-btn">
 								</div>
 							</td>
 						</tr>
@@ -235,7 +235,55 @@
 				</form>
 			</div>
 		</div>
+		<form id="profileChage-form" method="post" action="profileChange.me" enctype="multipart/form-data">
+			<input type="file" id="profile-file" name="profile-file" onchange="LoadImg(this);">
+		</form>
 		<jsp:include page="../common/myPage_RightSideBar.jsp"/>
-		<!--  -->
+		<script type="text/javascript">
+		$(function(){
+			$("#profile-file").hide();
+			$("#profileImg").click(function(){
+				$("#profile-file").click();
+			});
+			$("#profile-change-btn").click(function(){
+				var form = $('#profileChage-form')[0];
+				
+				var formData = new FormData(form);
+				
+				console.log(formData);
+				if($("#profile-file").val() == ""){
+					alert("프로필 사진을 선택해주세요.");
+				} else {
+					$.ajax({
+						url:"profileChange.me",
+						processData:false,
+						contentType:false,
+						data:formData,
+						type:"POST",
+						success:function(data){
+							console.log(data);
+							if(data == "true"){
+								alert("사진이 변경되었습니다.");
+							} else {
+								alert("사진 변경을 실패하였습니다.");
+							}
+						}
+					});
+				}
+				
+			});
+		});
+		
+		function LoadImg(value) {
+			if(value.files && value.files[0]){
+				
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					$("#profileImg").attr("src", e.target.result);
+				}
+			reader.readAsDataURL(value.files[0]);
+			}
+		}
+		</script>
 	</body>
 </html>

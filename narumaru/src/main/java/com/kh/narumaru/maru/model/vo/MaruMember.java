@@ -2,12 +2,15 @@ package com.kh.narumaru.maru.model.vo;
 
 import java.sql.Date;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class MaruMember implements java.io.Serializable{
 	private int conno;
 	private int mno;
 	private int conLevel;
 	private Date enrollDate;
-	private Date deleteDate;
+	private Date deleteDate; 
 	private String status;
 	private int nmno;
 	

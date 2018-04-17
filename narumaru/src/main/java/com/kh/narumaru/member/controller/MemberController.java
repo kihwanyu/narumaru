@@ -1,16 +1,30 @@
 package com.kh.narumaru.member.controller;
 
+
+import java.io.File;
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.narumaru.member.model.service.MemberService;
 import com.kh.narumaru.member.model.vo.Member;
+
+
 import com.kh.narumaru.member.model.exception.LoginException;
+import com.kh.narumaru.member.model.exception.ProfileChangeException;
 
 
 @Controller
@@ -39,7 +53,6 @@ public class MemberController {
 			/*return "main/main";*/
 			
 			mv.addObject("loginUser", loginUser);
-			status.setComplete();
 			mv.setViewName("main/main");
 			
 		} catch (LoginException e) {
@@ -62,6 +75,146 @@ public class MemberController {
 		return "member/memberInsertForm";
 	}
 	
+	@RequestMapping(value="memberInsert.me")
+	public String memberInsert(Member m, Model model, HttpServletRequest request){
+		
+		System.out.println("컨트롤러 회원가입: " + m);
+		
+		if(m.getGender().equals("M")){
+			m.setGender("남");
+		}else{
+			m.setGender("여");
+		}
+		
+		try{
+			ms.insertMember(m);
+			
+			return "main/mainLogin";
+			
+		}catch (Exception e) {
+			model.addAttribute("message", "회원가입실패!");
+			return "common/errorPage";
+		}
+		
+	}
 	
+	//마이페이지 Info start//
+	
+	@RequestMapping(value="profileChange.me", method=RequestMethod.POST)
+	public void profileChange(@RequestParam(name="profile-file", required=false) MultipartFile profile
+										, HttpServletRequest request, HttpSession session, HttpServletResponse response){
+		
+		System.out.println("profile : " + profile.getOriginalFilename());
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		Member m = new Member();
+		
+		String message = "";
+		
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String filePath = root + "\\memberprofile";
+		String fileName = "";
+		System.out.println(filePath);
+		
+		try {
+			File deleteFile = new File(filePath + "\\" + loginUser.getProfileName());
+			deleteFile.delete();
+			
+			fileName = profile.getOriginalFilename();
+			
+			int dot = fileName.lastIndexOf(".");
+				// dot을 포함한 뒷부분도 포함
+			String ext = fileName.substring(dot);
+			
+			fileName = String.valueOf(loginUser.getMid()) + loginUser.getNickName() + ext;
+			
+			m.setMid(loginUser.getMid());
+			m.setProfileName(fileName);
+			
+			profile.transferTo(new File(filePath + "\\" + fileName));
+			
+		} catch (IllegalStateException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		try {
+			ms.profileChange(m);
+			
+			response.getWriter().print("true");
+		} catch (ProfileChangeException e) {
+			try {
+				response.getWriter().print("false");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	//마이페이지 Info end//
+	
+	// 마이페이지 페이지 이동 start
+	@RequestMapping(value="myInfoView.me")
+	public ModelAndView myInfoForward(ModelAndView mv){
+		
+		mv.setViewName("mypage/myPage_myInfo");
+		
+		return mv;
+	}
+	@RequestMapping(value="myboardView.me")
+	public ModelAndView myBoardForward(ModelAndView mv){
+		
+		mv.setViewName("mypage/myPage_myboard");
+		
+		return mv;
+	}
+	@RequestMapping(value="myLoginView.me")
+	public ModelAndView myLoginForward(ModelAndView mv){
+		
+		mv.setViewName("mypage/myPage_loginRecord");
+		
+		return mv;
+	}
+	@RequestMapping(value="invitedMaruView.me")
+	public ModelAndView invitedMaruForward(ModelAndView mv){
+		
+		mv.setViewName("mypage/myPage_invitedMaru");
+		
+		return mv;
+	}
+	@RequestMapping(value="resisteredMaruView.me")
+	public ModelAndView resisteredMaruForward(ModelAndView mv){
+		
+		mv.setViewName("mypage/myPage_resisteredMaru");
+		
+		return mv;
+	}
+	@RequestMapping(value="naruNeighborListView.me")
+	public ModelAndView NaruNeighborListForward(ModelAndView mv){
+		
+		mv.setViewName("mypage/myPage_NaruNeighborList");
+		
+		return mv;
+	}
+	@RequestMapping(value="pointPaymentView.me")
+	public ModelAndView pointPaymentForward(ModelAndView mv){
+		
+		mv.setViewName("mypage/myPage_pointPayment");
+		
+		return mv;
+	}
+	@RequestMapping(value="refundView.me")
+	public ModelAndView RefundForward(ModelAndView mv){
+		
+		mv.setViewName("mypage/myPage_refund");
+		
+		return mv;
+	}
+	// 마이페이지 페이지 이동 end
 	
 }
