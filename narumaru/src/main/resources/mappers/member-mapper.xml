@@ -30,14 +30,17 @@
 	</select>
 	
 	<insert id="insertMember">
-		INSERT INTO MEMBER VALUES(SEQ_MNO.NEXTVAL, #{email}, #{userPwd}, #{nickName}, NULL, #{gender}, #{birthDay}, #{phone}, SYSDATE, SYSDATE, default)
+
+		INSERT INTO MEMBER VALUES(SEQ_MNO.NEXTVAL, #{email}, #{userPwd}, #{nickName}, NULL, #{gender}, #{phone}, SYSDATE, SYSDATE, default)
+
 	</insert>
 	
 	<insert id="insertBoard">
 		INSERT INTO BOARD(BID) VALUES(SEQ_BID.NEXTVAL)
 	</insert>
-	
-			
+	<update id="profileChange">
+		UPDATE MEMBER SET PROFILENAME=#{profileName} WHERE MNO=#{mid}
+	</update>
 </mapper>
 
 

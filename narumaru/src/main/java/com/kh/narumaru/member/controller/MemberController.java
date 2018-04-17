@@ -1,14 +1,13 @@
 package com.kh.narumaru.member.controller;
 
+
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.AnnotatedTypeVariable;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.junit.runner.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
@@ -23,7 +22,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.narumaru.member.model.service.MemberService;
 import com.kh.narumaru.member.model.vo.Member;
+
+
 import com.kh.narumaru.member.model.exception.LoginException;
+import com.kh.narumaru.member.model.exception.ProfileChangeException;
 
 
 @Controller
@@ -132,18 +134,39 @@ public class MemberController {
 	//마이페이지 Info start//
 	
 	@RequestMapping(value="profileChange.me", method=RequestMethod.POST)
-	public ModelAndView profileChange(ModelAndView mv,  @RequestParam(name="profile-file", required=false) MultipartFile profile, HttpServletRequest request){
-
+	public void profileChange(@RequestParam(name="profile-file", required=false) MultipartFile profile
+										, HttpServletRequest request, HttpSession session, HttpServletResponse response){
+		
 		System.out.println("profile : " + profile.getOriginalFilename());
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		Member m = new Member();
+		
+		String message = "";
 		
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String filePath = root + "\\memberprofile";
-		
+		String fileName = "";
 		System.out.println(filePath);
 		
 		try {
-			System.out.println("profile : " + profile);
-			profile.transferTo(new File(filePath + "\\" + profile.getOriginalFilename()));
+			File deleteFile = new File(filePath + "\\" + loginUser.getProfileName());
+			deleteFile.delete();
+			
+			fileName = profile.getOriginalFilename();
+			
+			int dot = fileName.lastIndexOf(".");
+				// dot을 포함한 뒷부분도 포함
+			String ext = fileName.substring(dot);
+			
+			fileName = String.valueOf(loginUser.getMid()) + loginUser.getNickName() + ext;
+			
+			m.setMid(loginUser.getMid());
+			m.setProfileName(fileName);
+			
+			profile.transferTo(new File(filePath + "\\" + fileName));
+			
 		} catch (IllegalStateException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -152,9 +175,19 @@ public class MemberController {
 			e1.printStackTrace();
 		}
 		
-		//mv.setViewName("jsonView");
-		
-		return mv;
+		try {
+			ms.profileChange(m);
+			
+			response.getWriter().print("true");
+		} catch (ProfileChangeException e) {
+			try {
+				response.getWriter().print("false");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	//마이페이지 Info end//
 	

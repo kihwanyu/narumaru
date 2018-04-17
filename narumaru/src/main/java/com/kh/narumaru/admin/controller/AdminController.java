@@ -1,12 +1,21 @@
 package com.kh.narumaru.admin.controller;
 
+import java.util.Date;
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.kh.narumaru.admin.model.service.AdminService;
+import com.kh.narumaru.admin.model.service.AdminServiceImpl;
+
 @Controller
 @SessionAttributes("loginUser")
 public class AdminController {
+	@Autowired
+	private AdminService as;
 
 	@RequestMapping(value="adMain.ad")
 	public String showAdminMainView(){
@@ -79,6 +88,12 @@ public class AdminController {
 	public String showAdminAnnouncementView(){
 		
 		return "admin/adAnnouncement";
+	}
+	
+	@RequestMapping("adCountEnrollDate.ad")
+	public void CountEnrollDate(){
+		ArrayList<Date> EnrollDateList = as.selectEnrollDateList();
+		System.out.println(EnrollDateList);
 	}
 	
 }

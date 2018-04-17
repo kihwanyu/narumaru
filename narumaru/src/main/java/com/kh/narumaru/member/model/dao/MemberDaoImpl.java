@@ -6,6 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.kh.narumaru.member.model.exception.LoginException;
+import com.kh.narumaru.member.model.exception.ProfileChangeException;
 import com.kh.narumaru.member.model.vo.Member;
 
 
@@ -50,6 +51,17 @@ public class MemberDaoImpl implements MemberDao{
 	public int insertMember(SqlSessionTemplate sqlSession, Member m) {
 		
 		return sqlSession.insert("Member.insertMember", m);
+	}
+
+
+	@Override
+	public void profileChange(SqlSessionTemplate sqlSession, Member m) throws ProfileChangeException {
+		
+		int result = sqlSession.update("Member.profileChange", m);
+		
+		if(result <= 0){
+			throw new ProfileChangeException("회원 프로필 변경 실패!!");
+		}
 	}
 
 }
