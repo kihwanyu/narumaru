@@ -10,7 +10,9 @@ import com.kh.narumaru.member.model.dao.MemberDao;
 import com.kh.narumaru.member.model.exception.LoginException;
 import com.kh.narumaru.member.model.exception.ProfileChangeException;
 import com.kh.narumaru.member.model.exception.birthdayChangeException;
+import com.kh.narumaru.member.model.exception.genderChangeException;
 import com.kh.narumaru.member.model.exception.nameChangeException;
+import com.kh.narumaru.member.model.exception.phoneChangeException;
 import com.kh.narumaru.member.model.vo.Member;
 
 @Service
@@ -61,6 +63,18 @@ public class MemberServiceImpl implements MemberService{
 	public void nameChange(Member m) throws nameChangeException {
 
 		md.nameChange(sqlSession, m);
+	}
+
+
+	@Override
+	public void genderChange(Member m) throws genderChangeException {
+		md.genderChange(sqlSession, m);
+	}
+
+
+	@Override
+	public void phoneChange(Member m) throws phoneChangeException {
+		md.phoneChange(sqlSession, m);
 	}
 
 }

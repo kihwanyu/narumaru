@@ -55,6 +55,12 @@
 	<update id="nameChange">
 		UPDATE MEMBER SET NICNAME=#{nickName} WHERE MNO=#{mid}
 	</update>
+	<update id="genderChange">
+		UPDATE MEMBER SET GENDER=#{gender} WHERE MNO=#{mid}
+	</update>
+	<update id="phoneChange">
+		UPDATE MEMBER SET PHONE=#{phone} WHERE MNO=#{mid}
+	</update>
 </mapper>
 
 

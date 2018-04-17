@@ -97,8 +97,8 @@
 								</div>
 								<div class="gender-div-false" style="display: none;">
 									성별&nbsp;&nbsp;&nbsp;
-									<input type="radio" name="gender" value="m">&nbsp;남성
-									<input type="radio" name="gender" value="f">&nbsp;여성
+									<input type="radio" name="gender" value="M" checked="checked">&nbsp;남성
+									<input type="radio" name="gender" value="F">&nbsp;여성
 								</div>							
 							</td>
 							<td width="15%">
@@ -209,7 +209,7 @@
 							$(".name-div-true").show();
 							$(".name-div-false").hide();
 							
-							var nickName = $("#nicName").val();
+							var nickName = $("#nicName").val().trim();
 							
 							$.ajax({
 								url:"nickChange.me",
@@ -264,6 +264,24 @@
 						$("#genderSubmit").click(function(){
 							$(".gender-div-true").show();
 							$(".gender-div-false").hide();
+							
+							var gender = $(':radio[name="gender"]:checked').val();
+							
+							console.log(gender);
+							
+							$.ajax({
+								url:"genderChange.me",
+								data:{gender:gender},
+								type:"POST",
+								success:function(data){
+									console.log(data);
+									if(data == "true"){
+										alert("성별 변경을 성공하였습니다.");
+									} else {
+										alert("성별 변경을 실패하였습니다.");
+									}
+								}
+							}); 
 						});
 						$("#genderCancel").click(function(){
 							$(".gender-div-true").show();
@@ -276,6 +294,28 @@
 						$("#phoneSubmit").click(function(){
 							$(".phone-div-true").show();
 							$(".phone-div-false").hide();
+							
+							var phoneSize = $("#phone").val().trim().length;
+							console.log(phoneSize);
+							if(phoneSize > 9){
+								var phone = $('#phone').val().trim();
+								
+								$.ajax({
+									url:"phoneChange.me",
+									data:{phone:phone},
+									type:"POST",
+									success:function(data){
+										console.log(data);
+										if(data == "true"){
+											alert("핸드폰번호 변경을 성공하였습니다.");
+										} else {
+											alert("핸드폰번호 변경을 실패하였습니다.");
+										}
+									}
+								}); 
+							} else {
+								alert("10자리 이상 입력해주세요.");
+							}
 						});
 						$("#phoneCancel").click(function(){
 							$(".phone-div-true").show();
