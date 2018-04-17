@@ -28,6 +28,10 @@ public class NarumaruController {
 	@Autowired
 	MaruService ms;
 	
+	@RequestMapping("goHome.nm")
+	public String goHome(){
+		return "main/main";
+	}
 	@RequestMapping(value = "boardListAll.bo", method = RequestMethod.POST)
 	public ModelAndView showBoardList(int nmno, ModelAndView mv){
 		System.out.println("조회하는 나루마루번호 " + nmno);
@@ -41,7 +45,7 @@ public class NarumaruController {
 	}
 	
 	@RequestMapping("insertNarumaru.nm")
-	public void insertNarumaru(Narumaru nm, ModelAndView mv, HttpServletRequest request){
+	public ModelAndView insertNarumaru(Narumaru nm, ModelAndView mv, HttpServletRequest request){
 		System.out.println(nm);
 		try {
 			int nmno = nms.insertNarumaru(nm).getNmno();
@@ -52,7 +56,8 @@ public class NarumaruController {
 			mm.setNmno(nmno);
 			mm.setConLevel(0);
 			ms.insertMaruMember(mm);
-		
+			mv.addObject("Maru", nm);
+			mv.setViewName("maru/maruBoard");
 		} catch (NarumaruException e) {
 			mv.addObject("message", e.getMessage());
 			mv.setViewName("common/errorPage");			
@@ -60,6 +65,8 @@ public class NarumaruController {
 			mv.addObject("message", e.getMessage());
 			mv.setViewName("common/errorPage");	
 		}
+		
+		return mv;
 	}
 	
 	

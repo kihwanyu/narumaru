@@ -13,4 +13,8 @@ public interface MaruService {
 	void insertMaruMember(MaruMember mm) throws MaruException; // 마루 가입
 	
 	void deleteMaruMember(int nmno, int mno); // 마루 탈퇴 
+
+	int countMaruMember(int nmno) throws MaruException;
+
+	ArrayList selectMaruList(int mno) throws MaruException;
 }

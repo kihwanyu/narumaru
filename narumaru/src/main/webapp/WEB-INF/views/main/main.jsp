@@ -81,7 +81,7 @@
 				<li><a href="#"><img src="${contextPath }/resources/images/image/책"> 밴드 가이드</a></li>
 				<li><a href="#"><img src="${contextPath }/resources/images/image/다운로드"> 데스크탑버전 다운로드</a></li>
 			</ul>
-		<div style="margin-top:20px;">
+		<div style="margin-top:20px;" id="maruList">
 			<div style="width:180px;height:200px;background:#ffffff;float:left;margin-top:20px;margin-right:30px;">
 				<a href="maruInsertView.ma">
 					<div style="width:60px;height:60px;border-radius:30px;background-color:gray;margin-top:50px;\">
@@ -207,5 +207,23 @@
 	</div>
 	
 	<jsp:include page="../common/footer.jsp"/>
+	<script>
+	$(function(){
+		var mno = ${ loginUser.mid };
+		$.ajax({
+			url:"selectMaruList.ma",
+			type:"get",
+			data:{"mno":mno},
+			success:function(data){
+				console.log(data);
+				/* var $select = $("#maruList");
+				$select.append(); */
+			},
+			error:function(data){
+				console.log("실패");
+			}			
+		});
+	});
+	</script>
 </body>
 </html>  
