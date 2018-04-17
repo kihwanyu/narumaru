@@ -46,8 +46,12 @@
 							<td width="30%" style="vertical-align: middle;">
 								<div class="birthday-div-true">생일&nbsp;&nbsp;&nbsp;1994년 5월 26일</div>
 								<div class="birthday-div-false" style="display: none;">
-									생일&nbsp;<input type="date" style="color: black;">&nbsp;
-											<input type="checkbox" value="음력">&nbsp;음력
+									<div style="float: left; width: 30%; padding-top: 5px; padding-bottom: 5px;">
+										생일&nbsp;
+									</div>
+									<div style="float: left; width: 67%;">
+										<input type="date" style="color: black;" value="" name="birthday" class="form-control">
+									</div>
 								</div>
 							</td>
 						
@@ -88,14 +92,15 @@
 						<tr>
 							<td width="30%" style="vertical-align: middle;">
 								<div class="phone-div-true">
-									휴대폰번호&nbsp;&nbsp;&nbsp;010-4803-4471
+									휴대폰번호&nbsp;&nbsp;&nbsp;82+1048034471
 								</div>
 								<div class="phone-div-false" style="display: none;">
 									<div style="float: left; width: 30%; padding-top: 5px; padding-bottom: 5px;">
 										휴대폰번호&nbsp;
 									</div>
 									<div style="float: left; width: 67%;">
-										<input type="tel" name="phone" value="" class="form-control">
+										<input type="tel" name="phone" id="phone" value="" class="form-control" placeholder="-없이 입력해주세요. 예)01012345678">
+										<label class="tel-label" style="display: none; color: red;">숫자만 입력해주세요.</label>
 									</div>
 								</div>	
 							</td>
@@ -173,6 +178,23 @@
 				</table>
 				<script type="text/javascript">
 					$(function(){
+						var telPass = "";
+						/* 핸드폰 번호 정규표현식 start */
+						$("#phone").keydown(function(){
+							
+							var patten = /^[0-9]/g;
+							var tel = $("#phone").val();
+							var telSub = tel.substr(tel.length-1);
+							
+							if(patten.test(telSub) || tel == ""){
+								$(".tel-label").hide();
+								telPass = tel;
+							} else {
+								$("#phone").val(telPass);
+								$(".tel-label").show();
+							}
+						});
+						/* 핸드폰 번호 정규표현식 end */
 						$("#birthdayChange").click(function(){
 							$(".birthday-div-true").hide();
 							$(".birthday-div-false").show();
@@ -223,11 +245,14 @@
 				<form action="" method="post">
 					<div style="width: 50%" align="center">
 						<div class="password-div">
-							현재 비밀번호&nbsp;<input type="password" style="margin-top: 10px;" class="form-control">
+							현재 비밀번호&nbsp;<input type="password" style="margin-top: 10px;" class="form-control" id="password1">
 						</div>
 						<div class="password-div">
-							변경 비밀번호&nbsp;<input type="password" style="margin-top: 10px;" class="form-control">
-						</div>				
+							변경 비밀번호&nbsp;<input type="password" style="margin-top: 10px;" class="form-control" id="password2" name="password">
+						</div>	
+						<div class="password-div">
+							변경 비밀번호 재입력&nbsp;<input type="password" style="margin-top: 10px;" class="form-control" id="password3">
+						</div>			
 						<div class="password-div">
 							<input type="submit" value="비밀번호 변경" class="btn btn-default">
 						</div>						
