@@ -15,7 +15,6 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</head>
 	<body>
-	<!--  -->
 	<jsp:include page="../common/topmenu.jsp"/>	
 		<br>
 		<br>
@@ -42,7 +41,33 @@
 							</td>
 						</tr>
 						<tr>
-							<td width="30%" rowspan="3">개인 정보</td>
+							<td width="30%" rowspan="4">개인 정보</td>
+							<td width="30%" style="vertical-align: middle;">
+								<div class="name-div-true">
+									이름&nbsp;&nbsp;&nbsp;유기환 
+								</div>
+								<div class="name-div-false" style="display: none;">
+									<div style="float: left; width: 30%; padding-top: 5px; padding-bottom: 5px;">
+										이름&nbsp;
+									</div>
+									<div style="float: left; width: 67%;">
+										<input type="text" id="nicName" name="nicName" value="" class="form-control">
+									</div>
+								</div>							
+							</td>
+							<td width="15%">
+								<div align="center">
+									<div class="name-div-true">
+										<input type="button" value="변경" class="btn btn-default" id="nameChange">
+									</div>
+									<div class="name-div-false" style="display: none;">
+									<input type="button" value="확인" class="btn btn-default" id="nameSubmit" style="margin-bottom: 10px;">
+									<input type="button" value="취소" class="btn btn-default" id="nameCancel">
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr>
 							<td width="30%" style="vertical-align: middle;">
 								<div class="birthday-div-true">생일&nbsp;&nbsp;&nbsp;1994년 5월 26일</div>
 								<div class="birthday-div-false" style="display: none;">
@@ -50,7 +75,7 @@
 										생일&nbsp;
 									</div>
 									<div style="float: left; width: 67%;">
-										<input type="date" style="color: black;" value="" name="birthday" class="form-control">
+										<input type="date" style="color: black;" value="" id="birthday" name="birthday" class="form-control">
 									</div>
 								</div>
 							</td>
@@ -65,7 +90,6 @@
 								</div>
 							</td>
 						</tr>
-						<!--  -->
 						<tr>
 							<td width="30%" style="vertical-align: middle;">
 								<div class="gender-div-true">
@@ -117,36 +141,18 @@
 						<tr>
 							<td width="30%">관심 채널</td>
 							<td width="30%">
-								<input type="checkbox" id="100" value="100">
-								<label for="100">문화/예술</label>
-								<input type="checkbox" id="200" value="200">
-								<label for="200">여행</label>
-								<input type="checkbox" id="300" value="300">
-								<label for="300">패션/뷰티</label>
+								<!-- count 변수를 선언 -->
+								<c:set var="count" value="0"/>
+								<c:forEach items="${cList }" var="cList">
+								<label for="${cList.cno }">${cList.cname }</label>
+								<input type="checkbox" id="${cList.cno }" name="cno" value="${cList.cno }">
+								<!-- count 변수 1씩 증가시킴 -->
+								<c:set var="count" value="${count+1 }"/>
+								<!-- count가 5의 배수일 경우, <br> 태그 출력  -->
+								<c:if test="${count%5 == 0 }">
 								<br>
-								<input type="checkbox" id="travel" value="400">
-								<label for="400">팬클럽</label>
-								<input type="checkbox" id="art" value="500">
-								<label for="500">인문/과학</label>
-								<input type="checkbox" id="travel" value="600">
-								<label for="600">동물</label>
-								<br>
-								<input type="checkbox" id="art" value="700">
-								<label for="700">나이</label>
-								<input type="checkbox" id="travel" value="800">
-								<label for="800">방송/연애</label>
-								<input type="checkbox" id="art" value="900">
-								<label for="900">친목/모임</label>
-								<br>
-								<input type="checkbox" id="travel" value="1000">
-								<label for="1000">여행</label>
-								<!-- 
-									문화/예술(100) 여행(200) 패션/뷰티(300) 팬클럽(400) 인문/과학(500) 동물(600) 나이(700) 방송/연예(800) 친목/모임(900) 종교/봉사(1000)
-
-									음악(1100) 경제(1200) IT/기술(1300) 게임(1400) 어학/외국어(1500) 만화(1600) 일상/이야기(1700) 스포츠/레저(1800) 건강(1900) 결혼/가정(2000)
-									
-									만화/애니메이션(2100) 정치/사회(2200) 교육/공부(2300) 취미/DIY(2400) 취업/자기개발(2500) 맛집/요리/생활(2600)
-								 -->
+								</c:if>
+								</c:forEach>
 							</td>
 							<td width="15%">
 								<div align="center" style="margin-top: 40px;margin-bottom: 40px;">
@@ -195,6 +201,34 @@
 							}
 						});
 						/* 핸드폰 번호 정규표현식 end */
+						$("#nameChange").click(function(){
+							$(".name-div-true").hide();
+							$(".name-div-false").show();
+						});
+						$("#nameSubmit").click(function(){
+							$(".name-div-true").show();
+							$(".name-div-false").hide();
+							
+							var nickName = $("#nicName").val();
+							
+							$.ajax({
+								url:"nickChange.me",
+								data:{nickName:nickName},
+								type:"POST",
+								success:function(data){
+									console.log(data);
+									if(data == "true"){
+										alert("이름 변경을 성공하였습니다.");
+									} else {
+										alert("이름 변경을 실패하였습니다.");
+									}
+								}
+							});
+						});
+						$("#nameCancel").click(function(){
+							$(".name-div-true").show();
+							$(".name-div-false").hide();
+						});
 						$("#birthdayChange").click(function(){
 							$(".birthday-div-true").hide();
 							$(".birthday-div-false").show();
@@ -202,6 +236,22 @@
 						$("#birthdaySubmit").click(function(){
 							$(".birthday-div-true").show();
 							$(".birthday-div-false").hide();
+							
+							var birthDay = $("#birthday").val();
+							
+							$.ajax({
+								url:"birthdayChange.me",
+								data:{birthDay:birthDay},
+								type:"POST",
+								success:function(data){
+									console.log(data);
+									if(data == "true"){
+										alert("생년월일 변경을 성공하였습니다.");
+									} else {
+										alert("생년월일 변경을 실패하였습니다.");
+									}
+								}
+							});
 						});
 						$("#birthdayCancel").click(function(){
 							$(".birthday-div-true").show();
@@ -288,9 +338,9 @@
 						success:function(data){
 							console.log(data);
 							if(data == "true"){
-								alert("사진이 변경되었습니다.");
+								alert("프로필사진 변경을 성공하였습니다.");
 							} else {
-								alert("사진 변경을 실패하였습니다.");
+								alert("프로필사진 변경을 실패하였습니다.");
 							}
 						}
 					});

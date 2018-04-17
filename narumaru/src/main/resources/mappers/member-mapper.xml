@@ -49,6 +49,12 @@
 	<update id="profileChange">
 		UPDATE MEMBER SET PROFILENAME=#{profileName} WHERE MNO=#{mid}
 	</update>
+	<update id="birthdayChange">
+		UPDATE MEMBER SET BIRTHDAY=#{birthDay} WHERE MNO=#{mid}
+	</update>
+	<update id="nameChange">
+		UPDATE MEMBER SET NICNAME=#{nickName} WHERE MNO=#{mid}
+	</update>
 </mapper>
 
 

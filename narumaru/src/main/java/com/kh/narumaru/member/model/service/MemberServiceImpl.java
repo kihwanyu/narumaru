@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.kh.narumaru.member.model.dao.MemberDao;
 import com.kh.narumaru.member.model.exception.LoginException;
 import com.kh.narumaru.member.model.exception.ProfileChangeException;
+import com.kh.narumaru.member.model.exception.birthdayChangeException;
+import com.kh.narumaru.member.model.exception.nameChangeException;
 import com.kh.narumaru.member.model.vo.Member;
 
 @Service
@@ -45,6 +47,20 @@ public class MemberServiceImpl implements MemberService{
 		
 		md.profileChange(sqlSession, m);
 		
+	}
+
+
+	@Override
+	public void birthdayChange(Member m) throws birthdayChangeException {
+
+		md.birthdayChange(sqlSession, m);
+	}
+
+
+	@Override
+	public void nameChange(Member m) throws nameChangeException {
+
+		md.nameChange(sqlSession, m);
 	}
 
 }
