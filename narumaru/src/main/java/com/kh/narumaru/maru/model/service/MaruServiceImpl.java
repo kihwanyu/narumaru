@@ -38,4 +38,16 @@ public class MaruServiceImpl implements MaruService{
 		
 	}
 
+	@Override
+	public int countMaruMember(int nmno) throws MaruException {
+		return md.countMaruMember(nmno);
+		
+	}
+
+	@Override
+	public ArrayList selectMaruList(int mno) throws MaruException {
+		ArrayList maruList = md.selectMaruList(mno);
+		return maruList;
+	}
+
 }

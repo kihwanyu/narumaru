@@ -44,4 +44,23 @@ public class MaruDaoImpl implements MaruDao{
 		
 	}
 
+	@Override
+	public int countMaruMember(int nmno) throws MaruException {
+		int result = sqlSession.selectOne("Maru.countMaruMember", nmno);
+		if(result>1){
+			throw new MaruException("회원 수 조회 실패");
+		}
+		return result;
+		
+	}
+
+	@Override
+	public ArrayList selectMaruList(int mno) throws MaruException {
+		ArrayList maruList = (ArrayList) sqlSession.selectList("Maru.selectMaruList", mno);
+		if(maruList==null){
+			throw new MaruException("마루목록 조회 실패");
+		}
+		return maruList;
+	}
+
 }
