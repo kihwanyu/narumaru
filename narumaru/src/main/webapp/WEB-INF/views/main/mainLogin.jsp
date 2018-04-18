@@ -326,35 +326,6 @@ $font-default: 'Roboto', sans-serif;
 	        <h2>회원가입</h2>
 	        <form action="insertMember.me" method="post"><!--  onsubmit="return false;" -->
 	          <div class="form-element form-stack">
-	            
-	           <%--  <%
-				    String clientId = "X5Nvd2AMVmO6GqWemA5v";//애플리케이션 클라이언트 아이디값";
-				    String redirectURI = URLEncoder.encode("http://127.0.0.1:8011/narumaru/naverLogin.me", "UTF-8");
-				    SecureRandom random = new SecureRandom();
-				    String state = new BigInteger(130, random).toString();
-				    String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
-				    apiURL += "&client_id=" + clientId;
-				    apiURL += "&redirect_uri=" + redirectURI;
-				    apiURL += "&state=" + state;
-				    session.setAttribute("state", state);
-				 %>
-				  <a href="<%=apiURL%>"><img height="50" src="http://static.nid.naver.com/oauth/small_g_in.PNG"/></a> --%>
-				  
-				<!-- 네이버아이디로로그인 버튼 노출 영역 -->
-				  <!-- <div id="naver_id_login"></div> -->
-				  <!-- //네이버아이디로로그인 버튼 노출 영역 -->
-				 <!--  <script type="text/javascript">
-				  	var naver_id_login = new naver_id_login("X5Nvd2AMVmO6GqWemA5v", "http://127.0.0.1:8011/narumaru/naverLogin.me");
-				  	var state = naver_id_login.getUniqState();
-				  	naver_id_login.setButton("white", 2,40);
-				  	naver_id_login.setDomain("http://127.0.0.1:8011/narumaru");
-				  	naver_id_login.setState(state);
-				  	naver_id_login.setPopup();
-				  	naver_id_login.init_naver_id_login();
-				  </script> -->
-				  
-				  
-				  
 				  
 				  <a id="kakao-login-btn"></a>
 			    	<a href="http://developers.kakao.com/logout"></a>
@@ -401,8 +372,19 @@ $font-default: 'Roboto', sans-serif;
 				  
 	          </div>
 	          <div class="form-element form-stack">
-	            <label for="username-signup" class="form-label">이름</label>
-	            <input id="username-signup" type="text" name="username">
+	           <%
+				    String clientId = "X5Nvd2AMVmO6GqWemA5v";//애플리케이션 클라이언트 아이디값";
+				    String redirectURI = URLEncoder.encode("http://127.0.0.1:8011/narumaru/naverCallback.me", "UTF-8");
+				    SecureRandom random = new SecureRandom();
+				    String state = new BigInteger(130, random).toString();
+				    String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
+				    apiURL += "&client_id=" + clientId;
+				    apiURL += "&redirect_uri=" + redirectURI;
+				    apiURL += "&state=" + state;
+				    session.setAttribute("state", state);
+				 %>
+			  <a href="<%=apiURL%>"><img height="50" src="http://static.nid.naver.com/oauth/small_g_in.PNG"/></a>
+	            
 	          </div>
 	          <div class="form-element form-stack">
 	            <label for="password-signup" class="form-label">비밀번호</label>
@@ -434,6 +416,7 @@ $font-default: 'Roboto', sans-serif;
 	          <div class="form-element form-submit">
 	            <button id="logIn" class="login" type="submit" name="login">로그인</button>
 	            <button id="goRight" class="login off" name="signup" type="button">회원가입</button>
+	            <%-- <button class="login" type="button" onclick="location.href='${contextPath}/naverLogin.me'">네이버 로그인페이지가기</button> --%>
 	          </div>
 	        </form>
 	      </div>
@@ -456,6 +439,7 @@ $font-default: 'Roboto', sans-serif;
 	
 	
 	<script>
+	
 		$(document).ready(function(){
 			  $('#goRight').on('click', function(){
 			    $('#slideBox').animate({

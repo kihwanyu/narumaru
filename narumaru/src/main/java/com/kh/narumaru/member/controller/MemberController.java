@@ -1,14 +1,24 @@
 package com.kh.narumaru.member.controller;
 
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.rmi.ServerException;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
@@ -25,8 +35,8 @@ import com.kh.narumaru.member.model.service.ChannelService;
 import com.kh.narumaru.member.model.service.MemberService;
 import com.kh.narumaru.member.model.vo.Channel;
 import com.kh.narumaru.member.model.vo.Member;
-
-
+import com.kh.narumaru.member.oauth.bo.NaverLoginBO;
+import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.kh.narumaru.member.model.exception.LoginException;
 import com.kh.narumaru.member.model.exception.ProfileChangeException;
 import com.kh.narumaru.member.model.exception.birthdayChangeException;
@@ -43,6 +53,16 @@ public class MemberController {
 	private MemberService ms;
 	@Autowired
 	private ChannelService cs;
+	
+	/* NaverLoginBO 
+	private NaverLoginBO naverLoginBO;
+
+	 NaverLoginBO 
+	@Autowired
+	private void setNaverLoginBO(NaverLoginBO naverLoginBO){
+		this.naverLoginBO = naverLoginBO;
+	}*/
+	
 	
 	@RequestMapping(value="login.me", method=RequestMethod.POST)
 	public ModelAndView showMainView(Member m, ModelAndView mv, SessionStatus status ){
@@ -106,13 +126,8 @@ public class MemberController {
 		
 	}
 	
-	/*@RequestMapping(value="naverLogin.me")
-	public String naverLogin(){
-		
-		return "main/callback";
-	}
-	*/
 	
+	//카카오 이메일 인증
 	@RequestMapping(value="kakaoLogin.me")
 	public ModelAndView kakaoLogin(HttpServletRequest request, HttpServletResponse response, ModelAndView mv){
 		
@@ -130,6 +145,134 @@ public class MemberController {
 		
 		return mv;
 	}
+	
+	//네이버 인증
+	  /*@RequestMapping("/naverLogin.me")
+	    public ModelAndView login(HttpSession session) {
+		   네아로 인증 URL을 생성하기 위하여 getAuthorizationUrl을 호출 
+	        String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+	        System.out.println("네아로 인증 URL"+naverAuthUrl);
+	         생성한 인증 URL을 View로 전달 
+	        return new ModelAndView("member/naverTest", "url", naverAuthUrl);
+	    }*/
+	    
+		@RequestMapping("/naverCallback.me")
+		public ModelAndView callback(Member m, HttpSession session, HttpServletRequest request, ModelAndView mv) throws IOException {
+	
+			String clientId = "X5Nvd2AMVmO6GqWemA5v";//애플리케이션 클라이언트 아이디값";
+			String clientSecret = "yf8f2GtrEs";//애플리케이션 클라이언트 시크릿값";
+			String code = request.getParameter("code");
+			String state = request.getParameter("state");
+			String redirectURI = URLEncoder.encode("http://127.0.0.1:8011/narumaru/naverCallback.me", "UTF-8");
+			String apiURL;
+			apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
+			apiURL += "client_id=" + clientId;
+			apiURL += "&client_secret=" + clientSecret;
+			apiURL += "&redirect_uri=" + redirectURI;
+			apiURL += "&code=" + code;
+			apiURL += "&state=" + state;
+			String access_token = "";
+			String refresh_token = "";
+			StringTokenizer stok = null;
+			
+			
+
+			System.out.println("apiURL="+apiURL);
+			try {
+				URL url = new URL(apiURL);
+				HttpURLConnection con = (HttpURLConnection)url.openConnection();
+				con.setRequestMethod("GET");
+				
+				int responseCode = con.getResponseCode();
+				
+				BufferedReader br;
+				System.out.print("responseCode="+responseCode);
+				if(responseCode==200) { // 정상 호출
+					br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+				} else {  // 에러 발생
+					br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+				}
+				String inputLine;
+				StringBuffer res = new StringBuffer();
+				while ((inputLine = br.readLine()) != null) {
+					res.append(inputLine);
+				}
+				
+				JSONParser parser = new JSONParser();
+				
+				Object obj2 = parser.parse(res.toString());
+				JSONObject jsonObj2 = (JSONObject) obj2;
+				
+				System.out.println("???제이슨2222 "+ jsonObj2.get("access_token"));
+				
+				access_token = (String) jsonObj2.get("access_token");
+				
+				br.close();
+				if(responseCode==200) {
+					System.out.println("네이버 토큰 발급 " + res.toString());
+				}
+				
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+			
+			//토큰 발급 후
+			
+			String token = access_token;// 네이버 로그인 접근 토큰;
+	        String header = "Bearer " + token; // Bearer 다음에 공백 추가
+	        String email = "";
+	        String gender = "";
+	        
+	        try {
+	            String apiURL1 = "https://openapi.naver.com/v1/nid/me";
+	            URL url1 = new URL(apiURL1);
+	            HttpURLConnection con1 = (HttpURLConnection)url1.openConnection();
+	            con1.setRequestMethod("GET");
+	            con1.setRequestProperty("Authorization", header);
+	            int responseCode1 = con1.getResponseCode();
+	            BufferedReader br1;
+	            if(responseCode1==200) { // 정상 호출
+	                br1 = new BufferedReader(new InputStreamReader(con1.getInputStream()));
+	            } else {  // 에러 발생
+	                br1 = new BufferedReader(new InputStreamReader(con1.getErrorStream()));
+	            }
+	            String inputLine1;
+	            StringBuffer response = new StringBuffer();
+	            while ((inputLine1 = br1.readLine()) != null) {
+	                response.append(inputLine1);
+	            }
+	            
+	            JSONParser parser = new JSONParser();
+				Object obj3 = parser.parse(response.toString());
+				JSONObject jsonObj3 = (JSONObject) obj3;
+				JSONObject jsonObj4 = (JSONObject) jsonObj3.get("response");
+				System.out.println("네이버 발급 후"+jsonObj3);
+				
+				System.out.println(jsonObj3.get("response"));
+				
+				System.out.println("이메일? " + jsonObj4.get("email"));
+				
+				m.setEmail((String) jsonObj4.get("email"));
+				m.setNickName((String) jsonObj4.get("name"));
+				
+	            br1.close();
+	        } catch (Exception e) {
+	            System.out.println(e);
+	        }
+	        
+	        System.out.println("이메일" + m.getEmail() + "이름" + m.getNickName());
+	        
+	        mv.addObject("member", m);
+			mv.setViewName("member/memberInsertForm");
+			
+			return mv;
+		}
+
+	
+		
+	
+	
+	
 	
 	
 	
