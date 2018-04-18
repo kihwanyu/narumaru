@@ -91,16 +91,7 @@
 					<p style="width:100px;text-align:Center;margin-top:12.5px;">밴드 만들기</p>
 				</a>
 			</div>
-			<div style="width:180px;height:200px;background:#ffffff;float:left;margin-top:20px;margin-right:30px;">
-				<img src="${contextPath }/resources/images/dummy.png" style="width:180px;height:125px;">
-				<p style="text-align:left;margin-top:5px;margin-left:15px;">밴드이름</p>
-				<p style="color:#969696;font-size:13px;margin-left:15px;">밴드설명</p>
-			</div>
-			<div style="width:180px;height:200px;background:#ffffff;float:left;margin-top:20px;margin-right:30px;">
-				<img src="${contextPath }/resources/images/dummy.png" style="width:180px;height:125px;">
-				<p style="text-align:left;margin-top:5px;margin-left:15px;">밴드이름2</p>
-				<p style="color:#2ecc71;font-size:13px;margin-left:15px;">밴드설명2</p>
-			</div>
+			
 			</div>
 		</div>
 	</div>
@@ -223,14 +214,27 @@
 			data:{"mno":mno},
 			success:function(data){
 				console.log(data);
-				/* var $select = $("#maruList");
-				$select.append(); */
+				for(var i = 0; i < data.length; i++){
+					console.log(data[i]);
+					$("#maruList").append(
+						'<div style="cursor:pointer; width:180px;height:200px;background:#ffffff;float:left;margin-top:20px;margin-right:30px;" class="pointer" onclick="selectMaru('+data[i].NMNO+');">'+
+						'<img src="${contextPath }/resources/images/dummy.png" style="width:180px;height:125px;">'+
+						'<p style="text-align:left;margin-top:5px;margin-left:15px;">'+data[i].NM_TITLE+'</p>'+
+						'<p style="color:#969696;font-size:13px;margin-left:15px;">밴드설명</p>'+
+						'</div>'
+					);
+				}
+				
 			},
 			error:function(data){
 				console.log("실패");
 			}			
 		});
 	});
+	
+	function selectMaru(nmno){
+		location.href="selectOneMaru.ma?nmno="+nmno;
+	}
 	</script>
 </body>
 </html>  

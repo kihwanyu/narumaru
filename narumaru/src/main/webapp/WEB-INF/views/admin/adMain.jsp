@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset=UTF-8>
 <title>:: naru? maru! :: Admin index</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
   <c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application" />
 </head>
 
@@ -60,20 +62,13 @@
 
                 <div class="row x_title">
                   <div class="col-md-6">
-                    <h3> 6개월 수입, 회원 증감 그래프</h3>
-                  </div>
-                  <div class="col-md-6">
-                    <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
-                      <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                      <span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
-                    </div>
                   </div>
                 </div>
             
             
             <!-- 곡선 그래프 -->
                 <div class="col-md-9 col-sm-9 col-xs-12">
-                  <div id="chart_plot_01" class="demo-placeholder"></div>
+                  <div id="chart_plot_1" class="demo-placeholder"></div>
                 </div>
                 
 
@@ -338,5 +333,66 @@
         <!-- 이럴수가!!  -->
       </div>
     </div>
+    <script src="https://code.highcharts.com/highcharts.src.js"></script>
+    <script type="text/javascript">
+    	
+    	console.log('${Date}' + "1");
+    	console.log('${Count}' + "1");
+    	
+    	$("#chart_plot_1").highcharts(
+            {chart: {
+                type: 'column'
+            },
+            title: {
+                text: '회원가입 현황'
+            },
+            subtitle: {
+                text: '2018년 회원가입 현황'
+            },
+            xAxis: {
+                type: 'category',
+                labels: {
+                    rotation: -45,
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: '회원수'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            tooltip: {
+                pointFormat: 'Population in 2017: <b>{point.y:.1f} millions</b>'
+            },
+            series: [{
+                name: 'Population',
+                data: [
+                	<c:forEach begin="0" end="${fn:length(Count)-1}" varStatus="status">
+						["${Date[status.index]}", ${Count[status.index]}],
+					</c:forEach> 
+                ],
+                dataLabels: {
+                    enabled: true,
+                    rotation: -90,
+                    color: '#FFFFFF',
+                    align: 'right',
+                    format: '{point.y:.1f}', // one decimal
+                    y: 10, // 10 pixels down from the top
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                }
+            }]
+        });
+    	
+    </script>
 </body>
 </html>

@@ -31,18 +31,43 @@
 						<div class="inlineBlock">멤버</div>
 						<div class="floatRight sort"><select><option>이름순</option><option>가입일순</option></select></div>
 					</div>
-					<div class="memberBody"></div>
-						<div class="memberInfo">
-						<hr>
-							<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
-							<label>이름</label>
-							<div class="floatRight boardBtn"><img src="resources/images/menu.png" class="modifyMenu size100per"></div>
-							<hr style="clear:both;">
-						<hr>
-						</div>
+					<div class="memberBody">
+						
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	<script>
+	$(function(){
+		var nmno = ${ Maru.nmno };
+		$.ajax({
+			url:"selectMaruMemberList.ma",
+			type:"get",
+			data:{"nmno":nmno},
+			success:function(data){
+				console.log(data);
+				for(var i = 0; i < data.length; i++){
+					console.log(data[i]);
+					$(".memberBody").append(
+						'<div class="memberInfo">'+
+						'<hr>'+
+						'	<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'+
+						'	<label>'+data[i].NICNAME+'</label>'+
+						'	<div class="floatRight boardBtn"><img src="resources/images/menu.png" class="modifyMenu size100per"></div>'+
+						'	<hr style="clear:both;">'+
+						'<hr>'+
+						'</div>'
+					);
+				}
+				
+			},
+			error:function(data){
+				console.log("실패");
+			}			
+		});
+	});
+	</script>
 </body>
 </html>

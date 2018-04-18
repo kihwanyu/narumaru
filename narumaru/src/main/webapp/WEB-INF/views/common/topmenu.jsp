@@ -99,7 +99,7 @@
 	<div id="wrap">
 		<div id="band_top">
 			<div id="binbt">
-				<img src="${contextPath }/resources/images/logo.png" style="width:70px;height:26px;float:left;" id="logo">
+				<img src="${contextPath }/resources/images/logo.png" style="width:70px;height:26px;float:left; cursor:pointer;" id="logo">
 				<div style="float:left;width:290px;height:26px;border:1px solid #8e8e8e;background-color:rgba(0,0,0,.03);border-radius:15px;margin-left:20px;">
 					<input style="border:none;width:240px;margin-left:20px;height:24px;margin-top:1px;background:none;" type="text" id="input_search_view83" class="_gnbInputSearch" role="search" title="밴드, 게시글 검색하기" placeholder="밴드, 게시글을 검색해 보세요" autocomplete="off">
 					<img src="${contextPath }/resources/images/find.png" style="float:Right;width:15px;height:15px;margin-top:5px;margin-right:7px;cursor:pointer;">

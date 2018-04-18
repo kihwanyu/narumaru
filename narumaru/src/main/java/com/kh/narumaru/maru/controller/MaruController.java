@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 import com.kh.narumaru.maru.exception.MaruException;
 import com.kh.narumaru.maru.model.service.MaruService;
 import com.kh.narumaru.maru.model.vo.MaruMember;
+import com.kh.narumaru.narumaru.model.vo.Narumaru;
 
 @Controller
-@SessionAttributes("loginUser")
+@SessionAttributes("Maru")
 public class MaruController {
 	@Autowired
 	private MaruService ms;
@@ -111,6 +113,42 @@ public class MaruController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping("selectOneMaru.ma")
+	public ModelAndView selectOneMaru(int nmno, ModelAndView mv, Narumaru nm){
+		try {
+			nm = ms.selectOneMaru(nmno);
+			mv.addObject("Maru", nm);
+			mv.setViewName("maru/maruBoard");
+		} catch (MaruException e) {
+			mv.addObject("message", e.getMessage());
+			mv.setViewName("common/errorPage");	
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("selectMaruMemberList.ma")
+	public void selectMaruMemberList(int nmno, HttpServletResponse response){
+		ArrayList maruMemberList;
+		try {
+			maruMemberList = ms.selectMaruMemberList(nmno);
+			System.out.println("memberlist : " + maruMemberList);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			new Gson().toJson(maruMemberList, response.getWriter());
+		} catch (MaruException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 }
