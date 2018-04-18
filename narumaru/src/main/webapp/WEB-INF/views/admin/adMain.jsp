@@ -16,7 +16,7 @@
     <div class="container body">
       <div class="main_container">
         <jsp:include page = "../common/adMenubar.jsp"/> 
-
+		<button id="Btn">aaaaaaaaaaaaaaaaaaaaaaaa</button>
        
 
         <!-- page content -->
@@ -44,18 +44,35 @@
              
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> 불량 회원수 </span>
+              <span class="count_top"><i class="fa fa-user"></i> 금일 신고 횟수 </span>
               <div class="count">2,315</div>
              
             </div>
-            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total Connections</span>
-              <div class="count">7,325</div>
-             
-            </div>
+           
           </div>
           <!-- /top tiles -->
-
+		  
+		 <script>
+		  	$(function(){
+		  		$("#Btn").click(function(){	
+					$.ajax({
+			  			url:"totalSelect.ad",
+			  			type:"get",
+			  			success:function(data){
+			  				console.log("성공");
+			  				console.log(data);
+			  			},
+						error:function(data){
+							console.log("실패!");
+							console.log(data);
+						}
+			  		});
+		  		});
+		  		
+		  		
+		  	});
+		  
+		  </script>
           <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="dashboard_graph">

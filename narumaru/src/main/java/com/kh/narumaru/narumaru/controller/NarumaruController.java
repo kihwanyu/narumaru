@@ -39,6 +39,7 @@ public class NarumaruController {
 	
 	@Autowired
 	private MaruService ms;
+
 	
 	@RequestMapping("goHome.nm")
 	public String goHome(){
