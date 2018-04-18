@@ -2,6 +2,9 @@ package com.kh.narumaru.payment.model.vo;
 
 import java.sql.Date;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Payment implements java.io.Serializable {
 	private int  payNo;
 	private int mno;

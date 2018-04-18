@@ -24,13 +24,19 @@
 				</div>
 			</div>
 			<br>
-			<div class="pointer maruSetting">
-			<hr>
-				<label for="open-pop2">나루 설정</label>				
-			</div>
+			<c:if test="${isOwner}">
+				<div class="pointer maruSetting">
+				<hr>
+					<label for="open-pop2">나루 설정</label>				
+				</div>
+				<br>
+				<div class="pointer naruBoardWriter">
+					<label onclick="toWrite()">글 작성</label>			
+				</div>
+			</c:if>
 		</div>
 		
-		<div class="floatRight rightArea">
+		<!-- <div class="floatRight rightArea">
 			<div class="rightMenu chat">
 				<div class="rightTitle">
 					채팅
@@ -51,10 +57,12 @@
 					<div class="photoThumb"></div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 	</div>
 	<script>
-	
+		function toWrite(){
+			location.href="toNaruBoardWrite.na?nmno=" + ${nm.nmno};
+		}
 	
 	</script>
 </body>

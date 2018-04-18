@@ -2,6 +2,9 @@ package com.kh.narumaru.narumaru.model.vo;
 
 import java.sql.Date;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Narumaru implements java.io.Serializable{
 	private int nmno;
 	private int nmCategory;

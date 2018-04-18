@@ -2,6 +2,9 @@ package com.kh.narumaru.payment.model.vo;
 
 import java.sql.Date;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class UsePoint implements java.io.Serializable{
 	private int pno;
 	private String pContent;

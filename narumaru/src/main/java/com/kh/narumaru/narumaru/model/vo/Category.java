@@ -1,5 +1,8 @@
 package com.kh.narumaru.narumaru.model.vo;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Category implements java.io.Serializable{
 	private int cano;
 	private String caName;
