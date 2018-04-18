@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
 
+import com.kh.narumaru.member.model.vo.Member;
 import com.kh.narumaru.narumaru.exception.NarumaruException;
 import com.kh.narumaru.narumaru.model.dao.NarumaruDao;
 import com.kh.narumaru.narumaru.model.vo.Board;
@@ -50,5 +51,15 @@ public class NarumaruServiceImpl implements NarumaruService {
 	public Narumaru insertNarumaru(Narumaru nm) throws NarumaruException {
 		return nmd.insertNarumaru(sqlSession, nm);	
 		
+	}
+	
+	@Override
+	public Narumaru selectNarumaruOne(int nmno) {
+		return nmd.selectNarumaruOne(nmno);
+	}
+
+	@Override
+	public boolean checkNarumaruOwner(int nmno, Member loginUser) {
+		return nmd.checkNarumaruOwner(nmno, loginUser);
 	}
 }

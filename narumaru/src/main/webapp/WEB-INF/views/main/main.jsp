@@ -72,6 +72,7 @@
 <body>
  	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
 	<jsp:include page="../common/topmenu.jsp"/>
+	<jsp:include page="../common/myPage_RightSideBar.jsp"/>	
 		
 	<div id="band_middle">
 		<div id="binb">
@@ -207,6 +208,12 @@
 	</div>
 	
 	<jsp:include page="../common/footer.jsp"/>
+	
+	<form method="post" action="boardListAll.bo">
+		<input type="number" id="nmno" name="nmno"><br>
+		<button type="submit"></button>
+	</form>
+	
 	<script>
 	$(function(){
 		var mno = ${ loginUser.mid };

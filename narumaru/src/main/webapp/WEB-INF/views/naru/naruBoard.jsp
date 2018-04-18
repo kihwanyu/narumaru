@@ -3,16 +3,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
-
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="resources/css/naruInsertBoard.css">
 </head>
 <body>
 	<jsp:include page="../common/topmenu.jsp"/>
-	<jsp:include page="../common/middleMenu.jsp"/>
-	<jsp:include page="../common/innerMenu.jsp"/>
+	<%-- <jsp:include page="middleMenu.jsp"/> --%>
+	<jsp:include page="innerMenu.jsp"/>
 	<div class="wrap">	
 		<div class="dumi"></div>
 		<div class="marginAuto content">
@@ -111,6 +111,132 @@
 				<img alt="" src="resources/images/lodingImg.gif">
 			</div>
 	</div>
+	
+	<!-- 이하 모달창(나루 관리) -->
+	<input class="modal-state2" id="open-pop2" type="checkbox" /> <!-- 안보이는 체크박스, 이게 체크되면 모달창이 나옴 -->
+	<div class="modal2" style="font-size:0.9em;">
+		<label class="modal_bg" for="open-pop2"></label>
+		<!-- 기본 -->
+		<div class="modal_inner" id="modal_default">
+			<div class="row">
+				<label class="btn_label modify-basic"><b>기본</b></label>
+				<label class="btn_label modify-theme">테마</label>
+				<label class="btn_label modify-category">카테고리</label>
+				<label class="btn_label modify-neighbor">이웃</label>
+				<label class="modal_close" for="open-pop2"></label>
+			</div>
+			<div class="row">
+				<label class="modal-leftlabel">나루 대표사진</label>
+				<input type="file" style="width:70%; float:right;">
+			</div>
+			<div class="row">
+				<label class="modal-leftlabel">나루 제목</label>
+				<input type="text" style="width:79.1%; float:right; height:25px;">
+			</div>
+			<div class="row">
+				<label class="modal-leftlabel">소개 문구</label>
+				<textarea style="width:78.7%; float:right; height:40px; resize:none;"></textarea>
+			</div>
+	 	</div>
+	 	<!-- 테마  -->
+	 	<div class="modal_inner" id="modal_theme" style="display:none;">
+			<div class="row">
+				<label class="btn_label modify-basic">기본</label>
+				<label class="btn_label modify-theme"><b>테마</b></label>
+				<label class="btn_label modify-category">카테고리</label>
+				<label class="btn_label modify-neighbor">이웃</label>
+				<label class="modal_close" for="open-pop2"></label>
+			</div>
+			<div class="row">
+				<label class="modal-leftlabel">테마 색상</label>
+				<select>
+					<option>기본</option>
+					<option>구매한 색상1</option>
+					<option>구매한 색상2</option>
+				</select>
+			</div>
+			<div class="row">
+				<label class="modal-leftlabel">폰트</label>
+				<select style="margin-left:31px;">
+					<option>기본</option>
+					<option>구매한 폰트1</option>
+					<option>구매한 폰트22</option>
+				</select>
+			</div>
+			<div class="row">
+				<label class="modal-leftlabel">소개 문구</label>
+				<textarea style="width:78.7%; float:right; height:40px; resize:none;"></textarea>
+			</div>
+	 	 </div>
+	 	 <!-- 카테고리 -->
+	 	 <div class="modal_inner" id="modal_category" style="display:none;">
+			<div class="row">
+				<label class="btn_label modify-basic">기본</label>
+				<label class="btn_label modify-theme">테마</label>
+				<label class="btn_label modify-category">카테고리</label>
+				<label class="btn_label modify-neighbor">이웃</label>
+				<label class="modal_close" for="open-pop2"></label>
+			</div>
+			<label class="btn_label" id="addCateBtn" style="margin-bottom:15px;">카테고리 추가</label>
+		 </div>
+		 <!-- 이웃목록 -->
+		 <div class="modal_inner" id="modal_neighbor" style="display:none;">
+			<div class="row">
+				<label class="btn_label modify-basic">기본</label>
+				<label class="btn_label modify-theme">테마</label>
+				<label class="btn_label modify-category">카테고리</label>
+				<label class="btn_label modify-neighbor">이웃</label>
+				<label class="modal_close" for="open-pop2"></label>
+			</div>
+			<c:forEach var="i" begin="1" end="4">
+			<div style="margin-bottom:40px;">
+				<img src="${contextPath}/resources/images/cosmos.jpg" style="width:35px;height:35px;float:left;margin-right:5px; border-radius: 5px;">
+				<span style="top:5px; position:relative;"><a href="#">${i}번째 마루</a></span>
+			</div>
+			</c:forEach>
+		 </div>
+	</div>
+	
+	<script>
+	  	$(function(){
+			// 수정 - 기본버튼
+			$(".modify-basic").click(function(){
+				$("#modal_default").css("display","");
+				$("#modal_theme").css("display","none");
+				$("#modal_category").css("display","none");
+				$("#modal_neighbor").css("display","none");
+			})
+			
+			// 수정 - 테마버튼
+			$(".modify-theme").click(function(){
+				$("#modal_default").css("display","none");
+				$("#modal_theme").css("display","");
+				$("#modal_category").css("display","none");
+				$("#modal_neighbor").css("display","none");
+			})
+			
+			// 수정 - 카테고리버튼
+			$(".modify-category").click(function(){
+				$("#modal_default").css("display","none");
+				$("#modal_theme").css("display","none");
+				$("#modal_category").css("display","");
+				$("#modal_neighbor").css("display","none");
+			})
+			
+			// 카테고리 - 카테고리 추가 버튼
+			$("#addCateBtn").click(function(){
+				$("#modal_category").append("<div class='row' style='height:50px;'><input type='text' value='앙 기모띠' id='addedCategory'><span id='categoryDelete'></span></div>");
+			})
+			
+			// 수정 - 이웃버튼
+			$(".modify-neighbor").click(function(){
+				$("#modal_default").css("display","none");
+				$("#modal_theme").css("display","none");
+				$("#modal_category").css("display","none");
+				$("#modal_neighbor").css("display","");
+			})
+		})
+	  </script>
 	
 	<script>
 		var isEnd = false;
