@@ -20,6 +20,8 @@
 		<result property="nmno" column="NMNO"/>
 		<result property="cano" column="CANO"/>
 		<result property="cno" column="CNO"/>
+		<result property="bLevel" column="B_LEVEL"/>
+		<result property="targetBno" column="TARGET_BNO"/>
 	</resultMap>
 	
 	<resultMap type="Notice" id="noticeResultSet">

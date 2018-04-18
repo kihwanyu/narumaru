@@ -7,35 +7,55 @@
 	
 	<resultMap type="Member" id="memberResultSet">
 		<id property="mid" column="MNO"/>
-		<result property="email" column="email"/>
+		<result property="email" column="EMAIL"/>
 		<result property="userPwd" column="PASSWORD"/>
 		<result property="nickName" column="NICNAME"/>
 		<result property="profileName" column="PROFILENAME"/>
 		<result property="gender" column="GENDER"/>
+		<result property="birthDay" column="BIRTHDAY"/>
 		<result property="phone" column="PHONE"/>
 		<result property="enroll_date" column="ENROLL_DATE"/>
 		<result property="modify_date" column="MODIFY_DATE"/>
 		<result property="status" column="STATUS"/>
 	</resultMap> 
 	
+	<resultMap type="Channel" id="channelResultSet">
+		<id property="cno" column="CNO"/>
+		<result property="cname" column="CNAME"/>
+		<result property="cphoto" column="CPHOTO"/>
+	</resultMap> 
+	
+	<resultMap type="MChannel" id="mchannelResultSet">
+		<id property="mcno" column="MCNO"/>
+		<result property="mno" column="MNO"/>
+		<result property="cno" column="CNO"/>
+	</resultMap> 
+	
 	<select id="loginCheck" resultMap="memberResultSet" parameterType="Member">
 		<!-- SELECT * FROM MEMBER WHERE USER_ID=#{userId} AND USER_PWD=#{userPwd} AND STATUS = 'Y' -->
-		SELECT * FROM MEMBER WHERE email = #{email} AND STATUS='Y'
+		SELECT * FROM MEMBER WHERE EMAIL = #{email} AND STATUS='Y'
 	</select>
 	
 	<select id="selectPwd" resultType="java.lang.String" parameterType="java.lang.String">
-		SELECT PASSWORD FROM MEMBER WHERE email = #{email} AND STATUS = 'Y'
+		<!-- SELECT PASSWORD FROM MEMBER WHERE EMAIL=#{email} AND STATUS = 'Y' -->
+		SELECT PASSWORD FROM MEMBER WHERE EMAIL like #{email}||'%' AND STATUS = 'Y'
+	</select>
+	
+	<select id="selectAllChanel" resultMap="channelResultSet">
+		SELECT CNO, CNAME FROM CHANNEL
+	</select>
+	<select id="selectMemberChannel" resultMap="mchannelResultSet" parameterType="_int">
+		SELECT CNO FROM MCHANNEL WHERE MNO = #{mno} ORDER BY CNO ASC
 	</select>
 	
 	<insert id="insertMember">
-		INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, #{email}, #{userPwd}, #{nickName}, NULL, #{gender}, #{phone}, SYSDATE, SYSDATE, default)
+		INSERT INTO MEMBER VALUES(SEQ_MNO.NEXTVAL, #{email}, #{userPwd}, #{nickName}, NULL, #{gender}, #{phone}, SYSDATE, SYSDATE, default)
 	</insert>
-	
 	<insert id="insertBoard">
 		INSERT INTO BOARD(BID) VALUES(SEQ_BID.NEXTVAL)
 	</insert>
 	
-	<select id ="showTotalMember" >
+  <select id ="showTotalMember" >
 		SELECT COUNT(*) AS MEMBERTOTAL,  
        		(SELECT COUNT(*) FROM MEMBER WHERE ENROLL_DATE = SYSDATE)AS TOTAYJOINER, 
        		(SELECT COUNT(*) FROM NARUMARU) AS MARUCOUNT,
@@ -44,6 +64,30 @@
 		FROM MEMBER GROUP BY 2;
 	
 	</select>
+	<update id="profileChange">
+		UPDATE MEMBER SET PROFILENAME=#{profileName} WHERE MNO=#{mid}
+	</update>
+	<update id="birthdayChange">
+		UPDATE MEMBER SET BIRTHDAY=#{birthDay} WHERE MNO=#{mid}
+	</update>
+	<update id="nameChange">
+		UPDATE MEMBER SET NICNAME=#{nickName} WHERE MNO=#{mid}
+	</update>
+	<update id="genderChange">
+		UPDATE MEMBER SET GENDER=#{gender} WHERE MNO=#{mid}
+	</update>
+	<update id="phoneChange">
+		UPDATE MEMBER SET PHONE=#{phone} WHERE MNO=#{mid}
+	</update>
+	<update id="passwordChange">
+		UPDATE MEMBER SET PASSWORD=#{userPwd} WHERE MNO=#{mid}
+	</update>
+	<delete id="memberChannelDelete">
+		DELETE FROM MCHANNEL WHERE MNO=#{mno}
+	</delete>
+	<insert id="memberChannelInsert">
+		INSERT INTO MCHANNEL VALUES (SEQ_MCNO.NEXTVAL, #{mno}, #{cno})
+	</insert>
 </mapper>
 
 

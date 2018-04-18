@@ -16,11 +16,11 @@
 			</div>
 			<br>
 			<div class="maruName">
-				<h2>마루 이름</h2>
+				<h2>${ Maru.nmTitle }</h2>
 			</div><br>
 			<div class="maruMember">
 				<div class="inlineBlock pointer maruMemberView">
-					맴버
+					멤버(<span class="countMaruMember"></span>)
 				</div>
 				<div class="floatRight pointer maruMemberInvateView">
 					초대
@@ -68,6 +68,24 @@
 	});
 	$(".maruSetting").click(function(){
 	    location.href="showMaruSetting.ma";
+	});
+	
+	$(function(){
+		var nmno = ${ Maru.nmno};
+		console.log(nmno);
+		$.ajax({
+			url:"countMaruMember.ma",
+			type:"get",
+			data:{"nmno":nmno},
+			success:function(data){
+				console.log(data);
+				var $select = $(".countMaruMember");
+				$select.html(data);
+			},
+			error:function(data){
+				console.log("실패");
+			}			
+		});
 	});
 	</script>
 </body>

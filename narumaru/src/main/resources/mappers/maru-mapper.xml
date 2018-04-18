@@ -18,6 +18,18 @@
 	<insert id="insertMaruMember">
 		INSERT INTO MARU_MEMBER VALUES(SEQ_CONNO.NEXTVAL, #{mno}, #{conLevel}, SYSDATE, NULL, 'Y', #{nmno})
 	</insert> 
+	
+	<select id="countMaruMember" resultType="_int">
+		SELECT COUNT(*) FROM MARU_MEMBER WHERE NMNO=#{nmno}
+	</select>
+	
+	<select id="selectMaruList" resultType="hashmap">
+		SELECT * FROM MARU_MEMBER M JOIN NARUMARU N ON(M.NMNO = N.NMNO) WHERE M.MNO=#{mno}
+	</select>
+	
+	<select id="selectMaruMemberList" resultType="hashmap">
+		SELECT * FROM MARU_MEMBER MM JOIN MEMBER M ON(M.MNO=MM.MNO) WHERE MM.NMNO=#{nmno}
+	</select>
 </mapper>
 
 

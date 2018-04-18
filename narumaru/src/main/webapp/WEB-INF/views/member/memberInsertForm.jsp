@@ -1,10 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.kh.narumaru.member.model.vo.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%-- <%@ page import="java.net.URLEncoder" %>
+<%@ page import="java.net.URL" %>
+<%@ page import="java.net.HttpURLConnection" %>
+<%@ page import="java.io.BufferedReader" %>
+<%@ page import="java.io.InputStreamReader" %> --%>
+
+
 <!DOCTYPE html>
 <html>
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <head>
 <style>
 	body{
@@ -42,6 +50,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+
 	<div align="center" class="mifh">
 		<img src="${contextPath }/resources/images/logo.png" style="width:70px;height:26px; margin-top:20px;"/>
 	</div>
@@ -97,7 +106,7 @@
             <div class="form-group" id="divId">
                 <label for="inputId" class="col-lg-2 control-label">아이디</label>
                 <div class="col-lg-10">
-                    <input type="text" name="email" class="form-control onlyAlphabetAndNumber" id="id" data-rule-required="true" placeholder="30자이내의 알파벳, 언더스코어(_), 숫자만 입력 가능합니다." maxlength="30">
+                    <input type="text" name="email" value="${member.email} " class="form-control onlyAlphabetAndNumber" id="id" data-rule-required="true" placeholder="30자이내의 알파벳, 언더스코어(_), 숫자만 입력 가능합니다." maxlength="30">
                 </div>
             </div>
             <div class="form-group" id="divPassword">
@@ -116,10 +125,15 @@
             <div class="form-group" id="divNickname">
                 <label for="inputNickname" class="col-lg-2 control-label">별명</label>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control" id="nickname" name="nickName" data-rule-required="true" placeholder="별명" maxlength="15">
+                    <input type="text" class="form-control" id="nickname" name="nickName" data-rule-required="true" placeholder="별명" maxlength="15" value="${member.nickName }">
                 </div>
             </div>
-             
+            <div class="form-group" id="divBirthDay">
+                <label class="col-lg-2 control-label">생일</label>
+                <div class="col-lg-10">
+                    <input type="date" class="form-control" id="birthDay" name="birthDay">
+                </div>
+            </div> 
             <div class="form-group" id="divPhoneNumber">
                 <label for="inputPhoneNumber" class="col-lg-2 control-label">휴대폰 번호</label>
                 <div class="col-lg-10">

@@ -15,6 +15,14 @@
 		<result property="isOpen" column="IS_OPEN"/>
 		<result property="status" column="STATUS"/>
 	</resultMap> 
+	
+	<select id="selectNarumaruOne" resultMap="NarumaruResultSet" parameterType="_int">
+		SELECT * FROM NARUMARU WHERE NMNO = #{nmno}
+	</select>
+	
+	<select id="checkNarumaruOwner" resultType="_int" parameterType="_int">
+		SELECT MNO FROM MARU_MEMBER WHERE NMNO = #{nmno}
+	</select>
 
 	<insert id="insertNarumaru" useGeneratedKeys="true" keyProperty="nmno">
 		<selectKey keyProperty="nmno" resultType="int" order="BEFORE">

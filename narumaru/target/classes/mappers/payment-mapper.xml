@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="Payment">
+	
+	<resultMap type="Payment" id="paymentResultSet">
+		<id property="payNo" column="PAY_NO"/>
+		<result property="mno" column="MNO"/>
+		<result property="impUid" column="IMP_UID"/>
+		<result property="amount" column="AMOUNT"/>
+		<result property="payPg" column="PAY_PG"/>
+		<result property="payMethod" column="PAY_METHOD"/>
+		<result property="merchantUid" column="MERCHANT_UID"/>
+		<result property="payName" column="PAY_NAME"/>
+		<result property="buyerName" column="BUYER_NAME"/>
+		<result property="buyerAddr" column="BUYER_ADDR"/>
+		<result property="buyerPostcode" column="BUYER_POSTCODE"/>
+		<result property="applyNum" column="APPLY_NUM"/>
+		<result property="buyerEmail" column="BUYER_EMAIL"/>
+		<result property="status" column="STATUS"/>
+		<result property="payday" column="PAYDAY"/>
+	</resultMap>
+	
+	
+</mapper>

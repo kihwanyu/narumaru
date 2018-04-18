@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.narumaru.member.model.vo.Member;
 import com.kh.narumaru.narumaru.exception.NarumaruException;
 import com.kh.narumaru.narumaru.model.vo.Board;
 import com.kh.narumaru.narumaru.model.vo.Category;
@@ -54,6 +55,31 @@ public class NarumaruDaoImpl implements NarumaruDao {
 			
 		}
 		return nm;
+	}
+	
+	@Override
+	public Narumaru selectNarumaruOne(int nmno) {
+		
+		Narumaru nm = (Narumaru)sqlSession.selectOne("Narumaru.selectNarumaruOne", nmno);
+		
+		System.out.println(nm);
+		
+		return nm;
+	}
+
+	@Override
+	public boolean checkNarumaruOwner(int nmno, Member loginUser) {
+		
+		boolean isOwner = false;
+		
+		int ownerMno = sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno);
+		
+		System.out.println(loginUser);
+		System.out.println(ownerMno);
+		
+		if(loginUser.getMid() == ownerMno) isOwner = true;
+		
+		return isOwner;
 	}
 
 }
