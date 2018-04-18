@@ -25,7 +25,7 @@ import com.kh.narumaru.narumaru.model.vo.Narumaru;
 public class NarumaruController {
 	@Autowired
 	NarumaruService nms;
-	@Autowired
+	
 	MaruService ms;
 	
 	@RequestMapping("goHome.nm")
