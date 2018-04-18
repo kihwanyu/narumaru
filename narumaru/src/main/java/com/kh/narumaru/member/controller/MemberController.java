@@ -49,10 +49,13 @@ import com.kh.narumaru.member.model.exception.selectChanelException;
 public class MemberController {
 	
 	
+	
+	
 	@Autowired
 	private MemberService ms;
 	@Autowired
 	private ChannelService cs;
+	
 	
 	/* NaverLoginBO 
 	private NaverLoginBO naverLoginBO;
