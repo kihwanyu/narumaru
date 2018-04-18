@@ -68,9 +68,9 @@
 								class="fa fa-chevron-down"></span></a>
 							<ul class="nav child_menu">
 								<li><a href="adAnnouncement.ad"> 공지 글쓰기 </a></li>
-								<li><a href="Notice.no"> 공지사항 </a></li>
-								<li><a href="FAQ.no"> FAQ </a></li>
-								<li><a href="adAnswer.ad"> 1:1 문의 </a></li>
+								<li><a href="noticeSelectList.no"> 공지사항 </a></li>
+								<li><a href="FAQSelectList.no"> FAQ </a></li>
+								<li><a href="adAnswerSelectList.ad"> 1:1 문의 </a></li>
 								
 							</ul></li>
 

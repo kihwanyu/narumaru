@@ -11,6 +11,7 @@
       <typeAlias alias="Declaration" type="com.kh.narumaru.declaration.model.vo.Declaration"/>
       <typeAlias alias="Payment" type="com.kh.narumaru.payment.model.vo.Payment"/>
       <typeAlias alias="MaruMember" type="com.kh.narumaru.maru.model.vo.MaruMember"/>
+      <typeAlias alias="Notice" type="com.kh.narumaru.notice.model.vo.Notice"/>
    </typeAliases>
    
    <mappers>

@@ -22,12 +22,32 @@
 		<result property="cno" column="CNO"/>
 	</resultMap>
 	
+	<resultMap type="Notice" id="noticeResultSet">
+		<id property="nid" column="BNO"/>
+		<result property="noType" column="B_TNO"/>
+		<result property="noTitle" column="B_TYPE"/>
+		<result property="noContent" column="B_CONTENT"/>
+		<result property="writerId" column="MNO"/>
+		<result property="createDate" column="CREATE_DATE"/>
+		<result property="status" column="STATUS"/>
+
+	</resultMap>
 	<select id="selectBoardList" resultMap="boardResultSet" parameterType="_int">
 		SELECT BNO, B_TNO, B_TYPE, B_TITLE, B_CONTENT, B_HIDDEN, b.MNO, M.NICNAME, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, NMNO, CANO, CNO
 		FROM BOARD B
 		JOIN MEMBER M ON(B.NMNO = M.MNO)
 		WHERE NMNO = #{nmno} AND B.STATUS = 'Y'
 		ORDER BY BNO DESC
+	</select>
+	
+	<insert id="insertNotice" >
+		INSERT INTO BOARD VFALUES(SEQ_BNO.NEXTVAL, NULL, 700 , #{noTitle}, #{noContent}, #{writerId}, #{createDate}, NULL, DEFAULT, NULL,NULL,NULL,NULL,NULL )
+	</insert>
+	
+	<select id="noticeSelectList" resultMap ="noticeResultSet">
+		SELECT * FROM BOARD
+		WHERE B_TYPE = 700
+		AND STATUS = 'Y'
 	</select>
 </mapper>
 
