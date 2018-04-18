@@ -13,4 +13,6 @@ public interface ChannelService {
 
 	void memberChannelChange(ArrayList<MChannel> mchList) throws memberChannelChangeException;
 
+	ArrayList<Channel> selectMemberChannel(int mno) throws selectChanelException;
+
 }

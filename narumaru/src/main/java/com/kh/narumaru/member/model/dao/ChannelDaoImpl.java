@@ -19,7 +19,7 @@ public class ChannelDaoImpl implements ChannelDao{
 		ArrayList<Channel> cList = (ArrayList)sqlSession.selectList("selectAllChanel");
 		
 		if(cList == null){
-			throw new selectChanelException("채널 리스트 출력 실패");
+			throw new selectChanelException("채널 리스트 출력 실패 - 전체 채널 검색 실패");
 		}
 		
 		return cList;
@@ -39,5 +39,17 @@ public class ChannelDaoImpl implements ChannelDao{
 		} else {
 			throw new memberChannelChangeException("회원 채널 변경 실패 !! - DELETE");
 		}
+	}
+
+	@Override
+	public ArrayList<Channel> selectMemberChannel(SqlSessionTemplate sqlSession, int mno) throws selectChanelException {
+		
+		ArrayList<Channel> mchList = (ArrayList)sqlSession.selectList("selectMemberChannel", mno);
+		
+		if(mchList == null){
+			throw new selectChanelException("채널 리스트 출력 실패 - 회원 채널 검색 실패!!");
+		}
+		
+		return mchList;
 	}
 }
