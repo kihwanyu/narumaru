@@ -7,36 +7,60 @@
 	
 	<resultMap type="Member" id="memberResultSet">
 		<id property="mid" column="MNO"/>
-		<result property="Email" column="EMAIL"/>
+		<result property="email" column="EMAIL"/>
 		<result property="userPwd" column="PASSWORD"/>
 		<result property="nickName" column="NICNAME"/>
-		<result property="fno" column="FNO"/>
+		<result property="profileName" column="PROFILENAME"/>
 		<result property="gender" column="GENDER"/>
+		<result property="birthDay" column="BIRTHDAY"/>
 		<result property="phone" column="PHONE"/>
 		<result property="enroll_date" column="ENROLL_DATE"/>
 		<result property="modify_date" column="MODIFY_DATE"/>
 		<result property="status" column="STATUS"/>
 	</resultMap> 
 	
+	<resultMap type="Channel" id="channelResultSet">
+		<id property="cno" column="CNO"/>
+		<result property="cname" column="CNAME"/>
+		<result property="cphoto" column="CPHOTO"/>
+	</resultMap> 
+	
 	<select id="loginCheck" resultMap="memberResultSet" parameterType="Member">
 		<!-- SELECT * FROM MEMBER WHERE USER_ID=#{userId} AND USER_PWD=#{userPwd} AND STATUS = 'Y' -->
-		SELECT * FROM MEMBER WHERE EMAIL = #{Email} AND STATUS='Y'
+		SELECT * FROM MEMBER WHERE EMAIL = #{email} AND STATUS='Y'
 	</select>
 	
 	<select id="selectPwd" resultType="java.lang.String" parameterType="java.lang.String">
-		SELECT PASSWORD FROM MEMBER WHERE EMAIL = #{Email} AND STATUS = 'Y'
+		<!-- SELECT PASSWORD FROM MEMBER WHERE EMAIL=#{email} AND STATUS = 'Y' -->
+		SELECT PASSWORD FROM MEMBER WHERE EMAIL like #{email}||'%' AND STATUS = 'Y'
+	</select>
+	
+	<select id="selectAllChanel" resultMap="channelResultSet">
+		SELECT CNO, CNAME FROM CHANNEL
 	</select>
 	
 	<insert id="insertMember">
-		INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, #{userId}, #{userPwd}, #{userName}, #{email}, #{birthDay}, #{gender}, #{phone}, #{address}, SYSDATE, SYSDATE, DEFAULT)
+		INSERT INTO MEMBER VALUES(SEQ_MNO.NEXTVAL, #{email}, #{userPwd}, #{nickName}, NULL, #{gender}, #{phone}, SYSDATE, SYSDATE, default)
 	</insert>
 	
 	<insert id="insertBoard">
 		INSERT INTO BOARD(BID) VALUES(SEQ_BID.NEXTVAL)
 	</insert>
-	
-	
-			
+	<update id="profileChange">
+		UPDATE MEMBER SET PROFILENAME=#{profileName} WHERE MNO=#{mid}
+	</update>
+	<update id="birthdayChange">
+		UPDATE MEMBER SET BIRTHDAY=#{birthDay} WHERE MNO=#{mid}
+	</update>
+	<update id="nameChange">
+		UPDATE MEMBER SET NICNAME=#{nickName} WHERE MNO=#{mid}
+	</update>
+	<update id="genderChange">
+		UPDATE MEMBER SET GENDER=#{gender} WHERE MNO=#{mid}
+	</update>
+	<update id="phoneChange">
+		UPDATE MEMBER SET PHONE=#{phone} WHERE MNO=#{mid}
+	</update>
 </mapper>
 
 

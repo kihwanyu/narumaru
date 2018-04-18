@@ -22,6 +22,10 @@
 		</selectKey>
 		INSERT INTO NARUMARU VALUES(#{nmno}, #{nmCategory}, #{cno}, #{nmTitle}, #{nmIntro}, SYSDATE, #{isOpen}, 'Y')
 	</insert>
+		
+	<select id="selectOneNarumaru" resultMap="NarumaruResultSet" parameterType="_int">
+		SELECT * FROM NARUMARU WHERE NMNO=#{nmno}
+	</select>
 </mapper>
 
 
