@@ -3,12 +3,14 @@ package com.kh.narumaru.member.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,12 +21,21 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.narumaru.member.model.service.ChannelService;
 import com.kh.narumaru.member.model.service.MemberService;
+import com.kh.narumaru.member.model.vo.Channel;
+import com.kh.narumaru.member.model.vo.MChannel;
 import com.kh.narumaru.member.model.vo.Member;
 
 
 import com.kh.narumaru.member.model.exception.LoginException;
 import com.kh.narumaru.member.model.exception.ProfileChangeException;
+import com.kh.narumaru.member.model.exception.birthdayChangeException;
+import com.kh.narumaru.member.model.exception.genderChangeException;
+import com.kh.narumaru.member.model.exception.memberChannelChangeException;
+import com.kh.narumaru.member.model.exception.nameChangeException;
+import com.kh.narumaru.member.model.exception.phoneChangeException;
+import com.kh.narumaru.member.model.exception.selectChanelException;
 
 
 @Controller
@@ -34,6 +45,8 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService ms;
+	@Autowired
+	private ChannelService cs;
 	
 	@RequestMapping(value="login.me", method=RequestMethod.POST)
 	public ModelAndView showMainView(Member m, ModelAndView mv, SessionStatus status ){
@@ -51,6 +64,7 @@ public class MemberController {
 			//session.setAttribute("loginUser", loginUser);
 			
 			/*return "main/main";*/
+			System.out.println("loginUser : " + loginUser);
 			
 			mv.addObject("loginUser", loginUser);
 			mv.setViewName("main/main");
@@ -70,7 +84,6 @@ public class MemberController {
 	
 	@RequestMapping(value="insertMember.me", method=RequestMethod.POST)
 	public String showInsertMember(){
-		System.out.println("로그인!!!!!!!");
 		
 		return "member/memberInsertForm";
 	}
@@ -98,8 +111,40 @@ public class MemberController {
 		
 	}
 	
-	//마이페이지 Info start//
+	/*@RequestMapping(value="naverLogin.me")
+	public String naverLogin(){
+		
+		return "main/callback";
+	}
+	*/
 	
+	@RequestMapping(value="kakaoLogin.me")
+	public ModelAndView kakaoLogin(HttpServletRequest request, HttpServletResponse response, ModelAndView mv){
+		
+		System.out.println("여기?????????????");
+		
+		String email = request.getParameter("email");
+		String nickname = request.getParameter("nickname");
+		
+		Member m = new Member();
+		m.setEmail(email);
+		m.setNickName(nickname);
+		
+		mv.addObject("member", m);
+		mv.setViewName("member/memberInsertForm");
+		
+		return mv;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//마이페이지 Info start//
 	@RequestMapping(value="profileChange.me", method=RequestMethod.POST)
 	public void profileChange(@RequestParam(name="profile-file", required=false) MultipartFile profile
 										, HttpServletRequest request, HttpSession session, HttpServletResponse response){
@@ -156,13 +201,154 @@ public class MemberController {
 			e.printStackTrace();
 		}
 	}
+	
+	@RequestMapping(value="nickChange.me", method=RequestMethod.POST)
+	public void nickNameChange(Member m, HttpSession session, HttpServletResponse response){
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		//System.out.println("m : " + m);
+		
+		m.setMid(loginUser.getMid());
+		
+		try {
+			ms.nameChange(m);
+			response.getWriter().print("true");
+		} catch (nameChangeException e) {
+			try {
+				response.getWriter().print("false");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(value="birthdayChange.me", method=RequestMethod.POST)
+	public void birthdayChange(Member m, HttpSession session, HttpServletResponse response){
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		//System.out.println("m : " + m);
+		
+		m.setMid(loginUser.getMid());
+		
+		try {
+			ms.birthdayChange(m);
+			response.getWriter().print("true");
+		} catch (birthdayChangeException e) {
+			try {
+				response.getWriter().print("false");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(value="phoneChange.me", method=RequestMethod.POST)
+	public void phoneChange(Member m, HttpSession session, HttpServletResponse response){
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		//System.out.println("m : " + m);
+		
+		String phone = m.getPhone();
+		
+		phone = "82+" + phone.substring(1, phone.length());
+		
+		m.setMid(loginUser.getMid());
+		m.setPhone(phone);
+		
+		try {
+			ms.phoneChange(m);
+			response.getWriter().print("true");
+		} catch (phoneChangeException e) {
+			try {
+				response.getWriter().print("false");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(value="genderChange.me", method=RequestMethod.POST)
+	public void genderChange(Member m, HttpSession session, HttpServletResponse response){
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		//System.out.println("m : " + m);
+		
+		m.setMid(loginUser.getMid());
+		
+		try {
+			ms.genderChange(m);
+			response.getWriter().print("true");
+		} catch (genderChangeException e) {
+			try {
+				response.getWriter().print("false");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@RequestMapping(value="channelChange.me", method=RequestMethod.POST)
+	public void channelChange(HttpSession session, HttpServletResponse response, @RequestParam(value="cnoArr[]")String[] cnoArr){
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		ArrayList<MChannel> mchList = new ArrayList<MChannel>();
+		
+		for(String str : cnoArr){
+			MChannel mch = new MChannel();
+			System.out.println("cnoArr : " + str);
+			mch.setMno(loginUser.getMid());
+			mch.setCno(Integer.valueOf(str));
+			mchList.add(mch);
+		}
+		
+		try {
+			cs.memberChannelChange(mchList);
+			response.getWriter().print("true");
+		} catch (memberChannelChangeException e) {
+			try {
+				response.getWriter().print("false");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	//마이페이지 Info end//
 	
 	// 마이페이지 페이지 이동 start
+	
 	@RequestMapping(value="myInfoView.me")
 	public ModelAndView myInfoForward(ModelAndView mv){
 		
-		mv.setViewName("mypage/myPage_myInfo");
+		ArrayList<Channel> cList = null;
+		try {
+			cList = cs.selectAllChannel();
+			System.out.println("cList : " + cList);
+			mv.addObject("cList", cList);
+			mv.setViewName("mypage/myPage_myInfo");
+		} catch (selectChanelException e) {
+			mv.addObject("message", e.getMessage());
+			mv.setViewName("common/errorPage.jsp");
+		}
 		
 		return mv;
 	}

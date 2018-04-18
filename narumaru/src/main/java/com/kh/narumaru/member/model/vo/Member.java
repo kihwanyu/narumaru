@@ -13,6 +13,7 @@ public class Member implements java.io.Serializable{
 	private String nickName;
 	private String profileName;
 	private String gender;
+	private Date birthDay;
 	private String phone;
 	private Date enroll_date;
 	private Date modify_date;
@@ -21,7 +22,7 @@ public class Member implements java.io.Serializable{
 	public Member(){}
 
 	public Member(int mid, String email, String userPwd, String nickName, String profileName, String gender,
-			String phone, Date enroll_date, Date modify_date, String status) {
+			Date birthDay, String phone, Date enroll_date, Date modify_date, String status) {
 		super();
 		this.mid = mid;
 		this.email = email;
@@ -29,6 +30,7 @@ public class Member implements java.io.Serializable{
 		this.nickName = nickName;
 		this.profileName = profileName;
 		this.gender = gender;
+		this.birthDay = birthDay;
 		this.phone = phone;
 		this.enroll_date = enroll_date;
 		this.modify_date = modify_date;
@@ -83,6 +85,14 @@ public class Member implements java.io.Serializable{
 		this.gender = gender;
 	}
 
+	public Date getBirthDay() {
+		return birthDay;
+	}
+
+	public void setBirthDay(Date birthDay) {
+		this.birthDay = birthDay;
+	}
+
 	public String getPhone() {
 		return phone;
 	}
@@ -118,9 +128,10 @@ public class Member implements java.io.Serializable{
 	@Override
 	public String toString() {
 		return "Member [mid=" + mid + ", email=" + email + ", userPwd=" + userPwd + ", nickName=" + nickName
-				+ ", profileName=" + profileName + ", gender=" + gender + ", phone=" + phone + ", enroll_date="
-				+ enroll_date + ", modify_date=" + modify_date + ", status=" + status + "]";
+				+ ", profileName=" + profileName + ", gender=" + gender + ", birthDay=" + birthDay + ", phone=" + phone
+				+ ", enroll_date=" + enroll_date + ", modify_date=" + modify_date + ", status=" + status + "]";
 	}
+
 	
 	
 }

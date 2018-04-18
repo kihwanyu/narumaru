@@ -15,7 +15,6 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</head>
 	<body>
-	<!--  -->
 	<jsp:include page="../common/topmenu.jsp"/>	
 		<br>
 		<br>
@@ -42,12 +41,42 @@
 							</td>
 						</tr>
 						<tr>
-							<td width="30%" rowspan="3">개인 정보</td>
+							<td width="30%" rowspan="4">개인 정보</td>
+							<td width="30%" style="vertical-align: middle;">
+								<div class="name-div-true">
+									이름&nbsp;&nbsp;&nbsp;유기환 
+								</div>
+								<div class="name-div-false" style="display: none;">
+									<div style="float: left; width: 30%; padding-top: 5px; padding-bottom: 5px;">
+										이름&nbsp;
+									</div>
+									<div style="float: left; width: 67%;">
+										<input type="text" id="nicName" name="nicName" value="" class="form-control">
+									</div>
+								</div>							
+							</td>
+							<td width="15%">
+								<div align="center">
+									<div class="name-div-true">
+										<input type="button" value="변경" class="btn btn-default" id="nameChange">
+									</div>
+									<div class="name-div-false" style="display: none;">
+									<input type="button" value="확인" class="btn btn-default" id="nameSubmit" style="margin-bottom: 10px;">
+									<input type="button" value="취소" class="btn btn-default" id="nameCancel">
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr>
 							<td width="30%" style="vertical-align: middle;">
 								<div class="birthday-div-true">생일&nbsp;&nbsp;&nbsp;1994년 5월 26일</div>
 								<div class="birthday-div-false" style="display: none;">
-									생일&nbsp;<input type="date" style="color: black;">&nbsp;
-											<input type="checkbox" value="음력">&nbsp;음력
+									<div style="float: left; width: 30%; padding-top: 5px; padding-bottom: 5px;">
+										생일&nbsp;
+									</div>
+									<div style="float: left; width: 67%;">
+										<input type="date" style="color: black;" value="" id="birthday" name="birthday" class="form-control">
+									</div>
 								</div>
 							</td>
 						
@@ -61,7 +90,6 @@
 								</div>
 							</td>
 						</tr>
-						<!--  -->
 						<tr>
 							<td width="30%" style="vertical-align: middle;">
 								<div class="gender-div-true">
@@ -69,8 +97,8 @@
 								</div>
 								<div class="gender-div-false" style="display: none;">
 									성별&nbsp;&nbsp;&nbsp;
-									<input type="radio" name="gender" value="m">&nbsp;남성
-									<input type="radio" name="gender" value="f">&nbsp;여성
+									<input type="radio" name="gender" value="M" checked="checked">&nbsp;남성
+									<input type="radio" name="gender" value="F">&nbsp;여성
 								</div>							
 							</td>
 							<td width="15%">
@@ -88,14 +116,15 @@
 						<tr>
 							<td width="30%" style="vertical-align: middle;">
 								<div class="phone-div-true">
-									휴대폰번호&nbsp;&nbsp;&nbsp;010-4803-4471
+									휴대폰번호&nbsp;&nbsp;&nbsp;82+1048034471
 								</div>
 								<div class="phone-div-false" style="display: none;">
 									<div style="float: left; width: 30%; padding-top: 5px; padding-bottom: 5px;">
 										휴대폰번호&nbsp;
 									</div>
 									<div style="float: left; width: 67%;">
-										<input type="tel" name="phone" value="" class="form-control">
+										<input type="tel" name="phone" id="phone" value="" class="form-control" placeholder="-없이 입력해주세요. 예)01012345678">
+										<label class="tel-label" style="display: none; color: red;">숫자만 입력해주세요.</label>
 									</div>
 								</div>	
 							</td>
@@ -112,40 +141,22 @@
 						<tr>
 							<td width="30%">관심 채널</td>
 							<td width="30%">
-								<input type="checkbox" id="100" value="100">
-								<label for="100">문화/예술</label>
-								<input type="checkbox" id="200" value="200">
-								<label for="200">여행</label>
-								<input type="checkbox" id="300" value="300">
-								<label for="300">패션/뷰티</label>
-								<br>
-								<input type="checkbox" id="travel" value="400">
-								<label for="400">팬클럽</label>
-								<input type="checkbox" id="art" value="500">
-								<label for="500">인문/과학</label>
-								<input type="checkbox" id="travel" value="600">
-								<label for="600">동물</label>
-								<br>
-								<input type="checkbox" id="art" value="700">
-								<label for="700">나이</label>
-								<input type="checkbox" id="travel" value="800">
-								<label for="800">방송/연애</label>
-								<input type="checkbox" id="art" value="900">
-								<label for="900">친목/모임</label>
-								<br>
-								<input type="checkbox" id="travel" value="1000">
-								<label for="1000">여행</label>
-								<!-- 
-									문화/예술(100) 여행(200) 패션/뷰티(300) 팬클럽(400) 인문/과학(500) 동물(600) 나이(700) 방송/연예(800) 친목/모임(900) 종교/봉사(1000)
-
-									음악(1100) 경제(1200) IT/기술(1300) 게임(1400) 어학/외국어(1500) 만화(1600) 일상/이야기(1700) 스포츠/레저(1800) 건강(1900) 결혼/가정(2000)
-									
-									만화/애니메이션(2100) 정치/사회(2200) 교육/공부(2300) 취미/DIY(2400) 취업/자기개발(2500) 맛집/요리/생활(2600)
-								 -->
+								<!-- count 변수를 선언 -->
+								<c:set var="count" value="0"/>
+								<c:forEach items="${cList }" var="cList">
+									<label for="${cList.cno }">${cList.cname }</label>
+									<input type="checkbox" id="${cList.cno }" name="cno" value="${cList.cno }">
+									<!-- count 변수 1씩 증가시킴 -->
+									<c:set var="count" value="${count+1 }"/>
+									<!-- count가 5의 배수일 경우, <br> 태그 출력  -->
+									<c:if test="${count%5 == 0 }">
+									<br>
+									</c:if>
+								</c:forEach>
 							</td>
 							<td width="15%">
 								<div align="center" style="margin-top: 40px;margin-bottom: 40px;">
-									<input type="button" value="변경" class="btn btn-default">
+									<input type="button" id="channelChangeBtn" value="변경" class="btn btn-default">
 								</div>
 							</td>
 						</tr>
@@ -173,6 +184,51 @@
 				</table>
 				<script type="text/javascript">
 					$(function(){
+						var telPass = "";
+						/* 핸드폰 번호 정규표현식 start */
+						$("#phone").keydown(function(){
+							
+							var patten = /^[0-9]/g;
+							var tel = $("#phone").val();
+							var telSub = tel.substr(tel.length-1);
+							
+							if(patten.test(telSub) || tel == ""){
+								$(".tel-label").hide();
+								telPass = tel;
+							} else {
+								$("#phone").val(telPass);
+								$(".tel-label").show();
+							}
+						});
+						/* 핸드폰 번호 정규표현식 end */
+						$("#nameChange").click(function(){
+							$(".name-div-true").hide();
+							$(".name-div-false").show();
+						});
+						$("#nameSubmit").click(function(){
+							$(".name-div-true").show();
+							$(".name-div-false").hide();
+							
+							var nickName = $("#nicName").val().trim();
+							
+							$.ajax({
+								url:"nickChange.me",
+								data:{nickName:nickName},
+								type:"POST",
+								success:function(data){
+									console.log(data);
+									if(data == "true"){
+										alert("이름 변경을 성공하였습니다.");
+									} else {
+										alert("이름 변경을 실패하였습니다.");
+									}
+								}
+							});
+						});
+						$("#nameCancel").click(function(){
+							$(".name-div-true").show();
+							$(".name-div-false").hide();
+						});
 						$("#birthdayChange").click(function(){
 							$(".birthday-div-true").hide();
 							$(".birthday-div-false").show();
@@ -180,6 +236,22 @@
 						$("#birthdaySubmit").click(function(){
 							$(".birthday-div-true").show();
 							$(".birthday-div-false").hide();
+							
+							var birthDay = $("#birthday").val();
+							
+							$.ajax({
+								url:"birthdayChange.me",
+								data:{birthDay:birthDay},
+								type:"POST",
+								success:function(data){
+									console.log(data);
+									if(data == "true"){
+										alert("생년월일 변경을 성공하였습니다.");
+									} else {
+										alert("생년월일 변경을 실패하였습니다.");
+									}
+								}
+							});
 						});
 						$("#birthdayCancel").click(function(){
 							$(".birthday-div-true").show();
@@ -192,6 +264,24 @@
 						$("#genderSubmit").click(function(){
 							$(".gender-div-true").show();
 							$(".gender-div-false").hide();
+							
+							var gender = $(':radio[name="gender"]:checked').val();
+							
+							console.log(gender);
+							
+							$.ajax({
+								url:"genderChange.me",
+								data:{gender:gender},
+								type:"POST",
+								success:function(data){
+									console.log(data);
+									if(data == "true"){
+										alert("성별 변경을 성공하였습니다.");
+									} else {
+										alert("성별 변경을 실패하였습니다.");
+									}
+								}
+							}); 
 						});
 						$("#genderCancel").click(function(){
 							$(".gender-div-true").show();
@@ -204,10 +294,54 @@
 						$("#phoneSubmit").click(function(){
 							$(".phone-div-true").show();
 							$(".phone-div-false").hide();
+							
+							var phoneSize = $("#phone").val().trim().length;
+							console.log(phoneSize);
+							if(phoneSize > 9){
+								var phone = $('#phone').val().trim();
+								
+								$.ajax({
+									url:"phoneChange.me",
+									data:{phone:phone},
+									type:"POST",
+									success:function(data){
+										console.log(data);
+										if(data == "true"){
+											alert("핸드폰번호 변경을 성공하였습니다.");
+										} else {
+											alert("핸드폰번호 변경을 실패하였습니다.");
+										}
+									}
+								}); 
+							} else {
+								alert("10자리 이상 입력해주세요.");
+							}
 						});
 						$("#phoneCancel").click(function(){
 							$(".phone-div-true").show();
 							$(".phone-div-false").hide();
+						});
+						
+						$("#channelChangeBtn").click(function(){
+							var cnoArr = [];
+							
+							var cno = $("input[name=cno]:checked").each(function(){
+								cnoArr.push($(this).val());
+							});
+							
+							$.ajax({
+								url:"channelChange.me",
+								data:{cnoArr:cnoArr},
+								type:"POST",
+								success:function(data){
+									console.log(data);
+									if(data == "true"){
+										alert("채널 변경을 성공하였습니다.");
+									} else {
+										alert("채널 변경을 실패하였습니다.");
+									}
+								}
+							}); 
 						});
 					});
 				</script>
@@ -223,11 +357,14 @@
 				<form action="" method="post">
 					<div style="width: 50%" align="center">
 						<div class="password-div">
-							현재 비밀번호&nbsp;<input type="password" style="margin-top: 10px;" class="form-control">
+							현재 비밀번호&nbsp;<input type="password" style="margin-top: 10px;" class="form-control" id="password1">
 						</div>
 						<div class="password-div">
-							변경 비밀번호&nbsp;<input type="password" style="margin-top: 10px;" class="form-control">
-						</div>				
+							변경 비밀번호&nbsp;<input type="password" style="margin-top: 10px;" class="form-control" id="password2" name="password">
+						</div>	
+						<div class="password-div">
+							변경 비밀번호 재입력&nbsp;<input type="password" style="margin-top: 10px;" class="form-control" id="password3">
+						</div>			
 						<div class="password-div">
 							<input type="submit" value="비밀번호 변경" class="btn btn-default">
 						</div>						
@@ -263,9 +400,9 @@
 						success:function(data){
 							console.log(data);
 							if(data == "true"){
-								alert("사진이 변경되었습니다.");
+								alert("프로필사진 변경을 성공하였습니다.");
 							} else {
-								alert("사진 변경을 실패하였습니다.");
+								alert("프로필사진 변경을 실패하였습니다.");
 							}
 						}
 					});
