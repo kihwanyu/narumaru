@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,13 +20,6 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kh.narumaru.member.model.service.ChannelService;
-import com.kh.narumaru.member.model.service.MemberService;
-import com.kh.narumaru.member.model.vo.Channel;
-import com.kh.narumaru.member.model.vo.MChannel;
-import com.kh.narumaru.member.model.vo.Member;
-
-
 import com.kh.narumaru.member.model.exception.LoginException;
 import com.kh.narumaru.member.model.exception.ProfileChangeException;
 import com.kh.narumaru.member.model.exception.birthdayChangeException;
@@ -36,6 +28,11 @@ import com.kh.narumaru.member.model.exception.memberChannelChangeException;
 import com.kh.narumaru.member.model.exception.nameChangeException;
 import com.kh.narumaru.member.model.exception.phoneChangeException;
 import com.kh.narumaru.member.model.exception.selectChanelException;
+import com.kh.narumaru.member.model.service.ChannelService;
+import com.kh.narumaru.member.model.service.MemberService;
+import com.kh.narumaru.member.model.vo.Channel;
+import com.kh.narumaru.member.model.vo.MChannel;
+import com.kh.narumaru.member.model.vo.Member;
 
 
 @Controller
