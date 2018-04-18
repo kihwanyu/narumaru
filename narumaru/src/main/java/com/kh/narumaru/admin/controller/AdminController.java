@@ -1,15 +1,19 @@
 package com.kh.narumaru.admin.controller;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.narumaru.admin.model.service.AdminService;
 import com.kh.narumaru.admin.model.service.AdminServiceImpl;
+import com.kh.narumaru.member.model.vo.Member;
 
 @Controller
 @SessionAttributes("loginUser")
@@ -18,9 +22,20 @@ public class AdminController {
 	private AdminService as;
 
 	@RequestMapping(value="adMain.ad")
-	public String showAdminMainView(){
-		   
-		return "admin/adMain";
+	public ModelAndView showAdminMainView(ModelAndView mv){
+		HashMap EnrollDateList = as.selectEnrollDateList();
+		mv.addObject("Date", EnrollDateList.get("date"));
+		mv.addObject("Count", EnrollDateList.get("count"));
+		System.out.println("나오니?" + EnrollDateList);
+		
+		Iterator iter = EnrollDateList.keySet().iterator();
+		
+		while(iter.hasNext()){
+			System.out.println("에베베" + EnrollDateList.get(iter.next()));
+		}
+		
+		mv.setViewName("admin/adMain");
+		return mv;
 	}
 	
 	
@@ -89,10 +104,10 @@ public class AdminController {
 		
 		return "admin/adAnnouncement";
 	}
-	
+	//관리자 메인 그래프
 	@RequestMapping("adCountEnrollDate.ad")
 	public void CountEnrollDate(){
-		ArrayList<Date> EnrollDateList = as.selectEnrollDateList();
+		HashMap EnrollDateList = as.selectEnrollDateList();
 		System.out.println(EnrollDateList);
 	}
 	
