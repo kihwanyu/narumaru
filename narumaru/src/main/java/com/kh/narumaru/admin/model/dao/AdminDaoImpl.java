@@ -1,6 +1,7 @@
 package com.kh.narumaru.admin.model.dao;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.ArrayList;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -17,14 +18,20 @@ public class AdminDaoImpl implements AdminDao{
 	
 	
 	@Override
-	public ArrayList<Date> selectEnrollDateList() {
+	public HashMap selectEnrollDateList() {
 		System.out.println("너는 나오니?");
 		
-		ArrayList<Date> list = (ArrayList)sqlSession.selectList("Admin.selectEnroll");
+		ArrayList list1 = (ArrayList)sqlSession.selectList("Admin.selectEnroll1");
 		
-		System.out.println(list);
+		ArrayList list2 = (ArrayList)sqlSession.selectList("Admin.selectEnroll2");
+		System.out.println(list1);
+		System.out.println(list2);
 		
-		return list;
+		HashMap hmap = new HashMap();
+		hmap.put("date", list2);
+		hmap.put("count", list1);
+		
+		return hmap;
 	}
 
 }

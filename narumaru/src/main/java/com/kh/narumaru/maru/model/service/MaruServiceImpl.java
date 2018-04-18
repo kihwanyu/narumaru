@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kh.narumaru.maru.exception.MaruException;
 import com.kh.narumaru.maru.model.dao.MaruDao;
 import com.kh.narumaru.maru.model.vo.MaruMember;
+import com.kh.narumaru.narumaru.model.vo.Narumaru;
 
 @Service
 public class MaruServiceImpl implements MaruService{
@@ -15,9 +16,9 @@ public class MaruServiceImpl implements MaruService{
 	private MaruDao md;
 	
 	@Override
-	public ArrayList<MaruMember> selectMaruMemberList(int nmno) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<MaruMember> selectMaruMemberList(int nmno) throws MaruException {
+		
+		return md.selectMaruMemberList(nmno);
 	}
 
 	@Override
@@ -48,6 +49,12 @@ public class MaruServiceImpl implements MaruService{
 	public ArrayList selectMaruList(int mno) throws MaruException {
 		ArrayList maruList = md.selectMaruList(mno);
 		return maruList;
+	}
+
+	@Override
+	public Narumaru selectOneMaru(int nmno) throws MaruException {
+		
+		return md.selectOneMaru(nmno);
 	}
 
 }

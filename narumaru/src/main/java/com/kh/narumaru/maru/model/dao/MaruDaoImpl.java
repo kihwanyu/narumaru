@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.narumaru.maru.exception.MaruException;
 import com.kh.narumaru.maru.model.vo.MaruMember;
+import com.kh.narumaru.narumaru.model.vo.Narumaru;
 
 @Repository
 public class MaruDaoImpl implements MaruDao{
@@ -15,9 +16,13 @@ public class MaruDaoImpl implements MaruDao{
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public ArrayList<MaruMember> selectMaruMemberList(int nmno) {
-		// TODO Auto-generated method stub 
-		return null;
+	public ArrayList<MaruMember> selectMaruMemberList(int nmno) throws MaruException {
+		ArrayList maruMemberList = (ArrayList) sqlSession.selectList("Maru.selectMaruMemberList", nmno);
+		if(maruMemberList==null){
+			throw new MaruException("마루목록 조회 실패");
+		}
+		
+		return maruMemberList;
 	}
 
 	@Override
@@ -59,6 +64,16 @@ public class MaruDaoImpl implements MaruDao{
 			throw new MaruException("마루목록 조회 실패");
 		}
 		return maruList;
+	}
+
+	@Override
+	public Narumaru selectOneMaru(int nmno) throws MaruException {
+		Narumaru mn = sqlSession.selectOne("Narumaru.selectOneNarumaru", nmno);
+		System.out.println(mn);
+		if(mn==null){
+			throw new MaruException("마루 조회 실패");
+		}
+		return mn;
 	}
 
 }

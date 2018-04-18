@@ -5,21 +5,16 @@
   
 <mapper namespace="Admin">
 	
-	<resultMap type="Member" id="memberResultSet">
-		<id property="mid" column="MNO"/>
-		<result property="Email" column="EMAIL"/>
-		<result property="userPwd" column="PASSWORD"/>
-		<result property="nickName" column="NICNAME"/>
-		<result property="fno" column="FNO"/>
-		<result property="gender" column="GENDER"/>
-		<result property="phone" column="PHONE"/>
+	<resultMap type="hashmap" id="memberResultSet">
 		<result property="enroll_date" column="ENROLL_DATE"/>
-		<result property="modify_date" column="MODIFY_DATE"/>
-		<result property="status" column="STATUS"/>
 	</resultMap>
 	
-	<select id="selectEnroll" resultMap="memberResultSet" parameterType="Member">
-		SELECT ENROLL_DATE FROM MEMBER
+	<select id="selectEnroll1" resultType="_int">
+		SELECT COUNT(TO_CHAR(ENROLL_DATE,'RRRRMM')) FROM MEMBER GROUP BY TO_CHAR(ENROLL_DATE,'RRRRMM')
+	</select>
+	
+	<select id="selectEnroll2" resultType="java.lang.String">
+		SELECT TO_CHAR(ENROLL_DATE,'RRRRMM') FROM MEMBER GROUP BY TO_CHAR(ENROLL_DATE,'RRRRMM')
 	</select>
 	
 </mapper>

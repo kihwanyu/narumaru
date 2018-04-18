@@ -12,6 +12,7 @@ import com.kh.narumaru.member.model.exception.ProfileChangeException;
 import com.kh.narumaru.member.model.exception.birthdayChangeException;
 import com.kh.narumaru.member.model.exception.genderChangeException;
 import com.kh.narumaru.member.model.exception.nameChangeException;
+import com.kh.narumaru.member.model.exception.passwordChangeException;
 import com.kh.narumaru.member.model.exception.phoneChangeException;
 import com.kh.narumaru.member.model.vo.Member;
 
@@ -75,6 +76,12 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public void phoneChange(Member m) throws phoneChangeException {
 		md.phoneChange(sqlSession, m);
+	}
+
+
+	@Override
+	public void passwordChange(Member m) throws passwordChangeException {
+		md.passwordChange(sqlSession, m);
 	}
 
 }
