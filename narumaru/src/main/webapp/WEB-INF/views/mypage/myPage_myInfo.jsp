@@ -144,19 +144,19 @@
 								<!-- count 변수를 선언 -->
 								<c:set var="count" value="0"/>
 								<c:forEach items="${cList }" var="cList">
-								<label for="${cList.cno }">${cList.cname }</label>
-								<input type="checkbox" id="${cList.cno }" name="cno" value="${cList.cno }">
-								<!-- count 변수 1씩 증가시킴 -->
-								<c:set var="count" value="${count+1 }"/>
-								<!-- count가 5의 배수일 경우, <br> 태그 출력  -->
-								<c:if test="${count%5 == 0 }">
-								<br>
-								</c:if>
+									<label for="${cList.cno }">${cList.cname }</label>
+									<input type="checkbox" id="${cList.cno }" name="cno" value="${cList.cno }">
+									<!-- count 변수 1씩 증가시킴 -->
+									<c:set var="count" value="${count+1 }"/>
+									<!-- count가 5의 배수일 경우, <br> 태그 출력  -->
+									<c:if test="${count%5 == 0 }">
+									<br>
+									</c:if>
 								</c:forEach>
 							</td>
 							<td width="15%">
 								<div align="center" style="margin-top: 40px;margin-bottom: 40px;">
-									<input type="button" value="변경" class="btn btn-default">
+									<input type="button" id="channelChangeBtn" value="변경" class="btn btn-default">
 								</div>
 							</td>
 						</tr>
@@ -320,6 +320,28 @@
 						$("#phoneCancel").click(function(){
 							$(".phone-div-true").show();
 							$(".phone-div-false").hide();
+						});
+						
+						$("#channelChangeBtn").click(function(){
+							var cnoArr = [];
+							
+							var cno = $("input[name=cno]:checked").each(function(){
+								cnoArr.push($(this).val());
+							});
+							
+							$.ajax({
+								url:"channelChange.me",
+								data:{cnoArr:cnoArr},
+								type:"POST",
+								success:function(data){
+									console.log(data);
+									if(data == "true"){
+										alert("채널 변경을 성공하였습니다.");
+									} else {
+										alert("채널 변경을 실패하였습니다.");
+									}
+								}
+							}); 
 						});
 					});
 				</script>

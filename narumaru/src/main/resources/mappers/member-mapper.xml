@@ -25,6 +25,12 @@
 		<result property="cphoto" column="CPHOTO"/>
 	</resultMap> 
 	
+	<resultMap type="MChannel" id="mchannelResultSet">
+		<id property="mcno" column="MCNO"/>
+		<result property="mno" column="MNO"/>
+		<result property="cno" column="CNO"/>
+	</resultMap> 
+	
 	<select id="loginCheck" resultMap="memberResultSet" parameterType="Member">
 		<!-- SELECT * FROM MEMBER WHERE USER_ID=#{userId} AND USER_PWD=#{userPwd} AND STATUS = 'Y' -->
 		SELECT * FROM MEMBER WHERE EMAIL = #{email} AND STATUS='Y'
@@ -42,10 +48,10 @@
 	<insert id="insertMember">
 		INSERT INTO MEMBER VALUES(SEQ_MNO.NEXTVAL, #{email}, #{userPwd}, #{nickName}, NULL, #{gender}, #{phone}, SYSDATE, SYSDATE, default)
 	</insert>
-	
 	<insert id="insertBoard">
 		INSERT INTO BOARD(BID) VALUES(SEQ_BID.NEXTVAL)
 	</insert>
+	
 	<update id="profileChange">
 		UPDATE MEMBER SET PROFILENAME=#{profileName} WHERE MNO=#{mid}
 	</update>
@@ -61,6 +67,13 @@
 	<update id="phoneChange">
 		UPDATE MEMBER SET PHONE=#{phone} WHERE MNO=#{mid}
 	</update>
+	
+	<delete id="memberChannelDelete">
+		DELETE FROM MCHANNEL WHERE MNO=#{mno}
+	</delete>
+	<insert id="memberChannelInsert">
+		INSERT INTO MCHANNEL VALUES (SEQ_MCNO.NEXTVAL, #{mno}, #{cno})
+	</insert>
 </mapper>
 
 
