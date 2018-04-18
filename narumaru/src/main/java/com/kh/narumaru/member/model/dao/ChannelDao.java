@@ -15,4 +15,6 @@ public interface ChannelDao {
 
 	void memberChannelChange(SqlSessionTemplate sqlSession, ArrayList<MChannel> mchList) throws memberChannelChangeException;
 
+	ArrayList<Channel> selectMemberChannel(SqlSessionTemplate sqlSession, int mno) throws selectChanelException;
+
 }

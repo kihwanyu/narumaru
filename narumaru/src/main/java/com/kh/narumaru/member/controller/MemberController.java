@@ -334,13 +334,21 @@ public class MemberController {
 	// 마이페이지 페이지 이동 start
 	
 	@RequestMapping(value="myInfoView.me")
-	public ModelAndView myInfoForward(ModelAndView mv){
+	public ModelAndView myInfoForward(ModelAndView mv, HttpSession session){
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		int mno = loginUser.getMid();
 		
 		ArrayList<Channel> cList = null;
+		ArrayList<Channel> mchList = null;
 		try {
 			cList = cs.selectAllChannel();
-			System.out.println("cList : " + cList);
+			mchList = cs.selectMemberChannel(mno);
+			
 			mv.addObject("cList", cList);
+			mv.addObject("mchList", mchList);
+			
 			mv.setViewName("mypage/myPage_myInfo");
 		} catch (selectChanelException e) {
 			mv.addObject("message", e.getMessage());

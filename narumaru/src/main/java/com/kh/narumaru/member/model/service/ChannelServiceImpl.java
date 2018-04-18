@@ -31,5 +31,12 @@ public class ChannelServiceImpl implements ChannelService {
 		
 		cd.memberChannelChange(sqlSession ,mchList);
 	}
+	@Override
+	public ArrayList<Channel> selectMemberChannel(int mno) throws selectChanelException {
+
+		ArrayList<Channel> mchList = cd.selectMemberChannel(sqlSession, mno);
+		
+		return mchList;
+	}
 
 }

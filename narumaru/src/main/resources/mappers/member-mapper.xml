@@ -44,6 +44,9 @@
 	<select id="selectAllChanel" resultMap="channelResultSet">
 		SELECT CNO, CNAME FROM CHANNEL
 	</select>
+	<select id="selectMemberChannel" resultMap="mchannelResultSet" parameterType="_int">
+		SELECT CNO FROM MCHANNEL WHERE MNO = #{mno}
+	</select>
 	
 	<insert id="insertMember">
 		INSERT INTO MEMBER VALUES(SEQ_MNO.NEXTVAL, #{email}, #{userPwd}, #{nickName}, NULL, #{gender}, #{phone}, SYSDATE, SYSDATE, default)
