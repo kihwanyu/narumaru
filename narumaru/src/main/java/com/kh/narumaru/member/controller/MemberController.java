@@ -34,6 +34,7 @@ import com.kh.narumaru.member.model.exception.birthdayChangeException;
 import com.kh.narumaru.member.model.exception.genderChangeException;
 import com.kh.narumaru.member.model.exception.memberChannelChangeException;
 import com.kh.narumaru.member.model.exception.nameChangeException;
+import com.kh.narumaru.member.model.exception.passwordChangeException;
 import com.kh.narumaru.member.model.exception.phoneChangeException;
 import com.kh.narumaru.member.model.exception.selectChanelException;
 
@@ -331,6 +332,64 @@ public class MemberController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping(value="userPwdChange.me", method=RequestMethod.POST)
+	public void userPwdChange(HttpSession session, HttpServletResponse response, @RequestParam(value="pwdArr[]")String[] pwdArr){
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		String userPwd = loginUser.getUserPwd();
+		
+		String currentPwd = pwdArr[0];
+		String changedPwd = pwdArr[1];
+		String changedPwdRe = pwdArr[2];
+
+		if(userPwd.equals(currentPwd)){
+			if(changedPwd.equals(changedPwdRe)){
+				try {
+					Member m = new Member();
+					m.setMid(loginUser.getMid());
+					m.setUserPwd(changedPwd);
+					ms.passwordChange(m);
+					response.getWriter().print("0");
+					/*비밀번호 변경 성공*/
+				} catch (passwordChangeException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else {
+				try {
+					response.getWriter().print("2");
+					/*변경 비밀번호 불일치*/
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		} else {
+			try {
+				response.getWriter().print("1");
+				/*현재 비밀번호 불일치*/
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		/*try {
+			cs.memberChannelChange(mchList);
+			response.getWriter().print("true");
+		} catch (memberChannelChangeException e) {
+			try {
+				response.getWriter().print("false");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}*/
 	}
 	//마이페이지 Info end//
 	

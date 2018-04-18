@@ -435,11 +435,35 @@
 							변경 비밀번호 재입력&nbsp;<input type="password" style="margin-top: 10px;" class="form-control" id="password3">
 						</div>			
 						<div class="password-div">
-							<input type="submit" value="비밀번호 변경" class="btn btn-default">
+							<input type="button" id="passwordChangeBtn" value="비밀번호 변경" class="btn btn-default" onclick="">
 						</div>						
 					</div>
 				</form>
 			</div>
+			<script type="text/javascript">
+			$(function(){
+				$("#passwordChangeBtn").click(function(){
+					
+					console.log("click");
+					var pwdArr = [$("#password1").val(), $("#password2").val(), $("#password3").val()];
+					$.ajax({
+						url:"userPwdChange.me",
+						data:{pwdArr:pwdArr},
+						type:"POST",
+						success:function(data){
+							console.log(data);
+							if(data == "0"){
+								alert("비밀번호 변경 성공하였습니다.");
+							} else if(data == "1") {
+								alert("비밀번호 변경 실패하였습니다. - 현재 비밀번호 불일치");
+							} else {
+								alert("비밀번호 변경 실패하였습니다. - 변경 비밀번호 불일치");
+							}
+						}
+					}); 
+				});
+			});
+			</script>
 		</div>
 		<form id="profileChage-form" method="post" action="profileChange.me" enctype="multipart/form-data">
 			<input type="file" id="profile-file" name="profile-file" onchange="LoadImg(this);">
@@ -447,6 +471,7 @@
 		<jsp:include page="../common/myPage_RightSideBar.jsp"/>
 		<script type="text/javascript">
 		$(function(){
+			/* 비밀번호 변경 */
 			$("#profile-file").hide();
 			$("#profileImg").click(function(){
 				$("#profile-file").click();

@@ -70,7 +70,9 @@
 	<update id="phoneChange">
 		UPDATE MEMBER SET PHONE=#{phone} WHERE MNO=#{mid}
 	</update>
-	
+	<update id="passwordChange">
+		UPDATE MEMBER SET PASSWORD=#{userPwd} WHERE MNO=#{mid}
+	</update>
 	<delete id="memberChannelDelete">
 		DELETE FROM MCHANNEL WHERE MNO=#{mno}
 	</delete>

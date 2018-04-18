@@ -7,6 +7,7 @@ import com.kh.narumaru.member.model.exception.ProfileChangeException;
 import com.kh.narumaru.member.model.exception.birthdayChangeException;
 import com.kh.narumaru.member.model.exception.genderChangeException;
 import com.kh.narumaru.member.model.exception.nameChangeException;
+import com.kh.narumaru.member.model.exception.passwordChangeException;
 import com.kh.narumaru.member.model.exception.phoneChangeException;
 import com.kh.narumaru.member.model.vo.Member;
 
@@ -25,6 +26,8 @@ public interface MemberDao {
 	void genderChange(SqlSessionTemplate sqlSession, Member m) throws genderChangeException;
 
 	void phoneChange(SqlSessionTemplate sqlSession, Member m) throws phoneChangeException;
+
+	void passwordChange(SqlSessionTemplate sqlSession, Member m) throws passwordChangeException;
 
 
 }
