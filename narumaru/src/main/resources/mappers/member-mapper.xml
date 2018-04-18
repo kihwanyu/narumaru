@@ -45,7 +45,7 @@
 		SELECT CNO, CNAME FROM CHANNEL
 	</select>
 	<select id="selectMemberChannel" resultMap="mchannelResultSet" parameterType="_int">
-		SELECT CNO FROM MCHANNEL WHERE MNO = #{mno}
+		SELECT CNO FROM MCHANNEL WHERE MNO = #{mno} ORDER BY CNO ASC
 	</select>
 	
 	<insert id="insertMember">

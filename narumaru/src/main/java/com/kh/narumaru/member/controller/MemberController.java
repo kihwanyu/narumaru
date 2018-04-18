@@ -349,6 +349,8 @@ public class MemberController {
 			cList = cs.selectAllChannel();
 			mchList = cs.selectMemberChannel(mno);
 			
+			System.out.println("mchList : " + mchList);
+			
 			mv.addObject("cList", cList);
 			mv.addObject("mchList", mchList);
 			
