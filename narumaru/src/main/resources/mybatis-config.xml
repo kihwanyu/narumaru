@@ -23,6 +23,7 @@
       <mapper resource="mappers/payment-mapper.xml"/>
       <mapper resource="mappers/narumaru-mapper.xml"/>
       <mapper resource="mappers/admin-mapper.xml"/>
+       <mapper resource="mappers/maru-mapper.xml"/>
    </mappers>
    
 </configuration>

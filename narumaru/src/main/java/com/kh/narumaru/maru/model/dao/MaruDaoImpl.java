@@ -68,7 +68,7 @@ public class MaruDaoImpl implements MaruDao{
 
 	@Override
 	public Narumaru selectOneMaru(int nmno) throws MaruException {
-		Narumaru mn = sqlSession.selectOne("Narumaru.selectOneNarumaru", nmno);
+		Narumaru mn = sqlSession.selectOne("Narumaru.selectNarumaruOne", nmno);
 		System.out.println(mn);
 		if(mn==null){
 			throw new MaruException("마루 조회 실패");

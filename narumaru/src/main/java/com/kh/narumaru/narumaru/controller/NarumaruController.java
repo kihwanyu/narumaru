@@ -30,8 +30,8 @@ import com.kh.narumaru.narumaru.model.vo.Narumaru;
 public class NarumaruController {
 	@Autowired
 	NarumaruService nms;
-	/*@Autowired
-	MaruService ms;*/
+	@Autowired
+	MaruService ms;
 	
 	@RequestMapping("goHome.nm")
 	public String goHome(){
@@ -84,7 +84,6 @@ public class NarumaruController {
 			System.out.println(nmno);
 			Member loginUser = (Member)request.getSession().getAttribute("loginUser");
 			MaruMember mm = new MaruMember();
-			MaruService ms = new MaruServiceImpl();
 			mm.setMno(loginUser.getMid());
 			mm.setNmno(nmno);
 			mm.setConLevel(0);
