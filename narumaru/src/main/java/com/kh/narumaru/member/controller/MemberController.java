@@ -159,16 +159,7 @@ public class MemberController {
 		return mv;
 	}
 	
-	//네이버 인증
-	  /*@RequestMapping("/naverLogin.me")
-	    public ModelAndView login(HttpSession session) {
-		   네아로 인증 URL을 생성하기 위하여 getAuthorizationUrl을 호출 
-	        String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
-	        System.out.println("네아로 인증 URL"+naverAuthUrl);
-	         생성한 인증 URL을 View로 전달 
-	        return new ModelAndView("member/naverTest", "url", naverAuthUrl);
-	    }*/
-	    
+		//네이버 인증
 		@RequestMapping("/naverCallback.me")
 		public ModelAndView callback(Member m, HttpSession session, HttpServletRequest request, ModelAndView mv) throws IOException {
 	
@@ -199,7 +190,6 @@ public class MemberController {
 				int responseCode = con.getResponseCode();
 				
 				BufferedReader br;
-				System.out.print("responseCode="+responseCode);
 				if(responseCode==200) { // 정상 호출
 					br = new BufferedReader(new InputStreamReader(con.getInputStream()));
 				} else {  // 에러 발생
@@ -215,8 +205,6 @@ public class MemberController {
 				
 				Object obj2 = parser.parse(res.toString());
 				JSONObject jsonObj2 = (JSONObject) obj2;
-				
-				System.out.println("???제이슨2222 "+ jsonObj2.get("access_token"));
 				
 				access_token = (String) jsonObj2.get("access_token");
 				
@@ -255,15 +243,11 @@ public class MemberController {
 	                response.append(inputLine1);
 	            }
 	            
+	            
 	            JSONParser parser = new JSONParser();
 				Object obj3 = parser.parse(response.toString());
 				JSONObject jsonObj3 = (JSONObject) obj3;
 				JSONObject jsonObj4 = (JSONObject) jsonObj3.get("response");
-				System.out.println("네이버 발급 후"+jsonObj3);
-				
-				System.out.println(jsonObj3.get("response"));
-				
-				System.out.println("이메일? " + jsonObj4.get("email"));
 				
 				m.setEmail((String) jsonObj4.get("email"));
 				m.setNickName((String) jsonObj4.get("name"));
@@ -272,8 +256,6 @@ public class MemberController {
 	        } catch (Exception e) {
 	            System.out.println(e);
 	        }
-	        
-	        System.out.println("이메일" + m.getEmail() + "이름" + m.getNickName());
 	        
 	        mv.addObject("member", m);
 			mv.setViewName("member/memberInsertForm");

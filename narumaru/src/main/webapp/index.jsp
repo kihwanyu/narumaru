@@ -15,7 +15,6 @@
 		<button type="submit"></button>
 	</form> -->
 	
-	
 	<jsp:forward page="WEB-INF/views/main/mainLogin.jsp"/>
 	<%-- <jsp:forward page="WEB-INF/views/naru/naruBoard.jsp"/>
 	<jsp:forward page="WEB-INF/views/naru/naruInsertBoard.jsp"/>

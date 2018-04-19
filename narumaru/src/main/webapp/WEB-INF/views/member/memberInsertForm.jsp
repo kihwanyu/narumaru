@@ -79,6 +79,7 @@
                     </div>
                 </div>
             </div>
+            
             <div class="form-group">
                 <label for="memberInfo" class="col-lg-2 control-label">개인정보취급방침</label>
                 <div class="col-lg-10" id="memberInfo">
