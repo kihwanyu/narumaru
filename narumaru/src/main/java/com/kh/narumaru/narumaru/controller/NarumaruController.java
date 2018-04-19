@@ -33,13 +33,10 @@ public class NarumaruController {
 	
 	@Autowired
 	private NarumaruService nms;
-	
 	@Autowired
 	private ChannelService cs;
-	
 	@Autowired
 	private MaruService ms;
-
 	
 	@RequestMapping("goHome.nm")
 	public String goHome(){
@@ -108,7 +105,6 @@ public class NarumaruController {
 			System.out.println(nmno);
 			Member loginUser = (Member)request.getSession().getAttribute("loginUser");
 			MaruMember mm = new MaruMember();
-			MaruService ms = new MaruServiceImpl();
 			mm.setMno(loginUser.getMid());
 			mm.setNmno(nmno);
 			mm.setConLevel(0);
