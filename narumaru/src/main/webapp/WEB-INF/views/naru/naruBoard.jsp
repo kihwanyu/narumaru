@@ -11,7 +11,7 @@
 </head>
 <body>
 	<jsp:include page="../common/topmenu.jsp"/>
-	<%-- <jsp:include page="middleMenu.jsp"/> --%>
+	<jsp:include page="middleMenu.jsp"/>
 	<jsp:include page="innerMenu.jsp"/>
 	<div class="wrap">	
 		<div class="dumi"></div>

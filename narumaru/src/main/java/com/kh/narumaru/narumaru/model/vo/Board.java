@@ -2,7 +2,9 @@ package com.kh.narumaru.narumaru.model.vo;
 
 import java.sql.Date;
 
-//나루마루 게시글
+import org.springframework.stereotype.Component;
+
+@Component
 public class Board implements java.io.Serializable {
 	private int bno;
 	private int bTno;

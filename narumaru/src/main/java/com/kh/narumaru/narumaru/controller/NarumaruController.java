@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -19,6 +18,9 @@ import com.kh.narumaru.maru.exception.MaruException;
 import com.kh.narumaru.maru.model.service.MaruService;
 import com.kh.narumaru.maru.model.service.MaruServiceImpl;
 import com.kh.narumaru.maru.model.vo.MaruMember;
+import com.kh.narumaru.member.model.exception.selectChanelException;
+import com.kh.narumaru.member.model.service.ChannelService;
+import com.kh.narumaru.member.model.vo.Channel;
 import com.kh.narumaru.member.model.vo.Member;
 import com.kh.narumaru.narumaru.exception.NarumaruException;
 import com.kh.narumaru.narumaru.model.service.NarumaruService;
@@ -28,17 +30,20 @@ import com.kh.narumaru.narumaru.model.vo.Narumaru;
 @Controller
 @SessionAttributes("loginUser")
 public class NarumaruController {
+	
 	@Autowired
-	NarumaruService nms;
+	private NarumaruService nms;
 	@Autowired
-	MaruService ms;
+	private ChannelService cs;
+	@Autowired
+	private MaruService ms;
 	
 	@RequestMapping("goHome.nm")
 	public String goHome(){
 		return "main/main";
 	}
 	
-	@RequestMapping(value = "boardListAll.bo", method = RequestMethod.POST)
+	@RequestMapping(value = "boardListAll.bo")
 	public ModelAndView showBoardList(int nmno, ModelAndView mv, HttpServletRequest request){
 		System.out.println("조회하는 나루마루번호 " + nmno);
 		
@@ -56,6 +61,22 @@ public class NarumaruController {
 		mv.setViewName("naru/naruBoard"); 
 		
 		return mv;
+	}
+	
+	@RequestMapping(value="selectChannelList.nm")
+	public void checkNarumaruOwner(HttpServletRequest request, HttpServletResponse response) throws selectChanelException{
+		try {
+			ArrayList<Channel> clist = cs.selectAllChannel();
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			new Gson().toJson(clist, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@RequestMapping(value = "checkNarumaruOwner.nm")
