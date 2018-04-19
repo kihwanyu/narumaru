@@ -19,7 +19,7 @@
 </head>
 <body style="background:white;">
 	<jsp:include page="../common/topmenu.jsp"/>
-	<form action="insertNaruBoard.na" method="post" id="insertForm">
+	<form action="insertNarumaruBoard.nm" method="post" id="insertForm">
 		<input type="hidden" name="nmno" value="${nmno}">
 		<div class="maru-content">
 			<div class="board-option" align="center">
@@ -57,17 +57,13 @@
 				<div class="row">
 					<label class="modal-leftlabel">카테고리&nbsp;</label>
 					<select name="category" id="category">
-						<option>미분류</option>
+						<option value="0">미분류</option>
 					</select>
 				</div>
 				<div class="row">
 					<label class="modal-leftlabel">채널 선택</label>
 					<select name="channel" id="channel">
-						<option>미분류</option>
-						<option>채널1</option>
-						<option>채널2</option>
-						<option>채널2</option>
-						<option>채널2</option>
+						<option value="0">미분류</option>
 					</select>
 				</div>
 				<div class="row" id="payamount">

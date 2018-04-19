@@ -22,5 +22,7 @@ public interface NarumaruService {
 
 	Narumaru selectNarumaruOne(int nmno);
 
-	boolean checkNarumaruOwner(int nmno, Member loginUser); 
+	boolean checkNarumaruOwner(int nmno, Member loginUser);
+
+	Board insertNarumaruBoard(Board b) throws NarumaruException; 
 }

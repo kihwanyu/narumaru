@@ -22,6 +22,7 @@
 		<result property="cno" column="CNO"/>
 		<result property="bLevel" column="B_LEVEL"/>
 		<result property="targetBno" column="TARGET_BNO"/>
+		<result property="isOpen" column="IS_OPEN"/>
 	</resultMap>
 	
 	<resultMap type="Notice" id="noticeResultSet">
