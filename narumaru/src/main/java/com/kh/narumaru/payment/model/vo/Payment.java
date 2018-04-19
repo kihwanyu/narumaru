@@ -15,18 +15,34 @@ public class Payment implements java.io.Serializable {
 	private String merchantUid;
 	private String payName;
 	private String buyerName;
-	private String buyerAddr;
-	private String buyerPostcode;
 	private String applyNum;
 	private String buyerEmail;
 	private String status;
 	private Date payDay;
 	
-	public Payment(){}
+	/*PAY_NO
+	MNO
+	IMP_UID
+	AMOUNT
+	PAY_PG
+	PAY_METHOD
+	MERCHANT_UID
+	PAY_NAME
+	BUYER_NAME
+	BUYER_ADDR
+	BUYER_POSTCODE
+	APPLY_NUM
+	BUYER_EMAIL
+	STATUS
+	PAYDAY*/
+	
+	public Payment() {
+		super();
+	}
 
 	public Payment(int payNo, int mno, String impUid, int amount, String payPg, String payMethod, String merchantUid,
-			String payName, String buyerName, String buyerAddr, String buyerPostcode, String applyNum,
-			String buyerEmail, String status, Date payDay) {
+			String payName, String buyerName, String applyNum, String buyerEmail, String status, Date payDay) {
+		super();
 		this.payNo = payNo;
 		this.mno = mno;
 		this.impUid = impUid;
@@ -36,8 +52,6 @@ public class Payment implements java.io.Serializable {
 		this.merchantUid = merchantUid;
 		this.payName = payName;
 		this.buyerName = buyerName;
-		this.buyerAddr = buyerAddr;
-		this.buyerPostcode = buyerPostcode;
 		this.applyNum = applyNum;
 		this.buyerEmail = buyerEmail;
 		this.status = status;
@@ -116,22 +130,6 @@ public class Payment implements java.io.Serializable {
 		this.buyerName = buyerName;
 	}
 
-	public String getBuyerAddr() {
-		return buyerAddr;
-	}
-
-	public void setBuyerAddr(String buyerAddr) {
-		this.buyerAddr = buyerAddr;
-	}
-
-	public String getBuyerPostcode() {
-		return buyerPostcode;
-	}
-
-	public void setBuyerPostcode(String buyerPostcode) {
-		this.buyerPostcode = buyerPostcode;
-	}
-
 	public String getApplyNum() {
 		return applyNum;
 	}
@@ -168,11 +166,9 @@ public class Payment implements java.io.Serializable {
 	public String toString() {
 		return "Payment [payNo=" + payNo + ", mno=" + mno + ", impUid=" + impUid + ", amount=" + amount + ", payPg="
 				+ payPg + ", payMethod=" + payMethod + ", merchantUid=" + merchantUid + ", payName=" + payName
-				+ ", buyerName=" + buyerName + ", buyerAddr=" + buyerAddr + ", buyerPostcode=" + buyerPostcode
-				+ ", applyNum=" + applyNum + ", buyerEmail=" + buyerEmail + ", status=" + status + ", payDay=" + payDay
-				+ "]";
+				+ ", buyerName=" + buyerName + ", applyNum=" + applyNum + ", buyerEmail=" + buyerEmail + ", status="
+				+ status + ", payDay=" + payDay + "]";
 	}
-	
 	
 	
 }
