@@ -18,8 +18,15 @@ public class PaymentServiceImpl implements PaymentService {
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public void PaymentInsert(Payment p) throws PaymentInsertException {
-		pd.paymentInsert(sqlSession, p);
+	public int PaymentInsert(Payment p) throws PaymentInsertException {
+		
+		int result = pd.paymentInsert(sqlSession, p);
+		
+		if(result > 0){
+			result = pd.myPointInquiry(sqlSession, p);
+		}
+		
+		return result;
 	}
 
 }

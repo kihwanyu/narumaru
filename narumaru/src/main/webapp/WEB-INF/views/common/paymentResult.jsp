@@ -16,7 +16,10 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 		<style type="text/css">
-		
+		* {
+			font-family: 'Nanum Gothic', sans-serif;
+			font-weight: bold;
+		}
 		.tab_container {
 		    border: 1px solid #eee;
 		    border-top: none;
@@ -24,12 +27,14 @@
 		    float: left;
 		    width: 100%;
 		    background: #FCC3C0;
-		    margin-top:50px;
-		    margin-bottom:50px;
+		    margin-top:30px;
+		    margin-bottom:30px;
 		    padding-top: 100px;
-		    padding-bottom: 100px;
+		    padding-bottom: 70px;
 		    padding-right: 10px;
 			padding-left: 10px;
+			border-radius: 10px;
+			box-shadow: 2px 2px 5px 0 gray;
 		}
 		#container {
 		    width: 100%;
@@ -41,48 +46,68 @@
 			height: 700px;
 		}
 		.paymentTitle{
-			font-size: 40px;
+			font-size: 35px;
 			margin-bottom: 50px;
 		}
 		.paymentInfo{
 			margin-top:20px;
 			margin-bottom:20px;
+			margin-left:5px;
 			padding-bottom: 10px;
 			padding-top: 10px;
 			padding-left: auto;
 			padding-right: auto;
-			font-size: 25px;
+			font-size: 20px;
+			text-align: left;
 		}
 		.closeBtn{
 			padding: 20px;
 			font-size: 15px;
+			font-family: 'Nanum Gothic', sans-serif;
+			font-weight: bold;
 		}
+		
 		</style>
 		
 	</head>
 	<body>
 	<!--  -->
 		<div id="container" align="center">
-		<c:set var="pageValue" value="pointPaymentList" scope="request" />
 			
 			<div id="contents">
 				<div style="width: 100%;">
 				    <div class="tab_container" align="center">
-						<div style="color: black;">
+						<div style="color: black; width: 70%;">
+							
 							<div class="paymentTitle">
-							결제가 완료되었습니다.
+								<c:if test="${errorWhether eq true}">
+									결제가 완료되었습니다.
+								</c:if>
+								<c:if test="${errorWhether eq false}">
+									결제가 실패되었습니다.
+								</c:if>
 							</div>
-							<div class="paymentInfo">
-								결제 금액 : 1100 원
+							
+							<div style="width: 60%; background: white; padding: 5px; margin-bottom: 50px; border-radius: 10px; box-shadow: 2px 2px 5px 0 gray;">
+								<c:if test="${errorWhether eq true }">
+									<div class="paymentInfo">
+										결제 금액 : <fmt:formatNumber value="${p.amount }" pattern="#,###" /> 원
+									</div>
+									<div class="paymentInfo">
+										구매 포인트 : <fmt:formatNumber value="${p.point }" pattern="#,###" /> P
+									</div>							
+									<div class="paymentInfo">
+										보유 포인트 : <fmt:formatNumber value="${totalPoint }" pattern="#,###" /> P
+									</div>
+								</c:if>
+								<c:if test="${errorWhether eq false }">
+									<div class="paymentInfo">
+										${errorMessage }
+									</div>	
+								</c:if>	
 							</div>
-							<div class="paymentInfo">
-								구매 포인트 : 1000 P
-							</div>							
-							<div class="paymentInfo">
-								보유 포인트 : 20000 P
-							</div>		
 							<div>
-								<input type="button" value="창닫기" class="closeBtn">
+								<input type="button" value="창닫기" id="closeBtn" class="closeBtn btn btn-default">
 							</div>					
 						</div>    
 				    </div>
@@ -90,5 +115,12 @@
 			</div>
 			
 		</div>
+		<script type="text/javascript">
+			$(function(){
+				$("#closeBtn").click(function(){
+					window.close();  
+				});
+			});
+		</script>
 	</body>
 </html>
