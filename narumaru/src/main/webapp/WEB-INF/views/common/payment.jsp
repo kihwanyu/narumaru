@@ -112,8 +112,6 @@
 	<body>
 	<!--  -->
 		<div id="container" align="center">
-		<c:set var="pageValue" value="pointPaymentList" scope="request" />
-			
 			<div id="contents">
 				<div style="margin-top: 5px; margin-bottom: 10px; color: black;" align="right">
 				</div>
@@ -136,32 +134,32 @@
 									<tr>
 										<td>1000P</td>
 										<td>1100원</td>
-										<td><input type="radio" name="point" value="1000" checked="checked"></td>
+										<td><input type="radio" name="point" value="1000" id="point-1" checked></td>
 									</tr>
 									<tr>
 										<td>3000P</td>
 										<td>3300원</td>
-										<td><input type="radio" name="point" value="3000"></td>
+										<td><input type="radio" name="point" value="3000" id="point-2"></td>
 									</tr>
 									<tr>
 										<td>5000P</td>
 										<td>5500원</td>
-										<td><input type="radio" name="point" value="4000"></td>
+										<td><input type="radio" name="point" value="5000" id="point-3"></td>
 									</tr>
 									<tr>
 										<td>10000P</td>
 										<td>11000원</td>
-										<td><input type="radio" name="point" value="4000"></td>
+										<td><input type="radio" name="point" value="10000" id="point-4"></td>
 									</tr>
 									<tr>
 										<td>30000P</td>
 										<td>33000원</td>
-										<td><input type="radio" name="point" value="4000"></td>
+										<td><input type="radio" name="point" value="30000" id="point-5"></td>
 									</tr>
 									<tr>
 										<td>50000P</td>
 										<td>55000원</td>
-										<td><input type="radio" name="point" value="4000"></td>
+										<td><input type="radio" name="point" value="50000" id="point-6"></td>
 									</tr>						
 							</table>
 						</div>    
@@ -174,17 +172,20 @@
 									<tbody>
 										<tr style="height: 50px;">
 											<td width="30%">이름 :<td>
-											<td width="70%"><input class="form-control" type="text" id="name" name="name" placeholder="이름을 입력해주세요."><td>
+											<td width="70%">
+												<input class="form-control" type="text" id="name" name="name" placeholder="이름을 입력해주세요." maxlength="5">
+												<label class="name-label" style="display: none; color: red;">한글만 입력해주세요.</label>
+											<td>
 										</tr>
 										<tr style="height: 50px;">
 											<td width="30%">이메일 :<td>
-											<td width="70%"><input class="form-control" type="text" id="email" name="email" value="${loginUser.email }" placeholder="이메일을 입력해주세요."><td>
+											<td width="70%"><input class="form-control" type="text" id="email" name="email" value="${loginUser.email }" placeholder="이메일을 입력해주세요." maxlength="24" disabled="disabled"><td>
 										</tr>
 										<tr style="height: 50px;">
 											<c:set var="phoneSize" value="${fn:length(loginUser.phone)}"/>
 											<c:set var="phoneStr" value="0${fn:substring(loginUser.phone,3,phoneSize)}"/>
 											<td width="30%">연락처 :<td>
-											<td width="70%"><input class="form-control" type="text" id="phone" name="phone" value="${loginUser.phone }" placeholder="핸드폰 번호를 입력해주세요."><td>
+											<td width="70%"><input class="form-control" type="text" id="phone" name="phone" value="${phoneStr }" placeholder="핸드폰 번호를 입력해주세요." maxlength="11" disabled="disabled"><td>
 										</tr>
 										<tr style="height: 50px;">
 											<td width="30%">결제방법 :<td>
@@ -223,89 +224,91 @@
 			<input type="hidden" id="pay_imp_uid" name="impUid">
 			<input type="hidden" id="pay_apply_num" name="applyNum">
 			<input type="hidden" id="pay_buyer_email" name="buyerEmail">
+			<input type="hidden" id="pay_point" name="point">
+			
 		</form>
-				
-		<script type="text/javascript">
-		$(function(){
-			$(".tab_content").hide();
-		    $(".tab_content:first").show();
-
-		    $("ul.tabs li").click(function () {
-		        $("ul.tabs li").removeClass("active").css("color", "#333");
-		        //$(this).addClass("active").css({"color": "darkred","font-weight": "bolder"});
-		        $(this).addClass("active").css("color", "darkred");
-		        $(".tab_content").hide()
-		        var activeTab = $(this).attr("rel");
-		        $("#" + activeTab).fadeIn()
-		    });
-		});
-		</script>
+		<form role="error" action="paymentError.pa" method="get">
+			<input type="hidden" id="error_msg" name="error_msg">
+		</form>		
 		<script type="text/javascript">
 				$(function(){
-					var formObj = $("form[role='payment']");
-					console.log(formObj);
-
-					var point = $(":radio[name='point']:checked").val();
-					console.log(point);
-					var price = Number(Number(point) + (Number(point)*0.1)); // 부가세 10%
-					console.log(price);
-					$('#paymentBtn').click(function(){
-						var IMP = window.IMP; // 생략가능
-						IMP.init('imp46573984'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
-						var pg = 'inicis';
-						var pay_pay_method = $(":radio[name='payments']:checked").val(); 
-						/* var pay_amount = price;  */
-						var pay_amount = 100;
-						var pay_name = point;
+					var namePass = "";
+					/* 이름 정규표현식 start */
+					$("#name").keydown(function(){
 						
-						var pay_buyer_email = $("#email").val();
-						var pay_buyer_name = $("#name").val();
-						var pay_buyer_tel = $("#phone").val();
-						var pay_buyer_address = "";
-						var pay_buyer_postcode = "";
+						var patten = /^[가-힣]/g;
+						var name = $("#name").val();
+						var nameSub = name.substr(name.length-1);
 						
-						IMP.request_pay({
-						    pg : pg, 
-						    pay_method : pay_pay_method,
-						    merchant_uid : 'merchant_' + new Date().getTime(),
-						    name : pay_name,
-						    amount : pay_amount,
-						    buyer_email : pay_buyer_email,
-						    buyer_name : pay_buyer_name,
-						    buyer_tel : pay_buyer_tel,
-						    buyer_addr : pay_buyer_address,
-						    buyer_postcode : pay_buyer_postcode,
-						}, function(rsp) {
-						    if ( rsp.success ) {
-						        var msg = '결제가 완료되었습니다.';
-						        msg += '고유ID : ' + rsp.imp_uid;
-						        msg += '상점 거래ID : ' + rsp.merchant_uid;
-						        msg += '결제 금액 : ' + rsp.paid_amount;
-						        msg += '카드 승인번호 : ' + rsp.apply_num;
-						        
-						      	$('#pay_imp_uid').val(rsp.imp_uid); 
-						      	$('#pay_merchant_uid').val(rsp.merchant_uid);
-						      	$('#pay_amount').val(rsp.paid_amount);
-						      	$('#pay_apply_num').val(rsp.apply_num);
-						      	$('#pay_pg').val(pg);
-						      	$('#pay_paymethod').val(pay_pay_method);
-						      	$('#pay_name').val(pay_name);
-						      	$('#pay_buyer_name').val(pay_buyer_name);
-						      	$('#pay_buyer_tel').val(pay_buyer_tel);
-						      	$('#pay_buyer_email').val(pay_buyer_email);
-								$('#pay_point').val(point);
-								
-						        formObj.submit();
-								setTimeout(function() {  
-									window.close();  
-								}, 2000);  
-						    } else {
-						        var msg = '결제에 실패하였습니다.';
-						        msg += '에러내용 : ' + rsp.error_msg;
-						    }
-						    alert(msg);
-						});
+						if(patten.test(nameSub) || name == ""){
+							$(".name-label").hide();
+							namePass = name;
+						} else {
+							$("#name").val(namePass);
+							$(".name-label").show();
+						}
 					});
+					/* 이름 정규표현식 end */
+					
+						var formObj = $("form[role='payment']");
+						var errorObj = $("form[role='error']");
+						
+						var point = $(":radio[name='point']:checked").val();
+						console.log(point);
+						var price = Number(Number(point) + (Number(point)*0.1)); // 부가세 10%
+						console.log(price);
+						$('#paymentBtn').click(function(){
+							if(namePass.length > 1){
+								var IMP = window.IMP; // 생략가능
+								IMP.init('imp46573984'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+								var pg = 'inicis';
+								var pay_pay_method = $(":radio[name='payments']:checked").val(); 
+								/* var pay_amount = price;  */
+								var pay_amount = 100;
+								var pay_name = point + ' 포인트 결제';
+								
+								var pay_buyer_email = $("#email").val();
+								var pay_buyer_name = $("#name").val();
+								var pay_buyer_tel = $("#phone").val();
+								var pay_buyer_address = "";
+								var pay_buyer_postcode = "";
+								
+								IMP.request_pay({
+								    pg : pg, 
+								    pay_method : pay_pay_method,
+								    merchant_uid : 'merchant_' + new Date().getTime(),
+								    name : pay_name,
+								    amount : pay_amount,
+								    buyer_email : pay_buyer_email,
+								    buyer_name : pay_buyer_name,
+								    buyer_tel : pay_buyer_tel,
+								    buyer_addr : pay_buyer_address,
+								    buyer_postcode : pay_buyer_postcode,
+								}, function(rsp) {
+								    if ( rsp.success ) {
+								      	$('#pay_imp_uid').val(rsp.imp_uid); 
+								      	$('#pay_merchant_uid').val(rsp.merchant_uid);
+								      	$('#pay_amount').val(rsp.paid_amount);
+								      	$('#pay_apply_num').val(rsp.apply_num);
+								      	$('#pay_pg').val(pg);
+								      	$('#pay_paymethod').val(pay_pay_method);
+								      	$('#pay_name').val(pay_name);
+								      	$('#pay_buyer_name').val(pay_buyer_name);
+								      	$('#pay_buyer_tel').val(pay_buyer_tel);
+								      	$('#pay_buyer_email').val(pay_buyer_email);
+										$('#pay_point').val(point);
+										
+								        formObj.submit();
+								    } else {
+								    	
+								        $('#error_msg').val('에러 내용 : ' + rsp.error_msg);
+								        errorObj.submit();
+								    }
+								});
+							} else {
+								alert("이름을 2글자 이상 입력해주세요.");
+							}
+						}); 
 				});
 				</script>
 	</body>

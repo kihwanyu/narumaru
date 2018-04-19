@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.narumaru.member.model.vo.Member;
@@ -28,10 +29,16 @@ public class PaymentController {
 		p.setMno(loginUser.getMid());
 		
 		try {
-			ps.PaymentInsert(p);
+			int result = ps.PaymentInsert(p);
+			
+			mv.addObject("errorWhether", true);
+			mv.addObject("p",p);
+			mv.addObject("totalPoint", result);
+			mv.setViewName("common/paymentResult");
 		} catch (PaymentInsertException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			mv.addObject("errorWhether", false);
+			mv.addObject("errorMessage", e.getMessage());
+			mv.setViewName("common/paymentResult");
 		}
 		
 		return mv;
@@ -40,6 +47,16 @@ public class PaymentController {
 	@RequestMapping(value="paymentView.pa")
 	public ModelAndView showMaruInsertView(ModelAndView mv){
 		   
+		mv.setViewName("common/payment");
+		
+		return mv;
+	}
+	/*결제 에러화면 표시*/
+	@RequestMapping(value="paymentError.pa")
+	public ModelAndView paymentError(ModelAndView mv, @RequestParam(name="error_msg")String error_msg){
+		
+		mv.addObject("errorWhether", false);
+		mv.addObject("errorMessage", error_msg);
 		mv.setViewName("common/paymentResult");
 		
 		return mv;

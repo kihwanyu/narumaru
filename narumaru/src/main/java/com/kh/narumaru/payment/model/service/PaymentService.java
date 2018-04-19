@@ -7,5 +7,5 @@ import com.kh.narumaru.payment.model.vo.Payment;
 
 public interface PaymentService {
 
-	void PaymentInsert(Payment p) throws PaymentInsertException;
+	int PaymentInsert(Payment p) throws PaymentInsertException;
 }
