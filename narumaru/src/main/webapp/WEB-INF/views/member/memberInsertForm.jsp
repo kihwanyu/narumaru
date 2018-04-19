@@ -107,13 +107,19 @@
             <div class="form-group" id="divId">
                 <label for="inputId" class="col-lg-2 control-label">아이디</label>
                 <div class="col-lg-10">
-                    <input type="text" name="email" value="${member.email} " class="form-control onlyAlphabetAndNumber" id="id" data-rule-required="true" placeholder="30자이내의 알파벳, 언더스코어(_), 숫자만 입력 가능합니다." maxlength="30">
+                    
+                    <c:if test="${empty loginUser }">
+                    	<input type="text" name="email" class="form-control onlyAlphabetAndNumber" id="id" data-rule-required="true" placeholder="이메일을 입력하세요." maxlength="30">
+                    </c:if>
+                    <c:if test="${!empty loginUser }">
+                  	  <input type="text" name="email" value="${member.email} " class="form-control onlyAlphabetAndNumber" id="id" data-rule-required="true" placeholder="이메일을 입력하세요." maxlength="30">
+                    </c:if>
                 </div>
             </div>
             <div class="form-group" id="divPassword">
                 <label for="inputPassword" class="col-lg-2 control-label">패스워드</label>
                 <div class="col-lg-10">
-                    <input type="password" class="form-control" id="password" name="userPwd" data-rule-required="true" placeholder="패스워드" maxlength="30">
+                    <input type="password" class="form-control aA20" id="password" name="userPwd" data-rule-required="true" placeholder="영어 대소문자,특수문자 포함 10-20자리를 입력하세요." maxlength="30">
                 </div>
             </div>
             <div class="form-group" id="divPasswordCheck">
@@ -190,9 +196,18 @@
                 $('.onlyAlphabetAndNumber').keyup(function(event){
                     if (!(event.keyCode >=37 && event.keyCode<=40)) {
                         var inputVal = $(this).val();
-                        $(this).val($(this).val().replace(/[^_a-z0-9]/gi,'')); //_(underscore), 영어, 숫자만 가능
+                        $(this).val($(this).val().replace(/^[a-z][a-z0-9_-]{3,11}@([a-z\d\.-]+)\.([a-z\.]{2,6})$/)); 
                     }
                 });
+                
+                //패스워드
+                $('.aA20').keyup(function(event){
+                	if (!(event.keyCode >=37 && event.keyCode<=40)) {
+                		 var inputVal = $(this).val();
+                		 $(this).val($(this).val().replace(/^(?=.*[a-zA-Z])(?=.*[!@#$%^~*+=-])(?=.*[0-9]).{10,20}$/)); 
+                	}
+                });        
+                        
                  
                 $(".onlyHangul").keyup(function(event){
                     if (!(event.keyCode >=37 && event.keyCode<=40)) {
@@ -200,6 +215,8 @@
                         $(this).val(inputVal.replace(/[a-z0-9]/gi,''));
                     }
                 });
+                
+                
              
                 $(".onlyNumber").keyup(function(event){
                     if (!(event.keyCode >=37 && event.keyCode<=40)) {
