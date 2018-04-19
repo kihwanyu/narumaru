@@ -15,13 +15,17 @@
 		<result property="merchantUid" column="MERCHANT_UID"/>
 		<result property="payName" column="PAY_NAME"/>
 		<result property="buyerName" column="BUYER_NAME"/>
-		<result property="buyerAddr" column="BUYER_ADDR"/>
-		<result property="buyerPostcode" column="BUYER_POSTCODE"/>
 		<result property="applyNum" column="APPLY_NUM"/>
 		<result property="buyerEmail" column="BUYER_EMAIL"/>
 		<result property="status" column="STATUS"/>
 		<result property="payday" column="PAYDAY"/>
 	</resultMap>
 	
+	<insert id="paymentInsert">
+		INSERT INTO PAYMENT VALUES(SEQ_PAY_NO.NEXTVAL, #{mno}, #{impUid}
+									, #{amount}, #{payPg}, #{payMethod}
+									, #{merchantUid}, #{payName}, #{buyerName}
+									, #{applyNum}, #{buyerEmail}, 'Y', SYSDATE)
+	</insert>
 	
 </mapper>

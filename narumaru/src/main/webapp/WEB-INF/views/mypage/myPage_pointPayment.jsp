@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -189,7 +190,7 @@
 								</ul>
 							</div>
 							<div align="right">
-								<input type="button" value="결제하기" class="btn btn-default"> 
+								<input type="button" id="payment-view-btn" value="결제하기" class="btn btn-default"> 
 							</div>
 				        </div>
 				         <!-- #tab1 -->
@@ -280,7 +281,23 @@
 		        var activeTab = $(this).attr("rel");
 		        $("#" + activeTab).fadeIn()
 		    });
+		    
+		   /* 포인트 결제창 */
+		   
+		   $("#payment-view-btn").click(function(){
+			   var cw = screen.availWidth;
+			   var ch = screen.availHeight;
+			   
+			   var w = 900;
+			   var h = 700;
+			   
+			   var ml = (cw-w)/2;
+			   var mt = (ch-h)/2;
+			   
+			   window.open("paymentView.pa", "결제 창", "width="+w+", height="+h+", top="+mt+", left="+ml+",toolbar=no, menubar=no, scrollbars=no, resizable=no");  
+		   });
 		});
+		
 		</script>
 	</body>
 </html>
