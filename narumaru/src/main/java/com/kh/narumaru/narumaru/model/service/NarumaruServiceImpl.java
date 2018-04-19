@@ -62,4 +62,10 @@ public class NarumaruServiceImpl implements NarumaruService {
 	public boolean checkNarumaruOwner(int nmno, Member loginUser) {
 		return nmd.checkNarumaruOwner(nmno, loginUser);
 	}
+
+	@Override
+	public Board insertNarumaruBoard(Board b) throws NarumaruException {
+		return nmd.insertNarumaruBoard(sqlSession, b);	
+		
+	}
 }

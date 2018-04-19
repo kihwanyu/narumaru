@@ -82,4 +82,17 @@ public class NarumaruDaoImpl implements NarumaruDao {
 		return isOwner;
 	}
 
+	@Override
+	public Board insertNarumaruBoard(SqlSessionTemplate sqlSession, Board b) throws NarumaruException {
+		System.out.println(b);
+		int result = sqlSession.insert("Narumaru.insertNarumaruBoard", b);
+		
+		if(result<0){
+			throw new NarumaruException("나루마루보드 생성실패");
+		}else{
+			
+		}
+		return b;
+	}
+
 }
