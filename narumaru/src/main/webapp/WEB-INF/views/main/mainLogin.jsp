@@ -343,8 +343,6 @@ $font-default: 'Roboto', sans-serif;
 						          success: function(res) {
 						            console.log(JSON.stringify(res));
 						            
-						           /*  kaccount_email
-						            nickname */
 						            var email = res.kaccount_email;
 						            var nickName = res.properties.nickname;
 						            console.log(email);
@@ -364,6 +362,7 @@ $font-default: 'Roboto', sans-serif;
 						    });
 						  //]]>
 						</script>
+				  
 				  
 				  
 				  

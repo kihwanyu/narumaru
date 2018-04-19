@@ -39,6 +39,7 @@
 		SELECT CNO, CNAME FROM CHANNEL
 	</select>
 	
+	
 	<insert id="insertMember">
 		INSERT INTO MEMBER VALUES(SEQ_MNO.NEXTVAL, #{email}, #{userPwd}, #{nickName}, NULL, #{gender}, #{birthDay}, #{phone}, SYSDATE, SYSDATE, default)
 	</insert>

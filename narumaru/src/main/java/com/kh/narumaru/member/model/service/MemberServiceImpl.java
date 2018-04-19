@@ -38,8 +38,6 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public void insertMember(Member m) {
 		
-		System.out.println("멤버 서비스 : " + m);
-		
 		int result = md.insertMember(sqlSession, m);
 		
 		
