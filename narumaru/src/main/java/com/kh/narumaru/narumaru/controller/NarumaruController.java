@@ -135,7 +135,7 @@ public class NarumaruController {
 		b.setbContent(boardContent);
 		
 		if(boardHidden==null){
-			b.setbHidden("널");
+			b.setbHidden("");
 		}else{
 			b.setbHidden(boardHidden);
 		}
