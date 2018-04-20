@@ -44,9 +44,23 @@
 	</select>
 	
 	<select id="selectBoardOne" resultMap="boardResultSet" parameterType="_int">
-		SELECT * FROM BOARD
+		SELECT BNO, B_TNO, B_TYPE, B_TITLE, B_CONTENT, B_HIDDEN, b.MNO, M.NICNAME, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, NMNO, CANO, CNO
+		FROM BOARD B
+		JOIN MEMBER M ON(B.MNO = M.MNO)
 		WHERE BNO = #{bno}
 	</select>
+	
+	<update id="updateBoardOne" parameterType="Board">
+		UPDATE BOARD
+		SET B_TITLE = #{bTitle}, B_CONTENT = #{bContent}, B_HIDDEN = #{bHidden}, MODIFY_DATE = SYSDATE, CANO = #{cano}, CNO = #{cno}
+		WHERE BNO = #{bno}
+	</update>
+	
+	<update id="deleteBoardOne" parameterType="_int">
+		UPDATE BOARD
+		SET STATUS = 'N'
+		WHERE BNO = #{bno}
+	</update>
 	
 	<insert id="insertNotice" >
 		INSERT INTO BOARD VFALUES(SEQ_BNO.NEXTVAL, NULL, 700 , #{noTitle}, #{noContent}, #{writerId}, #{createDate}, NULL, DEFAULT, NULL,NULL,NULL,NULL,NULL )
@@ -57,6 +71,7 @@
 		WHERE B_TYPE = 700
 		AND STATUS = 'Y'
 	</select>
+	
 </mapper>
 
 

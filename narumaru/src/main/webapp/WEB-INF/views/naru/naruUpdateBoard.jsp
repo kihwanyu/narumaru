@@ -19,26 +19,27 @@
 </head>
 <body style="background:white;">
 	<jsp:include page="../common/topmenu.jsp"/>
-	<form action="insertNarumaruBoard.nm" method="post" id="insertForm">
-		<input type="hidden" name="nmno" value="${nmno}">
+	<form action="updateBoardOne.nm" method="post" id="insertForm">
+		<input type="hidden" name="nmno" value="${nm.nmno}">
+		<input type="hidden" name="bno" value="${b.bno}">
 		<div class="maru-content">
 			<div class="board-option" align="center">
 				<span>여기에 볼드랑 뭐랑 이것저것 들어갈걸</span>
 				&nbsp;
-				<label class="btn_label" for="open-pop" onclick="checkHidden()">작성하기</label>
+				<label class="btn_label" for="open-pop" onclick="checkHidden()">수정완료</label>
 			</div>
 			<br>
 			<div class="board-div">
 				<div class="board-inner">
-					<b><input type="text" name="boardTitle" id="title-area" maxlength="50" placeholder="제목 없음"></b>
+					<b><input type="text" name="boardTitle" id="title-area" maxlength="50" placeholder="제목 없음" value="${b.bTitle}"></b>
 					<div id="content-area">
-						<textarea name="boardContent" onkeydown="resize(this)" id="content"></textarea>
+						<textarea name="boardContent" onkeydown="resize(this)" id="content">${b.bContent}</textarea>
 					</div>
 					<div id="payline">
 					$ 결제선 ㅡ 아래쪽에 유료 컨텐츠를 작성하세요
 					</div>
 					<div id="hidden-content-area">
-						<textarea name="boardHidden" onkeydown="resize(this)" id="hidden-content"></textarea>
+						<textarea name="boardHidden" onkeydown="resize(this)" id="hidden-content">${b.bHidden}</textarea>
 					</div>
 				</div>
 			</div>
@@ -89,7 +90,7 @@
 				</div>
 				<div class="row" style="padding-top:15px;">
 					<label class="btn_label" for="open-pop" style="float:left; background:lightgray; margin-left:20px;">취소</label>
-					<label onclick="submitBtn()" class="btn_label" style="float:right; margin-right:20px;">작성하기</label>
+					<label onclick="submitBtn()" class="btn_label" style="float:right; margin-right:20px;">수정완료</label>
 				</div>
 		 	 </div>
 		</div>
@@ -130,6 +131,9 @@
 				for(var i in data){
 					$("#channel").append("<option value='" + data[i].cno +"'>" + data[i].cname + "</option>")
 				}
+			},
+			complete:function(){
+				$("#channel").val("${b.cno}").prop("selected", true);
 			},
 			error:function(data){
 				console.log("채널 로딩 실패");

@@ -68,4 +68,19 @@ public class NarumaruServiceImpl implements NarumaruService {
 		return nmd.insertNarumaruBoard(sqlSession, b);	
 		
 	}
+
+	@Override
+	public Board selectBoardOne(int bno) {
+		return nmd.selectBoardOne(bno);
+	}
+
+	@Override
+	public Board updateBoardOne(Board b) throws NarumaruException {
+		return nmd.updateBoardOne(sqlSession, b);
+	}
+
+	@Override
+	public void deleteBoardOne(int bno) throws NarumaruException {
+		nmd.deleteBoardOne(sqlSession, bno);
+	}
 }

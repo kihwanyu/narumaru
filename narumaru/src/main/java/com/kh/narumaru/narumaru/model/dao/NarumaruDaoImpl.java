@@ -95,4 +95,39 @@ public class NarumaruDaoImpl implements NarumaruDao {
 		return b;
 	}
 
+	@Override
+	public Board selectBoardOne(int bno) {
+		Board b = (Board)sqlSession.selectOne("Board.selectBoardOne", bno);
+		
+		System.out.println("narumaruDao : "+b);
+		
+		return b;
+	}
+
+	@Override
+	public Board updateBoardOne(SqlSessionTemplate sqlSession, Board b) throws NarumaruException {
+		
+		System.out.println("updateBoardOne : " + b);
+		
+		int result = sqlSession.update("Board.updateBoardOne", b);
+		if(result<0){
+			throw new NarumaruException("게시글 갱신 실패");
+		}else{
+			
+		}
+		return b;
+	}
+
+	@Override
+	public void deleteBoardOne(SqlSessionTemplate sqlSession, int bno) throws NarumaruException {
+		
+		int result = sqlSession.update("Board.deleteBoardOne", bno);
+		
+		if(result<0){
+			throw new NarumaruException("게시글 삭제 실패");
+		}else{
+			
+		}
+	}
+
 }
