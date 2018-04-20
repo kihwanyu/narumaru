@@ -28,7 +28,7 @@ import com.kh.narumaru.narumaru.model.vo.Board;
 import com.kh.narumaru.narumaru.model.vo.Narumaru;
 
 @Controller
-@SessionAttributes("loginUser")
+@SessionAttributes("nm")
 public class NarumaruController {
 	
 	@Autowired
@@ -58,7 +58,12 @@ public class NarumaruController {
 		mv.addObject("nm", nm);
 		mv.addObject("list", list);
 		mv.addObject("isOwner", isOwner);
-		mv.setViewName("naru/naruBoard"); 
+		if(nm.getNmCategory() ==2){
+			mv.setViewName("naru/naruBoard"); 
+		}else{
+			mv.setViewName("maru/maruBoard"); 
+		}
+		
 		
 		return mv;
 	}
@@ -104,9 +109,14 @@ public class NarumaruController {
 		String boardTitle = request.getParameter("boardTitle");
 		String boardContent = request.getParameter("boardContent");
 		String boardHidden = request.getParameter("boardHidden");
-		int channel =  Integer.parseInt(request.getParameter("channel"));
-		int category = Integer.parseInt(request.getParameter("category"));
-		int needPoint = Integer.parseInt(request.getParameter("needPoint"));
+		
+		int channel = 0;  
+		if(request.getParameter("channel") != null) channel = Integer.parseInt(request.getParameter("channel"));
+		int category = 0; 
+		if(request.getParameter("category") != null) category=Integer.parseInt(request.getParameter("category"));
+		int needPoint = 0;
+		if(request.getParameter("needPoint") != null) needPoint=Integer.parseInt(request.getParameter("needPoint"));
+		
 		String openLevel = request.getParameter("openLevel");
 		String replyCondition = request.getParameter("replyCondition");
 		
@@ -123,7 +133,8 @@ public class NarumaruController {
 		
 		b.setbTitle(boardTitle);
 		b.setbContent(boardContent);
-		if(boardHidden.isEmpty()){
+		
+		if(boardHidden==null){
 			b.setbHidden("널");
 		}else{
 			b.setbHidden(boardHidden);

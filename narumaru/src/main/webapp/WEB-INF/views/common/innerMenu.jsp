@@ -71,7 +71,7 @@
 	});
 	
 	$(function(){
-		var nmno = ${ Maru.nmno};
+		var nmno = ${ nm.nmno};
 		console.log(nmno);
 		$.ajax({
 			url:"countMaruMember.ma",
