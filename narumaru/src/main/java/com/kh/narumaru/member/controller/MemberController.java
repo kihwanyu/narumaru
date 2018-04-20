@@ -22,6 +22,7 @@ import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,8 +36,11 @@ import com.kh.narumaru.member.model.service.MemberService;
 import com.kh.narumaru.member.model.vo.Channel;
 import com.kh.narumaru.member.model.vo.Member;
 import com.kh.narumaru.member.oauth.bo.NaverLoginBO;
+import com.kh.narumaru.payment.model.exception.PaymentListSelectException;
+import com.kh.narumaru.payment.model.service.PaymentService;
+import com.kh.narumaru.payment.model.vo.Payment;
 import com.github.scribejava.core.model.OAuth2AccessToken;
-
+import com.kh.narumaru.common.vo.PageInfo;
 import com.kh.narumaru.member.model.exception.LoginException;
 import com.kh.narumaru.member.model.exception.ProfileChangeException;
 import com.kh.narumaru.member.model.exception.birthdayChangeException;
@@ -64,7 +68,8 @@ public class MemberController {
 	private MemberService ms;
 	@Autowired
 	private ChannelService cs;
-	
+	@Autowired
+	private PaymentService ps; 
 	
 	/* NaverLoginBO 
 	private NaverLoginBO naverLoginBO;
@@ -589,10 +594,49 @@ public class MemberController {
 		return mv;
 	}
 	@RequestMapping(value="pointPaymentView.me")
-	public ModelAndView pointPaymentForward(ModelAndView mv){
+	public ModelAndView pointPaymentForward(ModelAndView mv, @RequestParam(defaultValue="1") int currentPage, HttpSession session){
+
+		Member m = (Member)session.getAttribute("loginUser");
 		
-		mv.setViewName("mypage/myPage_pointPayment");
+		int mno = m.getMid();
 		
+		//페이징처리
+		int limit;
+		int maxPage;
+		int startPage;
+		int endPage;
+		
+		/*limit = 10;*/
+		limit = 2;
+		
+		int listCount;
+		
+		try {
+			
+			listCount = ps.getPaymentListCount(mno);
+			
+			System.out.println("전체 게시글 수 : " + listCount);
+			
+			maxPage = (int)((double)listCount / limit + 0.9);
+			startPage = ((int)((double)currentPage / limit + 0.9) - 1)*limit + 1;
+			endPage = startPage + limit -1;
+			if(maxPage<endPage){
+				endPage = maxPage;
+			}
+			
+			PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage, mno);
+			
+			ArrayList<Payment> pList = ps.selectPaymentList(pi);
+			
+			System.out.println("pList : " + pList);
+			
+			mv.addObject("pList", pList);
+			mv.addObject("pi", pi);
+			mv.setViewName("mypage/myPage_pointPayment");
+		} catch (PaymentListSelectException e) {
+			mv.addObject("message", e.getMessage());
+			mv.setViewName("common/errorPage.jsp");
+		}
 		return mv;
 	}
 	@RequestMapping(value="refundView.me")

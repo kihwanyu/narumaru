@@ -132,33 +132,33 @@
 								</thead>
 								<tbody>
 									<tr>
-										<td>1000P</td>
-										<td>1100원</td>
+										<td>1,000P</td>
+										<td>1,100원</td>
 										<td><input type="radio" name="point" value="1000" id="point-1" checked></td>
 									</tr>
 									<tr>
-										<td>3000P</td>
-										<td>3300원</td>
+										<td>3,000P</td>
+										<td>3,300원</td>
 										<td><input type="radio" name="point" value="3000" id="point-2"></td>
 									</tr>
 									<tr>
-										<td>5000P</td>
-										<td>5500원</td>
+										<td>5,000P</td>
+										<td>5,500원</td>
 										<td><input type="radio" name="point" value="5000" id="point-3"></td>
 									</tr>
 									<tr>
-										<td>10000P</td>
-										<td>11000원</td>
+										<td>10,000P</td>
+										<td>11,000원</td>
 										<td><input type="radio" name="point" value="10000" id="point-4"></td>
 									</tr>
 									<tr>
-										<td>30000P</td>
-										<td>33000원</td>
+										<td>30,000P</td>
+										<td>33,000원</td>
 										<td><input type="radio" name="point" value="30000" id="point-5"></td>
 									</tr>
 									<tr>
-										<td>50000P</td>
-										<td>55000원</td>
+										<td>50,000P</td>
+										<td>55,000원</td>
 										<td><input type="radio" name="point" value="50000" id="point-6"></td>
 									</tr>						
 							</table>
@@ -232,20 +232,23 @@
 		</form>		
 		<script type="text/javascript">
 				$(function(){
-					var namePass = "";
+					var namePassValue = "";
+					var namePass = false;
 					/* 이름 정규표현식 start */
 					$("#name").keydown(function(){
 						
-						var patten = /^[가-힣]/g;
+						var patten = /^[가-힣ㄱ-ㅎㅏ-ㅣ]/g;
 						var name = $("#name").val();
 						var nameSub = name.substr(name.length-1);
 						
 						if(patten.test(nameSub) || name == ""){
 							$(".name-label").hide();
-							namePass = name;
+							namePassValue = name;
+							namePass = true;
 						} else {
-							$("#name").val(namePass);
+							$("#name").val(namePassValue);
 							$(".name-label").show();
+							namePass = false;
 						}
 					});
 					/* 이름 정규표현식 end */
@@ -253,16 +256,17 @@
 						var formObj = $("form[role='payment']");
 						var errorObj = $("form[role='error']");
 						
-						var point = $(":radio[name='point']:checked").val();
-						console.log(point);
-						var price = Number(Number(point) + (Number(point)*0.1)); // 부가세 10%
-						console.log(price);
 						$('#paymentBtn').click(function(){
-							if(namePass.length > 1){
+							var onclickPatten = /^[가-힣]/g;
+							console.log(namePass);
+							if(namePassValue.length > 1 && namePass == true){
 								var IMP = window.IMP; // 생략가능
 								IMP.init('imp46573984'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
 								var pg = 'inicis';
+								var point = $(":radio[name='point']:checked").val();
+								var price = Number(Number(point) + (Number(point)*0.1)); // 부가세 10%
 								var pay_pay_method = $(":radio[name='payments']:checked").val(); 
+								
 								/* var pay_amount = price;  */
 								var pay_amount = 100;
 								var pay_name = point + ' 포인트 결제';
@@ -306,7 +310,7 @@
 								    }
 								});
 							} else {
-								alert("이름을 2글자 이상 입력해주세요.");
+								alert("올바르지 못한 이름입니다.");
 							}
 						}); 
 				});
