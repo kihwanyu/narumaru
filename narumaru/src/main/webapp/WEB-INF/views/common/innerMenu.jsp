@@ -16,7 +16,7 @@
 			</div>
 			<br>
 			<div class="maruName">
-				<h2>${ Maru.nmTitle }</h2>
+				<h2>${ nm.nmTitle }</h2>
 			</div><br>
 			<div class="maruMember">
 				<div class="inlineBlock pointer maruMemberView">

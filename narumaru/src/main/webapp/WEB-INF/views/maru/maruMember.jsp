@@ -41,7 +41,7 @@
 	
 	<script>
 	$(function(){
-		var nmno = ${ Maru.nmno };
+		var nmno = ${ nm.nmno };
 		$.ajax({
 			url:"selectMaruMemberList.ma",
 			type:"get",

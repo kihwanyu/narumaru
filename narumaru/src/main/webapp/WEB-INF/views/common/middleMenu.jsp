@@ -221,7 +221,7 @@
 	<div class="innerTop">
 		<div class="marginAuto innerTopMenu">
 			<ul class="ul innerTopUl marginAuto">
-				<li><a href="insertDetail.ma">전체글</a></li>
+				<li><a href="boardListAll.bo?nmno=${ nm.nmno }">전체글</a></li>
 				<li><a href="showMaruAlbum.ma">사진첩</a></li>
 				<li><a href="showMaruCalendar.ma">일정</a></li>
 				<li><a href="showMaruMember.ma">멤버</a></li>

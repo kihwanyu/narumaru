@@ -164,7 +164,7 @@ public class NarumaruController {
 			mm.setConLevel(0);
 			System.out.println("mm:"+mm);
 			ms.insertMaruMember(mm);
-			mv.addObject("Maru", nm);
+			mv.addObject("nm", nm);
 			mv.setViewName("maru/maruBoard");
 		} catch (NarumaruException e) {
 			mv.addObject("message", e.getMessage());
