@@ -43,6 +43,11 @@
 		ORDER BY BNO DESC
 	</select>
 	
+	<select id="selectBoardOne" resultMap="boardResultSet" parameterType="_int">
+		SELECT * FROM BOARD
+		WHERE BNO = #{bno}
+	</select>
+	
 	<insert id="insertNotice" >
 		INSERT INTO BOARD VFALUES(SEQ_BNO.NEXTVAL, NULL, 700 , #{noTitle}, #{noContent}, #{writerId}, #{createDate}, NULL, DEFAULT, NULL,NULL,NULL,NULL,NULL )
 	</insert>
