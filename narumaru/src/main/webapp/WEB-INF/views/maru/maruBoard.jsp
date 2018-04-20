@@ -61,7 +61,7 @@
 			<div class="board">
 				<div class="boardInfo">
 					<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
-					<div style="display:inline-block;"><label>${b.bno}</label><br><label>${b.createDate}</label></div>
+					<div style="display:inline-block;"><label>${b.bWriter}</label><br><label>${b.createDate}</label></div>
 					<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">
 						<img src="resources/images/menu.png" class="modifyMenu size100per">
 						<div class="sub boardSub">
@@ -214,7 +214,7 @@
 	        		$(".content").append('<div class="board">'
 							+'<div class="boardInfo">'
 							+'<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
-							+'<label>${b.bno}</label><br><label>${b.createDate}</label>'
+							+'<label>${b.bWriter}</label><br><label>${b.createDate}</label>'
 							+'<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">'
 							+'	<img src="resources/images/menu.png" class="modifyMenu size100per">'
 							+'		<div class="sub boardSub">'
