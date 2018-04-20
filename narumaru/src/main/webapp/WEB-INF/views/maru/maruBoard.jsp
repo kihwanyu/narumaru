@@ -181,8 +181,13 @@
 			    + '</div>'
 				+ '<br>'
 				+ '<div class="boardInsert">'
+				+'<form action="insertNarumaruBoard.nm" method="post">'
 				+ '<div class="boardInsertcontent">'
-				+ '<input type="text" class="textArea">'
+				+'<input type="hidden" name="boardTitle" value="asd"/>'
+				+'<input type="hidden" name="openLevel" value="all"/>'
+				+'<input type="hidden" name="mno" value="${ loginUser.mid }"/>'
+				+'<input type="hidden" name=nmno value="${ nm.nmno }"/>'
+				+ '<input type="text" class="textArea"  name="boardContent">'
 				+ '</div>'
 				+ '<div class="boardInsertTab">'	
 				+ '<ul class="ul boardInsertUl">'
@@ -195,6 +200,7 @@
 				+	'</ul>	'		
 				+	'<button class="floatRight inertBoardBtn">작성</button>'
 				+	'</div>'
+				+'</form>'
 				+	'</div>')
 				
 	        	
