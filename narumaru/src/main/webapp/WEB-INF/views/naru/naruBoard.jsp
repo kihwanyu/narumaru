@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
+<%
+	pageContext.setAttribute("nr", "\n");
+	pageContext.setAttribute("br", "<br/>");
+%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,7 +70,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="boardContent">${b.bContent}</div>
+				<div class="boardContent">${fn:replace(b.bContent,nr,br)}</div>
 				<div class="boardfoot">
 					<hr>
 					<ul class="footUl">
@@ -274,10 +278,7 @@
 		        if(Math.ceil(scrollHeight) == parseInt(documentHeight)) { //문서의 맨끝에 도달했을때 내용 추가 올림처리 정확하게 표시
 		        	//새로 불러올 id계산
 		        	newPage = newPage + 10;
-		        	console.log("1 : " + newPage);
 		        	<c:set var="newPage" value="${newPage + 10}"/>
-		        	console.log("1re : " + newPage);
-		        	console.log("2 : ${newPage}");
 		        	
 		        	//새로 불러올게 페이지가 들고있는 글 갯수를 넘으면 안되니까 사이즈 재조정
 		        	if(newPage >= listSize){
@@ -327,21 +328,21 @@
 								+'<div class="boardInfo">'
 								+'<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
 								+'<label>${b.bno}</label><br><label>${b.createDate}</label>'
-								+'<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">'
-								+'	<img src="resources/images/menu.png" class="modifyMenu size100per">'
-								+'		<div class="sub boardSub">'
-								+'			<ul>'
-								+'		<li onclick="modifyBoard(${b.bno})">수정하기</li>'
-								+'			<li onclick="deleteBoard(${b.bno})">삭제하기</li>'
-								+'				<li>주소복사</li>'
-								+'				<li>공유하기</li>'
-								+'				<li>북마크</li>'
-								+'				<li>신고하기</li>'
-								+'			</ul>'
-								+'		</div>'
+								+'	<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">'
+								+'		<img src="resources/images/menu.png" class="modifyMenu size100per">'
+								+'			<div class="sub boardSub">'
+								+'				<ul>'
+								+'					<li onclick="modifyBoard(${b.bno})">수정하기</li>'
+								+'					<li onclick="deleteBoard(${b.bno})">삭제하기</li>'
+								+'					<li>주소복사</li>'
+								+'					<li>공유하기</li>'
+								+'					<li>북마크</li>'
+								+'					<li>신고하기</li>'
+								+'				</ul>'
+								+'			</div>'
 								+'	</div>'
 								+'</div>'
-								+'<div class="boardContent">${b.bContent}</div>'
+								+'<div class="boardContent">${fn:replace(b.bContent,nr,br)}</div>'
 								+'<div class="boardfoot">'
 								+'	<hr>'
 								+'	<ul class="footUl">'
@@ -378,7 +379,8 @@
 								+'		<div class="replyContent" style="clear:both;">내용</div>'
 								+'	</div>'
 								+'	</div>'
-								+'</div>');
+								+'</div>'
+								)
 		        	/* } */
 		        	</c:forEach>
 		        	
