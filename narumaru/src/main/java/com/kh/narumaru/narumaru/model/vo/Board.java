@@ -14,7 +14,7 @@ public class Board implements java.io.Serializable {
 	private String bHidden;
 	private int mno;
 	private String bWriter;
-	private Date createDate;
+	private String createDate;
 	private Date modifyDate;
 	private String status;
 	private int nmno;
@@ -27,7 +27,7 @@ public class Board implements java.io.Serializable {
 	public Board(){}
 
 	public Board(int bno, int bTno, int bType, String bTitle, String bContent, String bHidden, int mno, String bWriter,
-			Date createDate, Date modifyDate, String status, int nmno, int cano, int cno, int bLevel, int targetBno,
+			String createDate, Date modifyDate, String status, int nmno, int cano, int cno, int bLevel, int targetBno,
 			String isOpen) {
 		super();
 		this.bno = bno;
@@ -113,11 +113,11 @@ public class Board implements java.io.Serializable {
 		this.bWriter = bWriter;
 	}
 
-	public Date getCreateDate() {
+	public String getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
 
