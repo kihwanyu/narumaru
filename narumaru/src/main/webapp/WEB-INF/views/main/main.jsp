@@ -82,7 +82,7 @@
 				<li><a href="#"><img src="${contextPath }/resources/images/image/책"> 밴드 가이드</a></li>
 				<li><a href="#"><img src="${contextPath }/resources/images/image/다운로드"> 데스크탑버전 다운로드</a></li>
 			</ul>
-		<div style="margin-top:20px; height:220px; overflow: auto;" id="maruList">
+		<div style="margin-top:20px; height:220px; width:1000px; overflow: auto;" id="maruList">
 			<div style="width:180px;height:200px;background:#ffffff;float:left;margin-top:20px;margin-right:30px;">
 				<a href="maruInsertView.ma">
 					<div style="width:60px;height:60px;border-radius:30px;background-color:gray;margin-top:50px;\">
@@ -234,7 +234,7 @@
 	});
 	
 	function selectMaru(nmno){
-		location.href="selectOneMaru.ma?nmno="+nmno;
+		location.href="boardListAll.bo?nmno="+nmno;
 	}
 	</script>
 </body>

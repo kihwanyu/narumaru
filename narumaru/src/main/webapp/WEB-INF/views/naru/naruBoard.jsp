@@ -255,6 +255,7 @@
 			if(isEnd) return;
 			
 			$(".loadingArea").show();
+			
 			var reload = setTimeout(function() {
 				$(".loadingArea").hide();
 				//현재문서의 높이를 구함.
