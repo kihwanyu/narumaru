@@ -31,10 +31,6 @@ public class PaymentDaoImpl implements PaymentDao {
 	public int myPointInquiry(SqlSessionTemplate sqlSession, Payment p) throws PaymentInsertException {
 		int result = sqlSession.selectOne("Payment.myPointInquiry", p);
 		
-		if(result == 0){
-			throw new PaymentInsertException("포인트 조회 실패!");
-		}
-		
 		return result;
 	}
 
@@ -63,6 +59,13 @@ public class PaymentDaoImpl implements PaymentDao {
 		}
 		
 		return pList;
+	}
+
+	@Override
+	public int myPointInquiry(SqlSessionTemplate sqlSession, int mno) {
+		int result = sqlSession.selectOne("Payment.myPointInquiry", mno);
+		
+		return result;
 	}
 
 }

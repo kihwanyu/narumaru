@@ -630,8 +630,11 @@ public class MemberController {
 			
 			System.out.println("pList : " + pList);
 			
+			int totalPoint = ps.selectTotalPoint(mno);
+			
 			mv.addObject("pList", pList);
 			mv.addObject("pi", pi);
+			mv.addObject("totalPoint",totalPoint);
 			mv.setViewName("mypage/myPage_pointPayment");
 		} catch (PaymentListSelectException e) {
 			mv.addObject("message", e.getMessage());

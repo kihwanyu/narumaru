@@ -140,9 +140,9 @@
 										<c:forEach items="${pList }" var="pList">
 											<tr>
 												<td>${pList.payDay }</td>
-												<td>${pList.point } P</td>
+												<td><fmt:formatNumber value="${pList.point }" type="number"/> P</td>
 												<td>${pList.payMethod }</td>
-												<td>${pList.amount } 원</td>
+												<td><fmt:formatNumber value="${pList.amount }" type="number"/> 원</td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -150,7 +150,7 @@
 										<tr>
 											<td colspan="2"></td>
 											<td>보유 포인트 : </td>
-											<td>500,000 P</td>
+											<td><fmt:formatNumber value="${totalPoint }" type="number"/> P</td>
 										</tr>
 									</tfoot>
 								</table>
