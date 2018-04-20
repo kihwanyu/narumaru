@@ -50,4 +50,12 @@ public class PaymentServiceImpl implements PaymentService {
 		return plist;
 	}
 
+	@Override
+	public int selectTotalPoint(int mno) {
+		
+		int totalPoint = pd.myPointInquiry(sqlSession, mno);
+		
+		return totalPoint;
+	}
+
 }

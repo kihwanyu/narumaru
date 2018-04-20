@@ -1,7 +1,5 @@
 package com.kh.narumaru.payment.model.vo;
 
-import java.sql.Date;
-
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,13 +16,15 @@ public class Payment implements java.io.Serializable {
 	private String applyNum;
 	private String buyerEmail;
 	private String status;
-	private Date payDay;
+	private String payDay;
 	private int point;
+	
 	public Payment() {
 		super();
 	}
+
 	public Payment(int payNo, int mno, String impUid, int amount, String payPg, String payMethod, String merchantUid,
-			String payName, String buyerName, String applyNum, String buyerEmail, String status, Date payDay,
+			String payName, String buyerName, String applyNum, String buyerEmail, String status, String payDay,
 			int point) {
 		super();
 		this.payNo = payNo;
@@ -42,90 +42,119 @@ public class Payment implements java.io.Serializable {
 		this.payDay = payDay;
 		this.point = point;
 	}
+
 	public int getPayNo() {
 		return payNo;
 	}
+
 	public void setPayNo(int payNo) {
 		this.payNo = payNo;
 	}
+
 	public int getMno() {
 		return mno;
 	}
+
 	public void setMno(int mno) {
 		this.mno = mno;
 	}
+
 	public String getImpUid() {
 		return impUid;
 	}
+
 	public void setImpUid(String impUid) {
 		this.impUid = impUid;
 	}
+
 	public int getAmount() {
 		return amount;
 	}
+
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
+
 	public String getPayPg() {
 		return payPg;
 	}
+
 	public void setPayPg(String payPg) {
 		this.payPg = payPg;
 	}
+
 	public String getPayMethod() {
 		return payMethod;
 	}
+
 	public void setPayMethod(String payMethod) {
 		this.payMethod = payMethod;
 	}
+
 	public String getMerchantUid() {
 		return merchantUid;
 	}
+
 	public void setMerchantUid(String merchantUid) {
 		this.merchantUid = merchantUid;
 	}
+
 	public String getPayName() {
 		return payName;
 	}
+
 	public void setPayName(String payName) {
 		this.payName = payName;
 	}
+
 	public String getBuyerName() {
 		return buyerName;
 	}
+
 	public void setBuyerName(String buyerName) {
 		this.buyerName = buyerName;
 	}
+
 	public String getApplyNum() {
 		return applyNum;
 	}
+
 	public void setApplyNum(String applyNum) {
 		this.applyNum = applyNum;
 	}
+
 	public String getBuyerEmail() {
 		return buyerEmail;
 	}
+
 	public void setBuyerEmail(String buyerEmail) {
 		this.buyerEmail = buyerEmail;
 	}
+
 	public String getStatus() {
 		return status;
 	}
+
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public Date getPayDay() {
+
+	public String getPayDay() {
 		return payDay;
 	}
-	public void setPayDay(Date payDay) {
+
+	public void setPayDay(String payDay) {
 		this.payDay = payDay;
 	}
+
 	public int getPoint() {
 		return point;
 	}
+
 	public void setPoint(int point) {
 		this.point = point;
 	}
+
 	@Override
 	public String toString() {
 		return "Payment [payNo=" + payNo + ", mno=" + mno + ", impUid=" + impUid + ", amount=" + amount + ", payPg="
@@ -133,25 +162,4 @@ public class Payment implements java.io.Serializable {
 				+ ", buyerName=" + buyerName + ", applyNum=" + applyNum + ", buyerEmail=" + buyerEmail + ", status="
 				+ status + ", payDay=" + payDay + ", point=" + point + "]";
 	}
-	
-	/*PAY_NO
-	MNO
-	IMP_UID
-	AMOUNT
-	PAY_PG
-	PAY_METHOD
-	MERCHANT_UID
-	PAY_NAME
-	BUYER_NAME
-	BUYER_ADDR
-	BUYER_POSTCODE
-	APPLY_NUM
-	BUYER_EMAIL
-	STATUS
-	PAYDAY
-	POINT*/
-	
-	
-	
-	
 }
