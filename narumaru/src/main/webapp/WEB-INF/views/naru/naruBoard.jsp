@@ -58,9 +58,9 @@
 						<img src="resources/images/menu.png" class="modifyMenu size100per">
 						<div class="sub boardSub">
 							<ul>
-								<li>주소복사</li>
+								<li onclick="modifyBoard(${b.bno})">수정하기</li>
+								<li onclick="deleteBoard(${b.bno})">삭제하기</li>
 								<li>공유하기</li>
-								<li>북마크</li>
 								<li>신고하기</li>
 							</ul>
 						</div>
@@ -331,6 +331,8 @@
 								+'	<img src="resources/images/menu.png" class="modifyMenu size100per">'
 								+'		<div class="sub boardSub">'
 								+'			<ul>'
+								+'		<li onclick="modifyBoard(${b.bno})">수정하기</li>'
+								+'			<li onclick="deleteBoard(${b.bno})">삭제하기</li>'
 								+'				<li>주소복사</li>'
 								+'				<li>공유하기</li>'
 								+'				<li>북마크</li>'
@@ -388,6 +390,14 @@
 		}
 		function submenuOpen(btn){
 			$(btn).children(".sub").toggle();
+		}
+		
+		function modifyBoard(bno){
+			location.href="toUpdateBoardPage.nm?bno=" + bno + "&nmno=${nm.nmno}";
+		}
+		
+		function deleteBoard(bno){
+			location.href="deleteBoardOne.nm?bno="+ bno + "&nmno=${nm.nmno}";
 		}
 		
 	</script>
