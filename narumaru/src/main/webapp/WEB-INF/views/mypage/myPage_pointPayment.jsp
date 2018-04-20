@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -123,8 +124,8 @@
 				        <li class="active" rel="tab1" style="color: black;">결제 내역</li>
 				        <li rel="tab2" style="color: black;">사용 내역</li>
 				    </ul>
-				    <div class="tab_container" align="center">
-				        <div id="tab1" class="tab_content" style="color: black;">
+				    <div class="tab_container" >
+				        <div id="tab1" class="tab_content" style="color: black;" align="center">
 							<div>
 								<table class="table">
 									<thead>
@@ -136,58 +137,92 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>2017.04.10 AM 09:00</td>
-											<td>5000포인트</td>
-											<td>카드</td>
-											<td>50,000</td>
-										</tr>
-										<tr>
-											<td>2017.04.10 AM 09:00</td>
-											<td>5000포인트</td>
-											<td>카드</td>
-											<td>50,000</td>
-										</tr>
-										<tr>
-											<td>2017.04.10 AM 09:00</td>
-											<td>5000포인트</td>
-											<td>카드</td>
-											<td>50,000</td>
-										</tr>
-										<tr>
-											<td>2017.04.10 AM 09:00</td>
-											<td>5000포인트</td>
-											<td>카드</td>
-											<td>50,000</td>
-										</tr>
-										<tr>
-											<td>2017.04.10 AM 09:00</td>
-											<td>5000포인트</td>
-											<td>카드</td>
-											<td>50,000</td>
-										</tr>
+										<c:forEach items="${pList }" var="pList">
+											<tr>
+												<td>${pList.payDay }</td>
+												<td>${pList.point } P</td>
+												<td>${pList.payMethod }</td>
+												<td>${pList.amount } 원</td>
+											</tr>
+										</c:forEach>
 									</tbody>
 									<tfoot>
 										<tr>
 											<td colspan="2"></td>
 											<td>보유 포인트 : </td>
-											<td>500,000</td>
+											<td>500,000 P</td>
 										</tr>
 									</tfoot>
 								</table>
-							</div>    
-							<div style="color: gray; margin-left: 120px;">
+							</div>  
+							<!-- 페이지 처리 -->
+							<c:set var="currentPage" value="${pi.currentPage }"/>
+							<c:set var="limit" value="${pi.limit }"/>
+							<c:set var="startPage" value="${pi.startPage }"/>
+							<c:set var="endPage" value="${pi.endPage }"/>
+							<c:set var="maxPage" value="${pi.maxPage }"/>
+							
+							<c:set var="backNextPageVal" value="${currentPage/limit }" />
+							<c:set var="backNextTemp" value="${backNextPageVal-0.9 }"/>
+							<fmt:parseNumber var="backNextTemp" integerOnly="true" value="${backNextTemp }"/> 
+							<!-- int 형변환 -->
+							<c:set var="backNextpage" value="${backNextTemp*limit+1 }"/>
+							<!-- int 형변환 -->
+							<fmt:parseNumber var="backNextpage" integerOnly="true" value="${backNextpage }"/> 
+							<c:set var="forwardNextPageVal" value="${currentPage/limit }"/>
+							<c:set var="forwardNextTemp" value="${forwardNextPageVal+0.9 }"/>
+							<!-- int 형변환 -->
+							<fmt:parseNumber var="forwardNextTemp" integerOnly="true" value="${forwardNextTemp }"/> 							
+							<c:set var="forwardNextpage"  value="${forwardNextTemp*limit+1 }"/>
+							<!-- int 형변환 -->
+							<fmt:parseNumber var="forwardNextpage" integerOnly="true" value="${forwardNextpage }"/>  
+							<div class="pagingArea">
 								<ul class="pagination">
-									<li><a href="#"><<</a></li>
-									<li><a href="#"><</a></li>
-									<li><a href="#">1</a></li>
-									<li class="active"><a href="#">2</a></li>
-									<li><a href="#">3</a></li>
-									<li><a href="#">4</a></li>
-									<li><a href="#">5</a></li>
-									<li><a href="#">></a></li>
-									<li><a href="#">>></a></li>
+								<li><a href="pointPaymentView.me?currentPage=1"><<</a></li>
+								<c:choose>
+									<c:when test="${currentPage <= 1 }">
+										<li class="active"><a href="#"><</a></li>
+									</c:when>
+									<c:otherwise>
+										<c:choose>
+											<c:when test="${backNextpage < 1 }">
+												<li><a href="pointPaymentView.me?currentPage=1"><</a></li>
+											</c:when>
+											<c:otherwise>
+												<li><a href="pointPaymentView.me?currentPage=${backNextpage }"><</a></li>
+											</c:otherwise>
+										</c:choose>
+									</c:otherwise>
+								</c:choose>
+								<c:forEach var="p" begin="${startPage }" end="${endPage }" step="1">
+									<c:choose>
+										<c:when test="${p == currentPage }">
+											<li class="active"><a href="#">${p }</a></li>
+										</c:when>
+										<c:otherwise>
+											<li><a href="pointPaymentView.me?currentPage=${p }">${p }</a></li>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+								<c:choose>
+									<c:when test="${currentPage >= maxPage }">
+										<li class="active"><a href="#">></a></li>	
+									</c:when>
+									<c:otherwise>
+										<c:choose>
+											<c:when test="${forwardNextpage > maxPage }">
+												<li><a href="pointPaymentView.me?currentPage=${maxPage }">></a></li>
+											</c:when>
+											<c:otherwise>
+												<li><a href="pointPaymentView.me?currentPage=${forwardNextpage }">></a></li>
+											</c:otherwise>
+										</c:choose>
+									</c:otherwise>
+								</c:choose>
+								<li><a href="pointPaymentView.me?currentPage=${maxPage }">>></a></li>
 								</ul>
+							</div>
+								
 							</div>
 							<div align="right">
 								<input type="button" id="payment-view-btn" value="결제하기" class="btn btn-default"> 

@@ -18,7 +18,7 @@
 		<result property="applyNum" column="APPLY_NUM"/>
 		<result property="buyerEmail" column="BUYER_EMAIL"/>
 		<result property="status" column="STATUS"/>
-		<result property="payday" column="PAYDAY"/>
+		<result property="payDay" column="PAYDAY"/>
 		<result property="point" column="POINT"/>
  	</resultMap>
 	
@@ -31,5 +31,11 @@
 	<select id="myPointInquiry" resultType="_int">
 		SELECT SUM(POINT) FROM PAYMENT WHERE MNO=#{mno}
 	</select>
-	
+	<select id="selectPaymentListCount" resultType="_int" parameterType="_int">
+		SELECT COUNT(*) FROM PAYMENT WHERE MNO=#{mno}
+	</select>
+	<select id="selectPaymentList" resultMap="paymentResultSet">
+		SELECT * FROM PAYMENT 
+		WHERE MNO =#{mno} ORDER BY PAY_NO DESC
+	</select>	
 </mapper>
