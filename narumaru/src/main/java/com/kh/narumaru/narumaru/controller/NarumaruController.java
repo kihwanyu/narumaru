@@ -51,12 +51,14 @@ public class NarumaruController {
 		
 		System.out.println(loginUser);
 		
-		ArrayList<Board> list = nms.selectBoardList(nmno); 
+		ArrayList<Board> list = nms.selectBoardList(nmno);
+		ArrayList<Board> colist = nms.selectCommentList(nmno);
 		Narumaru nm = nms.selectNarumaruOne(nmno);
 		boolean isOwner = nms.checkNarumaruOwner(nmno, loginUser);
 		
 		mv.addObject("nm", nm);
 		mv.addObject("list", list);
+		mv.addObject("colist", colist);
 		mv.addObject("isOwner", isOwner);
 		if(nm.getNmCategory() ==2){
 			mv.setViewName("naru/naruBoard"); 
@@ -166,7 +168,6 @@ public class NarumaruController {
 	
 	@RequestMapping("updateBoardOne.nm")
 	public String updateBoardOne(int nmno, HttpServletRequest request) throws NarumaruException{
-		System.out.println("업뎃보드원시작하는부분");
 		Member loginUser = (Member)request.getSession().getAttribute("loginUser"); 
 		
 		int bno = Integer.parseInt(request.getParameter("bno"));
@@ -202,11 +203,26 @@ public class NarumaruController {
 		b.setNmno(nmno);
 		b.setIsOpen(openLevel);
 		
-		System.out.println("업뗏");
 		nms.updateBoardOne(b);
-		System.out.println("업뗏끝");
 		
 		return "redirect:/boardListAll.bo?nmno="+nmno;
+	}
+	
+	@RequestMapping("insertComment.nm")
+	public void insertComment(HttpServletRequest request, int nmno, int bno, String bContent) throws NarumaruException{
+		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
+		Board b = new Board();
+		
+		b.setbContent(bContent);
+		b.setbType(2);
+		b.setbLevel(1);
+		b.setTargetBno(bno);
+		b.setNmno(nmno);
+		b.setMno(loginUser.getMid());
+		b.setIsOpen("all");
+		b.setNeedPoint(0);
+		
+		nms.insertComment(b);
 	}
 	
 	@RequestMapping("deleteBoardOne.nm")

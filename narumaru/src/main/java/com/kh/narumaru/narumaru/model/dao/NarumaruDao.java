@@ -33,4 +33,8 @@ public interface NarumaruDao {
 	Board updateBoardOne(SqlSessionTemplate sqlSession, Board b) throws NarumaruException;
 
 	void deleteBoardOne(SqlSessionTemplate sqlSession, int bno) throws NarumaruException;
+
+	ArrayList<Board> selectCommentList(int nmno);
+
+	void insertComment(SqlSessionTemplate sqlSession, Board b) throws NarumaruException;
 } 
