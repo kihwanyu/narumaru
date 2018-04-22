@@ -30,5 +30,9 @@ public interface NarumaruService {
 
 	Board updateBoardOne(Board b) throws NarumaruException;
 
-	void deleteBoardOne(int bno) throws NarumaruException; 
+	void deleteBoardOne(int bno) throws NarumaruException;
+
+	ArrayList<Board> selectCommentList(int nmno);
+
+	void insertComment(Board b) throws NarumaruException; 
 }

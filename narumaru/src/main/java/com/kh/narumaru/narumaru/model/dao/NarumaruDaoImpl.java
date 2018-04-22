@@ -130,4 +130,23 @@ public class NarumaruDaoImpl implements NarumaruDao {
 		}
 	}
 
+	@Override
+	public ArrayList<Board> selectCommentList(int nmno) {
+		ArrayList<Board> colist = (ArrayList)sqlSession.selectList("Board.selectCommentList", nmno);
+		
+		System.out.println(colist);
+		
+		return colist;
+	}
+
+	@Override
+	public void insertComment(SqlSessionTemplate sqlSession, Board b) throws NarumaruException {
+		int result = sqlSession.insert("Narumaru.insertComment", b);
+		if(result<0){
+			throw new NarumaruException("댓글 작성 실패");
+		}else{
+			
+		}
+	}
+
 }

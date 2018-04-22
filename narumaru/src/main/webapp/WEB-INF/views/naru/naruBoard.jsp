@@ -3,8 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
 <%
-	pageContext.setAttribute("nr", "\n");
-	pageContext.setAttribute("br", "<br/>");
+	pageContext.setAttribute("nr", "\r\n");
+	pageContext.setAttribute("br", "<br>");
 %> 
 <!DOCTYPE html>
 <html>
@@ -85,27 +85,21 @@
 				</div>
 				<div class="insertReply">
 					<hr>
-					<button class="showSub attachBtn" onclick="submenuOpen(this);">
-						+
-						<div class="sub attachSub">
-							<ul>
-								<li>사진</li>
-								<li>파일</li>
-							</ul>
-						</div>
-					</button>
-					<input type="text" name="insertReply"
+					<input type="text" name="insertReply" id="insertReply"
 						style="background: none; width: 400px; height: 40px;">
-					<button class="floatRight insertReplyBtn">
+					<button class="floatRight insertReplyBtn" onclick="addReply(this, ${b.bno})">
 						<img src="${contextPath }/resources/images/find.png"
 							style="width: 35px; height: 35px;">
 					</button>
-					<div class="replyArea">
-						<hr>
-						<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
-						<label>이름</label> <label>날짜</label>
-						<div class="replyContent" style="clear:both;">내용</div>
-					</div>
+					<c:forEach var="j" items="${colist}">
+						<c:if test="${j.targetBno eq b.bno}">
+							<div class="replyArea">
+								<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
+								<label>${j.bWriter}</label><br><label>${j.createDate}</label>
+								<div class="replyContent" style="clear:both;">${j.bContent}</div>
+							</div>
+						</c:if>
+					</c:forEach>
 				</div>
 			</div>	
 			</c:forEach>
@@ -342,7 +336,7 @@
 								+'			</div>'
 								+'	</div>'
 								+'</div>'
-								+'<div class="boardContent">${fn:replace(b.bContent,nr,br)}</div>'
+								+'<div class="boardContent">${fn:replace(b.bContent, nr, "<br>")}</div>'
 								+'<div class="boardfoot">'
 								+'	<hr>'
 								+'	<ul class="footUl">'
@@ -357,26 +351,17 @@
 								+'</div>'
 								+'<div class="insertReply">'
 								+'	<hr>'
-								+'	<button class="showSub attachBtn" onclick="submenuOpen(this);">'
-								+'		+'
-								+'		<div class="sub attachSub">'
-								+'			<ul>'
-								+'				<li>사진</li>'
-								+'				<li>파일</li>'
-								+'			</ul>'
-								+'		</div>'
-								+'	</button>'
 								+'	<input type="text" name="insertReply"'
 								+'		style="background: none; width: 400px; height: 40px;">'
-								+'	<button class="floatRight insertReplyBtn">'
+								+'	<button class="floatRight insertReplyBtn" onclick="addReply(this, ${b.bno})">'
 								+'		<img src="${contextPath }/resources/images/find.png"'
 								+'			style="width: 35px; height: 35px;">'
 								+'	</button>'
 								+'	<div class="replyArea">'
 								+'		<hr>'
 								+'		<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
-								+'		<label>이름</label> <label>날짜</label>'
-								+'		<div class="replyContent" style="clear:both;">내용</div>'
+								+'		<label>너아닌사람</label><br><label>날짜</label>'
+								+'		<div class="replyContent" style="clear:both; padding-top:5px;">${b.bno}번째 글의 댓글이에요</div>'
 								+'	</div>'
 								+'	</div>'
 								+'</div>'
@@ -387,6 +372,7 @@
 		        }
 			}, 2000);
 		});
+		
 		function replyOpen(btn){
 			$(btn).parent().parent().siblings(".insertReply").toggle();			
 		}
@@ -400,6 +386,34 @@
 		
 		function deleteBoard(bno){
 			location.href="deleteBoardOne.nm?bno="+ bno + "&nmno=${nm.nmno}";
+		}
+		
+		function addReply(btn, bno){
+			var replyArea = $(btn).parent();
+			var comment = $(btn).parent().find("#insertReply").val()
+			console.log(replyArea);
+			console.log(comment);
+			
+			var d = new Date();
+			var strDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+			
+			$(replyArea).append('<div class="replyArea">'
+					+ '<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
+					+ '<label>이름</label><br><label>' + strDate + '</label>'
+					+ '<div class="replyContent" style="clear:both;">'+ comment +' </div>'
+					+ '</div>');
+			
+			$.ajax({
+				url:'insertComment.nm',
+				type:'post',
+				data: {"bContent":comment,"bno":bno, "nmno":${nm.nmno}},
+				success:function(data){
+					console.log("댓글 작성 완료");
+				},
+				error:function(){
+					console.log("댓글 작성중 에러 발생");
+				}
+			})
 		}
 		
 	</script>

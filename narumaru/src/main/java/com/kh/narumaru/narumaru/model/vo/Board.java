@@ -23,12 +23,13 @@ public class Board implements java.io.Serializable {
 	private int bLevel;
 	private int targetBno;
 	private String isOpen;
+	private int needPoint;
 	
 	public Board(){}
 
 	public Board(int bno, int bTno, int bType, String bTitle, String bContent, String bHidden, int mno, String bWriter,
 			String createDate, Date modifyDate, String status, int nmno, int cano, int cno, int bLevel, int targetBno,
-			String isOpen) {
+			String isOpen, int needPoint) {
 		super();
 		this.bno = bno;
 		this.bTno = bTno;
@@ -47,6 +48,7 @@ public class Board implements java.io.Serializable {
 		this.bLevel = bLevel;
 		this.targetBno = targetBno;
 		this.isOpen = isOpen;
+		this.needPoint = needPoint;
 	}
 
 	public int getBno() {
@@ -184,13 +186,21 @@ public class Board implements java.io.Serializable {
 	public void setIsOpen(String isOpen) {
 		this.isOpen = isOpen;
 	}
+	
+	public int getNeedPoint(){
+		return needPoint;
+	}
+	
+	public void setNeedPoint(int needPoint){
+		this.needPoint = needPoint;
+	}
 
 	@Override
 	public String toString() {
 		return "Board [bno=" + bno + ", bTno=" + bTno + ", bType=" + bType + ", bTitle=" + bTitle + ", bContent="
 				+ bContent + ", bHidden=" + bHidden + ", mno=" + mno + ", bWriter=" + bWriter + ", createDate="
 				+ createDate + ", modifyDate=" + modifyDate + ", status=" + status + ", nmno=" + nmno + ", cano=" + cano
-				+ ", cno=" + cno + ", bLevel=" + bLevel + ", targetBno=" + targetBno + ", isOpen=" + isOpen + "]";
+				+ ", cno=" + cno + ", bLevel=" + bLevel + ", targetBno=" + targetBno + ", isOpen=" + isOpen + ", needPoint=" + needPoint + "]";
 	}
 
 	

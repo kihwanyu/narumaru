@@ -200,11 +200,6 @@
 	
 	<jsp:include page="../common/footer.jsp"/>
 	
-	<form method="post" action="boardListAll.bo">
-		<input type="number" id="nmno" name="nmno"><br>
-		<button type="submit"></button>
-	</form>
-	
 	<script>
 	$(function(){
 		var mno = ${ loginUser.mid };

@@ -83,4 +83,14 @@ public class NarumaruServiceImpl implements NarumaruService {
 	public void deleteBoardOne(int bno) throws NarumaruException {
 		nmd.deleteBoardOne(sqlSession, bno);
 	}
+
+	@Override
+	public ArrayList<Board> selectCommentList(int nmno) {
+		return nmd.selectCommentList(nmno);
+	}
+
+	@Override
+	public void insertComment(Board b) throws NarumaruException {
+		nmd.insertComment(sqlSession, b);
+	}
 }
