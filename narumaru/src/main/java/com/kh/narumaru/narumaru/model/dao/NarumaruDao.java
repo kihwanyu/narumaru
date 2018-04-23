@@ -37,4 +37,6 @@ public interface NarumaruDao {
 	ArrayList<Board> selectCommentList(int nmno);
 
 	void insertComment(SqlSessionTemplate sqlSession, Board b) throws NarumaruException;
+
+	int selectNarumaruType(int nmno);
 } 

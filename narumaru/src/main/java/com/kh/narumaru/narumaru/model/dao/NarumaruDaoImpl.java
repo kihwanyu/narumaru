@@ -149,4 +149,13 @@ public class NarumaruDaoImpl implements NarumaruDao {
 		}
 	}
 
+	@Override
+	public int selectNarumaruType(int nmno) {
+		Narumaru nm = (Narumaru)sqlSession.selectOne("Narumaru.selectNarumaruOne", nmno);
+		
+		System.out.println(nm);
+		
+		return nm.getNmCategory();
+	}
+
 }
