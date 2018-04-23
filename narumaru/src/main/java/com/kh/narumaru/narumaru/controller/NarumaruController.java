@@ -210,6 +210,9 @@ public class NarumaruController {
 	
 	@RequestMapping("insertComment.nm")
 	public void insertComment(HttpServletRequest request, int nmno, int bno, String bContent) throws NarumaruException{
+		System.out.println("insertComment-nmno:"+nmno);
+		System.out.println("insertComment-bno:"+bno);
+		System.out.println("insertComment-bContent:"+bContent);
 		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
 		Board b = new Board();
 		
@@ -223,6 +226,7 @@ public class NarumaruController {
 		b.setNeedPoint(0);
 		
 		nms.insertComment(b);
+		System.out.println("인서트됨");
 	}
 	
 	@RequestMapping("deleteBoardOne.nm")

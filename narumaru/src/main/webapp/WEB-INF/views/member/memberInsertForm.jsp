@@ -107,8 +107,7 @@
             <div class="form-group" id="divId">
                 <label for="inputId" class="col-lg-2 control-label">아이디</label>
                 <div class="col-lg-10">
-                    
-                  	  <input type="text" name="email" value="${member.email} " class="form-control onlyAlphabetAndNumber" id="id" data-rule-required="true" placeholder="이메일을 입력하세요." maxlength="30">
+                  	  <input type="text" name="email" value="${member.email}" class="form-control onlyAlphabetAndNumber" id="id" data-rule-required="true" placeholder="이메일을 입력하세요." maxlength="30">
                 </div>
             </div>
             

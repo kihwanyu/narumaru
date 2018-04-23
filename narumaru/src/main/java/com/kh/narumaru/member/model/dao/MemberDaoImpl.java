@@ -47,6 +47,7 @@ public class MemberDaoImpl implements MemberDao{
 			throw new LoginException("로그인실패!!");
 		}else{
 			member = sqlSession.selectOne("Member.loginCheck", m);
+			System.out.println("memberdao2 : " + member);
 		}
 		
 		return member;
