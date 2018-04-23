@@ -20,6 +20,6 @@ public interface PaymentDao {
 
 	ArrayList<Payment> selectPaymentList(SqlSessionTemplate sqlSession, PageInfo pi) throws PaymentListSelectException;
 
-	int myPointInquiry(SqlSessionTemplate sqlSession, int mno);
+	int myPointInquiry(SqlSessionTemplate sqlSession, int mno) throws PaymentListSelectException;
 
 }

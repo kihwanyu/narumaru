@@ -28,7 +28,7 @@
 									, #{merchantUid}, #{payName}, #{buyerName}
 									, #{applyNum}, #{buyerEmail}, 'Y', SYSDATE, #{point})
 	</insert>
-	<select id="myPointInquiry" resultType="_int">
+	<select id="myPointInquiry" resultType="_int" parameterType="_int">
 		SELECT SUM(POINT) FROM PAYMENT WHERE MNO=#{mno}
 	</select>
 	<select id="selectPaymentListCount" resultType="_int" parameterType="_int">
@@ -37,5 +37,8 @@
 	<select id="selectPaymentList" resultMap="paymentResultSet">
 		SELECT AMOUNT, PAY_METHOD, POINT, TO_CHAR(payDay, 'yyyy-mm-dd PM hh:mi:ss') AS payDay FROM PAYMENT 
 		WHERE MNO=#{mno} ORDER BY PAY_NO DESC
+	</select>
+	<select id="selectPayment" resultMap="paymentResultSet" parameterType="_int">
+		SELECT * FROM PAYMENT WHERE MNO=#{mno}
 	</select>
 </mapper>

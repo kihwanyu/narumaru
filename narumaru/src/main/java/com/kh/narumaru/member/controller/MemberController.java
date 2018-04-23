@@ -74,8 +74,8 @@ public class MemberController {
 	@Autowired
 	private ChannelService cs;
 	@Autowired
-
 	private BCryptPasswordEncoder passwordEncoder;
+	@Autowired
 	private PaymentService ps; 
 	
 	/* NaverLoginBO 
@@ -631,6 +631,7 @@ public class MemberController {
 		int listCount;
 		
 		try {
+			System.out.println("ListCount mno : " + mno);
 			
 			listCount = ps.getPaymentListCount(mno);
 			
@@ -649,6 +650,8 @@ public class MemberController {
 			
 			System.out.println("pList : " + pList);
 			
+			System.out.println("TotalPoint mno : " + mno);
+			
 			int totalPoint = ps.selectTotalPoint(mno);
 			
 			mv.addObject("pList", pList);
@@ -657,7 +660,7 @@ public class MemberController {
 			mv.setViewName("mypage/myPage_pointPayment");
 		} catch (PaymentListSelectException e) {
 			mv.addObject("message", e.getMessage());
-			mv.setViewName("common/errorPage.jsp");
+			mv.setViewName("common/errorPage");
 		}
 		return mv;
 	}
