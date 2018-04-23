@@ -20,27 +20,6 @@
 	<div class="wrap">	
 		<div class="dumi"></div>
 		<div class="marginAuto content">
-			<div class="searchArea">
-				<input type="text" name="search" style="background:none; width:440px; height:40px;">
-				<button class="floatRight searchBtn"><img src="${contextPath }/resources/images/find.png" style="width:35px; height:35px;"></button>
-			</div>
-			<br>
-			<div class="boardInsert">
-				<div class="boardInsertcontent">
-					<input type="text" class="textArea">
-				</div>
-				<div class="boardInsertTab">					
-					<ul class="ul boardInsertUl">
-						<li>탭1</li>
-						<li>탭2</li>
-						<li>탭3</li>
-						<li>탭4</li>
-						<li>탭5</li>
-						<li>탭6</li>
-					</ul>			
-					<button class="floatRight inertBoardBtn">작성</button>
-				</div>
-			</div>
 			<!-- 게시글 불러오기, 시작은 1부터 -->
 			<c:set var="beginPage" value="0"/>
 			<!-- 먼저 불러온 갯수를 계산한다. -->
@@ -77,7 +56,7 @@
 						<li class="showSub emotionBtn" onclick="submenuOpen(this);"><span>이모티콘</span>
 							<div class="sub emotionSub">이모티콘</div>
 						</li>
-						<li class="insertReplyShow" onclick="replyOpen(this);"><span>댓글보기()</span></li>
+						<li class="insertReplyShow" onclick="replyOpen(this);"><span>댓글보기(${b.comments})</span></li>
 						<li class="showSub shereBtn" onclick="submenuOpen(this);"><span>공유하기</span>
 							<div class="sub shereSub">개발중인 기능입니다</div>
 						</li>
@@ -160,10 +139,6 @@
 					<option>구매한 폰트1</option>
 					<option>구매한 폰트22</option>
 				</select>
-			</div>
-			<div class="row">
-				<label class="modal-leftlabel">소개 문구</label>
-				<textarea style="width:78.7%; float:right; height:40px; resize:none;"></textarea>
 			</div>
 	 	 </div>
 	 	 <!-- 카테고리 -->
@@ -288,29 +263,6 @@
 		        	//페이지 한번 클리어
 		        	$(".content").html("");
 		        	
-		        	$(".content").append('<div class="searchArea">'
-					+ '<input type="text" name="search" style="background:none; width:440px; height:40px;">'
-					+ '<button class="floatRight searchBtn"><img src="${contextPath }/resources/images/find.png" style="width:35px; height:35px;"></button>'
-				    + '</div>'
-					+ '<br>'
-					+ '<div class="boardInsert">'
-					+ '<div class="boardInsertcontent">'
-					+ '<input type="text" class="textArea">'
-					+ '</div>'
-					+ '<div class="boardInsertTab">'	
-					+ '<ul class="ul boardInsertUl">'
-					+		'<li>탭1</li>'
-					+		'<li>탭2</li>'
-					+		'<li>탭3</li>'
-					+		'<li>탭4</li>'
-					+		'<li>탭5</li>'
-					+		'<li>탭6</li>'
-					+	'</ul>	'		
-					+	'<button class="floatRight inertBoardBtn">작성</button>'
-					+	'</div>'
-					+	'</div>')
-					
-		        	
 		        	//페이지 전부 다시불러옴
 		        	<c:forEach var="b" begin="0" end="${list.size()}" items="${list}" varStatus="i">
 		        		//새로 가져오려는게 적으면
@@ -343,7 +295,7 @@
 								+'		<li class="showSub emotionBtn" onclick="submenuOpen(this);"><span>이모티콘</span>'
 								+'			<div class="sub emotionSub">이모티콘</div>'
 								+'		</li>'
-								+'			<li class="insertReplyShow" onclick="replyOpen(this);"><span>댓글보기()</span></li>'
+								+'			<li class="insertReplyShow" onclick="replyOpen(this);"><span>댓글보기(${b.comments})</span></li>'
 								+'		<li class="showSub shereBtn" onclick="submenuOpen(this);"><span>공유하기</span>'
 								+'			<div class="sub shereSub">개발중인 기능입니다</div>'
 								+'		</li>'
@@ -357,12 +309,15 @@
 								+'		<img src="${contextPath }/resources/images/find.png"'
 								+'			style="width: 35px; height: 35px;">'
 								+'	</button>'
-								+'	<div class="replyArea">'
-								+'		<hr>'
-								+'		<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
-								+'		<label>너아닌사람</label><br><label>날짜</label>'
-								+'		<div class="replyContent" style="clear:both; padding-top:5px;">${b.bno}번째 글의 댓글이에요</div>'
-								+'	</div>'
+								<c:forEach var="j" items="${colist}">
+									<c:if test="${j.targetBno eq b.bno}">
+								+	'<div class="replyArea">'
+								+		'<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
+								+		'<label>${j.bWriter}</label><br><label>${j.createDate}</label>'
+								+		'<div class="replyContent" style="clear:both;">${j.bContent}</div>'
+								+	'</div>'
+									</c:if>
+								</c:forEach>
 								+'	</div>'
 								+'</div>'
 								)
@@ -390,7 +345,7 @@
 		
 		function addReply(btn, bno){
 			var replyArea = $(btn).parent();
-			var comment = $(btn).parent().find("#insertReply").val()
+			var comment = $(btn).parent().find("#insertReply").val();
 			console.log(replyArea);
 			console.log(comment);
 			
@@ -410,8 +365,7 @@
 				success:function(data){
 					console.log("댓글 작성 완료");
 				},
-				error:function(){
-					console.log("댓글 작성중 에러 발생");
+				error:function(data){
 				}
 			})
 		}
