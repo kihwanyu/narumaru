@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	body{
+	.maruBody{
 		background: #eef0f3;
 	}
 	.wrap{	
@@ -115,7 +115,7 @@
 	.boardInsert{
 		background:white;
 		width:500px;
-		height:150px;
+		height:200px;
 		border:1px solid lightgray;			
 	}
 	.textArea{
@@ -138,6 +138,7 @@
 		width:400px;
 	}
 	.boardInsertUl li{
+		cursor:pointer;
 		margin-top:9px;
 		width:30px;
 		height:30px;
@@ -201,6 +202,9 @@
 	.albumContent{
 		height:400px;
 	}	
+	.albumMiniContent{
+		border:1px solid lightgray;
+	}
 	#calendar {
     	max-width: 900px;
     	margin: 0 auto;

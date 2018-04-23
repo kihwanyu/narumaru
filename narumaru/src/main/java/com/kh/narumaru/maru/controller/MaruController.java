@@ -119,7 +119,7 @@ public class MaruController {
 	public ModelAndView selectOneMaru(int nmno, ModelAndView mv, Narumaru nm){
 		try {
 			nm = ms.selectOneMaru(nmno);
-			mv.addObject("Maru", nm);
+			mv.addObject("nm", nm);
 			mv.setViewName("maru/maruBoard");
 		} catch (MaruException e) {
 			mv.addObject("message", e.getMessage());

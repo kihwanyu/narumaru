@@ -18,6 +18,9 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.http.HttpRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +28,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -64,11 +69,13 @@ public class MemberController {
 	@Autowired
 	private ChannelService cs;
 	@Autowired
-	private PaymentService ps;
-	@Autowired
 	private NarumaruService nms;
 	@Autowired
 	private MaruService mas;
+  @Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	@Autowired
+	private PaymentService ps; 
 	
 	/* NaverLoginBO 
 	private NaverLoginBO naverLoginBO;
@@ -90,6 +97,16 @@ public class MemberController {
 
 		/*MemberService ms = new MemberServiceImpl();*/
 		
+	/*	HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+        
+        String userIp = request.getHeader("X-FORWARDED-FOR");
+		
+		System.out.println(userIp);
+		*/
+		
+		
+		
+		
 		try {
 			Member loginUser = ms.loginMember(m);
 			
@@ -97,6 +114,7 @@ public class MemberController {
 			
 			/*return "main/main";*/
 			System.out.println("loginUser : " + loginUser);
+			
 			
 			mv.addObject("loginUser", loginUser);
 			mv.setViewName("main/main");
@@ -124,8 +142,6 @@ public class MemberController {
 	public String memberInsert(Member m, Model model, HttpServletRequest request){
 		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
 		
-		System.out.println("컨트롤러 회원가입: " + m);
-		
 		if(m.getGender().equals("M")){
 			m.setGender("남");
 		}else{
@@ -140,6 +156,8 @@ public class MemberController {
 		nm.setNmIntro(m.getNickName() + "님의 나루입니다.");
 		
 		try{
+			m.setUserPwd(passwordEncoder.encode(m.getUserPwd()));
+			System.out.println("컨트롤러 회원가입: " + m);
 			ms.insertMember(m);
 			loginUser = ms.loginMember(m);
 			int nmno = nms.insertNarumaru(nm).getNmno();
@@ -170,6 +188,9 @@ public class MemberController {
 		
 		String email = request.getParameter("email");
 		String nickname = request.getParameter("nickname");
+		
+		System.out.println("다음 이메일 " + email);
+		System.out.println("다음 이름 : " + nickname);
 		
 		Member m = new Member();
 		m.setEmail(email);
@@ -629,6 +650,7 @@ public class MemberController {
 		int listCount;
 		
 		try {
+			System.out.println("ListCount mno : " + mno);
 			
 			listCount = ps.getPaymentListCount(mno);
 			
@@ -647,6 +669,8 @@ public class MemberController {
 			
 			System.out.println("pList : " + pList);
 			
+			System.out.println("TotalPoint mno : " + mno);
+			
 			int totalPoint = ps.selectTotalPoint(mno);
 			
 			mv.addObject("pList", pList);
@@ -655,7 +679,7 @@ public class MemberController {
 			mv.setViewName("mypage/myPage_pointPayment");
 		} catch (PaymentListSelectException e) {
 			mv.addObject("message", e.getMessage());
-			mv.setViewName("common/errorPage.jsp");
+			mv.setViewName("common/errorPage");
 		}
 		return mv;
 	}

@@ -13,5 +13,6 @@ public interface AdminService {
 	ArrayList<Admin> showTotalView(ArrayList<Admin> a);
   public HashMap selectEnrollDateList();//월별 회원수 조회
 	void insertNotice(Notice n);
+	Member memberView();
   
 }

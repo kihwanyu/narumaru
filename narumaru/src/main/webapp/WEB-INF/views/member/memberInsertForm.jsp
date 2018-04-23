@@ -110,6 +110,7 @@
                   	  <input type="text" name="email" value="${member.email}" class="form-control onlyAlphabetAndNumber" id="id" data-rule-required="true" placeholder="이메일을 입력하세요." maxlength="30">
                 </div>
             </div>
+            
             <div class="form-group" id="divPassword">
                 <label for="inputPassword" class="col-lg-2 control-label">패스워드</label>
                 <div class="col-lg-10">
@@ -190,7 +191,7 @@
                 $('.onlyAlphabetAndNumber').keyup(function(event){
                     if (!(event.keyCode >=37 && event.keyCode<=40)) {
                         var inputVal = $(this).val();
-                        $(this).val($(this).val().replace(/^[a-z][a-z0-9_-]{3,11}@([a-z\d\.-]+)\.([a-z\.]{2,6})$/)); 
+                        //$(this).val($(this).val().replace(/^[a-z][a-z0-9_-]{3,11}@([a-z\d\.-]+)\.([a-z\.]{2,6})$/)); 
                     }
                 });
                 
