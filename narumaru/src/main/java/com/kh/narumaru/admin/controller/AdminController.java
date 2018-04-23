@@ -179,5 +179,13 @@ public class AdminController {
 		
 	}
 	
+	//adminMemberView
+	@RequestMapping("adMember.ad")
+	public void adMemberView(){
+		Member memberView = as.memberView();
+		System.out.println(memberView);
+		
+	}
+	
 	
 }

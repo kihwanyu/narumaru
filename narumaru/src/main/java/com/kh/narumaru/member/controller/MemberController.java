@@ -98,12 +98,12 @@ public class MemberController {
 
 		/*MemberService ms = new MemberServiceImpl();*/
 		
-		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+	/*	HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
         
         String userIp = request.getHeader("X-FORWARDED-FOR");
 		
 		System.out.println(userIp);
-		
+		*/
 		
 		
 		
@@ -172,6 +172,9 @@ public class MemberController {
 		
 		String email = request.getParameter("email");
 		String nickname = request.getParameter("nickname");
+		
+		System.out.println("다음 이메일 " + email);
+		System.out.println("다음 이름 : " + nickname);
 		
 		Member m = new Member();
 		m.setEmail(email);
