@@ -36,9 +36,9 @@ public class PaymentServiceImpl implements PaymentService {
 
 	@Override
 	public int getPaymentListCount(int mno) throws PaymentListSelectException {
-
+		
 		int listCount = pd.getPaymentListCount(sqlSession, mno);
-
+		
 		return listCount;
 	}
 
@@ -51,7 +51,7 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public int selectTotalPoint(int mno) {
+	public int selectTotalPoint(int mno) throws PaymentListSelectException {
 		
 		int totalPoint = pd.myPointInquiry(sqlSession, mno);
 		

@@ -40,11 +40,17 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Override
 	public HashMap selectEnrollDateList() {
-		System.out.println("나오니?");
-		System.out.println(ad);
 		HashMap list = ad.selectEnrollDateList();
 		
 		return list;
+	}
+
+	@Override
+	public Member memberView() {
+		System.out.println("service야 나오니?");
+		Member member = ad.memberList();
+		
+		return member;
 	}
 
 }

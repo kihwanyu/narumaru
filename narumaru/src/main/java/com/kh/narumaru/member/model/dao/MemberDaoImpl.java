@@ -35,14 +35,15 @@ public class MemberDaoImpl implements MemberDao{
 		
 		System.out.println(id);
 		
-		//id += "@naver.com";
 		
-		String userPwd = sqlSession.selectOne("Member.selectPwd", id);
-		System.out.println("userEmail : " + m.getEmail());
+		id += "@naver.com";
 		
-		System.out.println("userPWd" + userPwd);
-		System.out.println("getuserpwd" + m.getUserPwd());
-		if(!m.getUserPwd().equals(userPwd)){
+		String cryptPwd = sqlSession.selectOne("Member.selectPwd", id);
+		//String cryptPwd = sqlSession.selectOne("Member.selectPwd", m.getEmail());
+		System.out.println(cryptPwd);
+		
+		//passwordEncoder.matches(m.getUserPwd(), cryptPwd)
+		if(!passwordEncoder.matches(m.getUserPwd(), cryptPwd)){
 			throw new LoginException("로그인실패!!");
 		}else{
 			member = sqlSession.selectOne("Member.loginCheck", m);

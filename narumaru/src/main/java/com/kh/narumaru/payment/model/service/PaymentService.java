@@ -15,5 +15,5 @@ public interface PaymentService {
 
 	ArrayList<Payment> selectPaymentList(PageInfo pi) throws PaymentListSelectException;
 
-	int selectTotalPoint(int mno);
+	int selectTotalPoint(int mno) throws PaymentListSelectException;
 }
