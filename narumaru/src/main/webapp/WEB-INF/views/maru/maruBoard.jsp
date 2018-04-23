@@ -1,15 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <!DOCTYPE html>
-
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet"/>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet"/>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/lang/summernote-ko-KR.js"></script>
 </head>
-<body>
+<body class="maruBody">
 	<jsp:include page="../common/topmenu.jsp"/>
 	<jsp:include page="../common/middleMenu.jsp"/>
 	<jsp:include page="../common/innerMenu.jsp"/>
@@ -22,18 +26,24 @@
 			</div>
 			<br>
 			<div class="boardInsert">
-				<form action="insertNarumaruBoard.nm" method="post">
-					<div class="boardInsertcontent">
+				<form action="insertNarumaruBoard.nm" method="post" id="boardInsert">
+					<textarea id="summernote" name="boardContent"></textarea>
+					<input type="hidden" name="boardTitle" value="asd"/>
+					<input type="hidden" name="openLevel" value="all"/>
+					<input type="hidden" name="mno" value="${ loginUser.mid }"/>
+					<input type="hidden" name="nmno" value="${ nm.nmno }"/>
+					<%-- <c:out value="${ nm.nmno }"/> --%>
+					<%-- <div class="boardInsertcontent">
 						<input type="hidden" name="boardTitle" value="asd"/>
 						<input type="hidden" name="openLevel" value="all"/>
 						<input type="hidden" name="mno" value="${ loginUser.mid }"/>
 						<input type="hidden" name=nmno value="${ nm.nmno }"/>
-						
+						<input type="file" name="photo" id="photo" style="display:none;"/>
 						<input type="text" class="textArea" name="boardContent"/>
 					</div>
 					<div class="boardInsertTab">					
 						<ul class="ul boardInsertUl">
-							<li>탭1</li>
+							<li id="photoUpload">사</li>
 							<li>탭2</li>
 							<li>탭3</li>
 							<li>탭4</li>
@@ -41,7 +51,7 @@
 							<li>탭6</li>
 						</ul>			
 						<button class="floatRight inertBoardBtn">작성</button>
-					</div>
+					</div> --%>
 				</form>
 			</div>
 
@@ -115,11 +125,16 @@
 			</c:forEach>	
 		
 		</div>
-			<div align="center" class="loadingArea" style="display: none;;">
-				<img alt="" src="resources/images/lodingImg.gif">
-			</div>
+		<div align="center" class="loadingArea" style="display: none;">
+			<img alt="" src="resources/images/lodingImg.gif">
+		</div>
 	</div>
-
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet"/>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet"/>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/lang/summernote-ko-KR.js"></script>
 	<script>
 	var isEnd = false;
 	var newPage = ${newPage};
@@ -277,6 +292,43 @@
 		function submenuOpen(btn){
 			$(btn).children(".sub").toggle();
 		}
+		$("#photoUpload").click(function(){
+				$("#photo").click();
+		});
+		
+		
+		var submitButton = function (context) {
+			  var ui = $.summernote.ui;
+
+			  // create button
+			  var button = ui.button({
+			    contents: '<i class="fa fa-child"/> 등록하기',
+			    tooltip: '등록하기',
+			    click: function () {
+			      $("#boardInsert").submit();
+			    }
+			  });
+
+			  return button.render();   // return button as jquery object
+			}
+		
+		$(document).ready(function() {
+			  $('#summernote').summernote({
+				  height: 150, 
+				  lang: 'ko-KR',
+				  toolbar: [
+					    ['style', ['bold', 'italic', 'underline', 'clear']],
+					    ['fontsize', ['fontsize']],
+					    ['color', ['color']],
+					    ['para', ['ul', 'ol', 'paragraph']],
+					    ['Insert',['picture'], ['video']],
+					    ['mybutton', ['submit']]
+					  ],
+				buttons: {
+					submit: submitButton
+				}
+			  });			  
+		});
 		
 	</script>
 </body>
