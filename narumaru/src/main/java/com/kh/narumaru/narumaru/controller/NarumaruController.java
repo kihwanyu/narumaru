@@ -1,7 +1,10 @@
 package com.kh.narumaru.narumaru.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -118,7 +123,16 @@ public class NarumaruController {
 	}
 	
 	@RequestMapping("insertNarumaruBoard.nm")
-	public String insertNaruBoard(HttpServletRequest request, int nmno) throws NarumaruException{
+	public String insertNaruBoard( int nmno, HttpServletRequest request) throws NarumaruException{
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String filePath = root + "\\uploadFiles";
+		
+		System.out.println(nmno);
+		Enumeration iter = request.getParameterNames();
+		while(iter.hasMoreElements()){
+			System.out.println(iter.nextElement());
+		}
+		
 		Member loginUser = (Member)request.getSession().getAttribute("loginUser"); 
 		
 		String boardTitle = request.getParameter("boardTitle");
