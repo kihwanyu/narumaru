@@ -29,6 +29,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -80,12 +82,21 @@ public class MemberController {
 
 		/*MemberService ms = new MemberServiceImpl();*/
 		
+		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+        
+        String userIp = request.getHeader("X-FORWARDED-FOR");
+		
+		System.out.println(userIp);
+		
+		
+		
 		try {
 			Member loginUser = ms.loginMember(m);
 			
 			//session.setAttribute("loginUser", loginUser);
 			
 			/*return "main/main";*/
+			
 			
 			mv.addObject("loginUser", loginUser);
 			mv.setViewName("main/main");
