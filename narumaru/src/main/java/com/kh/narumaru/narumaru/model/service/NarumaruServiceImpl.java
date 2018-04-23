@@ -93,4 +93,9 @@ public class NarumaruServiceImpl implements NarumaruService {
 	public void insertComment(Board b) throws NarumaruException {
 		nmd.insertComment(sqlSession, b);
 	}
+
+	@Override
+	public int selectNarumaruType(int nmno) {
+		return nmd.selectNarumaruType(nmno);
+	}
 }

@@ -5,11 +5,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.rmi.ServerException;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
@@ -22,7 +20,6 @@ import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,16 +28,9 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kh.narumaru.member.model.service.ChannelService;
-import com.kh.narumaru.member.model.service.MemberService;
-import com.kh.narumaru.member.model.vo.Channel;
-import com.kh.narumaru.member.model.vo.Member;
-import com.kh.narumaru.member.oauth.bo.NaverLoginBO;
-import com.kh.narumaru.payment.model.exception.PaymentListSelectException;
-import com.kh.narumaru.payment.model.service.PaymentService;
-import com.kh.narumaru.payment.model.vo.Payment;
-import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.kh.narumaru.common.vo.PageInfo;
+import com.kh.narumaru.maru.model.service.MaruService;
+import com.kh.narumaru.maru.model.vo.MaruMember;
 import com.kh.narumaru.member.model.exception.LoginException;
 import com.kh.narumaru.member.model.exception.ProfileChangeException;
 import com.kh.narumaru.member.model.exception.birthdayChangeException;
@@ -55,6 +45,11 @@ import com.kh.narumaru.member.model.service.MemberService;
 import com.kh.narumaru.member.model.vo.Channel;
 import com.kh.narumaru.member.model.vo.MChannel;
 import com.kh.narumaru.member.model.vo.Member;
+import com.kh.narumaru.narumaru.model.service.NarumaruService;
+import com.kh.narumaru.narumaru.model.vo.Narumaru;
+import com.kh.narumaru.payment.model.exception.PaymentListSelectException;
+import com.kh.narumaru.payment.model.service.PaymentService;
+import com.kh.narumaru.payment.model.vo.Payment;
 
 
 @Controller
@@ -69,7 +64,11 @@ public class MemberController {
 	@Autowired
 	private ChannelService cs;
 	@Autowired
-	private PaymentService ps; 
+	private PaymentService ps;
+	@Autowired
+	private NarumaruService nms;
+	@Autowired
+	private MaruService mas;
 	
 	/* NaverLoginBO 
 	private NaverLoginBO naverLoginBO;
@@ -123,6 +122,7 @@ public class MemberController {
 	
 	@RequestMapping(value="memberInsert.me")
 	public String memberInsert(Member m, Model model, HttpServletRequest request){
+		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
 		
 		System.out.println("컨트롤러 회원가입: " + m);
 		
@@ -132,13 +132,30 @@ public class MemberController {
 			m.setGender("여");
 		}
 		
+		Narumaru nm = new Narumaru();
+		
+		nm.setIsOpen("공개");
+		nm.setNmTitle(m.getNickName() + "님의 나루");
+		nm.setNmCategory(1);
+		nm.setNmIntro(m.getNickName() + "님의 나루입니다.");
+		
 		try{
 			ms.insertMember(m);
+			loginUser = ms.loginMember(m);
+			int nmno = nms.insertNarumaru(nm).getNmno();
+			
+			MaruMember mm = new MaruMember();
+			mm.setMno(loginUser.getMid());
+			mm.setNmno(nmno);
+			mm.setConLevel(0);
+			System.out.println("mm:"+mm);
+			mas.insertMaruMember(mm);
 			
 			return "main/mainLogin";
 			
 		}catch (Exception e) {
 			model.addAttribute("message", "회원가입실패!");
+			e.printStackTrace();
 			return "common/errorPage";
 		}
 		

@@ -155,7 +155,17 @@ public class NarumaruController {
 			b.setbHidden(boardHidden);
 		}
 		b.setCno(channel);
-		b.setbType(1);
+		
+		int bType = 0; 
+
+		if(nms.selectNarumaruType(nmno) == 1){
+			// 마루일때
+			bType = 200;
+		}else{
+			// 나루일때
+			bType = 100;
+		}
+		b.setbType(bType);
 		b.setMno(loginUser.getMid());
 		b.setCano(category);
 		b.setNmno(nmno);
@@ -197,7 +207,18 @@ public class NarumaruController {
 			b.setbHidden(boardHidden);
 		}
 		b.setCno(channel);
-		b.setbType(1);
+		
+		int bType = 0; 
+
+		if(nms.selectNarumaruType(nmno) == 1){
+			// 마루일때
+			bType = 201;
+		}else{
+			// 나루일때
+			bType = 101;
+		}
+		
+		b.setbType(bType);
 		b.setMno(loginUser.getMid());
 		b.setCano(category);
 		b.setNmno(nmno);
