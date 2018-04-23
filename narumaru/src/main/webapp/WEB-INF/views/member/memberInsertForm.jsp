@@ -196,7 +196,7 @@
                 $('.onlyAlphabetAndNumber').keyup(function(event){
                     if (!(event.keyCode >=37 && event.keyCode<=40)) {
                         var inputVal = $(this).val();
-                        $(this).val($(this).val().replace(/^[a-z][a-z0-9_-]{3,11}@([a-z\d\.-]+)\.([a-z\.]{2,6})$/)); 
+                        //$(this).val($(this).val().replace(/^[a-z][a-z0-9_-]{3,11}@([a-z\d\.-]+)\.([a-z\.]{2,6})$/)); 
                     }
                 });
                 

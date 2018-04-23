@@ -20,6 +20,9 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.http.HttpRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -69,6 +72,8 @@ public class MemberController {
 	@Autowired
 	private ChannelService cs;
 	@Autowired
+
+	private BCryptPasswordEncoder passwordEncoder;
 	private PaymentService ps; 
 	
 	/* NaverLoginBO 
@@ -124,8 +129,6 @@ public class MemberController {
 	@RequestMapping(value="memberInsert.me")
 	public String memberInsert(Member m, Model model, HttpServletRequest request){
 		
-		System.out.println("컨트롤러 회원가입: " + m);
-		
 		if(m.getGender().equals("M")){
 			m.setGender("남");
 		}else{
@@ -133,6 +136,8 @@ public class MemberController {
 		}
 		
 		try{
+			m.setUserPwd(passwordEncoder.encode(m.getUserPwd()));
+			System.out.println("컨트롤러 회원가입: " + m);
 			ms.insertMember(m);
 			
 			return "main/mainLogin";

@@ -37,8 +37,8 @@
 	</select>
 	
 	<select id="selectPwd" resultType="java.lang.String" parameterType="java.lang.String">
-		<!-- SELECT PASSWORD FROM MEMBER WHERE EMAIL=#{email} AND STATUS = 'Y' -->
-		SELECT PASSWORD FROM MEMBER WHERE EMAIL like #{email}||'%' AND STATUS = 'Y'
+		SELECT PASSWORD FROM MEMBER WHERE EMAIL=#{email} AND STATUS = 'Y'
+		<!-- SELECT PASSWORD FROM MEMBER WHERE EMAIL like #{email}||'%' AND STATUS = 'Y' -->
 	</select>
 	
 	<select id="selectAllChanel" resultMap="channelResultSet">
