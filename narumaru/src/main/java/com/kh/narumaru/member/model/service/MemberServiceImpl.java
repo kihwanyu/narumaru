@@ -35,6 +35,7 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 
+	
 	@Override
 	public void insertMember(Member m) {
 		
