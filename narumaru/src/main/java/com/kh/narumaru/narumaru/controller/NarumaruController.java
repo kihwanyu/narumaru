@@ -28,7 +28,7 @@ import com.kh.narumaru.narumaru.model.vo.Board;
 import com.kh.narumaru.narumaru.model.vo.Narumaru;
 
 @Controller
-@SessionAttributes("loginUser")
+@SessionAttributes("nm")
 public class NarumaruController {
 	
 	@Autowired
@@ -51,14 +51,21 @@ public class NarumaruController {
 		
 		System.out.println(loginUser);
 		
-		ArrayList<Board> list = nms.selectBoardList(nmno); 
+		ArrayList<Board> list = nms.selectBoardList(nmno);
+		ArrayList<Board> colist = nms.selectCommentList(nmno);
 		Narumaru nm = nms.selectNarumaruOne(nmno);
 		boolean isOwner = nms.checkNarumaruOwner(nmno, loginUser);
 		
 		mv.addObject("nm", nm);
 		mv.addObject("list", list);
+		mv.addObject("colist", colist);
 		mv.addObject("isOwner", isOwner);
-		mv.setViewName("naru/naruBoard"); 
+		if(nm.getNmCategory() ==2){
+			mv.setViewName("naru/naruBoard"); 
+		}else{
+			mv.setViewName("maru/maruBoard"); 
+		}
+		
 		
 		return mv;
 	}
@@ -97,6 +104,134 @@ public class NarumaruController {
 		}
 	}
 	
+	@RequestMapping(value = "toUpdateBoardPage.nm")
+	public ModelAndView toUpdateBoardPage(int bno, int nmno, ModelAndView mv){
+		Narumaru nm = nms.selectNarumaruOne(nmno);
+		Board b = nms.selectBoardOne(bno);
+		
+		mv.addObject("nm", nm);
+		mv.addObject("b", b);
+
+		mv.setViewName("naru/naruUpdateBoard");
+		
+		return mv;
+	}
+	
+	@RequestMapping("insertNarumaruBoard.nm")
+	public String insertNaruBoard(HttpServletRequest request, int nmno) throws NarumaruException{
+		Member loginUser = (Member)request.getSession().getAttribute("loginUser"); 
+		
+		String boardTitle = request.getParameter("boardTitle");
+		String boardContent = request.getParameter("boardContent");
+		String boardHidden = request.getParameter("boardHidden");
+		
+		int channel = 0;  
+		if(request.getParameter("channel") != null) channel = Integer.parseInt(request.getParameter("channel"));
+		int category = 0; 
+		if(request.getParameter("category") != null) category=Integer.parseInt(request.getParameter("category"));
+		int needPoint = 0;
+		if(request.getParameter("needPoint") != null) needPoint=Integer.parseInt(request.getParameter("needPoint"));
+		
+		String openLevel = request.getParameter("openLevel");
+		String replyCondition = request.getParameter("replyCondition");
+		
+		System.out.println(boardTitle);
+		System.out.println(boardContent);
+		System.out.println(boardHidden);
+		System.out.println("채널:" + channel);
+		System.out.println(category);
+		System.out.println(needPoint);
+		System.out.println(openLevel);
+		System.out.println(replyCondition);
+		
+		Board b = new Board();
+		
+		b.setbTitle(boardTitle);
+		b.setbContent(boardContent);
+		
+		if(boardHidden==null){
+			b.setbHidden("");
+		}else{
+			b.setbHidden(boardHidden);
+		}
+		b.setCno(channel);
+		b.setbType(1);
+		b.setMno(loginUser.getMid());
+		b.setCano(category);
+		b.setNmno(nmno);
+		b.setIsOpen(openLevel);
+		
+		nms.insertNarumaruBoard(b);
+		
+		return "redirect:/boardListAll.bo?nmno="+nmno;
+	}
+	
+	@RequestMapping("updateBoardOne.nm")
+	public String updateBoardOne(int nmno, HttpServletRequest request) throws NarumaruException{
+		Member loginUser = (Member)request.getSession().getAttribute("loginUser"); 
+		
+		int bno = Integer.parseInt(request.getParameter("bno"));
+		String boardTitle = request.getParameter("boardTitle");
+		String boardContent = request.getParameter("boardContent");
+		String boardHidden = request.getParameter("boardHidden");
+		
+		int channel = 0;  
+		if(request.getParameter("channel") != null) channel = Integer.parseInt(request.getParameter("channel"));
+		int category = 0; 
+		if(request.getParameter("category") != null) category=Integer.parseInt(request.getParameter("category"));
+		int needPoint = 0;
+		if(request.getParameter("needPoint") != null) needPoint=Integer.parseInt(request.getParameter("needPoint"));
+		
+		String openLevel = request.getParameter("openLevel");
+		String replyCondition = request.getParameter("replyCondition");
+		
+		Board b = new Board();
+		
+		b.setBno(bno);
+		b.setbTitle(boardTitle);
+		b.setbContent(boardContent);
+		
+		if(boardHidden==null){
+			b.setbHidden("");
+		}else{
+			b.setbHidden(boardHidden);
+		}
+		b.setCno(channel);
+		b.setbType(1);
+		b.setMno(loginUser.getMid());
+		b.setCano(category);
+		b.setNmno(nmno);
+		b.setIsOpen(openLevel);
+		
+		nms.updateBoardOne(b);
+		
+		return "redirect:/boardListAll.bo?nmno="+nmno;
+	}
+	
+	@RequestMapping("insertComment.nm")
+	public void insertComment(HttpServletRequest request, int nmno, int bno, String bContent) throws NarumaruException{
+		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
+		Board b = new Board();
+		
+		b.setbContent(bContent);
+		b.setbType(2);
+		b.setbLevel(1);
+		b.setTargetBno(bno);
+		b.setNmno(nmno);
+		b.setMno(loginUser.getMid());
+		b.setIsOpen("all");
+		b.setNeedPoint(0);
+		
+		nms.insertComment(b);
+	}
+	
+	@RequestMapping("deleteBoardOne.nm")
+	public String deleteBoardOne(int bno, int nmno) throws NarumaruException{
+		nms.deleteBoardOne(bno);
+		
+		return "redirect:/boardListAll.bo?nmno="+nmno;
+	}
+	
 	@RequestMapping("insertNarumaru.nm")
 	public ModelAndView insertNarumaru(Narumaru nm, ModelAndView mv, HttpServletRequest request){
 		System.out.println(nm);
@@ -110,7 +245,7 @@ public class NarumaruController {
 			mm.setConLevel(0);
 			System.out.println("mm:"+mm);
 			ms.insertMaruMember(mm);
-			mv.addObject("Maru", nm);
+			mv.addObject("nm", nm);
 			mv.setViewName("maru/maruBoard");
 		} catch (NarumaruException e) {
 			mv.addObject("message", e.getMessage());

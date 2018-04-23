@@ -82,4 +82,71 @@ public class NarumaruDaoImpl implements NarumaruDao {
 		return isOwner;
 	}
 
+	@Override
+	public Board insertNarumaruBoard(SqlSessionTemplate sqlSession, Board b) throws NarumaruException {
+		System.out.println(b);
+		int result = sqlSession.insert("Narumaru.insertNarumaruBoard", b);
+		
+		if(result<0){
+			throw new NarumaruException("나루마루보드 생성실패");
+		}else{
+			
+		}
+		return b;
+	}
+
+	@Override
+	public Board selectBoardOne(int bno) {
+		Board b = (Board)sqlSession.selectOne("Board.selectBoardOne", bno);
+		
+		System.out.println("narumaruDao : "+b);
+		
+		return b;
+	}
+
+	@Override
+	public Board updateBoardOne(SqlSessionTemplate sqlSession, Board b) throws NarumaruException {
+		
+		System.out.println("updateBoardOne : " + b);
+		
+		int result = sqlSession.update("Board.updateBoardOne", b);
+		if(result<0){
+			throw new NarumaruException("게시글 갱신 실패");
+		}else{
+			
+		}
+		return b;
+	}
+
+	@Override
+	public void deleteBoardOne(SqlSessionTemplate sqlSession, int bno) throws NarumaruException {
+		
+		int result = sqlSession.update("Board.deleteBoardOne", bno);
+		
+		if(result<0){
+			throw new NarumaruException("게시글 삭제 실패");
+		}else{
+			
+		}
+	}
+
+	@Override
+	public ArrayList<Board> selectCommentList(int nmno) {
+		ArrayList<Board> colist = (ArrayList)sqlSession.selectList("Board.selectCommentList", nmno);
+		
+		System.out.println(colist);
+		
+		return colist;
+	}
+
+	@Override
+	public void insertComment(SqlSessionTemplate sqlSession, Board b) throws NarumaruException {
+		int result = sqlSession.insert("Narumaru.insertComment", b);
+		if(result<0){
+			throw new NarumaruException("댓글 작성 실패");
+		}else{
+			
+		}
+	}
+
 }

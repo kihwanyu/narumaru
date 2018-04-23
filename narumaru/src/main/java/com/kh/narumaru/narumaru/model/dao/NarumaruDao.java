@@ -25,4 +25,16 @@ public interface NarumaruDao {
 	Narumaru selectNarumaruOne(int nmno);
 
 	boolean checkNarumaruOwner(int nmno, Member loginUser);
+
+	Board insertNarumaruBoard(SqlSessionTemplate sqlSession, Board b) throws NarumaruException;
+
+	Board selectBoardOne(int bno);
+
+	Board updateBoardOne(SqlSessionTemplate sqlSession, Board b) throws NarumaruException;
+
+	void deleteBoardOne(SqlSessionTemplate sqlSession, int bno) throws NarumaruException;
+
+	ArrayList<Board> selectCommentList(int nmno);
+
+	void insertComment(SqlSessionTemplate sqlSession, Board b) throws NarumaruException;
 } 

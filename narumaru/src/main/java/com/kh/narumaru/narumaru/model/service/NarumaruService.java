@@ -22,5 +22,17 @@ public interface NarumaruService {
 
 	Narumaru selectNarumaruOne(int nmno);
 
-	boolean checkNarumaruOwner(int nmno, Member loginUser); 
+	boolean checkNarumaruOwner(int nmno, Member loginUser);
+
+	Board insertNarumaruBoard(Board b) throws NarumaruException;
+
+	Board selectBoardOne(int bno);
+
+	Board updateBoardOne(Board b) throws NarumaruException;
+
+	void deleteBoardOne(int bno) throws NarumaruException;
+
+	ArrayList<Board> selectCommentList(int nmno);
+
+	void insertComment(Board b) throws NarumaruException; 
 }

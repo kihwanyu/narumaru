@@ -59,7 +59,7 @@
 										닉네임&nbsp;
 									</div>
 									<div style="float: left; width: 67%;">
-										<input type="text" id="nicName" name="nicName" value="${loginUser.nickName }" class="form-control">
+										<input type="text" id="nicName" name="nicName" value="${loginUser.nickName }" class="form-control" maxlength="5">
 										<label class="name-label" style="display: none; color: red;">특수문자는 입력할 수 없습니다.</label>
 									</div>
 								</div>		
@@ -150,7 +150,7 @@
 										휴대폰번호&nbsp;
 									</div>
 									<div style="float: left; width: 67%;">
-										<input type="tel" name="phone" id="phone" value="${phoneStr }" class="form-control" placeholder="-없이 입력해주세요. 예)01012345678">
+										<input type="tel" name="phone" id="phone" value="${phoneStr }" maxlength="11" class="form-control" placeholder="-없이 입력해주세요. 예)01012345678">
 										<label class="tel-label" style="display: none; color: red;">숫자만 입력해주세요.</label>
 									</div>
 								</div>	
@@ -282,9 +282,9 @@
 									success:function(data){
 										console.log(data);
 										if(data == "true"){
-											alert("이름 변경을 성공하였습니다.");
+											alert("닉네임 변경을 성공하였습니다.");
 										} else {
-											alert("이름 변경을 실패하였습니다.");
+											alert("닉네임 변경을 실패하였습니다.");
 										}
 									}
 								});

@@ -62,4 +62,35 @@ public class NarumaruServiceImpl implements NarumaruService {
 	public boolean checkNarumaruOwner(int nmno, Member loginUser) {
 		return nmd.checkNarumaruOwner(nmno, loginUser);
 	}
+
+	@Override
+	public Board insertNarumaruBoard(Board b) throws NarumaruException {
+		return nmd.insertNarumaruBoard(sqlSession, b);	
+		
+	}
+
+	@Override
+	public Board selectBoardOne(int bno) {
+		return nmd.selectBoardOne(bno);
+	}
+
+	@Override
+	public Board updateBoardOne(Board b) throws NarumaruException {
+		return nmd.updateBoardOne(sqlSession, b);
+	}
+
+	@Override
+	public void deleteBoardOne(int bno) throws NarumaruException {
+		nmd.deleteBoardOne(sqlSession, bno);
+	}
+
+	@Override
+	public ArrayList<Board> selectCommentList(int nmno) {
+		return nmd.selectCommentList(nmno);
+	}
+
+	@Override
+	public void insertComment(Board b) throws NarumaruException {
+		nmd.insertComment(sqlSession, b);
+	}
 }

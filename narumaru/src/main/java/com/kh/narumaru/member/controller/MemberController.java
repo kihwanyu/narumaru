@@ -20,13 +20,19 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.http.HttpRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -35,8 +41,11 @@ import com.kh.narumaru.member.model.service.MemberService;
 import com.kh.narumaru.member.model.vo.Channel;
 import com.kh.narumaru.member.model.vo.Member;
 import com.kh.narumaru.member.oauth.bo.NaverLoginBO;
+import com.kh.narumaru.payment.model.exception.PaymentListSelectException;
+import com.kh.narumaru.payment.model.service.PaymentService;
+import com.kh.narumaru.payment.model.vo.Payment;
 import com.github.scribejava.core.model.OAuth2AccessToken;
-
+import com.kh.narumaru.common.vo.PageInfo;
 import com.kh.narumaru.member.model.exception.LoginException;
 import com.kh.narumaru.member.model.exception.ProfileChangeException;
 import com.kh.narumaru.member.model.exception.birthdayChangeException;
@@ -64,7 +73,10 @@ public class MemberController {
 	private MemberService ms;
 	@Autowired
 	private ChannelService cs;
-	
+	@Autowired
+
+	private BCryptPasswordEncoder passwordEncoder;
+	private PaymentService ps; 
 	
 	/* NaverLoginBO 
 	private NaverLoginBO naverLoginBO;
@@ -86,6 +98,16 @@ public class MemberController {
 
 		/*MemberService ms = new MemberServiceImpl();*/
 		
+		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+        
+        String userIp = request.getHeader("X-FORWARDED-FOR");
+		
+		System.out.println(userIp);
+		
+		
+		
+		
+		
 		try {
 			Member loginUser = ms.loginMember(m);
 			
@@ -93,6 +115,7 @@ public class MemberController {
 			
 			/*return "main/main";*/
 			System.out.println("loginUser : " + loginUser);
+			
 			
 			mv.addObject("loginUser", loginUser);
 			mv.setViewName("main/main");
@@ -119,15 +142,16 @@ public class MemberController {
 	@RequestMapping(value="memberInsert.me")
 	public String memberInsert(Member m, Model model, HttpServletRequest request){
 		
-		System.out.println("컨트롤러 회원가입: " + m);
-		
 		if(m.getGender().equals("M")){
 			m.setGender("남");
 		}else{
 			m.setGender("여");
 		}
 		
+		
 		try{
+			m.setUserPwd(passwordEncoder.encode(m.getUserPwd()));
+			System.out.println("컨트롤러 회원가입: " + m);
 			ms.insertMember(m);
 			
 			return "main/mainLogin";
@@ -159,16 +183,7 @@ public class MemberController {
 		return mv;
 	}
 	
-	//네이버 인증
-	  /*@RequestMapping("/naverLogin.me")
-	    public ModelAndView login(HttpSession session) {
-		   네아로 인증 URL을 생성하기 위하여 getAuthorizationUrl을 호출 
-	        String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
-	        System.out.println("네아로 인증 URL"+naverAuthUrl);
-	         생성한 인증 URL을 View로 전달 
-	        return new ModelAndView("member/naverTest", "url", naverAuthUrl);
-	    }*/
-	    
+		//네이버 인증
 		@RequestMapping("/naverCallback.me")
 		public ModelAndView callback(Member m, HttpSession session, HttpServletRequest request, ModelAndView mv) throws IOException {
 	
@@ -199,7 +214,6 @@ public class MemberController {
 				int responseCode = con.getResponseCode();
 				
 				BufferedReader br;
-				System.out.print("responseCode="+responseCode);
 				if(responseCode==200) { // 정상 호출
 					br = new BufferedReader(new InputStreamReader(con.getInputStream()));
 				} else {  // 에러 발생
@@ -215,8 +229,6 @@ public class MemberController {
 				
 				Object obj2 = parser.parse(res.toString());
 				JSONObject jsonObj2 = (JSONObject) obj2;
-				
-				System.out.println("???제이슨2222 "+ jsonObj2.get("access_token"));
 				
 				access_token = (String) jsonObj2.get("access_token");
 				
@@ -255,15 +267,11 @@ public class MemberController {
 	                response.append(inputLine1);
 	            }
 	            
+	            
 	            JSONParser parser = new JSONParser();
 				Object obj3 = parser.parse(response.toString());
 				JSONObject jsonObj3 = (JSONObject) obj3;
 				JSONObject jsonObj4 = (JSONObject) jsonObj3.get("response");
-				System.out.println("네이버 발급 후"+jsonObj3);
-				
-				System.out.println(jsonObj3.get("response"));
-				
-				System.out.println("이메일? " + jsonObj4.get("email"));
 				
 				m.setEmail((String) jsonObj4.get("email"));
 				m.setNickName((String) jsonObj4.get("name"));
@@ -272,8 +280,6 @@ public class MemberController {
 	        } catch (Exception e) {
 	            System.out.println(e);
 	        }
-	        
-	        System.out.println("이메일" + m.getEmail() + "이름" + m.getNickName());
 	        
 	        mv.addObject("member", m);
 			mv.setViewName("member/memberInsertForm");
@@ -607,10 +613,52 @@ public class MemberController {
 		return mv;
 	}
 	@RequestMapping(value="pointPaymentView.me")
-	public ModelAndView pointPaymentForward(ModelAndView mv){
+	public ModelAndView pointPaymentForward(ModelAndView mv, @RequestParam(defaultValue="1") int currentPage, HttpSession session){
+
+		Member m = (Member)session.getAttribute("loginUser");
 		
-		mv.setViewName("mypage/myPage_pointPayment");
+		int mno = m.getMid();
 		
+		//페이징처리
+		int limit;
+		int maxPage;
+		int startPage;
+		int endPage;
+		
+		/*limit = 10;*/
+		limit = 2;
+		
+		int listCount;
+		
+		try {
+			
+			listCount = ps.getPaymentListCount(mno);
+			
+			System.out.println("전체 게시글 수 : " + listCount);
+			
+			maxPage = (int)((double)listCount / limit + 0.9);
+			startPage = ((int)((double)currentPage / limit + 0.9) - 1)*limit + 1;
+			endPage = startPage + limit -1;
+			if(maxPage<endPage){
+				endPage = maxPage;
+			}
+			
+			PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage, mno);
+			
+			ArrayList<Payment> pList = ps.selectPaymentList(pi);
+			
+			System.out.println("pList : " + pList);
+			
+			int totalPoint = ps.selectTotalPoint(mno);
+			
+			mv.addObject("pList", pList);
+			mv.addObject("pi", pi);
+			mv.addObject("totalPoint",totalPoint);
+			mv.setViewName("mypage/myPage_pointPayment");
+		} catch (PaymentListSelectException e) {
+			mv.addObject("message", e.getMessage());
+			mv.setViewName("common/errorPage.jsp");
+		}
 		return mv;
 	}
 	@RequestMapping(value="refundView.me")

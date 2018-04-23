@@ -37,8 +37,8 @@
 	</select>
 	
 	<select id="selectPwd" resultType="java.lang.String" parameterType="java.lang.String">
-		<!-- SELECT PASSWORD FROM MEMBER WHERE EMAIL=#{email} AND STATUS = 'Y' -->
-		SELECT PASSWORD FROM MEMBER WHERE EMAIL like #{email}||'%' AND STATUS = 'Y'
+		SELECT PASSWORD FROM MEMBER WHERE EMAIL=#{email} AND STATUS = 'Y'
+		<!-- SELECT PASSWORD FROM MEMBER WHERE EMAIL like #{email}||'%' AND STATUS = 'Y' -->
 	</select>
 	
 	<select id="selectAllChanel" resultMap="channelResultSet">
@@ -48,8 +48,9 @@
 		SELECT CNO FROM MCHANNEL WHERE MNO = #{mno} ORDER BY CNO ASC
 	</select>
 	
+	
 	<insert id="insertMember">
-		INSERT INTO MEMBER VALUES(SEQ_MNO.NEXTVAL, #{email}, #{userPwd}, #{nickName}, NULL, #{gender}, #{phone}, SYSDATE, SYSDATE, default)
+		INSERT INTO MEMBER VALUES(SEQ_MNO.NEXTVAL, #{email}, #{userPwd}, #{nickName}, NULL, #{gender}, #{birthDay}, #{phone}, SYSDATE, SYSDATE, default)
 	</insert>
 	<insert id="insertBoard">
 		INSERT INTO BOARD(BID) VALUES(SEQ_BID.NEXTVAL)

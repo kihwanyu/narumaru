@@ -22,6 +22,7 @@
 		<result property="cno" column="CNO"/>
 		<result property="bLevel" column="B_LEVEL"/>
 		<result property="targetBno" column="TARGET_BNO"/>
+		<result property="isOpen" column="IS_OPEN"/>
 	</resultMap>
 	
 	<resultMap type="Notice" id="noticeResultSet">
@@ -35,12 +36,39 @@
 
 	</resultMap>
 	<select id="selectBoardList" resultMap="boardResultSet" parameterType="_int">
-		SELECT BNO, B_TNO, B_TYPE, B_TITLE, B_CONTENT, B_HIDDEN, b.MNO, M.NICNAME, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, NMNO, CANO, CNO
+		SELECT BNO, B_TNO, B_TYPE, B_TITLE, B_CONTENT, B_HIDDEN, b.MNO, M.NICNAME, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, NMNO, CANO, CNO, B_LEVEL, TARGET_BNO, IS_OPEN, NEED_POINT
 		FROM BOARD B
-		JOIN MEMBER M ON(B.NMNO = M.MNO)
-		WHERE NMNO = #{nmno} AND B.STATUS = 'Y'
+		JOIN MEMBER M ON(B.MNO = M.MNO)
+		WHERE NMNO = #{nmno} AND B.STATUS = 'Y' AND B_TYPE = 1
 		ORDER BY BNO DESC
 	</select>
+	
+	<select id="selectCommentList" resultMap="boardResultSet" parameterType="_int">
+		SELECT BNO, B_TNO, B_TYPE, B_TITLE, B_CONTENT, B_HIDDEN, b.MNO, M.NICNAME, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, NMNO, CANO, CNO, B_LEVEL, TARGET_BNO, IS_OPEN, NEED_POINT
+		FROM BOARD B
+		JOIN MEMBER M ON(B.MNO = M.MNO)
+		WHERE NMNO = #{nmno} AND B.STATUS = 'Y' AND B_TYPE = 2
+		ORDER BY BNO DESC
+	</select>
+	
+	<select id="selectBoardOne" resultMap="boardResultSet" parameterType="_int">
+		SELECT BNO, B_TNO, B_TYPE, B_TITLE, B_CONTENT, B_HIDDEN, b.MNO, M.NICNAME, TO_CHAR(B.CREATE_DATE, 'YYYY-MM-DD HH24:MI:SS') AS CREATE_DATE, B.MODIFY_DATE, B.STATUS, NMNO, CANO, CNO, B_LEVEL, TARGET_BNO, IS_OPEN, NEED_POINT
+		FROM BOARD B
+		JOIN MEMBER M ON(B.MNO = M.MNO)
+		WHERE BNO = #{bno}
+	</select>
+	
+	<update id="updateBoardOne" parameterType="Board">
+		UPDATE BOARD
+		SET B_TITLE = #{bTitle}, B_CONTENT = #{bContent}, B_HIDDEN = #{bHidden}, MODIFY_DATE = SYSDATE, CANO = #{cano}, CNO = #{cno}
+		WHERE BNO = #{bno}
+	</update>
+	
+	<update id="deleteBoardOne" parameterType="_int">
+		UPDATE BOARD
+		SET STATUS = 'N'
+		WHERE BNO = #{bno}
+	</update>
 	
 	<insert id="insertNotice" >
 		INSERT INTO BOARD VFALUES(SEQ_BNO.NEXTVAL, NULL, 700 , #{noTitle}, #{noContent}, #{writerId}, #{createDate}, NULL, DEFAULT, NULL,NULL,NULL,NULL,NULL )
@@ -51,6 +79,7 @@
 		WHERE B_TYPE = 700
 		AND STATUS = 'Y'
 	</select>
+	
 </mapper>
 
 
