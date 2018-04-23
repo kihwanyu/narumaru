@@ -129,6 +129,7 @@ public class MemberController {
 			m.setGender("여");
 		}
 		
+		
 		try{
 			m.setUserPwd(passwordEncoder.encode(m.getUserPwd()));
 			System.out.println("컨트롤러 회원가입: " + m);
