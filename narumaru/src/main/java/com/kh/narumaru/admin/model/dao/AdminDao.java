@@ -16,6 +16,8 @@ public interface AdminDao {
 	ArrayList<Admin> showTotalMemberView(ArrayList<Admin> a);
 
 	int insertNotice(SqlSessionTemplate sqlSession, Notice n);
-  public HashMap selectEnrollDateList();
+	public HashMap selectEnrollDateList();
+
+  	Member memberList();
 
 }

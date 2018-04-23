@@ -38,7 +38,7 @@ public class AdminDaoImpl implements AdminDao{
   
   @Override
 	public HashMap selectEnrollDateList() {
-		System.out.println("너는 나오니?");
+		
 		
 		ArrayList list1 = (ArrayList)sqlSession.selectList("Admin.selectEnroll1");
 		
@@ -52,4 +52,15 @@ public class AdminDaoImpl implements AdminDao{
 		
 		return hmap;
 	}
+
+  @Override
+  public Member memberList() {
+	  System.out.println("너는 나오니?");
+	  
+	  Member member = (Member) sqlSession.selectList("Admin.memberList");
+	  System.out.println(member);
+	  
+	  
+	return member;
+  }
 }

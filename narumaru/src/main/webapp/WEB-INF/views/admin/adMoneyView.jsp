@@ -68,56 +68,28 @@
                     <table id="datatable" class="table table-striped table-bordered">
                       <thead>
                         <tr>
-                          <th>아이디</th>
-                          <th>이름</th>
-                          <th>수익금</th>
-                          <th>환급신청</th>
-                          <th>remove</th>
-                          <th>remove</th>
+                          <th>실명</th>
+                          <th>은행</th>
+                          <th>계좌번호</th>
+                          <th>예금주</th>
+                          <th>결제일</th>
+                          <th>환급금액</th>
+                          <th>환급신청여부</th>
+                          <th>환급결정</th>
                         </tr>
                       </thead>
 
 
                       <tbody>
                         <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>Edinburgh</td>
-                          <td><button onclick="">N</button></td>
+                          <td>유기환</td>
+                          <td>신한은행</td>
+                          <td>110</td>
+                          <td>유기환</td>
                           <td>2011/04/25</td>
-                          <td>$320,800</td>
-                        </tr>
-                        <tr>
-                          <td>Garrett Winters</td>
-                          <td>Accountant</td>
-                          <td>Tokyo</td>
-                          <td>63</td>
-                          <td>2011/07/25</td>
-                          <td>$170,750</td>
-                        </tr>
-                        <tr>
-                          <td>Ashton Cox</td>
-                          <td>Junior Technical Author</td>
-                          <td>San Francisco</td>
-                          <td>66</td>
-                          <td>2009/01/12</td>
-                          <td>$86,000</td>
-                        </tr>
-                        <tr>
-                          <td>Cedric Kelly</td>
-                          <td>Senior Javascript Developer</td>
-                          <td>Edinburgh</td>
-                          <td>22</td>
-                          <td>2012/03/29</td>
-                          <td>$433,060</td>
-                        </tr>
-                        <tr>
-                          <td>Airi Satou</td>
-                          <td>Accountant</td>
-                          <td>Tokyo</td>
-                          <td>33</td>
-                          <td>2008/11/28</td>
-                          <td>$162,700</td>
+                          <td>1</td>
+                          <td>N</td>
+                          <td><button onclick="">N</button></td>
                         </tr>
                       </tbody>
                     </table>

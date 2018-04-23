@@ -88,6 +88,10 @@
 	<insert id="memberChannelInsert">
 		INSERT INTO MCHANNEL VALUES (SEQ_MCNO.NEXTVAL, #{mno}, #{cno})
 	</insert>
+	
+	<select id="memberList" resultMap="memberResultSet" resultType="Member">
+		SELECT * FROM MEMBER
+	</select>
 </mapper>
 
 
