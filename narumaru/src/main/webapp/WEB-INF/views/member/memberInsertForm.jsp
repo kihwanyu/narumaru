@@ -116,6 +116,7 @@
                     </c:if>
                 </div>
             </div>
+            
             <div class="form-group" id="divPassword">
                 <label for="inputPassword" class="col-lg-2 control-label">패스워드</label>
                 <div class="col-lg-10">
