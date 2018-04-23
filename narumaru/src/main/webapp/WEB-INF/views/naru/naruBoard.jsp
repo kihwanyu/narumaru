@@ -1,18 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
+<%
+	pageContext.setAttribute("nr", "\r\n");
+	pageContext.setAttribute("br", "<br>");
+%> 
 <!DOCTYPE html>
-
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="resources/css/naruInsertBoard.css">
 </head>
 <body>
 	<jsp:include page="../common/topmenu.jsp"/>
-	<jsp:include page="../common/middleMenu.jsp"/>
-	<jsp:include page="../common/innerMenu.jsp"/>
+	<jsp:include page="middleMenu.jsp"/>
+	<jsp:include page="innerMenu.jsp"/>
 	<div class="wrap">	
 		<div class="dumi"></div>
 		<div class="marginAuto content">
@@ -58,15 +62,15 @@
 						<img src="resources/images/menu.png" class="modifyMenu size100per">
 						<div class="sub boardSub">
 							<ul>
-								<li>주소복사</li>
+								<li onclick="modifyBoard(${b.bno})">수정하기</li>
+								<li onclick="deleteBoard(${b.bno})">삭제하기</li>
 								<li>공유하기</li>
-								<li>북마크</li>
 								<li>신고하기</li>
 							</ul>
 						</div>
 					</div>
 				</div>
-				<div class="boardContent">${b.bContent}</div>
+				<div class="boardContent">${fn:replace(b.bContent,nr,br)}</div>
 				<div class="boardfoot">
 					<hr>
 					<ul class="footUl">
@@ -81,27 +85,21 @@
 				</div>
 				<div class="insertReply">
 					<hr>
-					<button class="showSub attachBtn" onclick="submenuOpen(this);">
-						+
-						<div class="sub attachSub">
-							<ul>
-								<li>사진</li>
-								<li>파일</li>
-							</ul>
-						</div>
-					</button>
-					<input type="text" name="insertReply"
+					<input type="text" name="insertReply" id="insertReply"
 						style="background: none; width: 400px; height: 40px;">
-					<button class="floatRight insertReplyBtn">
+					<button class="floatRight insertReplyBtn" onclick="addReply(this, ${b.bno})">
 						<img src="${contextPath }/resources/images/find.png"
 							style="width: 35px; height: 35px;">
 					</button>
-					<div class="replyArea">
-						<hr>
-						<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
-						<label>이름</label> <label>날짜</label>
-						<div class="replyContent" style="clear:both;">내용</div>
-					</div>
+					<c:forEach var="j" items="${colist}">
+						<c:if test="${j.targetBno eq b.bno}">
+							<div class="replyArea">
+								<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
+								<label>${j.bWriter}</label><br><label>${j.createDate}</label>
+								<div class="replyContent" style="clear:both;">${j.bContent}</div>
+							</div>
+						</c:if>
+					</c:forEach>
 				</div>
 			</div>	
 			</c:forEach>
@@ -111,6 +109,132 @@
 				<img alt="" src="resources/images/lodingImg.gif">
 			</div>
 	</div>
+	
+	<!-- 이하 모달창(나루 관리) -->
+	<input class="modal-state2" id="open-pop2" type="checkbox" /> <!-- 안보이는 체크박스, 이게 체크되면 모달창이 나옴 -->
+	<div class="modal2" style="font-size:0.9em;">
+		<label class="modal_bg" for="open-pop2"></label>
+		<!-- 기본 -->
+		<div class="modal_inner" id="modal_default">
+			<div class="row">
+				<label class="btn_label modify-basic"><b>기본</b></label>
+				<label class="btn_label modify-theme">테마</label>
+				<label class="btn_label modify-category">카테고리</label>
+				<label class="btn_label modify-neighbor">이웃</label>
+				<label class="modal_close" for="open-pop2"></label>
+			</div>
+			<div class="row">
+				<label class="modal-leftlabel">나루 대표사진</label>
+				<input type="file" style="width:70%; float:right;">
+			</div>
+			<div class="row">
+				<label class="modal-leftlabel">나루 제목</label>
+				<input type="text" style="width:79.1%; float:right; height:25px;">
+			</div>
+			<div class="row">
+				<label class="modal-leftlabel">소개 문구</label>
+				<textarea style="width:78.7%; float:right; height:40px; resize:none;"></textarea>
+			</div>
+	 	</div>
+	 	<!-- 테마  -->
+	 	<div class="modal_inner" id="modal_theme" style="display:none;">
+			<div class="row">
+				<label class="btn_label modify-basic">기본</label>
+				<label class="btn_label modify-theme"><b>테마</b></label>
+				<label class="btn_label modify-category">카테고리</label>
+				<label class="btn_label modify-neighbor">이웃</label>
+				<label class="modal_close" for="open-pop2"></label>
+			</div>
+			<div class="row">
+				<label class="modal-leftlabel">테마 색상</label>
+				<select>
+					<option>기본</option>
+					<option>구매한 색상1</option>
+					<option>구매한 색상2</option>
+				</select>
+			</div>
+			<div class="row">
+				<label class="modal-leftlabel">폰트</label>
+				<select style="margin-left:31px;">
+					<option>기본</option>
+					<option>구매한 폰트1</option>
+					<option>구매한 폰트22</option>
+				</select>
+			</div>
+			<div class="row">
+				<label class="modal-leftlabel">소개 문구</label>
+				<textarea style="width:78.7%; float:right; height:40px; resize:none;"></textarea>
+			</div>
+	 	 </div>
+	 	 <!-- 카테고리 -->
+	 	 <div class="modal_inner" id="modal_category" style="display:none;">
+			<div class="row">
+				<label class="btn_label modify-basic">기본</label>
+				<label class="btn_label modify-theme">테마</label>
+				<label class="btn_label modify-category">카테고리</label>
+				<label class="btn_label modify-neighbor">이웃</label>
+				<label class="modal_close" for="open-pop2"></label>
+			</div>
+			<label class="btn_label" id="addCateBtn" style="margin-bottom:15px;">카테고리 추가</label>
+		 </div>
+		 <!-- 이웃목록 -->
+		 <div class="modal_inner" id="modal_neighbor" style="display:none;">
+			<div class="row">
+				<label class="btn_label modify-basic">기본</label>
+				<label class="btn_label modify-theme">테마</label>
+				<label class="btn_label modify-category">카테고리</label>
+				<label class="btn_label modify-neighbor">이웃</label>
+				<label class="modal_close" for="open-pop2"></label>
+			</div>
+			<c:forEach var="i" begin="1" end="4">
+			<div style="margin-bottom:40px;">
+				<img src="${contextPath}/resources/images/cosmos.jpg" style="width:35px;height:35px;float:left;margin-right:5px; border-radius: 5px;">
+				<span style="top:5px; position:relative;"><a href="#">${i}번째 마루</a></span>
+			</div>
+			</c:forEach>
+		 </div>
+	</div>
+	
+	<script>
+	  	$(function(){
+			// 수정 - 기본버튼
+			$(".modify-basic").click(function(){
+				$("#modal_default").css("display","");
+				$("#modal_theme").css("display","none");
+				$("#modal_category").css("display","none");
+				$("#modal_neighbor").css("display","none");
+			})
+			
+			// 수정 - 테마버튼
+			$(".modify-theme").click(function(){
+				$("#modal_default").css("display","none");
+				$("#modal_theme").css("display","");
+				$("#modal_category").css("display","none");
+				$("#modal_neighbor").css("display","none");
+			})
+			
+			// 수정 - 카테고리버튼
+			$(".modify-category").click(function(){
+				$("#modal_default").css("display","none");
+				$("#modal_theme").css("display","none");
+				$("#modal_category").css("display","");
+				$("#modal_neighbor").css("display","none");
+			})
+			
+			// 카테고리 - 카테고리 추가 버튼
+			$("#addCateBtn").click(function(){
+				$("#modal_category").append("<div class='row' style='height:50px;'><input type='text' value='앙 기모띠' id='addedCategory'><span id='categoryDelete'></span></div>");
+			})
+			
+			// 수정 - 이웃버튼
+			$(".modify-neighbor").click(function(){
+				$("#modal_default").css("display","none");
+				$("#modal_theme").css("display","none");
+				$("#modal_category").css("display","none");
+				$("#modal_neighbor").css("display","");
+			})
+		})
+	  </script>
 	
 	<script>
 		var isEnd = false;
@@ -129,6 +253,7 @@
 			if(isEnd) return;
 			
 			$(".loadingArea").show();
+			
 			var reload = setTimeout(function() {
 				$(".loadingArea").hide();
 				//현재문서의 높이를 구함.
@@ -147,10 +272,7 @@
 		        if(Math.ceil(scrollHeight) == parseInt(documentHeight)) { //문서의 맨끝에 도달했을때 내용 추가 올림처리 정확하게 표시
 		        	//새로 불러올 id계산
 		        	newPage = newPage + 10;
-		        	console.log("1 : " + newPage);
 		        	<c:set var="newPage" value="${newPage + 10}"/>
-		        	console.log("1re : " + newPage);
-		        	console.log("2 : ${newPage}");
 		        	
 		        	//새로 불러올게 페이지가 들고있는 글 갯수를 넘으면 안되니까 사이즈 재조정
 		        	if(newPage >= listSize){
@@ -200,19 +322,21 @@
 								+'<div class="boardInfo">'
 								+'<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
 								+'<label>${b.bno}</label><br><label>${b.createDate}</label>'
-								+'<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">'
-								+'	<img src="resources/images/menu.png" class="modifyMenu size100per">'
-								+'		<div class="sub boardSub">'
-								+'			<ul>'
-								+'				<li>주소복사</li>'
-								+'				<li>공유하기</li>'
-								+'				<li>북마크</li>'
-								+'				<li>신고하기</li>'
-								+'			</ul>'
-								+'		</div>'
+								+'	<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">'
+								+'		<img src="resources/images/menu.png" class="modifyMenu size100per">'
+								+'			<div class="sub boardSub">'
+								+'				<ul>'
+								+'					<li onclick="modifyBoard(${b.bno})">수정하기</li>'
+								+'					<li onclick="deleteBoard(${b.bno})">삭제하기</li>'
+								+'					<li>주소복사</li>'
+								+'					<li>공유하기</li>'
+								+'					<li>북마크</li>'
+								+'					<li>신고하기</li>'
+								+'				</ul>'
+								+'			</div>'
 								+'	</div>'
 								+'</div>'
-								+'<div class="boardContent">${b.bContent}</div>'
+								+'<div class="boardContent">${fn:replace(b.bContent, nr, "<br>")}</div>'
 								+'<div class="boardfoot">'
 								+'	<hr>'
 								+'	<ul class="footUl">'
@@ -227,40 +351,69 @@
 								+'</div>'
 								+'<div class="insertReply">'
 								+'	<hr>'
-								+'	<button class="showSub attachBtn" onclick="submenuOpen(this);">'
-								+'		+'
-								+'		<div class="sub attachSub">'
-								+'			<ul>'
-								+'				<li>사진</li>'
-								+'				<li>파일</li>'
-								+'			</ul>'
-								+'		</div>'
-								+'	</button>'
 								+'	<input type="text" name="insertReply"'
 								+'		style="background: none; width: 400px; height: 40px;">'
-								+'	<button class="floatRight insertReplyBtn">'
+								+'	<button class="floatRight insertReplyBtn" onclick="addReply(this, ${b.bno})">'
 								+'		<img src="${contextPath }/resources/images/find.png"'
 								+'			style="width: 35px; height: 35px;">'
 								+'	</button>'
 								+'	<div class="replyArea">'
 								+'		<hr>'
 								+'		<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
-								+'		<label>이름</label> <label>날짜</label>'
-								+'		<div class="replyContent" style="clear:both;">내용</div>'
+								+'		<label>너아닌사람</label><br><label>날짜</label>'
+								+'		<div class="replyContent" style="clear:both; padding-top:5px;">${b.bno}번째 글의 댓글이에요</div>'
 								+'	</div>'
 								+'	</div>'
-								+'</div>');
+								+'</div>'
+								)
 		        	/* } */
 		        	</c:forEach>
 		        	
 		        }
 			}, 2000);
 		});
+		
 		function replyOpen(btn){
 			$(btn).parent().parent().siblings(".insertReply").toggle();			
 		}
 		function submenuOpen(btn){
 			$(btn).children(".sub").toggle();
+		}
+		
+		function modifyBoard(bno){
+			location.href="toUpdateBoardPage.nm?bno=" + bno + "&nmno=${nm.nmno}";
+		}
+		
+		function deleteBoard(bno){
+			location.href="deleteBoardOne.nm?bno="+ bno + "&nmno=${nm.nmno}";
+		}
+		
+		function addReply(btn, bno){
+			var replyArea = $(btn).parent();
+			var comment = $(btn).parent().find("#insertReply").val()
+			console.log(replyArea);
+			console.log(comment);
+			
+			var d = new Date();
+			var strDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+			
+			$(replyArea).append('<div class="replyArea">'
+					+ '<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
+					+ '<label>이름</label><br><label>' + strDate + '</label>'
+					+ '<div class="replyContent" style="clear:both;">'+ comment +' </div>'
+					+ '</div>');
+			
+			$.ajax({
+				url:'insertComment.nm',
+				type:'post',
+				data: {"bContent":comment,"bno":bno, "nmno":${nm.nmno}},
+				success:function(data){
+					console.log("댓글 작성 완료");
+				},
+				error:function(){
+					console.log("댓글 작성중 에러 발생");
+				}
+			})
 		}
 		
 	</script>

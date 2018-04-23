@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.narumaru.member.model.vo.Member;
 import com.kh.narumaru.narumaru.exception.NarumaruException;
 import com.kh.narumaru.narumaru.model.vo.Board;
 import com.kh.narumaru.narumaru.model.vo.Category;
@@ -20,4 +21,20 @@ public interface NarumaruDao {
 	void deleteCategory(int nmno, int cano);
 
 	Narumaru insertNarumaru(SqlSessionTemplate sqlSession, Narumaru nm) throws NarumaruException;
+
+	Narumaru selectNarumaruOne(int nmno);
+
+	boolean checkNarumaruOwner(int nmno, Member loginUser);
+
+	Board insertNarumaruBoard(SqlSessionTemplate sqlSession, Board b) throws NarumaruException;
+
+	Board selectBoardOne(int bno);
+
+	Board updateBoardOne(SqlSessionTemplate sqlSession, Board b) throws NarumaruException;
+
+	void deleteBoardOne(SqlSessionTemplate sqlSession, int bno) throws NarumaruException;
+
+	ArrayList<Board> selectCommentList(int nmno);
+
+	void insertComment(SqlSessionTemplate sqlSession, Board b) throws NarumaruException;
 } 

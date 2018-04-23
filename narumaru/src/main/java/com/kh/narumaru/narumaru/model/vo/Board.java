@@ -2,7 +2,9 @@ package com.kh.narumaru.narumaru.model.vo;
 
 import java.sql.Date;
 
-//나루마루 게시글
+import org.springframework.stereotype.Component;
+
+@Component
 public class Board implements java.io.Serializable {
 	private int bno;
 	private int bTno;
@@ -12,7 +14,7 @@ public class Board implements java.io.Serializable {
 	private String bHidden;
 	private int mno;
 	private String bWriter;
-	private Date createDate;
+	private String createDate;
 	private Date modifyDate;
 	private String status;
 	private int nmno;
@@ -20,11 +22,14 @@ public class Board implements java.io.Serializable {
 	private int cno;
 	private int bLevel;
 	private int targetBno;
+	private String isOpen;
+	private int needPoint;
 	
 	public Board(){}
 
 	public Board(int bno, int bTno, int bType, String bTitle, String bContent, String bHidden, int mno, String bWriter,
-			Date createDate, Date modifyDate, String status, int nmno, int cano, int cno, int bLevel, int targetBno) {
+			String createDate, Date modifyDate, String status, int nmno, int cano, int cno, int bLevel, int targetBno,
+			String isOpen, int needPoint) {
 		super();
 		this.bno = bno;
 		this.bTno = bTno;
@@ -42,6 +47,8 @@ public class Board implements java.io.Serializable {
 		this.cno = cno;
 		this.bLevel = bLevel;
 		this.targetBno = targetBno;
+		this.isOpen = isOpen;
+		this.needPoint = needPoint;
 	}
 
 	public int getBno() {
@@ -108,11 +115,11 @@ public class Board implements java.io.Serializable {
 		this.bWriter = bWriter;
 	}
 
-	public Date getCreateDate() {
+	public String getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
 
@@ -172,12 +179,28 @@ public class Board implements java.io.Serializable {
 		this.targetBno = targetBno;
 	}
 
+	public String getIsOpen() {
+		return isOpen;
+	}
+
+	public void setIsOpen(String isOpen) {
+		this.isOpen = isOpen;
+	}
+	
+	public int getNeedPoint(){
+		return needPoint;
+	}
+	
+	public void setNeedPoint(int needPoint){
+		this.needPoint = needPoint;
+	}
+
 	@Override
 	public String toString() {
 		return "Board [bno=" + bno + ", bTno=" + bTno + ", bType=" + bType + ", bTitle=" + bTitle + ", bContent="
 				+ bContent + ", bHidden=" + bHidden + ", mno=" + mno + ", bWriter=" + bWriter + ", createDate="
 				+ createDate + ", modifyDate=" + modifyDate + ", status=" + status + ", nmno=" + nmno + ", cano=" + cano
-				+ ", cno=" + cno + ", bLevel=" + bLevel + ", targetBno=" + targetBno + "]";
+				+ ", cno=" + cno + ", bLevel=" + bLevel + ", targetBno=" + targetBno + ", isOpen=" + isOpen + ", needPoint=" + needPoint + "]";
 	}
 
 	

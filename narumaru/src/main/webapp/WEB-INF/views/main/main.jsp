@@ -72,16 +72,17 @@
 <body>
  	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
 	<jsp:include page="../common/topmenu.jsp"/>
+	<jsp:include page="../common/myPage_RightSideBar.jsp"/>	
 		
 	<div id="band_middle">
 		<div id="binb">
-			<h2>내 밴드 <span>2</span></h2>
+			<h2>내 밴드 (<span id="maruCount"></span>)</h2>
 			<ul id="middle_box">
 				<li><a href="#"><img src="${contextPath }/resources/images/image/톱니"> 목록 편집</a></li>
 				<li><a href="#"><img src="${contextPath }/resources/images/image/책"> 밴드 가이드</a></li>
 				<li><a href="#"><img src="${contextPath }/resources/images/image/다운로드"> 데스크탑버전 다운로드</a></li>
 			</ul>
-		<div style="margin-top:20px;" id="maruList">
+		<div style="margin-top:20px; height:220px; width:1000px; overflow: auto;" id="maruList">
 			<div style="width:180px;height:200px;background:#ffffff;float:left;margin-top:20px;margin-right:30px;">
 				<a href="maruInsertView.ma">
 					<div style="width:60px;height:60px;border-radius:30px;background-color:gray;margin-top:50px;\">
@@ -90,16 +91,7 @@
 					<p style="width:100px;text-align:Center;margin-top:12.5px;">밴드 만들기</p>
 				</a>
 			</div>
-			<div style="width:180px;height:200px;background:#ffffff;float:left;margin-top:20px;margin-right:30px;">
-				<img src="${contextPath }/resources/images/dummy.png" style="width:180px;height:125px;">
-				<p style="text-align:left;margin-top:5px;margin-left:15px;">밴드이름</p>
-				<p style="color:#969696;font-size:13px;margin-left:15px;">밴드설명</p>
-			</div>
-			<div style="width:180px;height:200px;background:#ffffff;float:left;margin-top:20px;margin-right:30px;">
-				<img src="${contextPath }/resources/images/dummy.png" style="width:180px;height:125px;">
-				<p style="text-align:left;margin-top:5px;margin-left:15px;">밴드이름2</p>
-				<p style="color:#2ecc71;font-size:13px;margin-left:15px;">밴드설명2</p>
-			</div>
+			
 			</div>
 		</div>
 	</div>
@@ -207,6 +199,7 @@
 	</div>
 	
 	<jsp:include page="../common/footer.jsp"/>
+	
 	<script>
 	$(function(){
 		var mno = ${ loginUser.mid };
@@ -216,14 +209,28 @@
 			data:{"mno":mno},
 			success:function(data){
 				console.log(data);
-				/* var $select = $("#maruList");
-				$select.append(); */
+				$("#maruCount").html(data.length);
+				for(var i = 0; i < data.length; i++){
+					console.log(data[i]);
+					$("#maruList").append(
+						'<div style="cursor:pointer; width:180px;height:200px;background:#ffffff;float:left;margin-top:20px;margin-right:30px;" class="pointer" onclick="selectMaru('+data[i].NMNO+');">'+
+						'<img src="${contextPath }/resources/images/dummy.png" style="width:180px;height:125px;">'+
+						'<p style="text-align:left;margin-top:5px;margin-left:15px;">'+data[i].NM_TITLE+'</p>'+
+						'<p style="color:#969696;font-size:13px;margin-left:15px;">'+data[i].NM_INTRO+'</p>'+
+						'</div>'
+					);
+				}
+				
 			},
 			error:function(data){
 				console.log("실패");
 			}			
 		});
 	});
+	
+	function selectMaru(nmno){
+		location.href="boardListAll.bo?nmno="+nmno;
+	}
 	</script>
 </body>
 </html>  

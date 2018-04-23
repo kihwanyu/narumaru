@@ -2,6 +2,9 @@ package com.kh.narumaru.narumaru.model.vo;
 
 import java.sql.Date;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class DeleteRequest implements java.io.Serializable{
 	private int delno;
 	private int nmno;

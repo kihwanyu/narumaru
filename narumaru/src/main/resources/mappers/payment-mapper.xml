@@ -15,13 +15,27 @@
 		<result property="merchantUid" column="MERCHANT_UID"/>
 		<result property="payName" column="PAY_NAME"/>
 		<result property="buyerName" column="BUYER_NAME"/>
-		<result property="buyerAddr" column="BUYER_ADDR"/>
-		<result property="buyerPostcode" column="BUYER_POSTCODE"/>
 		<result property="applyNum" column="APPLY_NUM"/>
 		<result property="buyerEmail" column="BUYER_EMAIL"/>
 		<result property="status" column="STATUS"/>
-		<result property="payday" column="PAYDAY"/>
-	</resultMap>
+		<result property="payDay" column="PAYDAY"/>
+		<result property="point" column="POINT"/>
+ 	</resultMap>
 	
-	
+	<insert id="paymentInsert">
+		INSERT INTO PAYMENT VALUES(SEQ_PAY_NO.NEXTVAL, #{mno}, #{impUid}
+									, #{amount}, #{payPg}, #{payMethod}
+									, #{merchantUid}, #{payName}, #{buyerName}
+									, #{applyNum}, #{buyerEmail}, 'Y', SYSDATE, #{point})
+	</insert>
+	<select id="myPointInquiry" resultType="_int">
+		SELECT SUM(POINT) FROM PAYMENT WHERE MNO=#{mno}
+	</select>
+	<select id="selectPaymentListCount" resultType="_int" parameterType="_int">
+		SELECT COUNT(*) FROM PAYMENT WHERE MNO=#{mno}
+	</select>
+	<select id="selectPaymentList" resultMap="paymentResultSet">
+		SELECT AMOUNT, PAY_METHOD, POINT, TO_CHAR(payDay, 'yyyy-mm-dd PM hh:mi:ss') AS payDay FROM PAYMENT 
+		WHERE MNO=#{mno} ORDER BY PAY_NO DESC
+	</select>
 </mapper>

@@ -10,6 +10,7 @@ import com.kh.narumaru.member.model.exception.ProfileChangeException;
 import com.kh.narumaru.member.model.exception.birthdayChangeException;
 import com.kh.narumaru.member.model.exception.genderChangeException;
 import com.kh.narumaru.member.model.exception.nameChangeException;
+import com.kh.narumaru.member.model.exception.passwordChangeException;
 import com.kh.narumaru.member.model.exception.phoneChangeException;
 import com.kh.narumaru.member.model.vo.Member;
 
@@ -102,10 +103,20 @@ public class MemberDaoImpl implements MemberDao{
 
 	@Override
 	public void phoneChange(SqlSessionTemplate sqlSession, Member m) throws phoneChangeException {
-int result = sqlSession.update("Member.phoneChange", m);
+		int result = sqlSession.update("Member.phoneChange", m);
 		
 		if(result <= 0){
 			throw new phoneChangeException("핸드폰번호 변경 실패!!");
+		}
+	}
+
+
+	@Override
+	public void passwordChange(SqlSessionTemplate sqlSession, Member m) throws passwordChangeException {
+		int result = sqlSession.update("Member.passwordChange", m);
+		
+		if(result <= 0){
+			throw new passwordChangeException("비밀번호 변경 실패!!");
 		}
 	}
 

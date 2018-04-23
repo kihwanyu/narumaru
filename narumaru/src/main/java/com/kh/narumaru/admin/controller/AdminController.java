@@ -1,26 +1,77 @@
 package com.kh.narumaru.admin.controller;
 
-import java.util.Date;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.ArrayList;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.kh.narumaru.admin.model.service.AdminService;
+import com.kh.narumaru.admin.model.vo.Admin;
+import com.kh.narumaru.notice.model.vo.Notice;
+
 
 import com.kh.narumaru.admin.model.service.AdminService;
 import com.kh.narumaru.admin.model.service.AdminServiceImpl;
+import com.kh.narumaru.member.model.vo.Member;
+
 
 @Controller
 @SessionAttributes("loginUser")
 public class AdminController {
+
 	@Autowired
 	private AdminService as;
 
 	@RequestMapping(value="adMain.ad")
-	public String showAdminMainView(){
-		   
-		return "admin/adMain";
+	public ModelAndView showAdminMainView(ModelAndView mv){
+		HashMap EnrollDateList = as.selectEnrollDateList();
+		mv.addObject("Date", EnrollDateList.get("date"));
+		mv.addObject("Count", EnrollDateList.get("count"));
+		System.out.println("나오니?" + EnrollDateList);
+		
+		Iterator iter = EnrollDateList.keySet().iterator();
+		
+		while(iter.hasNext()){
+			System.out.println("에베베" + EnrollDateList.get(iter.next()));
+		}
+		
+		mv.setViewName("admin/adMain");
+		return mv;
+	}
+	
+	@RequestMapping(value = "totalSelect.ad")
+	public ModelAndView showTotalView(ArrayList<Admin> a,ModelAndView mv){
+		System.out.println("Admincontroller showTotalView ");
+		
+		ArrayList<Admin> alist = as.showTotalView(a);
+		System.out.println(alist);
+		
+		
+		mv.addObject("alist",alist);
+		mv.setViewName("admin/adMain");
+		
+		
+		return mv;
 	}
 	
 	
@@ -83,17 +134,50 @@ public class AdminController {
 		return "admin/adAnswer";
 	}
 	
-	//관리자 공지글쓰기
+	//관리자 공지글쓰기 페이지로 이동
 	@RequestMapping(value="adAnnouncement.ad")
 	public String showAdminAnnouncementView(){
 		
 		return "admin/adAnnouncement";
 	}
-	
+	//관리자 메인 그래프
 	@RequestMapping("adCountEnrollDate.ad")
 	public void CountEnrollDate(){
-		ArrayList<Date> EnrollDateList = as.selectEnrollDateList();
+		HashMap EnrollDateList = as.selectEnrollDateList();
 		System.out.println(EnrollDateList);
 	}
+	
+	
+	// 기능
+	// 공지 or FAQ 글쓰기
+	@RequestMapping(value="adAnnounce.ad")
+	public String insertNotice(Notice n, Model model,
+			@RequestParam(name="photo", required =false )MultipartFile photo,
+			HttpServletRequest request){
+		
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String filePath = root + "\\noticeUploadFiles";
+		
+		try {
+			photo.transferTo(new File(filePath + "\\" + photo.getOriginalFilename()));
+		
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		as.insertNotice(n);
+		
+		
+		return "main/main";
+		
+		
+	}
+	
 	
 }

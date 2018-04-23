@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset=UTF-8>
 <title>:: naru? maru! :: Admin index</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
   <c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application" />
 </head>
 
@@ -14,7 +16,7 @@
     <div class="container body">
       <div class="main_container">
         <jsp:include page = "../common/adMenubar.jsp"/> 
-
+		<button id="Btn">aaaaaaaaaaaaaaaaaaaaaaaa</button>
        
 
         <!-- page content -->
@@ -42,41 +44,42 @@
              
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> 불량 회원수 </span>
+              <span class="count_top"><i class="fa fa-user"></i> 금일 신고 횟수 </span>
               <div class="count">2,315</div>
              
             </div>
-            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total Connections</span>
-              <div class="count">7,325</div>
-             
-            </div>
+           
           </div>
           <!-- /top tiles -->
-
+		  
+		 <script>
+		  	$(function(){
+		  		$("#Btn").click(function(){	
+					$.ajax({
+			  			url:"totalSelect.ad",
+			  			type:"get",
+			  			success:function(data){
+			  				console.log("성공");
+			  				console.log(data);
+			  			},
+						error:function(data){
+							console.log("실패!");
+							console.log(data);
+						}
+			  		});
+		  		});
+		  		
+		  		
+		  	});
+		  
+		  </script>
           <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="dashboard_graph">
-
-                <div class="row x_title">
-                  <div class="col-md-6">
-                    <h3> 6개월 수입, 회원 증감 그래프</h3>
-                  </div>
-                  <div class="col-md-6">
-                    <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
-                      <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                      <span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
-                    </div>
-                  </div>
-                </div>
-            
-            
-            <!-- 곡선 그래프 -->
+            <!-- 회원수 막대 그래프 -->
                 <div class="col-md-9 col-sm-9 col-xs-12">
-                  <div id="chart_plot_01" class="demo-placeholder"></div>
+                  <div id="chart_plot_1" class="demo-placeholder"></div>
                 </div>
-                
-
                 <div class="clearfix"></div>
               </div>
             </div>
@@ -88,78 +91,9 @@
 
 
             <div class="col-md-4 col-sm-4 col-xs-12">
-              <div class="x_panel tile fixed_height_320">
-                <div class="x_title">
-                  <h2>신고하기 </h2>
-                  <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                      <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Settings 1</a>
-                        </li>
-                        <li><a href="#">Settings 2</a>
-                        </li>
-                      </ul>
-                    </li>
-                    <li><a class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
-                  </ul>
-                  <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                  <h4>최근 3개월</h4>
-                  <div class="widget_summary">
-                    <div class="w_left w_25">
-                      <span>4월</span>
-                    </div>
-                    <div class="w_center w_55">
-                      <div class="progress">
-                        <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 66%;">
-                          <span class="sr-only">60% Complete</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="w_right w_20">
-                      <span>123 건 </span>
-                    </div>
-                    <div class="clearfix"></div>
-                  </div>
-
-                  <div class="widget_summary">
-                    <div class="w_left w_25">
-                      <span>3월</span>
-                    </div>
-                    <div class="w_center w_55">
-                      <div class="progress">
-                        <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 45%;">
-                          <span class="sr-only">60% Complete</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="w_right w_20">
-                      <span>53 건 </span>
-                    </div>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="widget_summary">
-                    <div class="w_left w_25">
-                      <span>2월</span>
-                    </div>
-                    <div class="w_center w_55">
-                      <div class="progress">
-                        <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-                          <span class="sr-only">60% Complete</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="w_right w_20">
-                      <span>23k</span>
-                    </div>
-                    <div class="clearfix"></div>
-                  </div>
-                </div>
+              <div class="x_panel tile fixed_height_500">
+                 <h2>신고하기 </h2>
+                 <div id="Declaration"></div>
               </div>
             </div>
 
@@ -338,5 +272,131 @@
         <!-- 이럴수가!!  -->
       </div>
     </div>
+    <script src="https://code.highcharts.com/highcharts.src.js"></script>
+    <script type="text/javascript">
+    	
+    	console.log('${Date}' + "1");
+    	console.log('${Count}' + "1");
+    	//회원수 그래프 시작
+    	$("#chart_plot_1").highcharts(
+            {chart: {
+                type: 'column'
+            },
+            title: {
+                text: '회원가입 현황'
+            },
+            subtitle: {
+                text: '2018년 회원가입 현황'
+            },
+            xAxis: {
+                type: 'category',
+                labels: {
+                    rotation: -45,
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: '회원수'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            tooltip: {
+                pointFormat: 'Population in 2017: <b>{point.y:.1f} millions</b>'
+            },
+            series: [{
+                name: 'Population',
+                data: [
+                	<c:forEach begin="0" end="${fn:length(Count)-1}" varStatus="status">
+						["${Date[status.index]}", ${Count[status.index]}],
+					</c:forEach> 
+                ],
+                dataLabels: {
+                    enabled: true,
+                    rotation: -90,
+                    color: '#FFFFFF',
+                    align: 'right',
+                    format: '{point.y:.1f}', // one decimal
+                    y: 10, // 10 pixels down from the top
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                }
+            }]
+        });
+    	//회원 막대그래프 끝
+    	//신고 그래프 시작
+    	Highcharts.chart('Declaration', {
+    	    chart: {
+    	        type: 'bar'
+    	    },
+    	    title: {
+    	        text: 'Historic World Population by Region'
+    	    },
+    	    subtitle: {
+    	        text: 'Source: <a href="https://en.wikipedia.org/wiki/World_population">Wikipedia.org</a>'
+    	    },
+    	    xAxis: {
+    	        categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania'],
+    	        title: {
+    	            text: null
+    	        }
+    	    },
+    	    yAxis: {
+    	        min: 0,
+    	        title: {
+    	            text: 'Population (millions)',
+    	            align: 'high'
+    	        },
+    	        labels: {
+    	            overflow: 'justify'
+    	        }
+    	    },
+    	    tooltip: {
+    	        valueSuffix: ' millions'
+    	    },
+    	    plotOptions: {
+    	        bar: {
+    	            dataLabels: {
+    	                enabled: true
+    	            }
+    	        }
+    	    },
+    	    legend: {
+    	        layout: 'vertical',
+    	        align: 'right',
+    	        verticalAlign: 'top',
+    	        x: -40,
+    	        y: 80,
+    	        floating: true,
+    	        borderWidth: 1,
+    	        backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+    	        shadow: true
+    	    },
+    	    credits: {
+    	        enabled: false
+    	    },
+    	    series: [{
+    	        name: 'Year 1800',
+    	        data: [107, 31, 635, 203, 2]
+    	    }, {
+    	        name: 'Year 1900',
+    	        data: [133, 156, 947, 408, 6]
+    	    }, {
+    	        name: 'Year 2000',
+    	        data: [814, 841, 3714, 727, 31]
+    	    }, {
+    	        name: 'Year 2016',
+    	        data: [1216, 1001, 4436, 738, 40]
+    	    }]
+    	});
+    </script>
 </body>
 </html>
