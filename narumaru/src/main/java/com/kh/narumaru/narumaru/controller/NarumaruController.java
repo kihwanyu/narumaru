@@ -130,6 +130,12 @@ public class NarumaruController {
 		if(request.getParameter("category") != null) category=Integer.parseInt(request.getParameter("category"));
 		int needPoint = 0;
 		if(request.getParameter("needPoint") != null) needPoint=Integer.parseInt(request.getParameter("needPoint"));
+		int targetBno = 0;
+		if(request.getParameter("targetBno") != null) targetBno=Integer.parseInt(request.getParameter("targetBno"));
+		int bLevel = 0;
+		if(request.getParameter("bLevel") != null) bLevel=Integer.parseInt(request.getParameter("bLevel"));
+		int bType = 0;
+		if(request.getParameter("bType") != null) bType=Integer.parseInt(request.getParameter("bType"));		
 		
 		String openLevel = request.getParameter("openLevel");
 		String replyCondition = request.getParameter("replyCondition");
@@ -159,7 +165,9 @@ public class NarumaruController {
 		b.setCano(category);
 		b.setNmno(nmno);
 		b.setIsOpen(openLevel);
-		
+		b.setbLevel(bLevel);
+		b.setTargetBno(targetBno);
+		b.setbType(bType);
 		nms.insertNarumaruBoard(b);
 		
 		return "redirect:/boardListAll.bo?nmno="+nmno;

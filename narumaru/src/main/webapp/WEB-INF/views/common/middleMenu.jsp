@@ -186,7 +186,7 @@
 	}
 	.insertReply{
 		display:none;
-		padding:auto;
+		background:gray;
 	}
 	.replyArea{
 		padding:10px;

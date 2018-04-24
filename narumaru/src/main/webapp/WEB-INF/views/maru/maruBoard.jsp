@@ -27,6 +27,8 @@
 			<br>
 			<div class="boardInsert">
 				<form action="insertNarumaruBoard.nm" method="post" id="boardInsert">
+					<input type="hidden" name="bType" value="200"/>
+					<input type="hidden" name="bLevel" value="0"/>
 					<textarea id="summernote" name="boardContent"></textarea>
 					<input type="hidden" name="boardTitle" value="asd"/>
 					<input type="hidden" name="openLevel" value="all"/>
@@ -68,6 +70,7 @@
 			</c:choose>
 			
 			<c:forEach var="b" begin="${beginPage}" end="${newPage}" items="${ list }" varStatus="i">
+			<c:if test="${ b.bLevel == 0 }">
 			<div class="board">
 				<div class="boardInfo">
 					<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
@@ -91,7 +94,7 @@
 						<li class="showSub emotionBtn" onclick="submenuOpen(this);"><span>이모티콘</span>
 							<div class="sub emotionSub">이모티콘</div>
 						</li>
-						<li class="insertReplyShow" onclick="replyOpen(this);"><span>댓글보기()</span></li>
+						<li class="insertReplyShow" onclick="replyOpen(this, ${ b.bno });"><span>댓글보기()</span></li>
 						<li class="showSub shereBtn" onclick="submenuOpen(this);"><span>공유하기</span>
 							<div class="sub shereSub">개발중인 기능입니다</div>
 						</li>
@@ -99,29 +102,31 @@
 				</div>
 				<div class="insertReply">
 					<hr>
-					<button class="showSub attachBtn" onclick="submenuOpen(this);">
-						+
-						<div class="sub attachSub">
-							<ul>
-								<li>사진</li>
-								<li>파일</li>
-							</ul>
-						</div>
-					</button>
-					<input type="text" name="insertReply"
-						style="background: none; width: 400px; height: 40px;">
-					<button class="floatRight insertReplyBtn">
-						<img src="${contextPath }/resources/images/find.png"
-							style="width: 35px; height: 35px;">
-					</button>
+					<form action="insertNarumaruBoard.nm" method="post" id="replyInsert">
+					<textarea class="summernote2" name="boardContent"></textarea>
+					<input type="hidden" name="bType" value="201"/>
+					<input type="hidden" name="bLevel" value="1"/>
+					<input type="hidden" name="targetBno" value="${ b.bno }"/>
+					<input type="hidden" name="boardTitle" value="asd"/>
+					<input type="hidden" name="openLevel" value="all"/>
+					<input type="hidden" name="mno" value="${ loginUser.mid }"/>
+					<input type="hidden" name="nmno" value="${ nm.nmno }"/>
+					</form>
 					<div class="replyArea">
-						<hr>
-						<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
-						<label>이름</label> <label>날짜</label>
-						<div class="replyContent" style="clear:both;">내용</div>
+						 <c:forEach var="b2" begin="${beginPage}" end="${newPage}" items="${ list }" varStatus="i2">
+							<c:if test = "${ b.bno eq b2.targetBno and b2.bType == 201}">
+							<div style="height:100px;">
+								<hr>
+								<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
+								<label>${ b2.bWriter }</label> <label class="floatRight">${b2.createDate}</label>
+								<div class="replyContent" style="clear:both;">${b2.bContent}</div>
+							</div>
+							</c:if>
+						</c:forEach>
 					</div>
 				</div>
 			</div>	
+			</c:if>
 			</c:forEach>	
 		
 		</div>
@@ -268,10 +273,7 @@
 							+'	</button>'
 							+'	<input type="text" name="insertReply"'
 							+'		style="background: none; width: 400px; height: 40px;">'
-							+'	<button class="floatRight insertReplyBtn">'
-							+'		<img src="${contextPath }/resources/images/find.png"'
-							+'			style="width: 35px; height: 35px;">'
-							+'	</button>'
+							+'	<button class="floatRight insertReplyBtn">등록</button>'
 							+'	<div class="replyArea">'
 							+'		<hr>'
 							+'		<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
@@ -286,8 +288,9 @@
 	        }
 		}, 2000);
 	});
-		function replyOpen(btn){
-			$(btn).parent().parent().siblings(".insertReply").toggle();			
+		function replyOpen(btn, bno){
+			$(btn).parent().parent().siblings(".insertReply").toggle();
+			
 		}
 		function submenuOpen(btn){
 			$(btn).children(".sub").toggle();
@@ -312,6 +315,21 @@
 			  return button.render();   // return button as jquery object
 			}
 		
+		var submitButton2 = function (context) {
+			  var ui = $.summernote.ui;
+
+			  // create button
+			  var button = ui.button({
+			    contents: '<i class="fa fa-child"/> 등록하기',
+			    tooltip: '등록하기',
+			    click: function () {
+			      $("#replyInsert").submit();
+			    }
+			  });
+
+			  return button.render();   // return button as jquery object
+			}
+		
 		$(document).ready(function() {
 			  $('#summernote').summernote({
 				  height: 150, 
@@ -326,6 +344,25 @@
 					  ],
 				buttons: {
 					submit: submitButton
+				}
+			  });			  
+		});
+		
+		$(document).ready(function() {
+			console.log($('.summernote2'));
+			  $('.summernote2').summernote({
+				  height: 50, 
+				  lang: 'ko-KR',
+				  toolbar: [
+					    ['style', ['bold', 'italic', 'underline', 'clear']],
+					    ['fontsize', ['fontsize']],
+					    ['color', ['color']],
+					    ['para', ['ul', 'ol', 'paragraph']],
+					    ['Insert',['picture'], ['video']],
+					    ['mybutton', ['submit']]
+					  ],
+				buttons: {
+					submit: submitButton2
 				}
 			  });			  
 		});
