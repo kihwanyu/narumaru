@@ -1,13 +1,12 @@
 package com.kh.narumaru.naru.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.kh.narumaru.member.model.vo.Member;
 
 @Controller
 public class NaruController {
@@ -28,6 +27,25 @@ public class NaruController {
 		return mv;
 	}
 	
+	@RequestMapping("updateCategory.na")
+	public void updatecategory(ModelAndView mv, int nmno, HttpServletRequest request){
+		int i=0;
+		ArrayList<String> categorys = new ArrayList<String>(); 
+		
+		while(true){
+			String temp = "addedCategory" + i++;
+		
+			String cate = request.getParameter(temp);
+			
+			
+			if(cate == null){
+				break;
+			}else{
+				System.out.println(cate);
+				categorys.add(cate);
+			}
+		}
+	}
 	
 	
 }

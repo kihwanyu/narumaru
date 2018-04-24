@@ -141,17 +141,21 @@
 				</select>
 			</div>
 	 	 </div>
-	 	 <!-- 카테고리 -->
-	 	 <div class="modal_inner" id="modal_category" style="display:none;">
-			<div class="row">
-				<label class="btn_label modify-basic">기본</label>
-				<label class="btn_label modify-theme">테마</label>
-				<label class="btn_label modify-category">카테고리</label>
-				<label class="btn_label modify-neighbor">이웃</label>
-				<label class="modal_close" for="open-pop2"></label>
-			</div>
-			<label class="btn_label" id="addCateBtn" style="margin-bottom:15px;">카테고리 추가</label>
-		 </div>
+	 	 <form id="categoryModify" action="updateCategory.na" method="post">
+	 	 	<input type="hidden" name="nmno" value="${nm.nmno}">
+		 	 <!-- 카테고리 -->
+		 	 <div class="modal_inner" id="modal_category" style="display:none;">
+				<div class="row">
+					<label class="btn_label modify-basic">기본</label>
+					<label class="btn_label modify-theme">테마</label>
+					<label class="btn_label modify-category">카테고리</label>
+					<label class="btn_label modify-neighbor">이웃</label>
+					<label class="modal_close" for="open-pop2"></label>
+				</div>
+				<label class="btn_label" id="addCateBtn" style="margin-bottom:15px;">카테고리 추가</label>
+				<label class="btn_label" id="updateCateBtn" style="margin-bottom:15px;">수정완료</label>
+			 </div>
+		 </form>
 		 <!-- 이웃목록 -->
 		 <div class="modal_inner" id="modal_neighbor" style="display:none;">
 			<div class="row">
@@ -171,6 +175,8 @@
 	</div>
 	
 	<script>
+		var added = 0;
+	
 	  	$(function(){
 			// 수정 - 기본버튼
 			$(".modify-basic").click(function(){
@@ -198,7 +204,11 @@
 			
 			// 카테고리 - 카테고리 추가 버튼
 			$("#addCateBtn").click(function(){
-				$("#modal_category").append("<div class='row' style='height:50px;'><input type='text' value='앙 기모띠' id='addedCategory'><span id='categoryDelete'></span></div>");
+				$("#modal_category").append("<div class='row' style='height:50px;'><input type='text' value='' name='addedCategory"+ added++ +"' id='addedCategory'><span id='categoryDelete'></span></div>");
+			})
+			
+			$("#updateCateBtn").click(function(){
+				$("#categoryModify").submit();
 			})
 			
 			// 수정 - 이웃버튼
