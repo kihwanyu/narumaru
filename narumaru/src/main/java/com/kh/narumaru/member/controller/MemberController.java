@@ -152,13 +152,14 @@ public class MemberController {
 		
 		nm.setIsOpen("공개");
 		nm.setNmTitle(m.getNickName() + "님의 나루");
-		nm.setNmCategory(1);
+		nm.setNmCategory(2);
 		nm.setNmIntro(m.getNickName() + "님의 나루입니다.");
 		
 		try{
 			m.setUserPwd(passwordEncoder.encode(m.getUserPwd()));
 			System.out.println("컨트롤러 회원가입: " + m);
 			ms.insertMember(m);
+			m.setUserPwd(request.getParameter("userPwd"));
 			loginUser = ms.loginMember(m);
 			int nmno = nms.insertNarumaru(nm).getNmno();
 			

@@ -58,6 +58,26 @@ public class NarumaruController {
 		
 		ArrayList<Board> list = nms.selectBoardList(nmno);
 		ArrayList<Board> colist = nms.selectCommentList(nmno);
+		if(list.size() == 0){
+			Board newB = new Board();
+			
+			newB.setbWriter("");
+			newB.setbType(0);
+			newB.setNmno(nmno);
+			newB.setStatus("Y");
+			newB.setNeedPoint(0);
+			newB.setCreateDate("");
+			newB.setbTno(0);
+			newB.setBno(0);
+			newB.setCano(0);
+			newB.setCno(0);
+			newB.setIsOpen("all");
+			newB.setComments(0);
+			newB.setbLevel(0);
+			newB.setbContent("나루 가입을 환영합니다! 마음껏 글을 작성해보세요.");
+			
+			list.add(newB);
+		}
 		Narumaru nm = nms.selectNarumaruOne(nmno);
 		boolean isOwner = nms.checkNarumaruOwner(nmno, loginUser);
 		
@@ -226,10 +246,10 @@ public class NarumaruController {
 
 		if(nms.selectNarumaruType(nmno) == 1){
 			// 마루일때
-			bType = 201;
+			bType = 200;
 		}else{
 			// 나루일때
-			bType = 101;
+			bType = 100;
 		}
 		
 		b.setbType(bType);
@@ -252,7 +272,15 @@ public class NarumaruController {
 		Board b = new Board();
 		
 		b.setbContent(bContent);
-		b.setbType(2);
+		int bType = 0; 
+
+		if(nms.selectNarumaruType(nmno) == 1){
+			// 마루일때
+			bType = 201;
+		}else{
+			// 나루일때
+			bType = 101;
+		}
 		b.setbLevel(1);
 		b.setTargetBno(bno);
 		b.setNmno(nmno);
