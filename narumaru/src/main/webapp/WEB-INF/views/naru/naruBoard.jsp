@@ -36,7 +36,7 @@
 			<div class="board">
 				<div class="boardInfo">
 					<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
-					<div style="display:inline-block;"><label>${b.bno}</label><br><label>${b.createDate}</label></div>
+					<div style="display:inline-block;"><label>${b.bTitle}</label><br><label>${b.createDate}</label></div>
 					<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">
 						<img src="resources/images/menu.png" class="modifyMenu size100per">
 						<div class="sub boardSub">
@@ -204,10 +204,24 @@
 			
 			// 카테고리 - 카테고리 추가 버튼
 			$("#addCateBtn").click(function(){
-				$("#modal_category").append("<div class='row' style='height:50px;'><input type='text' value='' name='addedCategory"+ added++ +"' id='addedCategory'><span id='categoryDelete'></span></div>");
+				$("#modal_category").append("<div class='row' style='height:50px;'><input type='text' value='' id='addedCategory"+ added +"' name='addedCategory"+ added++ +"'  style='float:left;'><div id='categoryDelete' style='float:left;' onclick='deleteCategory(this)'></div></div>");
 			})
 			
 			$("#updateCateBtn").click(function(){
+				
+				for(var i=0; i<20; i++){
+					var checkVal = $("#addedCategory" + i).val();
+					var blank_pattern = /^\s+|\s+$/g;
+
+					if(checkVal == null){
+						var size = i+1;
+						break;
+					}else if(checkVal.replace(blank_pattern, '') == ""){
+						alert("카테고리 명을 입력해주세요.");
+						return false;
+					}
+				}
+				
 				$("#categoryModify").submit();
 			})
 			
@@ -219,6 +233,10 @@
 				$("#modal_neighbor").css("display","");
 			})
 		})
+		
+		function deleteCategory(btn){
+	  		console.log($(btn).parent().remove());
+	  	}
 	  </script>
 	
 	<script>
@@ -283,7 +301,7 @@
 		        		$(".content").append('<div class="board">'
 								+'<div class="boardInfo">'
 								+'<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
-								+'<label>${b.bno}</label><br><label>${b.createDate}</label>'
+								+'<label>${b.bTitle}</label><br><label>${b.createDate}</label>'
 								+'	<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">'
 								+'		<img src="resources/images/menu.png" class="modifyMenu size100per">'
 								+'			<div class="sub boardSub">'
