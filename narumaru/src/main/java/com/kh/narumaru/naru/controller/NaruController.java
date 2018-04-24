@@ -37,7 +37,6 @@ public class NaruController {
 		
 			String cate = request.getParameter(temp);
 			
-			
 			if(cate == null){
 				break;
 			}else{
