@@ -22,6 +22,12 @@
 		<result property="point" column="POINT"/>
  	</resultMap>
 	
+	<resultMap type="Bank" id="bankResultSet">
+		<id property="bcode" column="BCODE"/>
+		<result property="bank_name" column="BANK_NAME"/>
+	</resultMap>
+	
+	
 	<insert id="paymentInsert">
 		INSERT INTO PAYMENT VALUES(SEQ_PAY_NO.NEXTVAL, #{mno}, #{impUid}
 									, #{amount}, #{payPg}, #{payMethod}
@@ -41,4 +47,8 @@
 	<select id="selectPayment" resultMap="paymentResultSet" parameterType="_int">
 		SELECT * FROM PAYMENT WHERE MNO=#{mno}
 	</select>
+	<select id="selectAllBankList" resultMap="bankResultSet">
+		SELECT * FROM BANK
+	</select>
+	
 </mapper>

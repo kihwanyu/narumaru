@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -41,8 +42,11 @@ import com.kh.narumaru.member.model.service.MemberService;
 import com.kh.narumaru.member.model.vo.Channel;
 import com.kh.narumaru.member.model.vo.Member;
 import com.kh.narumaru.member.oauth.bo.NaverLoginBO;
+import com.kh.narumaru.payment.model.exception.BankSelectAllException;
 import com.kh.narumaru.payment.model.exception.PaymentListSelectException;
+import com.kh.narumaru.payment.model.service.BankSevice;
 import com.kh.narumaru.payment.model.service.PaymentService;
+import com.kh.narumaru.payment.model.vo.Bank;
 import com.kh.narumaru.payment.model.vo.Payment;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.kh.narumaru.common.vo.PageInfo;
@@ -77,6 +81,8 @@ public class MemberController {
 	private BCryptPasswordEncoder passwordEncoder;
 	@Autowired
 	private PaymentService ps; 
+	@Autowired
+	private BankSevice bs;
 	
 	/* NaverLoginBO 
 	private NaverLoginBO naverLoginBO;
@@ -582,6 +588,9 @@ public class MemberController {
 	}
 	@RequestMapping(value="myboardView.me")
 	public ModelAndView myBoardForward(ModelAndView mv){
+		int b_type = 100; /*나루 초기값*/
+		
+		
 		
 		mv.setViewName("mypage/myPage_myboard");
 		
@@ -670,7 +679,21 @@ public class MemberController {
 	@RequestMapping(value="refundView.me")
 	public ModelAndView RefundForward(ModelAndView mv){
 		
-		mv.setViewName("mypage/myPage_refund");
+		ArrayList<Bank> bankList = null;
+		try {
+			bankList = bs.selectAllBankList();
+			
+			System.out.println("bankList : " + bankList);
+			
+			mv.addObject("bankList", bankList);
+			
+			mv.setViewName("mypage/myPage_refund");
+			
+		} catch (BankSelectAllException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		return mv;
 	}
