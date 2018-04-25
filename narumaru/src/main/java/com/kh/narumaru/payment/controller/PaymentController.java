@@ -16,8 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.narumaru.member.model.vo.Member;
 import com.kh.narumaru.payment.model.exception.PaymentInsertException;
+import com.kh.narumaru.payment.model.exception.refundInsertException;
 import com.kh.narumaru.payment.model.service.PaymentService;
 import com.kh.narumaru.payment.model.vo.Payment;
+import com.kh.narumaru.payment.model.vo.Withdraw;
 
 @Controller
 public class PaymentController {
@@ -72,11 +74,23 @@ public class PaymentController {
 	
 	/* 포인트 환급 */
 	@RequestMapping(value="pointRefund.pa")
-	public ModelAndView pointRefund(ModelAndView mv){
+	public ModelAndView pointRefund(ModelAndView mv, Withdraw w, HttpSession Session){
 		
+		System.out.println("w : " + w);
 		
+		Member loginUser = (Member)Session.getAttribute("loginUser");
 		
-		//mv.setViewName("common/paymentResult");
+		int mno = loginUser.getMid();
+		
+		w.setMno(mno);
+		
+		try {
+			ps.refundInsert(w);
+			//mv.setViewName("common/");
+		} catch (refundInsertException e) {
+			mv.addObject("message", e.getMessage());
+			mv.setViewName("common/errorPage");
+		}
 		
 		return mv;
 	}

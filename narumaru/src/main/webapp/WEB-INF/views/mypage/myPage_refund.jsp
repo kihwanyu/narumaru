@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -133,17 +135,20 @@
 								<div class="rFund">
 									<table class="table t3">
 										<tr>
-											<td>환전 포인트 : </td>
-											<td><input type="text" class="panel panel-default">
-											<label style="color:gray;">&nbsp;&nbsp;&nbsp;&nbsp; 숫자만 입력해주세요.
-											</label></td>
+											<td style="width: 20%;">환전 포인트 : </td>
+											<td>
+												<input type="text" id="pointText" class="panel panel-default" name="point">
+												<label style="color:gray;">숫자만 입력해주세요.</label>
+												<input type="button" value="잔여 포인트 조회"> 
+												<label style="color:gray;">잔여 포인트 : <fmt:formatNumber value="${pList.point }" type="number"/><fmt:formatNumber value="${userTotalPoint }" type="number"/> P</label>
+											</td>
 										</tr>
 										<tr>
 											<td>은행 : </td>
 											<td>
-												<select class="panel panel-default" name="bank_name">
+												<select class="panel panel-default" name="bcode">
 													<option value="0">은행을 선택해주세요.</option>
-													<c:forEach items="${bankList }" var="bcode">
+													<c:forEach items="${bankList }" var="bank">
 														<option value="${bank.bcode }">${bank.bank_name }</option>
 													</c:forEach>
 												</select>
@@ -151,25 +156,27 @@
 										</tr>
 										<tr>
 											<td>계좌번호 : </td>
-											<td><input type="text" name="account_number" placeholder="계좌번호" class="panel panel-default">
-												<label style="color:gray;">&nbsp;&nbsp;&nbsp;&nbsp; (-)포함한 숫자를 입력해주세요.										
+											<td>
+												<input type="text" name="account_number" placeholder="계좌번호" class="panel panel-default">
+												<label style="color:gray;">(-)포함한 숫자를 입력해주세요.	</label>
 											</td>
 										</tr>
 										<tr>
 											<td>예금주명 : </td>
 											<td>
-											<input type="text" name="name" placeholder="예금주명" class="panel panel-default">
-											<label style="color:gray;">&nbsp;&nbsp;&nbsp;&nbsp; 정확한 예금주명을 입력해주세요.
+												<input type="text" name="account_holder" placeholder="예금주명" class="panel panel-default">
+												<label style="color:gray;">정확한 예금주명을 입력해주세요.</label>
 											</td>
 										</tr>
 									</table>
-									<input type="button" class="btn btn-success" value="제출하기">
+									<input type="submit" class="btn btn-success" value="제출하기" disabled="disabled">
 								</div>    
 							</form>
 							<br><br>
 							<div style="border:1px solid black; text-align: left;">
 								<label style="font-size: 1.2em;">수익 출금은 다음과 같이 진행됩니다.</label>
 								<ol style="list-style: square;">
+									<li>* 부정확한 정보를 입력하실 경우, 출금 신청이 취소될 수도 있습니다.</li>
 									<li>* 출금은 1원 단위로 하실 수 있으며, 출금 가능한 최소 금액은 50,000원부터 입니다.</li>
 									<li>* 출금 신청 금액에서 정산 수수료 15% + 1,000원을 제외한 금액이 입금됩니다.</li>
 									<li>* 출금을 신청하시면 다음달 10일(휴일일 경우 이전 영업일)에 일괄적으로 처리해 드립니다.</li>
@@ -213,9 +220,6 @@
 									<li><a href="#">>></a></li>
 								</ul>
 							</div>
-				        	
-				        	
-				        	
 				       	</div>
 				        <!-- #tab2 -->
 				    </div>
@@ -230,9 +234,10 @@
 		<jsp:include page="../common/myPage_RightSideBar.jsp"/>
 		
 		<script type="text/javascript">
-		
-		
 		$(function(){
+			
+			var pointPass = "";
+			
 			$(".tab_content").hide();
 		    $(".tab_content:first").show();
 
@@ -248,6 +253,18 @@
 		    $("#accountCertifiedBtn").click(function(){
 		    	location.href = "accountCertified.pa";
 		    });
+		    
+		    $("#pointText").keydown(function(){
+				var patten = /^[0-9]/g;
+				var point = $("#pointText").val();
+				var pointSub = point.substr(point.length-1);
+				
+				if(patten.test(pointSub) || point == ""){
+					pointPass = point;
+				} else {
+					$("#pointText").val(pointPass);
+				}
+			});
 		});
 		</script>
 </body>
