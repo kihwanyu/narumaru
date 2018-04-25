@@ -195,8 +195,6 @@ public class NarumaruController {
 		}
 		b.setCno(channel);
 		
-		int bType = 0; 
-
 		if(nms.selectNarumaruType(nmno) == 1){
 			// 마루일때
 			bType = 200;

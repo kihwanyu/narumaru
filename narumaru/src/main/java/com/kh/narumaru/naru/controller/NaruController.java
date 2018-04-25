@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.narumaru.naru.model.exception.NaruException;
 import com.kh.narumaru.naru.model.service.NaruService;
 
 @Controller
@@ -34,7 +35,7 @@ public class NaruController {
 	}
 	
 	@RequestMapping("updateCategory.na")
-	public String updatecategory(ModelAndView mv, int nmno, HttpServletRequest request){
+	public String updatecategory(ModelAndView mv, int nmno, HttpServletRequest request) throws NaruException{
 		int i=0;
 		ArrayList<String> categorys = new ArrayList<String>(); 
 		
