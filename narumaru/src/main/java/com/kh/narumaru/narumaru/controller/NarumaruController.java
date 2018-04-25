@@ -195,6 +195,7 @@ public class NarumaruController {
 			b.setbHidden(boardHidden);
 		}
 		b.setCno(channel);
+
 		if(nms.selectNarumaruType(nmno) == 1){
 			// 마루일때
 			bType = 200;
