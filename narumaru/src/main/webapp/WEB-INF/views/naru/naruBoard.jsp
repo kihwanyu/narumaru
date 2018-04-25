@@ -235,7 +235,8 @@
 		})
 		
 		function deleteCategory(btn){
-	  		console.log($(btn).parent().remove());
+	  		$(btn).parent().find(":text").val(":none:");
+	  		$(btn).parent().hide();
 	  	}
 	  </script>
 	

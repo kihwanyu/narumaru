@@ -11,7 +11,6 @@ import com.kh.narumaru.member.model.vo.Member;
 import com.kh.narumaru.narumaru.exception.NarumaruException;
 import com.kh.narumaru.narumaru.model.dao.NarumaruDao;
 import com.kh.narumaru.narumaru.model.vo.Board;
-import com.kh.narumaru.narumaru.model.vo.Category;
 import com.kh.narumaru.narumaru.model.vo.Narumaru;
 
 @Service
@@ -27,24 +26,6 @@ public class NarumaruServiceImpl implements NarumaruService {
 	public ArrayList<Board> selectBoardList(int nmno) {
 		
 		return nmd.selectBoardList(nmno);
-	}
-
-	@Override
-	public ArrayList<Category> selectCategoryList(int nmno) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void insertCategory(int nmno, Category c) { 
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteCategory(int nmno, int cano) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

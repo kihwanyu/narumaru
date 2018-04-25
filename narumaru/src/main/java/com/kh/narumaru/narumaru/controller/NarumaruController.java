@@ -80,7 +80,6 @@ public class NarumaruController {
 		}
 		Narumaru nm = nms.selectNarumaruOne(nmno);
 		boolean isOwner = nms.checkNarumaruOwner(nmno, loginUser);
-		
 		mv.addObject("nm", nm);
 		mv.addObject("list", list);
 		mv.addObject("colist", colist);
