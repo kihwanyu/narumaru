@@ -142,14 +142,15 @@ public class NarumaruController {
 	}
 	
 	@RequestMapping("insertNarumaruBoard.nm")
-	public String insertNaruBoard( int nmno, HttpServletRequest request) throws NarumaruException{
+	public String insertNaruBoard( int nmno, HttpServletRequest request, @RequestParam(name="file", required=false) MultipartFile file) throws NarumaruException{
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String filePath = root + "\\uploadFiles";
 		
 		System.out.println(nmno);
 		Enumeration iter = request.getParameterNames();
 		while(iter.hasMoreElements()){
-			System.out.println(iter.nextElement());
+			String parameterName = (String) iter.nextElement();
+			System.out.println(parameterName + ":" + request.getParameter(parameterName));
 		}
 		
 		Member loginUser = (Member)request.getSession().getAttribute("loginUser"); 
@@ -194,9 +195,6 @@ public class NarumaruController {
 			b.setbHidden(boardHidden);
 		}
 		b.setCno(channel);
-		
-		int bType = 0; 
-
 		if(nms.selectNarumaruType(nmno) == 1){
 			// 마루일때
 			bType = 200;
