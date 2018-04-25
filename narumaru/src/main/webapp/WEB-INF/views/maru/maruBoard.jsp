@@ -1,15 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <!DOCTYPE html>
-
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet"/>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet"/>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/lang/summernote-ko-KR.js"></script>
 </head>
-<body>
+<body class="maruBody">
 	<jsp:include page="../common/topmenu.jsp"/>
 	<jsp:include page="../common/middleMenu.jsp"/>
 	<jsp:include page="../common/innerMenu.jsp"/>
@@ -22,18 +26,26 @@
 			</div>
 			<br>
 			<div class="boardInsert">
-				<form action="insertNarumaruBoard.nm" method="post">
-					<div class="boardInsertcontent">
+				<form action="insertNarumaruBoard.nm" method="post" id="boardInsert">
+					<input type="hidden" name="bType" value="200"/>
+					<input type="hidden" name="bLevel" value="0"/>
+					<textarea id="summernote" name="boardContent"></textarea>
+					<input type="hidden" name="boardTitle" value="asd"/>
+					<input type="hidden" name="openLevel" value="all"/>
+					<input type="hidden" name="mno" value="${ loginUser.mid }"/>
+					<input type="hidden" name="nmno" value="${ nm.nmno }"/>
+					<%-- <c:out value="${ nm.nmno }"/> --%>
+					<%-- <div class="boardInsertcontent">
 						<input type="hidden" name="boardTitle" value="asd"/>
 						<input type="hidden" name="openLevel" value="all"/>
 						<input type="hidden" name="mno" value="${ loginUser.mid }"/>
 						<input type="hidden" name=nmno value="${ nm.nmno }"/>
-						
+						<input type="file" name="photo" id="photo" style="display:none;"/>
 						<input type="text" class="textArea" name="boardContent"/>
 					</div>
 					<div class="boardInsertTab">					
 						<ul class="ul boardInsertUl">
-							<li>탭1</li>
+							<li id="photoUpload">사</li>
 							<li>탭2</li>
 							<li>탭3</li>
 							<li>탭4</li>
@@ -41,7 +53,7 @@
 							<li>탭6</li>
 						</ul>			
 						<button class="floatRight inertBoardBtn">작성</button>
-					</div>
+					</div> --%>
 				</form>
 			</div>
 
@@ -58,6 +70,7 @@
 			</c:choose>
 			
 			<c:forEach var="b" begin="${beginPage}" end="${newPage}" items="${ list }" varStatus="i">
+			<c:if test="${ b.bLevel == 0 }">
 			<div class="board">
 				<div class="boardInfo">
 					<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
@@ -81,7 +94,7 @@
 						<li class="showSub emotionBtn" onclick="submenuOpen(this);"><span>이모티콘</span>
 							<div class="sub emotionSub">이모티콘</div>
 						</li>
-						<li class="insertReplyShow" onclick="replyOpen(this);"><span>댓글보기()</span></li>
+						<li class="insertReplyShow" onclick="replyOpen(this, ${ b.bno });"><span>댓글보기()</span></li>
 						<li class="showSub shereBtn" onclick="submenuOpen(this);"><span>공유하기</span>
 							<div class="sub shereSub">개발중인 기능입니다</div>
 						</li>
@@ -89,37 +102,44 @@
 				</div>
 				<div class="insertReply">
 					<hr>
-					<button class="showSub attachBtn" onclick="submenuOpen(this);">
-						+
-						<div class="sub attachSub">
-							<ul>
-								<li>사진</li>
-								<li>파일</li>
-							</ul>
-						</div>
-					</button>
-					<input type="text" name="insertReply"
-						style="background: none; width: 400px; height: 40px;">
-					<button class="floatRight insertReplyBtn">
-						<img src="${contextPath }/resources/images/find.png"
-							style="width: 35px; height: 35px;">
-					</button>
+					<form action="insertNarumaruBoard.nm" method="post" id="replyInsert">
+					<textarea class="summernote2" name="boardContent"></textarea>
+					<input type="hidden" name="bType" value="201"/>
+					<input type="hidden" name="bLevel" value="1"/>
+					<input type="hidden" name="targetBno" value="${ b.bno }"/>
+					<input type="hidden" name="boardTitle" value="asd"/>
+					<input type="hidden" name="openLevel" value="all"/>
+					<input type="hidden" name="mno" value="${ loginUser.mid }"/>
+					<input type="hidden" name="nmno" value="${ nm.nmno }"/>
+					</form>
 					<div class="replyArea">
-						<hr>
-						<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
-						<label>이름</label> <label>날짜</label>
-						<div class="replyContent" style="clear:both;">내용</div>
+						 <c:forEach var="b2" begin="${beginPage}" end="${newPage}" items="${ list }" varStatus="i2">
+							<c:if test = "${ b.bno eq b2.targetBno and b2.bType == 201}">
+							<div style="height:100px;">
+								<hr>
+								<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
+								<label>${ b2.bWriter }</label> <label class="floatRight">${b2.createDate}</label>
+								<div class="replyContent" style="clear:both;">${b2.bContent}</div>
+							</div>
+							</c:if>
+						</c:forEach>
 					</div>
 				</div>
 			</div>	
+			</c:if>
 			</c:forEach>	
 		
 		</div>
-			<div align="center" class="loadingArea" style="display: none;;">
-				<img alt="" src="resources/images/lodingImg.gif">
-			</div>
+		<div align="center" class="loadingArea" style="display: none;">
+			<img alt="" src="resources/images/lodingImg.gif">
+		</div>
 	</div>
-
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet"/>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet"/>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/lang/summernote-ko-KR.js"></script>
 	<script>
 	var isEnd = false;
 	var newPage = ${newPage};
@@ -253,10 +273,7 @@
 							+'	</button>'
 							+'	<input type="text" name="insertReply"'
 							+'		style="background: none; width: 400px; height: 40px;">'
-							+'	<button class="floatRight insertReplyBtn">'
-							+'		<img src="${contextPath }/resources/images/find.png"'
-							+'			style="width: 35px; height: 35px;">'
-							+'	</button>'
+							+'	<button class="floatRight insertReplyBtn">등록</button>'
 							+'	<div class="replyArea">'
 							+'		<hr>'
 							+'		<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
@@ -271,12 +288,84 @@
 	        }
 		}, 2000);
 	});
-		function replyOpen(btn){
-			$(btn).parent().parent().siblings(".insertReply").toggle();			
+		function replyOpen(btn, bno){
+			$(btn).parent().parent().siblings(".insertReply").toggle();
+			
 		}
 		function submenuOpen(btn){
 			$(btn).children(".sub").toggle();
 		}
+		$("#photoUpload").click(function(){
+				$("#photo").click();
+		});
+		
+		
+		var submitButton = function (context) {
+			  var ui = $.summernote.ui;
+
+			  // create button
+			  var button = ui.button({
+			    contents: '<i class="fa fa-child"/> 등록하기',
+			    tooltip: '등록하기',
+			    click: function () {
+			      $("#boardInsert").submit();
+			    }
+			  });
+
+			  return button.render();   // return button as jquery object
+			}
+		
+		var submitButton2 = function (context) {
+			  var ui = $.summernote.ui;
+
+			  // create button
+			  var button = ui.button({
+			    contents: '<i class="fa fa-child"/> 등록하기',
+			    tooltip: '등록하기',
+			    click: function () {
+			      $("#replyInsert").submit();
+			    }
+			  });
+
+			  return button.render();   // return button as jquery object
+			}
+		
+		$(document).ready(function() {
+			  $('#summernote').summernote({
+				  height: 150, 
+				  lang: 'ko-KR',
+				  toolbar: [
+					    ['style', ['bold', 'italic', 'underline', 'clear']],
+					    ['fontsize', ['fontsize']],
+					    ['color', ['color']],
+					    ['para', ['ul', 'ol', 'paragraph']],
+					    ['Insert',['picture'], ['video']],
+					    ['mybutton', ['submit']]
+					  ],
+				buttons: {
+					submit: submitButton
+				}
+			  });			  
+		});
+		
+		$(document).ready(function() {
+			console.log($('.summernote2'));
+			  $('.summernote2').summernote({
+				  height: 50, 
+				  lang: 'ko-KR',
+				  toolbar: [
+					    ['style', ['bold', 'italic', 'underline', 'clear']],
+					    ['fontsize', ['fontsize']],
+					    ['color', ['color']],
+					    ['para', ['ul', 'ol', 'paragraph']],
+					    ['Insert',['picture'], ['video']],
+					    ['mybutton', ['submit']]
+					  ],
+				buttons: {
+					submit: submitButton2
+				}
+			  });			  
+		});
 		
 	</script>
 </body>

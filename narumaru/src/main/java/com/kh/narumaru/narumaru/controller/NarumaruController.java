@@ -1,7 +1,10 @@
 package com.kh.narumaru.narumaru.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -53,9 +58,28 @@ public class NarumaruController {
 		
 		ArrayList<Board> list = nms.selectBoardList(nmno);
 		ArrayList<Board> colist = nms.selectCommentList(nmno);
+		if(list.size() == 0){
+			Board newB = new Board();
+			
+			newB.setbWriter("");
+			newB.setbType(0);
+			newB.setNmno(nmno);
+			newB.setStatus("Y");
+			newB.setNeedPoint(0);
+			newB.setCreateDate("");
+			newB.setbTno(0);
+			newB.setBno(0);
+			newB.setCano(0);
+			newB.setCno(0);
+			newB.setIsOpen("all");
+			newB.setComments(0);
+			newB.setbLevel(0);
+			newB.setbContent("나루 가입을 환영합니다! 마음껏 글을 작성해보세요.");
+			
+			list.add(newB);
+		}
 		Narumaru nm = nms.selectNarumaruOne(nmno);
 		boolean isOwner = nms.checkNarumaruOwner(nmno, loginUser);
-		
 		mv.addObject("nm", nm);
 		mv.addObject("list", list);
 		mv.addObject("colist", colist);
@@ -118,7 +142,16 @@ public class NarumaruController {
 	}
 	
 	@RequestMapping("insertNarumaruBoard.nm")
-	public String insertNaruBoard(HttpServletRequest request, int nmno) throws NarumaruException{
+	public String insertNaruBoard( int nmno, HttpServletRequest request) throws NarumaruException{
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String filePath = root + "\\uploadFiles";
+		
+		System.out.println(nmno);
+		Enumeration iter = request.getParameterNames();
+		while(iter.hasMoreElements()){
+			System.out.println(iter.nextElement());
+		}
+		
 		Member loginUser = (Member)request.getSession().getAttribute("loginUser"); 
 		
 		String boardTitle = request.getParameter("boardTitle");
@@ -131,6 +164,12 @@ public class NarumaruController {
 		if(request.getParameter("category") != null) category=Integer.parseInt(request.getParameter("category"));
 		int needPoint = 0;
 		if(request.getParameter("needPoint") != null) needPoint=Integer.parseInt(request.getParameter("needPoint"));
+		int targetBno = 0;
+		if(request.getParameter("targetBno") != null) targetBno=Integer.parseInt(request.getParameter("targetBno"));
+		int bLevel = 0;
+		if(request.getParameter("bLevel") != null) bLevel=Integer.parseInt(request.getParameter("bLevel"));
+		int bType = 0;
+		if(request.getParameter("bType") != null) bType=Integer.parseInt(request.getParameter("bType"));		
 		
 		String openLevel = request.getParameter("openLevel");
 		String replyCondition = request.getParameter("replyCondition");
@@ -155,12 +194,24 @@ public class NarumaruController {
 			b.setbHidden(boardHidden);
 		}
 		b.setCno(channel);
-		b.setbType(1);
+		
+		int bType = 0; 
+
+		if(nms.selectNarumaruType(nmno) == 1){
+			// 마루일때
+			bType = 200;
+		}else{
+			// 나루일때
+			bType = 100;
+		}
+		b.setbType(bType);
 		b.setMno(loginUser.getMid());
 		b.setCano(category);
 		b.setNmno(nmno);
 		b.setIsOpen(openLevel);
-		
+		b.setbLevel(bLevel);
+		b.setTargetBno(targetBno);
+		b.setbType(bType);
 		nms.insertNarumaruBoard(b);
 		
 		return "redirect:/boardListAll.bo?nmno="+nmno;
@@ -197,7 +248,18 @@ public class NarumaruController {
 			b.setbHidden(boardHidden);
 		}
 		b.setCno(channel);
-		b.setbType(1);
+		
+		int bType = 0; 
+
+		if(nms.selectNarumaruType(nmno) == 1){
+			// 마루일때
+			bType = 200;
+		}else{
+			// 나루일때
+			bType = 100;
+		}
+		
+		b.setbType(bType);
 		b.setMno(loginUser.getMid());
 		b.setCano(category);
 		b.setNmno(nmno);
@@ -217,7 +279,15 @@ public class NarumaruController {
 		Board b = new Board();
 		
 		b.setbContent(bContent);
-		b.setbType(2);
+		int bType = 0; 
+
+		if(nms.selectNarumaruType(nmno) == 1){
+			// 마루일때
+			bType = 201;
+		}else{
+			// 나루일때
+			bType = 101;
+		}
 		b.setbLevel(1);
 		b.setTargetBno(bno);
 		b.setNmno(nmno);

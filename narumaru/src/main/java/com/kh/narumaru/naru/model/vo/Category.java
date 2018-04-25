@@ -1,4 +1,4 @@
-package com.kh.narumaru.narumaru.model.vo;
+package com.kh.narumaru.naru.model.vo;
 
 import org.springframework.stereotype.Component;
 
@@ -9,15 +9,17 @@ public class Category implements java.io.Serializable{
 	private int nmno;
 	private int refCano;
 	private int caLevel;
+	private String status;
 	
 	public Category(){}
 
-	public Category(int cano, String caName, int nmno, int refCano, int caLevel) {
+	public Category(int cano, String caName, int nmno, int refCano, int caLevel, String status) {
 		this.cano = cano;
 		this.caName = caName;
 		this.nmno = nmno;
 		this.refCano = refCano;
 		this.caLevel = caLevel;
+		this.status = status;
 	}
 
 	public int getCano() {
@@ -60,10 +62,18 @@ public class Category implements java.io.Serializable{
 		this.caLevel = caLevel;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
 		return "Category [cano=" + cano + ", caName=" + caName + ", nmno=" + nmno + ", refCano=" + refCano
-				+ ", caLevel=" + caLevel + "]";
+				+ ", caLevel=" + caLevel + ", status=" + status + "]";
 	}
 	
 	

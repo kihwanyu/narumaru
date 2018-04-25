@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
+<body class="maruBody">
 	<jsp:include page="../common/topmenu.jsp"/>
 	<jsp:include page="../common/middleMenu.jsp"/>
 	<jsp:include page="../common/innerMenu.jsp"/>
