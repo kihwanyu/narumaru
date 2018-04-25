@@ -513,13 +513,14 @@ public class MemberController {
 			mch.setCno(Integer.valueOf(str));
 			mchList.add(mch);
 		}
-		
+		System.out.println("mchList : " + mchList);
 		try {
 			cs.memberChannelChange(mchList);
 			response.getWriter().print("true");
 		} catch (memberChannelChangeException e) {
 			try {
 				response.getWriter().print("false");
+				e.printStackTrace();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

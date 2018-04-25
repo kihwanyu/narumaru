@@ -30,8 +30,10 @@
 	<resultMap type="Withdraw" id="withdrawResultSet">
 		<id property="wno" column="WNO"/>
 		<result property="w_date" column="W_DATE"/>
+		<result property="w_dateStr" column="W_DATESTR"/>
 		<result property="mno" column="MNO"/>
 		<result property="point" column="POINT"/>
+		<result property="amount" column="AMOUNT"/>
 		<result property="bcode" column="BCODE"/>
 		<result property="account_number" column="ACCOUNT_NUMBER"/>
 		<result property="account_holder" column="ACCOUNT_HOLDER"/>
@@ -55,13 +57,18 @@
 		WHERE MNO=#{mno} ORDER BY PAY_NO DESC
 	</select>
 	<select id="selectPayment" resultMap="paymentResultSet" parameterType="_int">
-		SELECT * FROM PAYMENT WHERE MNO=#{mno}
+		SELECT PAY_NO 
+		FROM(
+		SELECT ROWNUM ,PAY_NO 
+		FROM PAYMENT 
+		WHERE MNO=#{mno}) 
+		WHERE ROWNUM=1
 	</select>
 	<select id="selectAllBankList" resultMap="bankResultSet">
 		SELECT * FROM BANK
 	</select>
 	
 	<insert id="refundInsert">
-		INSERT INTO WITHDRAW VALUES (SEQ_WNO.NEXTVAL, SYSDATE, #{mno}, #{point}, #{bcode}, #{account_number}, #{account_holder}, 'Y')
+		INSERT INTO WITHDRAW VALUES (SEQ_WNO.NEXTVAL, SYSDATE, #{mno}, #{point}, #{amount}, #{bcode}, #{account_number}, #{account_holder}, 'N')
 	</insert>
 </mapper>

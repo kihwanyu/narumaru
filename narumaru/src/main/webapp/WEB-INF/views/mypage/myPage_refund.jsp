@@ -131,7 +131,7 @@
 				    </ul>
 				    <div class="tab_container" align="center">
 				        <div id="tab1" class="tab_content" style="color: black;">
-				        	<form action="pointRefund.pa" method="post">
+				        	<form role="refund" action="pointRefund.pa" method="post">
 								<div class="rFund">
 									<table class="table t3">
 										<tr>
@@ -139,14 +139,16 @@
 											<td>
 												<input type="text" id="pointText" class="panel panel-default" name="point">
 												<label style="color:gray;">숫자만 입력해주세요.</label>
-												<input type="button" value="잔여 포인트 조회"> 
-												<label style="color:gray;">잔여 포인트 : <fmt:formatNumber value="${pList.point }" type="number"/><fmt:formatNumber value="${userTotalPoint }" type="number"/> P</label>
+												<input type="button" id="pointInquiryBtn" value="잔여 포인트 조회"> 
+												<label style="color:gray;">
+													현재 포인트 : <fmt:formatNumber value="${userTotalPoint }" type="number"/> P
+												</label>
 											</td>
 										</tr>
 										<tr>
 											<td>은행 : </td>
 											<td>
-												<select class="panel panel-default" name="bcode">
+												<select class="panel panel-default" id="bcodeText" name="bcode">
 													<option value="0">은행을 선택해주세요.</option>
 													<c:forEach items="${bankList }" var="bank">
 														<option value="${bank.bcode }">${bank.bank_name }</option>
@@ -157,19 +159,19 @@
 										<tr>
 											<td>계좌번호 : </td>
 											<td>
-												<input type="text" name="account_number" placeholder="계좌번호" class="panel panel-default">
-												<label style="color:gray;">(-)포함한 숫자를 입력해주세요.	</label>
+												<input type="text" id="account_numberText" name="account_number" placeholder="계좌번호" class="panel panel-default">
+												<label style="color:gray;">(-)없이 숫자만 입력해주세요.</label>
 											</td>
 										</tr>
 										<tr>
 											<td>예금주명 : </td>
 											<td>
-												<input type="text" name="account_holder" placeholder="예금주명" class="panel panel-default">
+												<input type="text" id="account_holderText" name="account_holder" placeholder="예금주명" class="panel panel-default">
 												<label style="color:gray;">정확한 예금주명을 입력해주세요.</label>
 											</td>
 										</tr>
 									</table>
-									<input type="submit" class="btn btn-success" value="제출하기" disabled="disabled">
+									<input type="button" id="refundBtn" class="btn btn-success" value="제출하기">
 								</div>    
 							</form>
 							<br><br>
@@ -185,9 +187,7 @@
 							
 				        </div>
 				        
-				        
-				        
-				         <!-- #tab1 -->
+				         <!-- #tab2 -->
 				        <div id="tab2" class="tab_content">
 				        	<table class="table" style="color:black;">
 				        		<thead>
@@ -225,10 +225,13 @@
 				    </div>
 				</div>
 			</div>
-			<form action="">
+			<!-- 현재 포인트 -->
+			<input type="hidden" id="currentPoint" value="${userTotalPoint }">
+			
+			<!-- <form action="">
 				
 			</form>
-			<input type="button" id="accountCertifiedBtn" value="테스트 버튼">
+			<input type="button" id="accountCertifiedBtn" value="테스트 버튼"> -->
 		</div>
 		
 		<jsp:include page="../common/myPage_RightSideBar.jsp"/>
@@ -236,14 +239,16 @@
 		<script type="text/javascript">
 		$(function(){
 			
-			var pointPass = "";
+			var resultPointPass = false;
 			
+			var pointPass = "";
+			var account_numberPass = "";
+			var account_holderPass = "";
 			$(".tab_content").hide();
 		    $(".tab_content:first").show();
 
 		    $("ul.tabs li").click(function () {
 		        $("ul.tabs li").removeClass("active").css("color", "#333");
-		        //$(this).addClass("active").css({"color": "darkred","font-weight": "bolder"});
 		        $(this).addClass("active").css("color", "darkred");
 		        $(".tab_content").hide()
 		        var activeTab = $(this).attr("rel");
@@ -253,11 +258,13 @@
 		    $("#accountCertifiedBtn").click(function(){
 		    	location.href = "accountCertified.pa";
 		    });
-		    
+		   
 		    $("#pointText").keydown(function(){
 				var patten = /^[0-9]/g;
 				var point = $("#pointText").val();
 				var pointSub = point.substr(point.length-1);
+				
+				resultPointPass = false;
 				
 				if(patten.test(pointSub) || point == ""){
 					pointPass = point;
@@ -265,6 +272,73 @@
 					$("#pointText").val(pointPass);
 				}
 			});
+		    
+		    $("#account_numberText").keydown(function(){
+				var patten = /^[0-9]/g;
+				var account_number = $("#account_numberText").val();
+				var account_numberSub = account_number.substr(account_number.length-1);
+				
+				if(patten.test(account_numberSub) || account_number == ""){
+					account_numberPass = account_number;
+				} else {
+					$("#account_numberText").val(account_numberPass);
+				}
+			});
+		    
+		    $("#account_holderText").keydown(function(){
+		    	var patten = /^[가-힣]*$/g;
+				var account_holder = $("#account_holderText").val();
+				var account_holderSub = account_holder.substr(account_holder.length-1);
+				
+				if(patten.test(account_holderSub) || account_holder == ""){
+					account_holderPass = account_holder;
+				} else {
+					$("#account_holderText").val(account_holderPass);
+				}
+			});
+		    
+		    $("#pointInquiryBtn").click(function(){
+		    	var point = $("#pointText").val();
+		    	var currentPoint = $("#currentPoint").val();
+		    	
+		    	var resultPoint = currentPoint - point;
+		    	
+		    	if(point >= 50000){
+		    		if(resultPoint >= 0){
+		    			alert("출금이 가능합니다. 잔여 포인트 : " + resultPoint);
+		    			resultPointPass = true;
+		    		} else {
+		    			alert("포인트가 부족합니다.");
+		    			resultPointPass = false;
+		    		}
+		    	} else {
+		    		alert("5만원 이상 입력해주세요.");
+		    	}
+		    });
+		    $("#refundBtn").click(function(){
+		    	var formObj = $("form[role='refund']");
+		    	
+		    	var resultBankVal = $("#bcodeText").val();
+		    	
+		    	if(!resultPointPass){
+		    		alert("잔여포인트 조회를 해주세요.");
+		    	} else {
+		    		if(resultBankVal == '0'){
+		    			alert("은행을 선택해주세요.");
+		    		} else {
+		    			if(account_numberPass.length < 11){
+		    				alert("계좌번호의 자릿수를 확인해주세요.");
+		    			} else {
+		    				if(account_holderPass.length < 2){
+		    					alert("이름을 확인해주세요.");
+		    				} else {
+		    					formObj.submit();
+		    				}
+		    			}
+		    		}
+		    	}
+		    	
+		    });
 		});
 		</script>
 </body>
