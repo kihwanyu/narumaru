@@ -10,7 +10,9 @@ import org.springframework.stereotype.Repository;
 import com.kh.narumaru.common.vo.PageInfo;
 import com.kh.narumaru.payment.model.exception.PaymentInsertException;
 import com.kh.narumaru.payment.model.exception.PaymentListSelectException;
+import com.kh.narumaru.payment.model.exception.refundInsertException;
 import com.kh.narumaru.payment.model.vo.Payment;
+import com.kh.narumaru.payment.model.vo.Withdraw;
 
 @Repository
 public class PaymentDaoImpl implements PaymentDao {
@@ -73,6 +75,16 @@ public class PaymentDaoImpl implements PaymentDao {
 			result = sqlSession.selectOne("Payment.myPointInquiry", mno);
 		} 
 		return result;
+	}
+
+	@Override
+	public void refundInsert(SqlSessionTemplate sqlSession, Withdraw w) throws refundInsertException {
+		
+		int result = sqlSession.insert("Payment.refundInsert", w);
+		
+		if(result <= 0){
+				throw new refundInsertException("환급 신청 실패 - INSERT");
+		}
 	}
 
 }

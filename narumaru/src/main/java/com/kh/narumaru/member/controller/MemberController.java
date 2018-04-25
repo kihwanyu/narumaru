@@ -89,7 +89,7 @@ public class MemberController {
 	private NarumaruService nms;
 	@Autowired
 	private MaruService mas;
-  @Autowired
+	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	@Autowired
 	private PaymentService ps; 
@@ -539,13 +539,14 @@ public class MemberController {
 		String currentPwd = pwdArr[0];
 		String changedPwd = pwdArr[1];
 		String changedPwdRe = pwdArr[2];
-
-		if(userPwd.equals(currentPwd)){
+		
+		if(passwordEncoder.matches(currentPwd, userPwd)){
 			if(changedPwd.equals(changedPwdRe)){
 				try {
 					Member m = new Member();
 					m.setMid(loginUser.getMid());
-					m.setUserPwd(changedPwd);
+					m.setUserPwd(passwordEncoder.encode(changedPwd));
+					
 					ms.passwordChange(m);
 					response.getWriter().print("0");
 					/*비밀번호 변경 성공*/
@@ -707,24 +708,26 @@ public class MemberController {
 		return mv;
 	}
 	@RequestMapping(value="refundView.me")
-	public ModelAndView RefundForward(ModelAndView mv){
+	public ModelAndView RefundForward(ModelAndView mv, HttpSession session){
 		
 		ArrayList<Bank> bankList = null;
 		try {
 			bankList = bs.selectAllBankList();
 			
-			System.out.println("bankList : " + bankList);
+			Member m = (Member)session.getAttribute("loginUser");
+			
+			int userTotalPoint = ps.selectTotalPoint(m.getMid());
+			
+			System.out.println(userTotalPoint);
 			
 			mv.addObject("bankList", bankList);
-			
+			mv.addObject("userTotalPoint",userTotalPoint);
 			mv.setViewName("mypage/myPage_refund");
 			
-		} catch (BankSelectAllException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (BankSelectAllException | PaymentListSelectException e) {
+			mv.addObject("message", e.getMessage());
+			mv.setViewName("common/errorPage");
 		}
-		
-		
 		return mv;
 	}
 	// 마이페이지 페이지 이동 end
