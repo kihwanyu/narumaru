@@ -77,12 +77,15 @@ public class PaymentController {
 	public ModelAndView pointRefund(ModelAndView mv, Withdraw w, HttpSession Session){
 		
 		System.out.println("w : " + w);
+		/*수수료*/
+		int amount = (int) (w.getPoint()*0.15)+1000;
 		
 		Member loginUser = (Member)Session.getAttribute("loginUser");
 		
 		int mno = loginUser.getMid();
 		
 		w.setMno(mno);
+		w.setAmount(amount);
 		
 		try {
 			ps.refundInsert(w);
