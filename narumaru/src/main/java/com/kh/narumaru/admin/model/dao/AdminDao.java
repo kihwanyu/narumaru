@@ -18,6 +18,8 @@ public interface AdminDao {
 	int insertNotice(SqlSessionTemplate sqlSession, Notice n);
 	public HashMap selectEnrollDateList();
 
-  	Member memberList();
+  	ArrayList<Member> memberList();
+
+	Member memberRevenue();
 
 }

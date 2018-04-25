@@ -87,7 +87,7 @@
               <!-- <div class="col-md-12 col-sm-12 col-xs-12"> -->
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>수익테이블 <small>RevenueTable</small></h2>
+                    <h2>회원 결제 <small>RevenueTable</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -105,69 +105,15 @@
                     <table id="datatable" class="table table-striped table-bordered">
                       <thead>
                         <tr>
-                          <th>년도</th>
-                          <th>1월</th>
-                          <th>2월</th>
-                          <th>3월</th>
-                          <th>4월</th>
-                          <th>5월</th>
-                          <th>6월</th>
-                          <th>7월</th>
-                          <th>8월</th>
-                          <th>9월</th>
-                          <th>10월</th>
-                          <th>11월</th>
-                          <th>12월</th>
+                          <th>회원아이디</th>
+                          <th>닉네임</th>
+                          <th>결제일</th>
+                          <th>결제금액</th>
+                          <th>포인트</th>
                         </tr>
                       </thead>
-
-
                       <tbody>
-                        <tr>
-                          <th>2016</th>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>Edinburgh</td>
-                          <td>61</td>
-                          <td>2011/04/25</td>
-                          <td>$320,800</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                        <tr>
-                          <th>2017</th>
-                          <td>Garrett Winters</td>
-                          <td>Accountant</td>
-                          <td>Tokyo</td>
-                          <td>63</td>
-                          <td>2011/07/25</td>
-                          <td>$170,750</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                        <tr>
-                          <th>2018</th>
-                          <td>Ashton Cox</td>
-                          <td>Junior Technical Author</td>
-                          <td>San Francisco</td>
-                          <td>66</td>
-                          <td>2009/01/12</td>
-                          <td>$86,000</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                        </tr>
+                      
                       </tbody>
                     </table>
                   </div>

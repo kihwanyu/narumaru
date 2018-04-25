@@ -46,10 +46,17 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public Member memberView() {
+	public ArrayList<Member> memberView() {
 		System.out.println("service야 나오니?");
-		Member member = ad.memberList();
+		ArrayList<Member> member = ad.memberList();
 		
+		return member;
+	}
+	
+	@Override
+	public Member memberRevenue(){
+		System.out.println("결제 나오니?");
+		Member member = ad.memberRevenue();
 		return member;
 	}
 
