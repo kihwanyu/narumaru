@@ -54,13 +54,23 @@ public class AdminDaoImpl implements AdminDao{
 	}
 
   @Override
-  public Member memberList() {
+  public ArrayList<Member> memberList() {
 	  System.out.println("너는 나오니?");
 	  
-	  Member member = (Member) sqlSession.selectList("Admin.memberList");
+	  ArrayList<Member> member = (ArrayList)sqlSession.selectList("Admin.memberList1");
 	  System.out.println(member);
 	  
 	  
 	return member;
+  }
+
+  @Override
+  public Member memberRevenue() {
+	  System.out.println("나오는거지?");
+	  
+	  Member member = (Member) sqlSession.selectList("Admin.memberRevenue");
+	  System.out.println(member);
+	  
+	 return member;
   }
 }
