@@ -20,27 +20,6 @@
 	<div class="wrap">	
 		<div class="dumi"></div>
 		<div class="marginAuto content">
-			<div class="searchArea">
-				<input type="text" name="search" style="background:none; width:440px; height:40px;">
-				<button class="floatRight searchBtn"><img src="${contextPath }/resources/images/find.png" style="width:35px; height:35px;"></button>
-			</div>
-			<br>
-			<div class="boardInsert">
-				<div class="boardInsertcontent">
-					<input type="text" class="textArea">
-				</div>
-				<div class="boardInsertTab">					
-					<ul class="ul boardInsertUl">
-						<li>탭1</li>
-						<li>탭2</li>
-						<li>탭3</li>
-						<li>탭4</li>
-						<li>탭5</li>
-						<li>탭6</li>
-					</ul>			
-					<button class="floatRight inertBoardBtn">작성</button>
-				</div>
-			</div>
 			<!-- 게시글 불러오기, 시작은 1부터 -->
 			<c:set var="beginPage" value="0"/>
 			<!-- 먼저 불러온 갯수를 계산한다. -->
@@ -57,7 +36,7 @@
 			<div class="board">
 				<div class="boardInfo">
 					<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
-					<div style="display:inline-block;"><label>${b.bno}</label><br><label>${b.createDate}</label></div>
+					<div style="display:inline-block;"><label>${b.bTitle}</label><br><label>${b.createDate}</label></div>
 					<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">
 						<img src="resources/images/menu.png" class="modifyMenu size100per">
 						<div class="sub boardSub">
@@ -77,7 +56,7 @@
 						<li class="showSub emotionBtn" onclick="submenuOpen(this);"><span>이모티콘</span>
 							<div class="sub emotionSub">이모티콘</div>
 						</li>
-						<li class="insertReplyShow" onclick="replyOpen(this);"><span>댓글보기()</span></li>
+						<li class="insertReplyShow" onclick="replyOpen(this);"><span>댓글보기(${b.comments})</span></li>
 						<li class="showSub shereBtn" onclick="submenuOpen(this);"><span>공유하기</span>
 							<div class="sub shereSub">개발중인 기능입니다</div>
 						</li>
@@ -161,22 +140,22 @@
 					<option>구매한 폰트22</option>
 				</select>
 			</div>
-			<div class="row">
-				<label class="modal-leftlabel">소개 문구</label>
-				<textarea style="width:78.7%; float:right; height:40px; resize:none;"></textarea>
-			</div>
 	 	 </div>
-	 	 <!-- 카테고리 -->
-	 	 <div class="modal_inner" id="modal_category" style="display:none;">
-			<div class="row">
-				<label class="btn_label modify-basic">기본</label>
-				<label class="btn_label modify-theme">테마</label>
-				<label class="btn_label modify-category">카테고리</label>
-				<label class="btn_label modify-neighbor">이웃</label>
-				<label class="modal_close" for="open-pop2"></label>
-			</div>
-			<label class="btn_label" id="addCateBtn" style="margin-bottom:15px;">카테고리 추가</label>
-		 </div>
+	 	 <form id="categoryModify" action="updateCategory.na" method="post">
+	 	 	<input type="hidden" name="nmno" value="${nm.nmno}">
+		 	 <!-- 카테고리 -->
+		 	 <div class="modal_inner" id="modal_category" style="display:none;">
+				<div class="row">
+					<label class="btn_label modify-basic">기본</label>
+					<label class="btn_label modify-theme">테마</label>
+					<label class="btn_label modify-category">카테고리</label>
+					<label class="btn_label modify-neighbor">이웃</label>
+					<label class="modal_close" for="open-pop2"></label>
+				</div>
+				<label class="btn_label" id="addCateBtn" style="margin-bottom:15px;">카테고리 추가</label>
+				<label class="btn_label" id="updateCateBtn" style="margin-bottom:15px;">수정완료</label>
+			 </div>
+		 </form>
 		 <!-- 이웃목록 -->
 		 <div class="modal_inner" id="modal_neighbor" style="display:none;">
 			<div class="row">
@@ -196,7 +175,24 @@
 	</div>
 	
 	<script>
+		var added = 0;
+	
 	  	$(function(){
+	  		//설정해둔 카테고리 리스트 불러오기
+	  		$.ajax({
+				url:"selectCategoryList.na",
+				type:"get",
+				data:{"nmno":${nm.nmno}},
+				success:function(data){
+					for(var i in data){
+						$("#modal_category").append("<div class='row' style='height:50px;'><input type='text' value='" + data[i].caName + "' id='addedCategory"+ added +"' name='addedCategory"+ added++ +"'  style='float:left;'><div id='categoryDelete' style='float:left;' onclick='deleteCategory(this)'></div></div>");
+					}
+				},
+				error:function(request,status,error){
+					console.log("카테고리 리스트 ajax 실패")
+				}
+			});
+	  		
 			// 수정 - 기본버튼
 			$(".modify-basic").click(function(){
 				$("#modal_default").css("display","");
@@ -223,7 +219,25 @@
 			
 			// 카테고리 - 카테고리 추가 버튼
 			$("#addCateBtn").click(function(){
-				$("#modal_category").append("<div class='row' style='height:50px;'><input type='text' value='앙 기모띠' id='addedCategory'><span id='categoryDelete'></span></div>");
+				$("#modal_category").append("<div class='row' style='height:50px;'><input type='text' value='' id='addedCategory"+ added +"' name='addedCategory"+ added++ +"'  style='float:left;'><div id='categoryDelete' style='float:left;' onclick='deleteCategory(this)'></div></div>");
+			})
+			
+			$("#updateCateBtn").click(function(){
+				
+				for(var i=0; i<20; i++){
+					var checkVal = $("#addedCategory" + i).val();
+					var blank_pattern = /^\s+|\s+$/g;
+
+					if(checkVal == null){
+						var size = i+1;
+						break;
+					}else if(checkVal.replace(blank_pattern, '') == ""){
+						alert("카테고리 명을 입력해주세요.");
+						return false;
+					}
+				}
+				
+				$("#categoryModify").submit();
 			})
 			
 			// 수정 - 이웃버튼
@@ -234,6 +248,29 @@
 				$("#modal_neighbor").css("display","");
 			})
 		})
+		
+		function deleteCategory(btn){
+	  		console.log("버튼눌름");
+	  		var categoryName = $(btn).parent().find(":text").val();
+	  		console.log(categoryName);
+	  		$(btn).parent().find(":text").val(":none:");
+	  		console.log(categoryName);
+	  		$(btn).parent().hide();
+	  		
+	  		console.log("3");
+	  		$.ajax({
+				url:'disableCategory.na',
+				type:'get',
+				data: {"caName":categoryName, "nmno":${nm.nmno}},
+				success:function(){
+					console.log(categoryName + "카테고리 비활성화");
+				},
+				error:function(data){
+					console.log(data);
+				}
+			})
+			console.log("4");
+	  	}
 	  </script>
 	
 	<script>
@@ -288,29 +325,6 @@
 		        	//페이지 한번 클리어
 		        	$(".content").html("");
 		        	
-		        	$(".content").append('<div class="searchArea">'
-					+ '<input type="text" name="search" style="background:none; width:440px; height:40px;">'
-					+ '<button class="floatRight searchBtn"><img src="${contextPath }/resources/images/find.png" style="width:35px; height:35px;"></button>'
-				    + '</div>'
-					+ '<br>'
-					+ '<div class="boardInsert">'
-					+ '<div class="boardInsertcontent">'
-					+ '<input type="text" class="textArea">'
-					+ '</div>'
-					+ '<div class="boardInsertTab">'	
-					+ '<ul class="ul boardInsertUl">'
-					+		'<li>탭1</li>'
-					+		'<li>탭2</li>'
-					+		'<li>탭3</li>'
-					+		'<li>탭4</li>'
-					+		'<li>탭5</li>'
-					+		'<li>탭6</li>'
-					+	'</ul>	'		
-					+	'<button class="floatRight inertBoardBtn">작성</button>'
-					+	'</div>'
-					+	'</div>')
-					
-		        	
 		        	//페이지 전부 다시불러옴
 		        	<c:forEach var="b" begin="0" end="${list.size()}" items="${list}" varStatus="i">
 		        		//새로 가져오려는게 적으면
@@ -321,7 +335,7 @@
 		        		$(".content").append('<div class="board">'
 								+'<div class="boardInfo">'
 								+'<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
-								+'<label>${b.bno}</label><br><label>${b.createDate}</label>'
+								+'<label>${b.bTitle}</label><br><label>${b.createDate}</label>'
 								+'	<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">'
 								+'		<img src="resources/images/menu.png" class="modifyMenu size100per">'
 								+'			<div class="sub boardSub">'
@@ -343,7 +357,7 @@
 								+'		<li class="showSub emotionBtn" onclick="submenuOpen(this);"><span>이모티콘</span>'
 								+'			<div class="sub emotionSub">이모티콘</div>'
 								+'		</li>'
-								+'			<li class="insertReplyShow" onclick="replyOpen(this);"><span>댓글보기()</span></li>'
+								+'			<li class="insertReplyShow" onclick="replyOpen(this);"><span>댓글보기(${b.comments})</span></li>'
 								+'		<li class="showSub shereBtn" onclick="submenuOpen(this);"><span>공유하기</span>'
 								+'			<div class="sub shereSub">개발중인 기능입니다</div>'
 								+'		</li>'
@@ -357,12 +371,15 @@
 								+'		<img src="${contextPath }/resources/images/find.png"'
 								+'			style="width: 35px; height: 35px;">'
 								+'	</button>'
-								+'	<div class="replyArea">'
-								+'		<hr>'
-								+'		<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
-								+'		<label>너아닌사람</label><br><label>날짜</label>'
-								+'		<div class="replyContent" style="clear:both; padding-top:5px;">${b.bno}번째 글의 댓글이에요</div>'
-								+'	</div>'
+								<c:forEach var="j" items="${colist}">
+									<c:if test="${j.targetBno eq b.bno}">
+								+	'<div class="replyArea">'
+								+		'<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
+								+		'<label>${j.bWriter}</label><br><label>${j.createDate}</label>'
+								+		'<div class="replyContent" style="clear:both;">${j.bContent}</div>'
+								+	'</div>'
+									</c:if>
+								</c:forEach>
 								+'	</div>'
 								+'</div>'
 								)
@@ -390,7 +407,7 @@
 		
 		function addReply(btn, bno){
 			var replyArea = $(btn).parent();
-			var comment = $(btn).parent().find("#insertReply").val()
+			var comment = $(btn).parent().find("#insertReply").val();
 			console.log(replyArea);
 			console.log(comment);
 			
@@ -410,8 +427,7 @@
 				success:function(data){
 					console.log("댓글 작성 완료");
 				},
-				error:function(){
-					console.log("댓글 작성중 에러 발생");
+				error:function(data){
 				}
 			})
 		}

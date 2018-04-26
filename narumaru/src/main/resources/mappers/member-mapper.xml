@@ -48,7 +48,6 @@
 		SELECT CNO FROM MCHANNEL WHERE MNO = #{mno} ORDER BY CNO ASC
 	</select>
 	
-	
 	<insert id="insertMember">
 		INSERT INTO MEMBER VALUES(SEQ_MNO.NEXTVAL, #{email}, #{userPwd}, #{nickName}, NULL, #{gender}, #{birthDay}, #{phone}, SYSDATE, SYSDATE, default)
 	</insert>
@@ -89,6 +88,11 @@
 	<insert id="memberChannelInsert">
 		INSERT INTO MCHANNEL VALUES (SEQ_MCNO.NEXTVAL, #{mno}, #{cno})
 	</insert>
+	
+	<select id="memberList" resultMap="memberResultSet" resultType="Member">
+		SELECT * FROM MEMBER
+	</select>
+	
 </mapper>
 
 

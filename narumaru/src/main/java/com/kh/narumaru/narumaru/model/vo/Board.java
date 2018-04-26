@@ -24,12 +24,13 @@ public class Board implements java.io.Serializable {
 	private int targetBno;
 	private String isOpen;
 	private int needPoint;
+	private int comments;
 	
 	public Board(){}
 
 	public Board(int bno, int bTno, int bType, String bTitle, String bContent, String bHidden, int mno, String bWriter,
 			String createDate, Date modifyDate, String status, int nmno, int cano, int cno, int bLevel, int targetBno,
-			String isOpen, int needPoint) {
+			String isOpen, int needPoint, int comments) {
 		super();
 		this.bno = bno;
 		this.bTno = bTno;
@@ -49,6 +50,7 @@ public class Board implements java.io.Serializable {
 		this.targetBno = targetBno;
 		this.isOpen = isOpen;
 		this.needPoint = needPoint;
+		this.comments = comments;
 	}
 
 	public int getBno() {
@@ -193,6 +195,14 @@ public class Board implements java.io.Serializable {
 	
 	public void setNeedPoint(int needPoint){
 		this.needPoint = needPoint;
+	}
+	
+	public int getComments(){
+		return comments;
+	}
+	
+	public void setComments(int comments){
+		this.comments = comments;
 	}
 
 	@Override

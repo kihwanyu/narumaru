@@ -1,16 +1,27 @@
 package com.kh.narumaru.naru.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kh.narumaru.member.model.vo.Member;
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.kh.narumaru.naru.model.exception.NaruException;
+import com.kh.narumaru.naru.model.service.NaruService;
+import com.kh.narumaru.naru.model.vo.Category;
 
 @Controller
 public class NaruController {
+	@Autowired
+	private NaruService ns;
 	
 	@RequestMapping("naruMain.na")
 	public String showNaruMainView(){
@@ -28,6 +39,62 @@ public class NaruController {
 		return mv;
 	}
 	
+	@RequestMapping("selectCategoryList.na")
+	public void selectCategoryList(int nmno, HttpServletResponse response){
+		ArrayList<Category> list = ns.selectCategoryList(nmno);
+		
+		System.out.println("카테고리 리스트 : " + list);
+		
+		try {
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			new Gson().toJson(list, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
+	@RequestMapping("updateCategory.na")
+	public String updatecategory(ModelAndView mv, int nmno, HttpServletRequest request) throws NaruException{
+		int i=0;
+		ArrayList<String> categorys = new ArrayList<String>(); 
+		
+		while(true){
+			String temp = "addedCategory" + i++;
+		
+			String cate = request.getParameter(temp);
+			
+			if(cate == null){
+				break;
+			}else if(cate.equals(":none:")){
+				continue;
+			}else{
+				System.out.println(cate);
+				categorys.add(cate);
+			}
+		}
+		
+		//중복값 제거용
+		HashSet<String> hs = new HashSet();
+		hs.addAll(categorys);
+		categorys.clear();
+		categorys.addAll(hs);
+		
+		//이하 카테고리 재설정
+		
+		for(String s : categorys){
+			ns.insertCategory(s, nmno);
+		}
+		
+		return "redirect:/boardListAll.bo?nmno="+nmno;
+	}
+	
+	@RequestMapping("disableCategory.na")
+	public void disableCategory(String caName, int nmno){
+		System.out.println("disabled go");
+		ns.disableCategory(caName, nmno);
+	}
 	
 }

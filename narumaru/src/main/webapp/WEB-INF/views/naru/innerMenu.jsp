@@ -15,11 +15,11 @@
 				<img src="resources/images/profile_defalt.png" class="size100per">
 			</div>
 			<br>
-			<div class="maruName">
+			<div class="maruName" style="cursor:default;">
 				<h2>${ nm.nmTitle }</h2>
 			</div><br>
-			<div class="maruMember">
-				<div class="inlineBlock pointer maruMemberView">
+			<div class="maruMember" style="cursor:default;">
+				<div class="inlineBlock">
 					${nm.nmIntro }
 				</div>
 			</div>
@@ -27,11 +27,9 @@
 			<c:if test="${isOwner}">
 				<div class="pointer maruSetting">
 				<hr>
-					<label for="open-pop2">나루 설정</label>				
-				</div>
 				<br>
-				<div class="pointer naruBoardWriter">
-					<label onclick="toWrite()">글 작성</label>			
+				<label class="btn_label" for="open-pop2" style="margin-bottom:10px;">나루 설정</label>
+				<label class="btn_label" onclick="toWrite()">글 작성</label>			
 				</div>
 			</c:if>
 		</div>

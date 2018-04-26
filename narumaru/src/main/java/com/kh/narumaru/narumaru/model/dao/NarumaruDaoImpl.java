@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import com.kh.narumaru.member.model.vo.Member;
 import com.kh.narumaru.narumaru.exception.NarumaruException;
 import com.kh.narumaru.narumaru.model.vo.Board;
-import com.kh.narumaru.narumaru.model.vo.Category;
 import com.kh.narumaru.narumaru.model.vo.Narumaru;
 
 @Repository
@@ -25,24 +24,6 @@ public class NarumaruDaoImpl implements NarumaruDao {
 		System.out.println(list);
 		
 		return list;
-	}
-
-	@Override
-	public ArrayList<Category> selectCategoryList(int nmno) {
-		// TODO Auto-generated method stub
-		return null; 
-	}
-
-	@Override
-	public void insertCategory(int nmno, Category c) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteCategory(int nmno, int cano) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -73,9 +54,6 @@ public class NarumaruDaoImpl implements NarumaruDao {
 		boolean isOwner = false;
 		
 		int ownerMno = sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno);
-		
-		System.out.println(loginUser);
-		System.out.println(ownerMno);
 		
 		if(loginUser.getMid() == ownerMno) isOwner = true;
 		
@@ -147,6 +125,15 @@ public class NarumaruDaoImpl implements NarumaruDao {
 		}else{
 			
 		}
+	}
+
+	@Override
+	public int selectNarumaruType(int nmno) {
+		Narumaru nm = (Narumaru)sqlSession.selectOne("Narumaru.selectNarumaruOne", nmno);
+		
+		System.out.println(nm);
+		
+		return nm.getNmCategory();
 	}
 
 }

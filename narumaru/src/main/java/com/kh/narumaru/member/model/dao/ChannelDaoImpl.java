@@ -27,17 +27,13 @@ public class ChannelDaoImpl implements ChannelDao{
 
 	@Override
 	public void memberChannelChange(SqlSessionTemplate sqlSession, ArrayList<MChannel> mchList) throws memberChannelChangeException {
-		int deleteResult = sqlSession.delete("memberChannelDelete",mchList.get(0));
+		sqlSession.delete("memberChannelDelete",mchList.get(0));
 		
-		if(deleteResult > 0){
-			for(int i = 0; i < mchList.size(); i++){
-				int insertResult = sqlSession.insert("memberChannelInsert",mchList.get(i));
-				if(insertResult <= 0){
-					throw new memberChannelChangeException("회원 채널 변경 실패 !! - UPDATE");
-				}
+		for(int i = 0; i < mchList.size(); i++){
+			int insertResult = sqlSession.insert("memberChannelInsert",mchList.get(i));
+			if(insertResult <= 0){
+				throw new memberChannelChangeException("회원 채널 변경 실패 !! - UPDATE");
 			}
-		} else {
-			throw new memberChannelChangeException("회원 채널 변경 실패 !! - DELETE");
 		}
 	}
 

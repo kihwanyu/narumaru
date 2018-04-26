@@ -98,7 +98,7 @@
             </div>
 
             <div class="col-md-4 col-sm-4 col-xs-12">
-              <div class="x_panel tile fixed_height_320 overflow_hidden">
+              <div class="x_panel tile fixed_height_500 overflow_hidden">
                 <div class="x_title">
                   <h2>마루 종류</h2>
                   <ul class="nav navbar-right panel_toolbox">
@@ -118,142 +118,15 @@
                   </ul>
                   <div class="clearfix"></div>
                 </div>
-                 <div class="x_content">
-                  <table class="" style="width:100%">
-                    <tr>
-                      <th style="width:37%;">
-                        <p>Top 5</p>
-                      </th>
-                      <th>
-                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-                          <p class="">Device</p>
-                        </div>
-                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                          <p class="">Progress</p>
-                        </div>
-                      </th>
-                    </tr>
-                    <tr>
-                      <td>
-                        <canvas class="canvasDoughnut" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
-                      </td>
-                      <td>
-                        <table class="tile_info">
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square blue"></i>IOS </p>
-                            </td>
-                            <td>30%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square green"></i>Android </p>
-                            </td>
-                            <td>10%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square purple"></i>Blackberry </p>
-                            </td>
-                            <td>20%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square aero"></i>Symbian </p>
-                            </td>
-                            <td>15%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square red"></i>Others </p>
-                            </td>
-                            <td>30%</td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                  </table>
+                 <div class="x_content" id="marucount">
+                  
                 </div>
               </div>
             </div>
           </div>
-
-
           <div class="row">
               <div class="col-md-8 col-sm-8 col-xs-12">
               <div class="row">
-
-
-                <!-- Start to do list -->
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                  <div class="x_panel">
-                    <div class="x_title">
-                      <h2>To Do List <small>Sample tasks</small></h2>
-                      <ul class="nav navbar-right panel_toolbox">
-                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                        <li class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                          <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Settings 1</a>
-                            </li>
-                            <li><a href="#">Settings 2</a>
-                            </li>
-                          </ul>
-                        </li>
-                        <li><a class="close-link"><i class="fa fa-close"></i></a>
-                        </li>
-                      </ul>
-                      <div class="clearfix"></div>
-                    </div>
-                    <div class="x_content">
-
-                      <div class="">
-                        <ul class="to_do">
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> Schedule meeting with new client </p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> Create email address for new intern</p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> Have IT fix the network printer</p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> Copy backups to offsite location</p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> Food truck fixie locavors mcsweeney</p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> Food truck fixie locavors mcsweeney</p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> Create email address for new intern</p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> Have IT fix the network printer</p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> Copy backups to offsite location</p>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- End to do list -->
-                
-            
               </div>
             </div>
           </div>
@@ -308,7 +181,7 @@
                 enabled: false
             },
             tooltip: {
-                pointFormat: 'Population in 2017: <b>{point.y:.1f} millions</b>'
+                pointFormat: '회원수: <b>{point.y:.1f} 명</b>'
             },
             series: [{
                 name: 'Population',
@@ -397,6 +270,287 @@
     	        data: [1216, 1001, 4436, 738, 40]
     	    }]
     	});
+    	//신고 막대그래프 끝
+    	//마루 수 그래프 시작
+    	var colors = Highcharts.getOptions().colors,
+    categories = [
+        "Chrome",
+        "Firefox",
+        "Internet Explorer",
+        "Safari",
+        "Edge",
+        "Opera",
+        "Other"
+    ],
+    data = [
+        {
+            "y": 62.74,
+            "color": colors[2],
+            "drilldown": {
+                "name": "Chrome",
+                "categories": [
+                    "Chrome v65.0",
+                    "Chrome v64.0",
+                    "Chrome v63.0",
+                    "Chrome v62.0",
+                    "Chrome v61.0",
+                    "Chrome v60.0",
+                    "Chrome v59.0",
+                    "Chrome v58.0",
+                    "Chrome v57.0",
+                    "Chrome v56.0",
+                    "Chrome v55.0",
+                    "Chrome v54.0",
+                    "Chrome v51.0",
+                    "Chrome v49.0",
+                    "Chrome v48.0",
+                    "Chrome v47.0",
+                    "Chrome v43.0",
+                    "Chrome v29.0"
+                ],
+                "data": [
+                    0.1,
+                    1.3,
+                    53.02,
+                    1.4,
+                    0.88,
+                    0.56,
+                    0.45,
+                    0.49,
+                    0.32,
+                    0.29,
+                    0.79,
+                    0.18,
+                    0.13,
+                    2.16,
+                    0.13,
+                    0.11,
+                    0.17,
+                    0.26
+                ]
+            }
+        },
+        {
+            "y": 10.57,
+            "color": colors[1],
+            "drilldown": {
+                "name": "Firefox",
+                "categories": [
+                    "Firefox v58.0",
+                    "Firefox v57.0",
+                    "Firefox v56.0",
+                    "Firefox v55.0",
+                    "Firefox v54.0",
+                    "Firefox v52.0",
+                    "Firefox v51.0",
+                    "Firefox v50.0",
+                    "Firefox v48.0",
+                    "Firefox v47.0"
+                ],
+                "data": [
+                    1.02,
+                    7.36,
+                    0.35,
+                    0.11,
+                    0.1,
+                    0.95,
+                    0.15,
+                    0.1,
+                    0.31,
+                    0.12
+                ]
+            }
+        },
+        {
+            "y": 7.23,
+            "color": colors[0],
+            "drilldown": {
+                "name": "Internet Explorer",
+                "categories": [
+                    "Internet Explorer v11.0",
+                    "Internet Explorer v10.0",
+                    "Internet Explorer v9.0",
+                    "Internet Explorer v8.0"
+                ],
+                "data": [
+                    6.2,
+                    0.29,
+                    0.27,
+                    0.47
+                ]
+            }
+        },
+        {
+            "y": 5.58,
+            "color": colors[3],
+            "drilldown": {
+                "name": "Safari",
+                "categories": [
+                    "Safari v11.0",
+                    "Safari v10.1",
+                    "Safari v10.0",
+                    "Safari v9.1",
+                    "Safari v9.0",
+                    "Safari v5.1"
+                ],
+                "data": [
+                    3.39,
+                    0.96,
+                    0.36,
+                    0.54,
+                    0.13,
+                    0.2
+                ]
+            }
+        },
+        {
+            "y": 4.02,
+            "color": colors[5],
+            "drilldown": {
+                "name": "Edge",
+                "categories": [
+                    "Edge v16",
+                    "Edge v15",
+                    "Edge v14",
+                    "Edge v13"
+                ],
+                "data": [
+                    2.6,
+                    0.92,
+                    0.4,
+                    0.1
+                ]
+            }
+        },
+        {
+            "y": 1.92,
+            "color": colors[4],
+            "drilldown": {
+                "name": "Opera",
+                "categories": [
+                    "Opera v50.0",
+                    "Opera v49.0",
+                    "Opera v12.1"
+                ],
+                "data": [
+                    0.96,
+                    0.82,
+                    0.14
+                ]
+            }
+        },
+        {
+            "y": 7.62,
+            "color": colors[6],
+            "drilldown": {
+                "name": 'Other',
+                "categories": [
+                    'Other'
+                ],
+                "data": [
+                    7.62
+                ]
+            }
+        }
+    ],
+    browserData = [],
+    versionsData = [],
+    i,
+    j,
+    dataLen = data.length,
+    drillDataLen,
+    brightness;
+
+
+// Build the data arrays
+for (i = 0; i < dataLen; i += 1) {
+
+    // add browser data
+    browserData.push({
+        name: categories[i],
+        y: data[i].y,
+        color: data[i].color
+    });
+
+    // add version data
+    drillDataLen = data[i].drilldown.data.length;
+    for (j = 0; j < drillDataLen; j += 1) {
+        brightness = 0.2 - (j / drillDataLen) / 5;
+        versionsData.push({
+            name: data[i].drilldown.categories[j],
+            y: data[i].drilldown.data[j],
+            color: Highcharts.Color(data[i].color).brighten(brightness).get()
+        });
+    }
+}
+
+// Create the chart
+Highcharts.chart('marucount', {
+    chart: {
+        type: 'pie'
+    },
+    title: {
+        text: 'Browser market share, January, 2018'
+    },
+    subtitle: {
+        text: 'Source: <a href="http://statcounter.com" target="_blank">statcounter.com</a>'
+    },
+    yAxis: {
+        title: {
+            text: 'Total percent market share'
+        }
+    },
+    plotOptions: {
+        pie: {
+            shadow: false,
+            center: ['50%', '50%']
+        }
+    },
+    tooltip: {
+        valueSuffix: '%'
+    },
+    series: [{
+        name: 'Browsers',
+        data: browserData,
+        size: '60%',
+        dataLabels: {
+            formatter: function () {
+                return this.y > 5 ? this.point.name : null;
+            },
+            color: '#ffffff',
+            distance: -30
+        }
+    }, {
+        name: 'Versions',
+        data: versionsData,
+        size: '80%',
+        innerSize: '60%',
+        dataLabels: {
+            formatter: function () {
+                // display only if larger than 1
+                return this.y > 1 ? '<b>' + this.point.name + ':</b> ' +
+                    this.y + '%' : null;
+            }
+        },
+        id: 'versions'
+    }],
+    responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 400
+            },
+            chartOptions: {
+                series: [{
+                    id: 'versions',
+                    dataLabels: {
+                        enabled: false
+                    }
+                }]
+            }
+        }]
+    }
+});
+//마루수 그래프 끝
     </script>
 </body>
 </html>

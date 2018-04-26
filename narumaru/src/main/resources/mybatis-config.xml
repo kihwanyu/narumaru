@@ -12,9 +12,12 @@
       <typeAlias alias="Narumaru" type="com.kh.narumaru.narumaru.model.vo.Narumaru"/>
       <typeAlias alias="Declaration" type="com.kh.narumaru.declaration.model.vo.Declaration"/>
       <typeAlias alias="Payment" type="com.kh.narumaru.payment.model.vo.Payment"/>
+      <typeAlias alias="Bank" type="com.kh.narumaru.payment.model.vo.Bank"/>
+      <typeAlias alias="Withdraw" type="com.kh.narumaru.payment.model.vo.Withdraw"/>
       <typeAlias alias="MaruMember" type="com.kh.narumaru.maru.model.vo.MaruMember"/>
       <typeAlias alias="Notice" type="com.kh.narumaru.notice.model.vo.Notice"/>
       <typeAlias alias="Admin" type="com.kh.narumaru.member.model.vo.Member"/>
+      <typeAlias alias="Category" type="com.kh.narumaru.naru.model.vo.Category"/>
    </typeAliases>
    
    <mappers>
@@ -24,7 +27,8 @@
       <mapper resource="mappers/payment-mapper.xml"/>
       <mapper resource="mappers/narumaru-mapper.xml"/>
       <mapper resource="mappers/admin-mapper.xml"/>
-       <mapper resource="mappers/maru-mapper.xml"/>
+      <mapper resource="mappers/maru-mapper.xml"/>
+      <mapper resource="mappers/naru-mapper.xml"/>
    </mappers>
    
 </configuration>

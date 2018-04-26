@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="Naru">
+	<resultMap type="Category" id="CategoryResultSet">
+		<id property="cano" column="CANO"/>
+		<result property="caName" column="CANAME"/>
+		<result property="nmno" column="NMNO"/>
+		<result property="refCano" column="REF_CANO"/>
+		<result property="caLevel" column="CA_LEVEL"/>
+		<result property="status" column="STATUS"/>
+	</resultMap> 
+	
+	<select id="selectCategoryAll" resultMap="CategoryResultSet" parameterType="_int">
+		SELECT * FROM CATEGORY WHERE NMNO = #{nmno} AND STATUS = 'Y'
+	</select>
+	
+	<insert id="insertCategory">
+		INSERT INTO CATEGORY VALUES(SEQ_CANO.NEXTVAL, #{caName}, #{nmno}, #{refCano}, #{caLevel}, 'Y')
+	</insert>
+	
+	<update id="restoreCategory" parameterType="_int">
+		UPDATE CATEGORY SET STATUS = 'Y' WHERE CANO = #{cano}
+	</update>
+	
+	<update id="disableCategory" parameterType="Category">
+		UPDATE CATEGORY SET STATUS = 'N' WHERE CANAME = #{caName} AND NMNO = #{nmno}
+	</update>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  

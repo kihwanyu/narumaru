@@ -76,9 +76,14 @@ public class AdminController {
 	
 	
 	@RequestMapping(value="adMemberView.ad")
-	public String showAdminMemberView(){
-		   
-		return "admin/adMemberView";
+	public ModelAndView showAdminMemberView(Member m, ModelAndView mv){
+		ArrayList<Member> memberView = as.memberView();
+		System.out.println(memberView);
+		
+		mv.addObject("memberView", memberView);
+		mv.setViewName("admin/adMemberView");
+		
+		return mv;
 	}
 	
 	@RequestMapping("adNaruView.ad")
@@ -168,6 +173,5 @@ public class AdminController {
 			
 			
 		}
-	
 	
 }

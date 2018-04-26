@@ -5,11 +5,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.rmi.ServerException;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
@@ -20,27 +21,38 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.http.HttpRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
 
 import com.kh.narumaru.member.model.service.ChannelService;
 import com.kh.narumaru.member.model.service.MemberService;
 import com.kh.narumaru.member.model.vo.Channel;
 import com.kh.narumaru.member.model.vo.Member;
 import com.kh.narumaru.member.oauth.bo.NaverLoginBO;
+import com.kh.narumaru.payment.model.exception.BankSelectAllException;
 import com.kh.narumaru.payment.model.exception.PaymentListSelectException;
+import com.kh.narumaru.payment.model.service.BankSevice;
 import com.kh.narumaru.payment.model.service.PaymentService;
+import com.kh.narumaru.payment.model.vo.Bank;
 import com.kh.narumaru.payment.model.vo.Payment;
 import com.github.scribejava.core.model.OAuth2AccessToken;
+
 import com.kh.narumaru.common.vo.PageInfo;
+import com.kh.narumaru.maru.model.service.MaruService;
+import com.kh.narumaru.maru.model.vo.MaruMember;
 import com.kh.narumaru.member.model.exception.LoginException;
 import com.kh.narumaru.member.model.exception.ProfileChangeException;
 import com.kh.narumaru.member.model.exception.birthdayChangeException;
@@ -55,6 +67,11 @@ import com.kh.narumaru.member.model.service.MemberService;
 import com.kh.narumaru.member.model.vo.Channel;
 import com.kh.narumaru.member.model.vo.MChannel;
 import com.kh.narumaru.member.model.vo.Member;
+import com.kh.narumaru.narumaru.model.service.NarumaruService;
+import com.kh.narumaru.narumaru.model.vo.Narumaru;
+import com.kh.narumaru.payment.model.exception.PaymentListSelectException;
+import com.kh.narumaru.payment.model.service.PaymentService;
+import com.kh.narumaru.payment.model.vo.Payment;
 
 
 @Controller
@@ -69,7 +86,15 @@ public class MemberController {
 	@Autowired
 	private ChannelService cs;
 	@Autowired
+	private NarumaruService nms;
+	@Autowired
+	private MaruService mas;
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	@Autowired
 	private PaymentService ps; 
+	@Autowired
+	private BankSevice bs;
 	
 	/* NaverLoginBO 
 	private NaverLoginBO naverLoginBO;
@@ -91,6 +116,16 @@ public class MemberController {
 
 		/*MemberService ms = new MemberServiceImpl();*/
 		
+	/*	HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+        
+        String userIp = request.getHeader("X-FORWARDED-FOR");
+		
+		System.out.println(userIp);
+		*/
+		
+		
+		
+		
 		try {
 			Member loginUser = ms.loginMember(m);
 			
@@ -98,6 +133,7 @@ public class MemberController {
 			
 			/*return "main/main";*/
 			System.out.println("loginUser : " + loginUser);
+			
 			
 			mv.addObject("loginUser", loginUser);
 			mv.setViewName("main/main");
@@ -123,8 +159,7 @@ public class MemberController {
 	
 	@RequestMapping(value="memberInsert.me")
 	public String memberInsert(Member m, Model model, HttpServletRequest request){
-		
-		System.out.println("컨트롤러 회원가입: " + m);
+		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
 		
 		if(m.getGender().equals("M")){
 			m.setGender("남");
@@ -132,13 +167,33 @@ public class MemberController {
 			m.setGender("여");
 		}
 		
+		Narumaru nm = new Narumaru();
+		
+		nm.setIsOpen("공개");
+		nm.setNmTitle(m.getNickName() + "님의 나루");
+		nm.setNmCategory(2);
+		nm.setNmIntro(m.getNickName() + "님의 나루입니다.");
+		
 		try{
+			m.setUserPwd(passwordEncoder.encode(m.getUserPwd()));
+			System.out.println("컨트롤러 회원가입: " + m);
 			ms.insertMember(m);
+			m.setUserPwd(request.getParameter("userPwd"));
+			loginUser = ms.loginMember(m);
+			int nmno = nms.insertNarumaru(nm).getNmno();
+			
+			MaruMember mm = new MaruMember();
+			mm.setMno(loginUser.getMid());
+			mm.setNmno(nmno);
+			mm.setConLevel(0);
+			System.out.println("mm:"+mm);
+			mas.insertMaruMember(mm);
 			
 			return "main/mainLogin";
 			
 		}catch (Exception e) {
 			model.addAttribute("message", "회원가입실패!");
+			e.printStackTrace();
 			return "common/errorPage";
 		}
 		
@@ -153,6 +208,9 @@ public class MemberController {
 		
 		String email = request.getParameter("email");
 		String nickname = request.getParameter("nickname");
+		
+		System.out.println("다음 이메일 " + email);
+		System.out.println("다음 이름 : " + nickname);
 		
 		Member m = new Member();
 		m.setEmail(email);
@@ -455,13 +513,14 @@ public class MemberController {
 			mch.setCno(Integer.valueOf(str));
 			mchList.add(mch);
 		}
-		
+		System.out.println("mchList : " + mchList);
 		try {
 			cs.memberChannelChange(mchList);
 			response.getWriter().print("true");
 		} catch (memberChannelChangeException e) {
 			try {
 				response.getWriter().print("false");
+				e.printStackTrace();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -481,13 +540,14 @@ public class MemberController {
 		String currentPwd = pwdArr[0];
 		String changedPwd = pwdArr[1];
 		String changedPwdRe = pwdArr[2];
-
-		if(userPwd.equals(currentPwd)){
+		
+		if(passwordEncoder.matches(currentPwd, userPwd)){
 			if(changedPwd.equals(changedPwdRe)){
 				try {
 					Member m = new Member();
 					m.setMid(loginUser.getMid());
-					m.setUserPwd(changedPwd);
+					m.setUserPwd(passwordEncoder.encode(changedPwd));
+					
 					ms.passwordChange(m);
 					response.getWriter().print("0");
 					/*비밀번호 변경 성공*/
@@ -560,6 +620,9 @@ public class MemberController {
 	}
 	@RequestMapping(value="myboardView.me")
 	public ModelAndView myBoardForward(ModelAndView mv){
+		int b_type = 100; /*나루 초기값*/
+		
+		
 		
 		mv.setViewName("mypage/myPage_myboard");
 		
@@ -612,6 +675,7 @@ public class MemberController {
 		int listCount;
 		
 		try {
+			System.out.println("ListCount mno : " + mno);
 			
 			listCount = ps.getPaymentListCount(mno);
 			
@@ -630,6 +694,8 @@ public class MemberController {
 			
 			System.out.println("pList : " + pList);
 			
+			System.out.println("TotalPoint mno : " + mno);
+			
 			int totalPoint = ps.selectTotalPoint(mno);
 			
 			mv.addObject("pList", pList);
@@ -638,15 +704,31 @@ public class MemberController {
 			mv.setViewName("mypage/myPage_pointPayment");
 		} catch (PaymentListSelectException e) {
 			mv.addObject("message", e.getMessage());
-			mv.setViewName("common/errorPage.jsp");
+			mv.setViewName("common/errorPage");
 		}
 		return mv;
 	}
 	@RequestMapping(value="refundView.me")
-	public ModelAndView RefundForward(ModelAndView mv){
+	public ModelAndView RefundForward(ModelAndView mv, HttpSession session){
 		
-		mv.setViewName("mypage/myPage_refund");
-		
+		ArrayList<Bank> bankList = null;
+		try {
+			bankList = bs.selectAllBankList();
+			
+			Member m = (Member)session.getAttribute("loginUser");
+			
+			int userTotalPoint = ps.selectTotalPoint(m.getMid());
+			
+			System.out.println(userTotalPoint);
+			
+			mv.addObject("bankList", bankList);
+			mv.addObject("userTotalPoint",userTotalPoint);
+			mv.setViewName("mypage/myPage_refund");
+			
+		} catch (BankSelectAllException | PaymentListSelectException e) {
+			mv.addObject("message", e.getMessage());
+			mv.setViewName("common/errorPage");
+		}
 		return mv;
 	}
 	// 마이페이지 페이지 이동 end
