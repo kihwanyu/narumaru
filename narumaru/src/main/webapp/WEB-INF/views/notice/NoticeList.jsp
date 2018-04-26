@@ -66,6 +66,16 @@
 			</div>
 			 
 			<ul class = "noticeContent">
+				<c:forEach items ="${ noList }" var="Notice">
+					<li>
+						<a href = "noticeDetail.no?bno=${Notice.nid}">
+						<p>${ Notice.noTitle }</p>
+						<p>${ Notice.createDate }</p>
+						</a>
+					</li>
+				</c:forEach>
+			
+				
 				<li><a href = "noticeDetail.no">
 					<p>다국어 서비스 관련해 안내해드립니다.</p>
 					<o>2018년 4월 4일 오후 2:00</o>
