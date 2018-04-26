@@ -32,9 +32,21 @@ public class PaymentDaoImpl implements PaymentDao {
 
 	@Override
 	public int myPointInquiry(SqlSessionTemplate sqlSession, Payment p) throws PaymentInsertException {
-		int myPaymentPoint = sqlSession.selectOne("Payment.myPaymentPointInquiry", p);
-		int myRefundPoint = sqlSession.selectOne("Payment.myRefundPointInquiry", p);
-		int result = myPaymentPoint - myRefundPoint;
+		
+		int result = 0;
+		int myPaymentPoint = 0;
+		int myRefundPoint = 0;
+		// 결제 내역이 없을 경우. CHAEK 하기위해서 이용.
+		Payment paymentResult = sqlSession.selectOne("Payment.selectPayment",p);
+		Withdraw withdrawResult = sqlSession.selectOne("Payment.selectRefund",p);
+		System.out.println("paymentResult : "+paymentResult);
+		if(paymentResult != null){
+			myPaymentPoint = sqlSession.selectOne("Payment.myPaymentPointInquiry", p);
+		} 
+		if(withdrawResult != null){
+			myRefundPoint = sqlSession.selectOne("Payment.myRefundPointInquiry", p);
+		}
+		result = myPaymentPoint - myRefundPoint;
 		return result;
 	}
 

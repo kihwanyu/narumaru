@@ -689,7 +689,7 @@ public class MemberController {
 		int endPage;
 		
 		/*limit = 10;*/
-		limit = 2;
+		limit = 5;
 		
 		int listCount = 0;
 		
@@ -733,7 +733,7 @@ public class MemberController {
 		int endPage;
 		
 		/*limit = 10;*/
-		limit = 2;
+		limit = 5;
 		
 		int listCount = 0;
 		
