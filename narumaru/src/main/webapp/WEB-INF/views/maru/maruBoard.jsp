@@ -145,7 +145,7 @@
 		    contents: '<i class="fa fa-child"/> 등록하기',
 		    tooltip: '등록하기',
 		    click: function () {
-		      $("#replyInsert").submit();
+		      $(this).parents("form").submit();
 		    }
 		  });
 
@@ -269,6 +269,7 @@
 	        	
 	        	//페이지 전부 다시불러옴
 	        	<c:forEach var="b" begin="0" end="${list.size()}" items="${list}" varStatus="i">
+	        	<c:if test="${ b.bLevel == 0 }">
 	        		//새로 가져오려는게 적으면
 		        	<c:if test="${newPage < i.count}">
 		        		return;
@@ -330,10 +331,11 @@
 						+'</div>'
 						+'</div>');
 	        	/* } */
+	        	</c:if>
 	        	</c:forEach>
+	        }
 	        	summernote1();
 	        	summernote2();
-	        }
 		}, 2000);
 	});
 		function replyOpen(btn, bno){

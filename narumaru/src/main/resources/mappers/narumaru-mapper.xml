@@ -52,7 +52,7 @@
 	</insert>
 	
 	<insert id="insertNarumaruBoard">
-		INSERT INTO BOARD VALUES(SEQ_BNO.NEXTVAL, (SELECT MAX(B_TNO)+1 FROM BOARD WHERE NMNO = #{nmno}), #{bType}, #{bTitle}, #{bContent}, #{bHidden}, #{mno}, SYSDATE, SYSDATE, 'Y', #{nmno}, #{cano}, #{cno}, 0, NULL, #{isOpen}, 100)
+		INSERT INTO BOARD VALUES(SEQ_BNO.NEXTVAL, (SELECT MAX(B_TNO)+1 FROM BOARD WHERE NMNO = #{nmno}), #{bType}, #{bTitle}, #{bContent}, #{bHidden}, #{mno}, SYSDATE, SYSDATE, 'Y', #{nmno}, #{cano}, #{cno}, #{bLevel}, #{targetBno}, #{isOpen}, 100)
 	</insert>
 	
 	<insert id="insertComment">
