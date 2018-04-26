@@ -58,9 +58,9 @@ public class NarumaruController {
 		
 		ArrayList<Board> list = nms.selectBoardList(nmno);
 		ArrayList<Board> colist = nms.selectCommentList(nmno);
+		Narumaru nm = nms.selectNarumaruOne(nmno);
 		if(list.size() == 0){
 			Board newB = new Board();
-			
 			newB.setbWriter("");
 			newB.setbType(0);
 			newB.setNmno(nmno);
@@ -74,11 +74,14 @@ public class NarumaruController {
 			newB.setIsOpen("all");
 			newB.setComments(0);
 			newB.setbLevel(0);
-			newB.setbContent("나루 가입을 환영합니다! 마음껏 글을 작성해보세요.");
+			if(nm.getNmCategory()==2){
+				newB.setbContent("나루 가입을 환영합니다! 마음껏 글을 작성해보세요.");				
+			}else{
+				newB.setbContent("마루 가입을 환영합니다! 마음껏 글을 작성해보세요.");
+			}
 			
 			list.add(newB);
-		}
-		Narumaru nm = nms.selectNarumaruOne(nmno);
+		}		
 		boolean isOwner = nms.checkNarumaruOwner(nmno, loginUser);
 		mv.addObject("nm", nm);
 		mv.addObject("list", list);
@@ -176,7 +179,7 @@ public class NarumaruController {
 		String replyCondition = request.getParameter("replyCondition");
 		
 		System.out.println(boardTitle);
-		System.out.println(boardContent);
+		System.out.println(boardContent); 
 		System.out.println(boardHidden);
 		System.out.println("채널:" + channel);
 		System.out.println(category);
@@ -306,7 +309,7 @@ public class NarumaruController {
 	}
 	
 	@RequestMapping("insertNarumaru.nm")
-	public ModelAndView insertNarumaru(Narumaru nm, ModelAndView mv, HttpServletRequest request){
+	public String insertNarumaru(Narumaru nm, ModelAndView mv, HttpServletRequest request){
 		System.out.println(nm);
 		try {
 			int nmno = nms.insertNarumaru(nm).getNmno();
@@ -318,8 +321,6 @@ public class NarumaruController {
 			mm.setConLevel(0);
 			System.out.println("mm:"+mm);
 			ms.insertMaruMember(mm);
-			mv.addObject("nm", nm);
-			mv.setViewName("maru/maruBoard");
 		} catch (NarumaruException e) {
 			mv.addObject("message", e.getMessage());
 			mv.setViewName("common/errorPage");			
@@ -328,7 +329,7 @@ public class NarumaruController {
 			mv.setViewName("common/errorPage");	
 		}
 		
-		return mv;
+		return "redirect:/boardListAll.bo?nmno="+nm.getNmno();
 	}
 	
 }
