@@ -203,11 +203,15 @@
 				        			<c:forEach items="${wList }" var="w">
 				        				<tr>
 						        			<td>${w.resister_dateStr }</td>
-						        			<td>${w.point } P</td>
-						        			<td>${w.point-w.amount } 원</td>
+						        			<td><fmt:formatNumber value="${w.point }" type="number"/> P</td>
+						        			<td><fmt:formatNumber value="${w.point-w.amount }" type="number"/> 원</td>
 						        			<td>${w.status }</td>
 						        			<td>${w.withdraw_dateStr }</td>
-						        			<td><input type="button" value="취소" onclick="withdrawCancle(${w.wno});"></td>
+						        			<td>
+						        				<c:if test="${w.status ne '입금 완료' }">
+						        					<input type="button" value="취소" onclick="withdrawCancle(${w.wno});">
+						        				</c:if>
+						        			</td>
 						        		</tr>
 				        			</c:forEach>
 				        		</tbody>
