@@ -247,7 +247,7 @@
 	        	
 	        	
 	        	//페이지 한번 클리어
-	        	$(".content").html("");
+	        	$(".content").html(""); 
 	        	
 	        	$(".content").append('<div class="searchArea">'
 	    				+'<input type="text" name="search" style="background:none; width:440px; height:40px;">'

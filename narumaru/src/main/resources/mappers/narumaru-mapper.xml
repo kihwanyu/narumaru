@@ -48,7 +48,7 @@
 		<selectKey keyProperty="nmno" resultType="int" order="BEFORE">
 			SELECT SEQ_NMNO.NEXTVAL FROM DUAL
 		</selectKey>
-		INSERT INTO NARUMARU VALUES(#{nmno}, #{nmCategory}, #{cno}, #{nmTitle}, #{nmIntro}, SYSDATE, #{isOpen}, 'Y')
+		INSERT INTO NARUMARU VALUES(#{nmno}, #{nmCategory}, #{cno}, #{nmTitle}, #{nmIntro}, SYSDATE, #{isOpen}, 'Y') 
 	</insert>
 	
 	<insert id="insertNarumaruBoard">

@@ -179,7 +179,7 @@ public class NarumaruController {
 		String replyCondition = request.getParameter("replyCondition");
 		
 		System.out.println(boardTitle);
-		System.out.println(boardContent);
+		System.out.println(boardContent); 
 		System.out.println(boardHidden);
 		System.out.println("채널:" + channel);
 		System.out.println(category);
