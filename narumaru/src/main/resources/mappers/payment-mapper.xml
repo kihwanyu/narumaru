@@ -29,15 +29,17 @@
 	
 	<resultMap type="Withdraw" id="withdrawResultSet">
 		<id property="wno" column="WNO"/>
-		<result property="w_date" column="W_DATE"/>
-		<result property="w_dateStr" column="W_DATESTR"/>
+		<result property="resister_date" column="RESISTER_DATE"/>
+		<result property="resister_dateStr" column="RESISTER_DATESTR"/>
+		<result property="withdraw_date" column="WITHDRAW_DATE"/>
+		<result property="withdraw_dateStr" column="WITHDRAW_DATESTR"/>
 		<result property="mno" column="MNO"/>
 		<result property="point" column="POINT"/>
 		<result property="amount" column="AMOUNT"/>
 		<result property="bcode" column="BCODE"/>
 		<result property="account_number" column="ACCOUNT_NUMBER"/>
 		<result property="account_holder" column="ACCOUNT_HOLDER"/>
-		<result property="w_value" column="W_VALUE"/>
+		<result property="status" column="STATUS"/>
 	</resultMap>
 	
 	<insert id="paymentInsert">
@@ -67,8 +69,27 @@
 	<select id="selectAllBankList" resultMap="bankResultSet">
 		SELECT * FROM BANK
 	</select>
-	
 	<insert id="refundInsert">
-		INSERT INTO WITHDRAW VALUES (SEQ_WNO.NEXTVAL, SYSDATE, #{mno}, #{point}, #{amount}, #{bcode}, #{account_number}, #{account_holder}, 'N')
+		INSERT INTO WITHDRAW VALUES (SEQ_WNO.NEXTVAL, SYSDATE, null, #{mno}, #{point}, #{amount}, #{bcode}, #{account_number}, #{account_holder}, '입금 대기')
 	</insert>
+	<select id="selectRefund" resultMap="withdrawResultSet" parameterType="_int">
+		SELECT WNO 
+		FROM(
+		SELECT ROWNUM ,WNO 
+		FROM WITHDRAW 
+		WHERE MNO=#{mno}) 
+		WHERE ROWNUM=1
+	</select>
+	<select id="selectRefundListCount" resultType="_int" parameterType="_int">
+		SELECT COUNT(*) FROM WITHDRAW WHERE MNO=#{mno}
+	</select>
+	<select id="selectRefundList" resultMap="withdrawResultSet">
+		SELECT TO_CHAR(RESISTER_DATE, 'yyyy-mm-dd PM hh:mi:ss') AS RESISTER_DATESTR
+			, WNO, POINT, AMOUNT, STATUS
+			, TO_CHAR(WITHDRAW_DATE, 'yyyy-mm-dd PM hh:mi:ss') AS WITHDRAW_DATESTR 
+		FROM WITHDRAW 
+		WHERE MNO=#{mno} ORDER BY WNO DESC
+	</select>
+	
+	
 </mapper>

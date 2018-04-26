@@ -20,4 +20,8 @@ public interface PaymentService {
 	int selectTotalPoint(int mno) throws PaymentListSelectException;
 
 	void refundInsert(Withdraw w) throws refundInsertException;
+
+	int getRefundListCount(int mno);
+
+	ArrayList<Withdraw> selectWithdrawList(PageInfo pi);
 }

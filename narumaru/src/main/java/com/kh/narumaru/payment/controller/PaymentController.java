@@ -74,7 +74,7 @@ public class PaymentController {
 	
 	/* 포인트 환급 */
 	@RequestMapping(value="pointRefund.pa")
-	public ModelAndView pointRefund(ModelAndView mv, Withdraw w, HttpSession Session){
+	public ModelAndView pointRefund(ModelAndView mv, Withdraw w, HttpSession Session, @RequestParam(name="currentPoint") int currentPoint){
 		
 		System.out.println("w : " + w);
 		/*수수료*/
@@ -89,10 +89,16 @@ public class PaymentController {
 		
 		try {
 			ps.refundInsert(w);
-			//mv.setViewName("common/");
+			
+			mv.addObject("currentPoint", currentPoint);
+			mv.addObject("amount", amount);
+			mv.addObject("point", w.getPoint());
+			
+			mv.setViewName("mypage/myPage_refundResult");
 		} catch (refundInsertException e) {
-			mv.addObject("message", e.getMessage());
-			mv.setViewName("common/errorPage");
+			mv.addObject("currentPoint", currentPoint);
+			
+			mv.setViewName("mypage/myPage_refundResult");
 		}
 		
 		return mv;

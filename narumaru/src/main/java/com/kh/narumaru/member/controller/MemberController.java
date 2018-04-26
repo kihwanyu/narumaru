@@ -48,6 +48,7 @@ import com.kh.narumaru.payment.model.service.BankSevice;
 import com.kh.narumaru.payment.model.service.PaymentService;
 import com.kh.narumaru.payment.model.vo.Bank;
 import com.kh.narumaru.payment.model.vo.Payment;
+import com.kh.narumaru.payment.model.vo.Withdraw;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 
 import com.kh.narumaru.common.vo.PageInfo;
@@ -672,14 +673,11 @@ public class MemberController {
 		/*limit = 10;*/
 		limit = 2;
 		
-		int listCount;
+		int listCount = 0;
 		
 		try {
-			System.out.println("ListCount mno : " + mno);
 			
 			listCount = ps.getPaymentListCount(mno);
-			
-			System.out.println("전체 게시글 수 : " + listCount);
 			
 			maxPage = (int)((double)listCount / limit + 0.9);
 			startPage = ((int)((double)currentPage / limit + 0.9) - 1)*limit + 1;
@@ -691,10 +689,6 @@ public class MemberController {
 			PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage, mno);
 			
 			ArrayList<Payment> pList = ps.selectPaymentList(pi);
-			
-			System.out.println("pList : " + pList);
-			
-			System.out.println("TotalPoint mno : " + mno);
 			
 			int totalPoint = ps.selectTotalPoint(mno);
 			
@@ -709,18 +703,48 @@ public class MemberController {
 		return mv;
 	}
 	@RequestMapping(value="refundView.me")
-	public ModelAndView RefundForward(ModelAndView mv, HttpSession session){
+	public ModelAndView RefundForward(ModelAndView mv, @RequestParam(defaultValue="1") int currentPage, HttpSession session){
 		
-		ArrayList<Bank> bankList = null;
+		Member m = (Member)session.getAttribute("loginUser");
+		int mno = m.getMid();
+		
+		//페이징처리
+		int limit;
+		int maxPage;
+		int startPage;
+		int endPage;
+		
+		/*limit = 10;*/
+		limit = 2;
+		
+		int listCount = 0;
+		
 		try {
-			bankList = bs.selectAllBankList();
+			/*환급 내역 LIST*/
 			
-			Member m = (Member)session.getAttribute("loginUser");
+			listCount = ps.getRefundListCount(mno);
 			
-			int userTotalPoint = ps.selectTotalPoint(m.getMid());
+			maxPage = (int)((double)listCount / limit + 0.9);
+			startPage = ((int)((double)currentPage / limit + 0.9) - 1)*limit + 1;
+			endPage = startPage + limit -1;
+			if(maxPage<endPage){
+				endPage = maxPage;
+			}
 			
-			System.out.println(userTotalPoint);
+			PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage, mno);
 			
+			ArrayList<Withdraw> wList = ps.selectWithdrawList(pi);
+			
+			System.out.println("wList : " + wList);
+			
+			/*은행 LIST*/
+			ArrayList<Bank> bankList = bs.selectAllBankList();
+			
+			/*사용자 총 포인트 량*/
+			int userTotalPoint = ps.selectTotalPoint(mno);
+			
+			mv.addObject("wList", wList);
+			mv.addObject("pi", pi);
 			mv.addObject("bankList", bankList);
 			mv.addObject("userTotalPoint",userTotalPoint);
 			mv.setViewName("mypage/myPage_refund");
