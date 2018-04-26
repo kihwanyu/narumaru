@@ -298,7 +298,19 @@
 			var result = confirm("정말로 취소하시겠습니까? 복구할 수 없습니다.");
 			
 			if(result){
-				location.href = "withDrawDelete.pa";				
+				$.ajax({
+					url:"withDrawDelete.pa",
+					data:{wno:wno},
+					type:"GET",
+					success:function(data){
+						console.log(data);
+						if(data == "Y"){
+							alert("환급 신청이 취소 되었습니다.");
+						} else {
+							alert("환급 신청 취소가 실패하였습니다.");
+						}
+					}
+				}); 
 			}
 		}
 		

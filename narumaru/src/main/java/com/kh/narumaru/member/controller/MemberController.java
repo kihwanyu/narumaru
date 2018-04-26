@@ -79,9 +79,6 @@ import com.kh.narumaru.payment.model.vo.Payment;
 @SessionAttributes("loginUser")
 public class MemberController {
 	
-	
-	
-	
 	@Autowired
 	private MemberService ms;
 	@Autowired

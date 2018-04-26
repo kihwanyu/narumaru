@@ -48,8 +48,11 @@
 									, #{merchantUid}, #{payName}, #{buyerName}
 									, #{applyNum}, #{buyerEmail}, 'Y', SYSDATE, #{point})
 	</insert>
-	<select id="myPointInquiry" resultType="_int" parameterType="_int">
+	<select id="myPaymentPointInquiry" resultType="_int" parameterType="_int">
 		SELECT SUM(POINT) FROM PAYMENT WHERE MNO=#{mno}
+	</select>
+	<select id="myRefundPointInquiry" resultType="_int" parameterType="_int">
+		SELECT SUM(POINT) FROM WITHDRAW WHERE MNO=#{mno}
 	</select>
 	<select id="selectPaymentListCount" resultType="_int" parameterType="_int">
 		SELECT COUNT(*) FROM PAYMENT WHERE MNO=#{mno}
@@ -89,6 +92,9 @@
 			, TO_CHAR(WITHDRAW_DATE, 'yyyy-mm-dd PM hh:mi:ss') AS WITHDRAW_DATESTR 
 		FROM WITHDRAW 
 		WHERE MNO=#{mno} ORDER BY WNO DESC
+	</select>
+	<select id="deleteWithdraw" parameterType="_int">
+		DELETE FROM WITHDRAW WHERE WNO=#{wno}
 	</select>
 	
 	

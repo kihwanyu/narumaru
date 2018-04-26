@@ -11,6 +11,7 @@ import com.kh.narumaru.common.vo.PageInfo;
 import com.kh.narumaru.payment.model.dao.PaymentDao;
 import com.kh.narumaru.payment.model.exception.PaymentInsertException;
 import com.kh.narumaru.payment.model.exception.PaymentListSelectException;
+import com.kh.narumaru.payment.model.exception.WithdrawListSelectException;
 import com.kh.narumaru.payment.model.exception.refundInsertException;
 import com.kh.narumaru.payment.model.vo.Payment;
 import com.kh.narumaru.payment.model.vo.Withdraw;
@@ -79,6 +80,11 @@ public class PaymentServiceImpl implements PaymentService {
 		ArrayList<Withdraw> wlist = pd.selectWithdrawList(sqlSession, pi);
 
 		return wlist;
+	}
+
+	@Override
+	public void deleteWithdraw(int wno) throws WithdrawListSelectException {
+		pd.deleteWithdraw(sqlSession, wno);
 	}
 
 }
