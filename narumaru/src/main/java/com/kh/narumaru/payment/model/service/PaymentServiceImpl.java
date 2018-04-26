@@ -66,4 +66,19 @@ public class PaymentServiceImpl implements PaymentService {
 		pd.refundInsert(sqlSession, w);
 	}
 
+	@Override
+	public int getRefundListCount(int mno) {
+		
+		int listCount = pd.getRefundListCount(sqlSession, mno);
+		
+		return listCount;
+	}
+
+	@Override
+	public ArrayList<Withdraw> selectWithdrawList(PageInfo pi) {
+		ArrayList<Withdraw> wlist = pd.selectWithdrawList(sqlSession, pi);
+
+		return wlist;
+	}
+
 }

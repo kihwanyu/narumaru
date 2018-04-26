@@ -25,6 +25,10 @@ public interface PaymentDao {
 	int myPointInquiry(SqlSessionTemplate sqlSession, int mno) throws PaymentListSelectException;
 
 	void refundInsert(SqlSessionTemplate sqlSession, Withdraw w) throws refundInsertException;
+
+	int getRefundListCount(SqlSessionTemplate sqlSession, int mno);
+
+	ArrayList<Withdraw> selectWithdrawList(SqlSessionTemplate sqlSession, PageInfo pi);
 	
 	
 }

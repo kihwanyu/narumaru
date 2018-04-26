@@ -87,4 +87,33 @@ public class PaymentDaoImpl implements PaymentDao {
 		}
 	}
 
+	@Override
+	public int getRefundListCount(SqlSessionTemplate sqlSession, int mno) {
+		int result = 0;
+		// 환급내역 없을 경우. CHAEK 하기위해서 이용.
+		Withdraw paymentResult = sqlSession.selectOne("Payment.selectRefund",mno);
+		if(paymentResult != null){
+			result = sqlSession.selectOne("Payment.selectRefundListCount",mno);
+		} 
+		
+		return result;
+	}
+
+	@Override
+	public ArrayList<Withdraw> selectWithdrawList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int result = 0;
+		ArrayList<Withdraw> wList = null;
+		// 결제 내역이 없을 경우. CHAEK 하기위해서 이용.
+		Withdraw paymentResult = sqlSession.selectOne("Payment.selectRefund", pi);
+		
+		if(paymentResult != null){
+			int offset = (pi.getCurrentPage() - 1) * pi.getLimit();
+			RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+			
+			wList = (ArrayList) sqlSession.selectList("Payment.selectRefundList", pi, rowBounds);
+		} 
+		
+		return wList;
+	}
+
 }
