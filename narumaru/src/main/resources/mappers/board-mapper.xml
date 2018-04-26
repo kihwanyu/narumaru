@@ -27,8 +27,8 @@
 	
 	<resultMap type="Notice" id="noticeResultSet">
 		<id property="nid" column="BNO"/>
-		<result property="noType" column="B_TNO"/>
-		<result property="noTitle" column="B_TYPE"/>
+		<result property="noType" column="B_TYPE"/>
+		<result property="noTitle" column="B_TITLE"/>
 		<result property="noContent" column="B_CONTENT"/>
 		<result property="writerId" column="MNO"/>
 		<result property="createDate" column="CREATE_DATE"/>
@@ -70,16 +70,28 @@
 		WHERE BNO = #{bno}
 	</update>
 	
-	<insert id="insertNotice" >
-		INSERT INTO BOARD VFALUES(SEQ_BNO.NEXTVAL, NULL, 700 , #{noTitle}, #{noContent}, #{writerId}, #{createDate}, NULL, DEFAULT, NULL,NULL,NULL,NULL,NULL )
+	<insert id="insertNotice" parameterType="Notice">
+		INSERT INTO BOARD VALUES(SEQ_BNO.NEXTVAL, NULL, #{noType} , #{noTitle}, #{noContent}, NULL, 2, SYSDATE, SYSDATE, DEFAULT, 1,NULL,NULL,NULL,NULL,NULL,NULL )
 	</insert>
 	
 	<select id="noticeSelectList" resultMap ="noticeResultSet">
 		SELECT * FROM BOARD
-		WHERE B_TYPE = 700
-		AND STATUS = 'Y'
+		WHERE STATUS = 'Y'
+		<choose>
+			<when test = "noType=700">
+				AND B_TYPE = 700
+			</when>
+			<otherwise>
+				AND B_TYPE = 800
+			</otherwise>
+		</choose>
 	</select>
 	
+	<select id = "noticeSelectListOne" parameterType = "_int" resultMap = "noticeResultSet">
+		SELECT * FROM BOARD
+		WHERE STATUS = 'Y'
+		AND BNO = #{nid}
+	</select>
 </mapper>
 
 

@@ -8,6 +8,15 @@
 <!-- Meta, title, CSS, favicons, etc. -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+	.FAQsubMenu{
+		display:none;
+		width:200px;
+		height:100px;
+		background:yellow;
+	}
+
+</style>
 <title>:: naru ? maru ! :: 공지 글쓰기 </title>
 <link href="${ contextPath }/resources/admin/build/css/custom.min.css" rel="stylesheet">
 </head>
@@ -59,7 +68,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"> 제목 <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
+                          <input type="text" id="first-name"  name="noTitle" required="required" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
              
@@ -68,15 +77,41 @@
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <div id="gender" class="btn-group" data-toggle="buttons">
                             <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                              <input type="radio" name="gender" value="notice"> &nbsp; 공지사항 &nbsp;
+                              <input type="radio" id = "Noticebtn" name="noType" value=700> &nbsp; 공지사항 &nbsp;
                             </label>
                             <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                              <input type="radio" name="gender" value="faq"> FAQ
+                              <input type="radio" id="FAQbtn" name="noType" value="800"> FAQ
+                 			  
                             </label>
+                            
+                            <div class="FAQsubMenu">
+	                            <select name="subType">
+	                 			  	<option value = 801> 자주묻는 질문</option>
+	                 			  	<option value = 802>로그인, 회원가입 질문</option>
+	                 			  	<option value = 803>알림, 새소식</option>
+	                 			  	<option value = 804>나루마루 설정</option>
+	                 			  	<option value = 805>마루 멤버</option>
+	                 			  	<option value = 806>기타</option>
+                 			  	</select>
+                 			</div>
+                 			<script>
+                 			$(function(){
+                 				$("#FAQbtn").on("change",function(){
+                 					
+                					$(".FAQsubMenu").css('display','block');
+                 					
+                 				});
+                 				$("#Noticebtn").on("change", function(){
+                 					$(".FAQsubMenu").css('display','none');
+                 				})
+                 			});
+                 			</script>
                           </div>
+                          	
+                  
                         </div>
                       </div>
-                      
+                    
                       
                       <!-- textarea -->
                   
@@ -155,8 +190,8 @@
                     </div>
                   </div>
 
-                  <div id="editor-one" class="editor-wrapper" contenteditable = "true">
-                  
+                  <div id="editor-one" class="editor-wrapper" contenteditable = "true" name="noContent">
+                  	<textarea style ="width:741px;height:231px;resize:none;" name="noContent" ></textarea>
                   
                   </div>
 
@@ -183,14 +218,7 @@
                   </div>
                 </div>
               </div>
-            </div>
-
-
-            
-
-            
-
-            
+            </div>   
           </div>
         </div>
         <!-- /page content -->

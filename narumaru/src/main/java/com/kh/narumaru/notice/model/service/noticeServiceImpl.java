@@ -19,6 +19,15 @@ public class noticeServiceImpl implements noticeService {
 		
 		return nd.noticeSelectList(n);
 	}
+
+
+
+	@Override
+	public Notice showNoticeDetailView(int bno) {
+		System.out.println("noticeService noticeSelectList ");
+		
+		return nd.showNoticeDetailView(bno);
+	}
 	
 	
 }
