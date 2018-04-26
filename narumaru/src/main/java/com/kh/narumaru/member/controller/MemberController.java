@@ -79,9 +79,6 @@ import com.kh.narumaru.payment.model.vo.Payment;
 @SessionAttributes("loginUser")
 public class MemberController {
 	
-	
-	
-	
 	@Autowired
 	private MemberService ms;
 	@Autowired
@@ -373,19 +370,21 @@ public class MemberController {
 			
 			m.setMid(loginUser.getMid());
 			m.setProfileName(fileName);
+			loginUser.setProfileName(fileName);
 			
 			profile.transferTo(new File(filePath + "\\" + fileName));
 			
 		} catch (IllegalStateException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
 		try {
 			ms.profileChange(m);
+			
+			session.removeAttribute("loginUser");
+			session.setAttribute("loginUser", loginUser);
 			
 			response.getWriter().print("true");
 		} catch (ProfileChangeException e) {
@@ -407,9 +406,14 @@ public class MemberController {
 		//System.out.println("m : " + m);
 		
 		m.setMid(loginUser.getMid());
+		loginUser.setNickName(m.getNickName());
 		
 		try {
 			ms.nameChange(m);
+			
+			session.removeAttribute("loginUser");
+			session.setAttribute("loginUser", loginUser);
+			
 			response.getWriter().print("true");
 		} catch (nameChangeException e) {
 			try {
@@ -431,9 +435,13 @@ public class MemberController {
 		//System.out.println("m : " + m);
 		
 		m.setMid(loginUser.getMid());
-		
+		loginUser.setBirthDay(m.getBirthDay());
 		try {
 			ms.birthdayChange(m);
+			
+			session.removeAttribute("loginUser");
+			session.setAttribute("loginUser", loginUser);
+			
 			response.getWriter().print("true");
 		} catch (birthdayChangeException e) {
 			try {
@@ -459,9 +467,14 @@ public class MemberController {
 		
 		m.setMid(loginUser.getMid());
 		m.setPhone(phone);
+		loginUser.setPhone(phone);
 		
 		try {
 			ms.phoneChange(m);
+			
+			session.removeAttribute("loginUser");
+			session.setAttribute("loginUser", loginUser);
+			
 			response.getWriter().print("true");
 		} catch (phoneChangeException e) {
 			try {
@@ -483,9 +496,14 @@ public class MemberController {
 		//System.out.println("m : " + m);
 		
 		m.setMid(loginUser.getMid());
+		loginUser.setGender(m.getGender());
 		
 		try {
 			ms.genderChange(m);
+			
+			session.removeAttribute("loginUser");
+			session.setAttribute("loginUser", loginUser);
+			
 			response.getWriter().print("true");
 		} catch (genderChangeException e) {
 			try {

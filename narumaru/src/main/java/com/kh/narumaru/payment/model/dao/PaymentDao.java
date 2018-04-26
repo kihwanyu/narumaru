@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import com.kh.narumaru.common.vo.PageInfo;
 import com.kh.narumaru.payment.model.exception.PaymentInsertException;
 import com.kh.narumaru.payment.model.exception.PaymentListSelectException;
+import com.kh.narumaru.payment.model.exception.WithdrawListSelectException;
 import com.kh.narumaru.payment.model.exception.refundInsertException;
 import com.kh.narumaru.payment.model.vo.Payment;
 import com.kh.narumaru.payment.model.vo.Withdraw;
@@ -29,6 +30,8 @@ public interface PaymentDao {
 	int getRefundListCount(SqlSessionTemplate sqlSession, int mno);
 
 	ArrayList<Withdraw> selectWithdrawList(SqlSessionTemplate sqlSession, PageInfo pi);
+
+	void deleteWithdraw(SqlSessionTemplate sqlSession, int wno) throws WithdrawListSelectException;
 	
 	
 }
