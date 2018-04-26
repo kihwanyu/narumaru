@@ -85,6 +85,7 @@ public class NarumaruController {
 		boolean isOwner = nms.checkNarumaruOwner(nmno, loginUser);
 		mv.addObject("nm", nm);
 		mv.addObject("list", list);
+		System.out.println("colist:"+colist);
 		mv.addObject("colist", colist);
 		mv.addObject("isOwner", isOwner);
 		if(nm.getNmCategory() ==2){
@@ -293,6 +294,7 @@ public class NarumaruController {
 		b.setbLevel(1);
 		b.setTargetBno(bno);
 		b.setNmno(nmno);
+		b.setbType(bType);
 		b.setMno(loginUser.getMid());
 		b.setIsOpen("all");
 		b.setNeedPoint(0);
