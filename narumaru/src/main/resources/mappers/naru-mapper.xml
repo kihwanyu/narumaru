@@ -14,7 +14,7 @@
 	</resultMap> 
 	
 	<select id="selectCategoryAll" resultMap="CategoryResultSet" parameterType="_int">
-		SELECT * FROM CATEGORY WHERE NMNO = #{nmno}
+		SELECT * FROM CATEGORY WHERE NMNO = #{nmno} AND STATUS = 'Y'
 	</select>
 	
 	<insert id="insertCategory">
@@ -22,7 +22,11 @@
 	</insert>
 	
 	<update id="restoreCategory" parameterType="_int">
-		UPDATE CATEGORY SET STUATS = 'Y' WHERE CANO = #{cano}
+		UPDATE CATEGORY SET STATUS = 'Y' WHERE CANO = #{cano}
+	</update>
+	
+	<update id="disableCategory" parameterType="Category">
+		UPDATE CATEGORY SET STATUS = 'N' WHERE CANAME = #{caName} AND NMNO = #{nmno}
 	</update>
 </mapper>
 

@@ -10,10 +10,8 @@
 <link rel="stylesheet" type="text/css" href="resources/css/naruInsertBoard.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 <style>
-	#searchTopMaru span{
-		float:left; 
-		top:16px; 
-		position:relative;
+	.btn_label{
+		height:40px;
 	}
 </style>
 </head>
@@ -140,42 +138,21 @@
 			}			
 		});
   		
-		// 수정 - 기본버튼
-		$(".modify-basic").click(function(){
-			$("#modal_default").css("display","");
-			$("#modal_theme").css("display","none");
-			$("#modal_category").css("display","none");
-			$("#modal_neighbor").css("display","none");
-		})
-		
-		// 수정 - 테마버튼
-		$(".modify-theme").click(function(){
-			$("#modal_default").css("display","none");
-			$("#modal_theme").css("display","");
-			$("#modal_category").css("display","none");
-			$("#modal_neighbor").css("display","none");
-		})
-		
-		// 수정 - 카테고리버튼
-		$(".modify-category").click(function(){
-			$("#modal_default").css("display","none");
-			$("#modal_theme").css("display","none");
-			$("#modal_category").css("display","");
-			$("#modal_neighbor").css("display","none");
-		})
-		
-		// 카테고리 - 카테고리 추가 버튼
-		$("#addCateBtn").click(function(){
-			$("#modal_category").append("<div class='row' style='height:50px;'><input type='text' value='앙 기모띠' id='addedCategory'><span id='categoryDelete'></span></div>");
-		})
-		
-		// 수정 - 이웃버튼
-		$(".modify-neighbor").click(function(){
-			$("#modal_default").css("display","none");
-			$("#modal_theme").css("display","none");
-			$("#modal_category").css("display","none");
-			$("#modal_neighbor").css("display","");
-		})
+  		$.ajax({
+			url:"selectCategoryList.na",
+			type:"get",
+			data:{"nmno":${nm.nmno}},
+			success:function(data){
+				$("#category option:not(option:eq(0))").remove();
+				
+				for(var i in data){
+					$("#category").append("<option value='" + data[i].cano +"'>" + data[i].caName + "</option>")
+				}
+			},
+			error:function(data){
+				console.log("카테고리 불러오기 실패")
+			}			
+		});
 	})
   </script>
 	
