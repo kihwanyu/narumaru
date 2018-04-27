@@ -40,7 +40,21 @@ public class AdminServiceImpl implements AdminService {
 		return list;
 	}
 
+	public ArrayList<Member> memberView() {
+		System.out.println("service야 나오니?");
+		ArrayList<Member> member = ad.memberList();
+		
+		return member;
+	}
+	
 	@Override
+	public Member memberRevenue(){
+		System.out.println("결제 나오니?");
+		Member member = ad.memberRevenue();
+		return member; 
+	}
+
+
 	public void insertNotice(Notice n, int subType) {
 		 ad.insertNotice(sqlSession, n, subType);
   }
