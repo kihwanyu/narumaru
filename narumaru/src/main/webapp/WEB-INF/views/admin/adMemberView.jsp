@@ -79,10 +79,11 @@
                       <tbody>
                         <c:forEach items="${memberView}" var="memberView">
                         	<tr>
-                        		<td>${memberView.EMAIL}</td>
-                        		<td>${memberView.NICNAME}</td>
-                        		<td>${memberView.BIRTHDAY}</td>
-                        		<td>${memberView.PHONE}</td>
+                        		<td>${memberView.email}</td>
+                        		<td>${memberView.nickName}</td>
+                        		<td>${memberView.birthDay}</td>
+                        		<td>${memberView.phone}</td>
+                        		<td>${memberView.total_amount}</td>
                         	</tr>
                         </c:forEach>
                       </tbody>

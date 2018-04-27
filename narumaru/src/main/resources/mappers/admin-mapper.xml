@@ -4,8 +4,19 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="Admin">
-	<resultMap type="hashmap" id="memberResultSet">
+	<resultMap type="Admin" id="memberResultSet1">
+		<id property="mid" column="MNO"/>
+		<result property="email" column="EMAIL"/>
+		<result property="userPwd" column="PASSWORD"/>
+		<result property="nickName" column="NICNAME"/>
+		<result property="profileName" column="PROFILENAME"/>
+		<result property="gender" column="GENDER"/>
+		<result property="birthDay" column="BIRTHDAY"/>
+		<result property="phone" column="PHONE"/>
 		<result property="enroll_date" column="ENROLL_DATE"/>
+		<result property="modify_date" column="MODIFY_DATE"/>
+		<result property="status" column="STATUS"/>
+		<result property="total_amount" column="TOTAL_AMOUNT"/>
 	</resultMap>
 	
 	<select id="selectEnroll1" resultType="_int">
@@ -16,8 +27,8 @@
 		SELECT TO_CHAR(ENROLL_DATE,'RRRRMM') FROM MEMBER GROUP BY TO_CHAR(ENROLL_DATE,'RRRRMM')
 	</select>
 	
-	<select id="memberList1" resultMap="memberResultSet">
-		SELECT M.EMAIL, M.PHONE, M.BIRTHDAY, M.NICKNAME,(SELECT SUM (P.AMOUNT) FROM PAYMENT P GROUP BY P.MNO WHERE P.MNO = M.MNO) FROM MEMBER M
+	<select id="memberList1" resultMap="memberResultSet1">
+		SELECT M.MNO, M.EMAIL, M.PHONE, M.BIRTHDAY, M.NICNAME,(SELECT SUM (P.AMOUNT) FROM PAYMENT P GROUP BY P.MNO HAVING P.MNO = M.MNO) AS TOTAL_AMOUNT FROM MEMBER M
 	</select>
 	
 </mapper>

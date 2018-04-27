@@ -211,13 +211,13 @@
     	        type: 'bar'
     	    },
     	    title: {
-    	        text: 'Historic World Population by Region'
+    	        text: ''
     	    },
     	    subtitle: {
     	        text: 'Source: <a href="https://en.wikipedia.org/wiki/World_population">Wikipedia.org</a>'
     	    },
     	    xAxis: {
-    	        categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania'],
+    	        categories: ['나루신고', '마루신고', '회원신고'],
     	        title: {
     	            text: null
     	        }
@@ -225,7 +225,7 @@
     	    yAxis: {
     	        min: 0,
     	        title: {
-    	            text: 'Population (millions)',
+    	            text: 'Population (명)',
     	            align: 'high'
     	        },
     	        labels: {
@@ -257,29 +257,20 @@
     	        enabled: false
     	    },
     	    series: [{
-    	        name: 'Year 1800',
-    	        data: [107, 31, 635, 203, 2]
-    	    }, {
-    	        name: 'Year 1900',
-    	        data: [133, 156, 947, 408, 6]
-    	    }, {
-    	        name: 'Year 2000',
-    	        data: [814, 841, 3714, 727, 31]
-    	    }, {
-    	        name: 'Year 2016',
-    	        data: [1216, 1001, 4436, 738, 40]
+    	        name: '신고 수',
+    	        data: [107, 31, 635]
     	    }]
     	});
     	//신고 막대그래프 끝
     	//마루 수 그래프 시작
     	var colors = Highcharts.getOptions().colors,
     categories = [
-        "Chrome",
-        "Firefox",
-        "Internet Explorer",
-        "Safari",
-        "Edge",
-        "Opera",
+        "팬클럽",
+        "방송/연예",
+        "스포츠/레저",
+        "음악",
+        "어학/외국어",
+        "취미/DIY",
         "Other"
     ],
     data = [
@@ -287,7 +278,7 @@
             "y": 62.74,
             "color": colors[2],
             "drilldown": {
-                "name": "Chrome",
+                "name": "팬클럽",
                 "categories": [
                     "Chrome v65.0",
                     "Chrome v64.0",
@@ -334,7 +325,7 @@
             "y": 10.57,
             "color": colors[1],
             "drilldown": {
-                "name": "Firefox",
+                "name": "방송/연예",
                 "categories": [
                     "Firefox v58.0",
                     "Firefox v57.0",
@@ -365,7 +356,7 @@
             "y": 7.23,
             "color": colors[0],
             "drilldown": {
-                "name": "Internet Explorer",
+                "name": "스포츠/레저",
                 "categories": [
                     "Internet Explorer v11.0",
                     "Internet Explorer v10.0",
@@ -384,7 +375,7 @@
             "y": 5.58,
             "color": colors[3],
             "drilldown": {
-                "name": "Safari",
+                "name": "음악",
                 "categories": [
                     "Safari v11.0",
                     "Safari v10.1",
@@ -407,7 +398,7 @@
             "y": 4.02,
             "color": colors[5],
             "drilldown": {
-                "name": "Edge",
+                "name": "어학/외국어",
                 "categories": [
                     "Edge v16",
                     "Edge v15",
@@ -426,7 +417,7 @@
             "y": 1.92,
             "color": colors[4],
             "drilldown": {
-                "name": "Opera",
+                "name": "취미/DIY",
                 "categories": [
                     "Opera v50.0",
                     "Opera v49.0",
@@ -490,7 +481,7 @@ Highcharts.chart('marucount', {
         type: 'pie'
     },
     title: {
-        text: 'Browser market share, January, 2018'
+        text: ''
     },
     subtitle: {
         text: 'Source: <a href="http://statcounter.com" target="_blank">statcounter.com</a>'
