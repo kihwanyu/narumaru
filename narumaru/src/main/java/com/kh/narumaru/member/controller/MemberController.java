@@ -182,12 +182,12 @@ public class MemberController {
 			loginUser = ms.loginMember(m);
 			int nmno = nms.insertNarumaru(nm).getNmno();
 			
-			MaruMember mm = new MaruMember();
+			/*MaruMember mm = new MaruMember();
 			mm.setMno(loginUser.getMid());
 			mm.setNmno(nmno);
 			mm.setConLevel(0);
 			System.out.println("mm:"+mm);
-			mas.insertMaruMember(mm);
+			mas.insertMaruMember(mm);*/
 			
 			return "main/mainLogin";
 			
