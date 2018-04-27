@@ -154,34 +154,24 @@ public class AdminController {
 	
 	
 	// 기능
-	// 공지 or FAQ 글쓰기
-	@RequestMapping(value="adAnnounce.ad")
-	public String insertNotice(Notice n, Model model,
-			@RequestParam(name="photo", required =false )MultipartFile photo,
-			HttpServletRequest request){
-		
-		String root = request.getSession().getServletContext().getRealPath("resources");
-		String filePath = root + "\\noticeUploadFiles";
-		
-		try {
-			photo.transferTo(new File(filePath + "\\" + photo.getOriginalFilename()));
-		
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		// 공지 or FAQ 글쓰기
+		@RequestMapping(value="adAnnounce.ad")
+		public String insertNotice(Notice n, Model model,
+				HttpServletRequest request,@RequestParam(name="subType") int subType){
+			
+			if(n.getNoType() == 800){
+				n.setNoType(subType);
+			}
+
+			System.out.println("AdminController notice subType : "  + n +", " + subType);
+
+			
+			as.insertNotice(n, subType);
+			
+			
+			return "main/main";
+			
+			
 		}
-		
-		
-		
-		as.insertNotice(n);
-		
-		
-		return "main/main";
-		
-		
-	}
 	
 }

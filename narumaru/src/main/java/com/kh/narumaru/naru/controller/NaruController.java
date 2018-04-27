@@ -1,17 +1,22 @@
 package com.kh.narumaru.naru.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 import com.kh.narumaru.naru.model.exception.NaruException;
 import com.kh.narumaru.naru.model.service.NaruService;
+import com.kh.narumaru.naru.model.vo.Category;
 
 @Controller
 public class NaruController {
@@ -32,6 +37,23 @@ public class NaruController {
 		mv.setViewName("naru/naruInsertBoard"); 
 		
 		return mv;
+	}
+	
+	@RequestMapping("selectCategoryList.na")
+	public void selectCategoryList(int nmno, HttpServletResponse response){
+		ArrayList<Category> list = ns.selectCategoryList(nmno);
+		
+		System.out.println("카테고리 리스트 : " + list);
+		
+		try {
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			new Gson().toJson(list, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@RequestMapping("updateCategory.na")
@@ -67,6 +89,12 @@ public class NaruController {
 		}
 		
 		return "redirect:/boardListAll.bo?nmno="+nmno;
+	}
+	
+	@RequestMapping("disableCategory.na")
+	public void disableCategory(String caName, int nmno){
+		System.out.println("disabled go");
+		ns.disableCategory(caName, nmno);
 	}
 	
 }

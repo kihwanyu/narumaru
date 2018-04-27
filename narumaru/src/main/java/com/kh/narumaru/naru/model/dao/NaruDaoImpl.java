@@ -14,7 +14,6 @@ public class NaruDaoImpl implements NaruDao{
 	@Override
 	public void insertCategory(String s, int nmno, SqlSessionTemplate sqlSession) throws NaruException {
 		Category c = new Category();
-		
 		c.setCaName(s);
 		c.setNmno(nmno);
 		c.setCaLevel(0);
@@ -25,7 +24,7 @@ public class NaruDaoImpl implements NaruDao{
 		for(Category ca : clist){
 			if(ca.getCaName().equals(s)){
 				sqlSession.update("Naru.restoreCategory", ca.getCano());
-				break;
+				return;
 			}
 		}
 		
@@ -36,6 +35,26 @@ public class NaruDaoImpl implements NaruDao{
 			throw new NaruException("생성 실패");
 		}else{
 			
+		}
+	}
+
+	@Override
+	public ArrayList<Category> selectCategoryList(SqlSessionTemplate sqlSession, int nmno) {
+		
+		ArrayList<Category> list = (ArrayList) sqlSession.selectList("Naru.selectCategoryAll", nmno);
+		
+		return list;
+	}
+
+	@Override
+	public void disableCategory(SqlSessionTemplate sqlSession, String caName, int nmno) {
+		Category c = new Category();
+		c.setCaName(caName);
+		c.setNmno(nmno);
+		int result = sqlSession.update("Naru.disableCategory",c);
+		
+		if(result <= 0){
+			System.out.println("해당하는 카테고리 없음");
 		}
 	}
 

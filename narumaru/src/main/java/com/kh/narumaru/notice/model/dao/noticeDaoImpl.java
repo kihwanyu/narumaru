@@ -26,7 +26,19 @@ public class noticeDaoImpl implements noticeDao{
 
 		return nlist;
 		
+	}
+
+
+
+	@Override
+	public Notice showNoticeDetailView(int bno) {
+		Notice n = null;
+		System.out.println("noticeDaoImpl showNoticeDetailView");
 		
+		n = (Notice) sqlSession.selectOne("Board.noticeSelectListOne", bno);
+		System.out.println("noticeDaoImpl showNoticeDetailView n " + n);
+		
+		return n;
 	}
 
 }

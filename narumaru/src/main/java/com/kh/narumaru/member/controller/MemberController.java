@@ -48,6 +48,7 @@ import com.kh.narumaru.payment.model.service.BankSevice;
 import com.kh.narumaru.payment.model.service.PaymentService;
 import com.kh.narumaru.payment.model.vo.Bank;
 import com.kh.narumaru.payment.model.vo.Payment;
+import com.kh.narumaru.payment.model.vo.Withdraw;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 
 import com.kh.narumaru.common.vo.PageInfo;
@@ -78,9 +79,6 @@ import com.kh.narumaru.payment.model.vo.Payment;
 @SessionAttributes("loginUser")
 public class MemberController {
 	
-	
-	
-	
 	@Autowired
 	private MemberService ms;
 	@Autowired
@@ -89,7 +87,7 @@ public class MemberController {
 	private NarumaruService nms;
 	@Autowired
 	private MaruService mas;
-  @Autowired
+	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	@Autowired
 	private PaymentService ps; 
@@ -372,19 +370,21 @@ public class MemberController {
 			
 			m.setMid(loginUser.getMid());
 			m.setProfileName(fileName);
+			loginUser.setProfileName(fileName);
 			
 			profile.transferTo(new File(filePath + "\\" + fileName));
 			
 		} catch (IllegalStateException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
 		try {
 			ms.profileChange(m);
+			
+			session.removeAttribute("loginUser");
+			session.setAttribute("loginUser", loginUser);
 			
 			response.getWriter().print("true");
 		} catch (ProfileChangeException e) {
@@ -406,9 +406,14 @@ public class MemberController {
 		//System.out.println("m : " + m);
 		
 		m.setMid(loginUser.getMid());
+		loginUser.setNickName(m.getNickName());
 		
 		try {
 			ms.nameChange(m);
+			
+			session.removeAttribute("loginUser");
+			session.setAttribute("loginUser", loginUser);
+			
 			response.getWriter().print("true");
 		} catch (nameChangeException e) {
 			try {
@@ -430,9 +435,13 @@ public class MemberController {
 		//System.out.println("m : " + m);
 		
 		m.setMid(loginUser.getMid());
-		
+		loginUser.setBirthDay(m.getBirthDay());
 		try {
 			ms.birthdayChange(m);
+			
+			session.removeAttribute("loginUser");
+			session.setAttribute("loginUser", loginUser);
+			
 			response.getWriter().print("true");
 		} catch (birthdayChangeException e) {
 			try {
@@ -458,9 +467,14 @@ public class MemberController {
 		
 		m.setMid(loginUser.getMid());
 		m.setPhone(phone);
+		loginUser.setPhone(phone);
 		
 		try {
 			ms.phoneChange(m);
+			
+			session.removeAttribute("loginUser");
+			session.setAttribute("loginUser", loginUser);
+			
 			response.getWriter().print("true");
 		} catch (phoneChangeException e) {
 			try {
@@ -482,9 +496,14 @@ public class MemberController {
 		//System.out.println("m : " + m);
 		
 		m.setMid(loginUser.getMid());
+		loginUser.setGender(m.getGender());
 		
 		try {
 			ms.genderChange(m);
+			
+			session.removeAttribute("loginUser");
+			session.setAttribute("loginUser", loginUser);
+			
 			response.getWriter().print("true");
 		} catch (genderChangeException e) {
 			try {
@@ -513,13 +532,14 @@ public class MemberController {
 			mch.setCno(Integer.valueOf(str));
 			mchList.add(mch);
 		}
-		
+		System.out.println("mchList : " + mchList);
 		try {
 			cs.memberChannelChange(mchList);
 			response.getWriter().print("true");
 		} catch (memberChannelChangeException e) {
 			try {
 				response.getWriter().print("false");
+				e.printStackTrace();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -539,13 +559,14 @@ public class MemberController {
 		String currentPwd = pwdArr[0];
 		String changedPwd = pwdArr[1];
 		String changedPwdRe = pwdArr[2];
-
-		if(userPwd.equals(currentPwd)){
+		
+		if(passwordEncoder.matches(currentPwd, userPwd)){
 			if(changedPwd.equals(changedPwdRe)){
 				try {
 					Member m = new Member();
 					m.setMid(loginUser.getMid());
-					m.setUserPwd(changedPwd);
+					m.setUserPwd(passwordEncoder.encode(changedPwd));
+					
 					ms.passwordChange(m);
 					response.getWriter().print("0");
 					/*비밀번호 변경 성공*/
@@ -668,16 +689,13 @@ public class MemberController {
 		int endPage;
 		
 		/*limit = 10;*/
-		limit = 2;
+		limit = 5;
 		
-		int listCount;
+		int listCount = 0;
 		
 		try {
-			System.out.println("ListCount mno : " + mno);
 			
 			listCount = ps.getPaymentListCount(mno);
-			
-			System.out.println("전체 게시글 수 : " + listCount);
 			
 			maxPage = (int)((double)listCount / limit + 0.9);
 			startPage = ((int)((double)currentPage / limit + 0.9) - 1)*limit + 1;
@@ -689,10 +707,6 @@ public class MemberController {
 			PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage, mno);
 			
 			ArrayList<Payment> pList = ps.selectPaymentList(pi);
-			
-			System.out.println("pList : " + pList);
-			
-			System.out.println("TotalPoint mno : " + mno);
 			
 			int totalPoint = ps.selectTotalPoint(mno);
 			
@@ -707,24 +721,56 @@ public class MemberController {
 		return mv;
 	}
 	@RequestMapping(value="refundView.me")
-	public ModelAndView RefundForward(ModelAndView mv){
+	public ModelAndView RefundForward(ModelAndView mv, @RequestParam(defaultValue="1") int currentPage, HttpSession session){
 		
-		ArrayList<Bank> bankList = null;
+		Member m = (Member)session.getAttribute("loginUser");
+		int mno = m.getMid();
+		
+		//페이징처리
+		int limit;
+		int maxPage;
+		int startPage;
+		int endPage;
+		
+		/*limit = 10;*/
+		limit = 5;
+		
+		int listCount = 0;
+		
 		try {
-			bankList = bs.selectAllBankList();
+			/*환급 내역 LIST*/
 			
-			System.out.println("bankList : " + bankList);
+			listCount = ps.getRefundListCount(mno);
 			
+			maxPage = (int)((double)listCount / limit + 0.9);
+			startPage = ((int)((double)currentPage / limit + 0.9) - 1)*limit + 1;
+			endPage = startPage + limit -1;
+			if(maxPage<endPage){
+				endPage = maxPage;
+			}
+			
+			PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage, mno);
+			
+			ArrayList<Withdraw> wList = ps.selectWithdrawList(pi);
+			
+			System.out.println("wList : " + wList);
+			
+			/*은행 LIST*/
+			ArrayList<Bank> bankList = bs.selectAllBankList();
+			
+			/*사용자 총 포인트 량*/
+			int userTotalPoint = ps.selectTotalPoint(mno);
+			
+			mv.addObject("wList", wList);
+			mv.addObject("pi", pi);
 			mv.addObject("bankList", bankList);
-			
+			mv.addObject("userTotalPoint",userTotalPoint);
 			mv.setViewName("mypage/myPage_refund");
 			
-		} catch (BankSelectAllException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (BankSelectAllException | PaymentListSelectException e) {
+			mv.addObject("message", e.getMessage());
+			mv.setViewName("common/errorPage");
 		}
-		
-		
 		return mv;
 	}
 	// 마이페이지 페이지 이동 end

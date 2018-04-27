@@ -34,18 +34,12 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public void insertNotice(Notice n) {
-		int result = ad.insertNotice(sqlSession, n);
-  }
-	
-	@Override
 	public HashMap selectEnrollDateList() {
 		HashMap list = ad.selectEnrollDateList();
 		
 		return list;
 	}
 
-	@Override
 	public ArrayList<Member> memberView() {
 		System.out.println("service야 나오니?");
 		ArrayList<Member> member = ad.memberList();
@@ -60,4 +54,8 @@ public class AdminServiceImpl implements AdminService {
 		return member; 
 	}
 
+
+	public void insertNotice(Notice n, int subType) {
+		 ad.insertNotice(sqlSession, n, subType);
+  }
 }

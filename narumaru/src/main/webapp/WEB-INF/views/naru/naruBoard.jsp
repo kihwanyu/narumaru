@@ -178,6 +178,21 @@
 		var added = 0;
 	
 	  	$(function(){
+	  		//설정해둔 카테고리 리스트 불러오기
+	  		$.ajax({
+				url:"selectCategoryList.na",
+				type:"get",
+				data:{"nmno":${nm.nmno}},
+				success:function(data){
+					for(var i in data){
+						$("#modal_category").append("<div class='row' style='height:50px;'><input type='text' value='" + data[i].caName + "' id='addedCategory"+ added +"' name='addedCategory"+ added++ +"'  style='float:left;'><div id='categoryDelete' style='float:left;' onclick='deleteCategory(this)'></div></div>");
+					}
+				},
+				error:function(request,status,error){
+					console.log("카테고리 리스트 ajax 실패")
+				}
+			});
+	  		
 			// 수정 - 기본버튼
 			$(".modify-basic").click(function(){
 				$("#modal_default").css("display","");
@@ -235,8 +250,26 @@
 		})
 		
 		function deleteCategory(btn){
+	  		console.log("버튼눌름");
+	  		var categoryName = $(btn).parent().find(":text").val();
+	  		console.log(categoryName);
 	  		$(btn).parent().find(":text").val(":none:");
+	  		console.log(categoryName);
 	  		$(btn).parent().hide();
+	  		
+	  		console.log("3");
+	  		$.ajax({
+				url:'disableCategory.na',
+				type:'get',
+				data: {"caName":categoryName, "nmno":${nm.nmno}},
+				success:function(){
+					console.log(categoryName + "카테고리 비활성화");
+				},
+				error:function(data){
+					console.log(data);
+				}
+			})
+			console.log("4");
 	  	}
 	  </script>
 	

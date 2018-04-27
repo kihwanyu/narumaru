@@ -67,7 +67,7 @@
 
 	<div class = "container">
 		<div class="btn-group-vertical">
-			<button type="button" class="btn btn-primary" onclick ="location.href='Notice.no'" > 공지사항 </button>
+			<button type="button" class="btn btn-primary" onclick = "location.href='noticeSelectList.no'" > 공지사항 </button>
 			<button type="button" class="btn btn-primary" onclick = "location.href='FAQ.no'"> FAQ </button>
 			<button type="button" class="btn btn-primary" onclick = "location.href='question.no'"> 1:1 문의 </button>
 			

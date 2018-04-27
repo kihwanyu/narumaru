@@ -30,15 +30,10 @@ public class AdminDaoImpl implements AdminDao{
 		return alist;
 	}
   
-	@Override
-	public int insertNotice(SqlSessionTemplate sqlSession, Notice n) {
-		System.out.println("insertNotice Dao : " + n );
-		return sqlSession.insert("Board.insertNotice");
-	}
-  
+	
   @Override
 	public HashMap selectEnrollDateList() {
-		
+		System.out.println("너는 나오니?");
 		
 		ArrayList list1 = (ArrayList)sqlSession.selectList("Admin.selectEnroll1");
 		
@@ -53,24 +48,10 @@ public class AdminDaoImpl implements AdminDao{
 		return hmap;
 	}
 
-  @Override
-  public ArrayList<Member> memberList() {
-	  System.out.println("너는 나오니?");
-	  
-	  ArrayList<Member> member = (ArrayList)sqlSession.selectList("Admin.memberList1");
-	  System.out.println(member);
-	  
-	  
-	return member;
-  }
-
-  @Override
-  public Member memberRevenue() {
-	  System.out.println("나오는거지?");
-	  
-	  Member member = (Member) sqlSession.selectList("Admin.memberRevenue");
-	  System.out.println(member);
-	  
-	 return member;
-  }
+	@Override
+	public int insertNotice(SqlSessionTemplate sqlSession, Notice n, int subType) {
+		System.out.println("insertNotice Dao : " + n );
+		
+		return sqlSession.insert("Board.insertNotice", n);
+	}
 }

@@ -272,7 +272,7 @@
 							$(".name-div-true").show();
 							$(".name-div-false").hide();
 							
-							if(namePass > 1 && namePass <= 8){
+							if(namePass.length > 1 && namePass.length <= 8){
 								var nickName = $("#nicName").val().trim();
 								
 								$.ajax({
@@ -461,7 +461,7 @@
 							}
 						}
 					}); 
-				});
+				}); 
 			});
 			</script>
 		</div>

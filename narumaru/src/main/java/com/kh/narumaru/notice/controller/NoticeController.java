@@ -26,12 +26,43 @@ public class NoticeController {
 		return "notice/Notice";
 	}
 	
+	// 공지사항 조회하기 
+	@RequestMapping(value = "noticeSelectList.no")
+	public ModelAndView noticeSelectList(Notice n, 
+			ModelAndView mv, SessionStatus status){
+
+			System.out.println("noticeController noticeSelectList");
+			
+			ArrayList<Notice> noList = ns.noticeSelectList(n);
+			System.out.println("noticeController noticeSelectList noList : " + noList);
+			
+			mv.addObject("noList",noList);
+			status.setComplete();
+			
+			mv.setViewName("notice/NoticeList");
+			
+			
+			return mv;
+				
+	}
+		
 	//공지사항 Detail
 	@RequestMapping(value = "noticeDetail.no")
-	public String showNoticeDetailView(){
+	public ModelAndView showNoticeDetailView(ModelAndView mv,SessionStatus status, int bno){
 		
-		return "notice/noticeDetail";
+		System.out.println("noticeController showNoticeDetailView bno : " + bno);
+	
+		Notice n = ns.showNoticeDetailView(bno);
+		System.out.println("noticeController showNoticeDetailView n : " + n);
+		
+		mv.addObject("n" ,n);
+		status.setComplete();
+		
+		mv.setViewName("notice/noticeDetail");
+		
+		return mv;
 	}
+	
 	
 	//FAQ
 	@RequestMapping(value = "FAQ.no")
@@ -47,29 +78,11 @@ public class NoticeController {
 		return "notice/question";
 	}
 	
-	// 공지사항 조회하기 
-	@RequestMapping(value = "noticeSelectList.no")
-	public ModelAndView noticeSelectList(Notice n, 
-			ModelAndView mv, SessionStatus status){
-
-		System.out.println("noticeController noticeSelectList");
-		
-		ArrayList<Notice> noList = ns.noticeSelectList(n);
-		System.out.println("noticeController noticeSelectList noList : " + noList);
-		
-		mv.addObject("noList",noList);
-		status.setComplete();
-		
-		mv.setViewName("notice/NoticeList");
-		
-		
-		return mv;
-		
-		
-	}
 	
 	
-	// FAQ 조회하기 
-	//@RequestMapping(value = "FAQSelectList.no")
+	
+	/*// FAQ 조회하기 
+	@RequestMapping(value = "FAQSelectList.no")
+	public ModelAndView */
 	
 }
