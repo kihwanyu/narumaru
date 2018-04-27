@@ -177,7 +177,7 @@ public class MemberController {
 			System.out.println("컨트롤러 회원가입: " + m);
 			ms.insertMember(m);
 			m.setUserPwd(request.getParameter("userPwd"));
-			loginUser = ms.loginMember(m);
+			//loginUser = ms.loginMember(m);
 			int nmno = nms.insertNarumaru(nm).getNmno();
 			
 			/*MaruMember mm = new MaruMember();
