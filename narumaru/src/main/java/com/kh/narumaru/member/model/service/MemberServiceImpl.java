@@ -24,8 +24,6 @@ public class MemberServiceImpl implements MemberService{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
-	@Autowired
 	private DataSourceTransactionManager transactionManager;
 	
 	

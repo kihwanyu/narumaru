@@ -36,7 +36,7 @@ public class MemberDaoImpl implements MemberDao{
 		System.out.println(id);
 		
 		
-		id += "@naver.com";
+		//id += "@naver.com";
 		
 		String cryptPwd = sqlSession.selectOne("Member.selectPwd", id);
 		//String cryptPwd = sqlSession.selectOne("Member.selectPwd", m.getEmail());
