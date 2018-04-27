@@ -3,7 +3,7 @@
 <%@ page import="java.net.URLEncoder" %>
 <%@ page import="java.security.SecureRandom" %>
 <%@ page import="java.math.BigInteger" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
 <link href='https://fonts.googleapis.com/css?family=Roboto:300,400' rel='stylesheet' type='text/css'>
@@ -13,6 +13,8 @@
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 <html>
 <head>
 <style>

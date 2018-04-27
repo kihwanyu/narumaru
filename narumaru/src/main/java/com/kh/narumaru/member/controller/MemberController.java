@@ -63,6 +63,7 @@ import com.kh.narumaru.member.model.exception.nameChangeException;
 import com.kh.narumaru.member.model.exception.passwordChangeException;
 import com.kh.narumaru.member.model.exception.phoneChangeException;
 import com.kh.narumaru.member.model.exception.selectChanelException;
+import com.kh.narumaru.member.model.exception.statusUpdateException;
 import com.kh.narumaru.member.model.service.ChannelService;
 import com.kh.narumaru.member.model.service.MemberService;
 import com.kh.narumaru.member.model.vo.Channel;
@@ -607,6 +608,25 @@ public class MemberController {
 			e.printStackTrace();
 		}*/
 	}
+	@RequestMapping(value="memberDropout.me")
+	public ModelAndView memberDropout(ModelAndView mv, Member m, HttpSession session){
+		/*탈퇴 N*/
+		m.setStatus("N");
+		
+		try {
+			ms.memberStatusUpdate(m);
+			
+			session.removeAttribute("loginUser");
+			mv.setViewName("main/mainLogin");
+		} catch (statusUpdateException e) {
+			mv.addObject("message", e.getMessage());
+			mv.setViewName("common/errorPage");
+		}
+		
+		return mv;
+	}
+	
+	
 	//마이페이지 Info end//
 	
 	// 마이페이지 페이지 이동 start

@@ -7,6 +7,7 @@ import com.kh.narumaru.member.model.exception.genderChangeException;
 import com.kh.narumaru.member.model.exception.nameChangeException;
 import com.kh.narumaru.member.model.exception.passwordChangeException;
 import com.kh.narumaru.member.model.exception.phoneChangeException;
+import com.kh.narumaru.member.model.exception.statusUpdateException;
 import com.kh.narumaru.member.model.vo.Member;
 
 public interface MemberService {
@@ -26,5 +27,7 @@ public interface MemberService {
 	void phoneChange(Member m) throws phoneChangeException;
 
 	void passwordChange(Member m) throws passwordChangeException;
+
+	void memberStatusUpdate(Member m) throws statusUpdateException;
 
 }

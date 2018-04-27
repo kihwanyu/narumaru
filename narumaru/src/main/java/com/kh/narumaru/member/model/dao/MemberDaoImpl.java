@@ -12,6 +12,7 @@ import com.kh.narumaru.member.model.exception.genderChangeException;
 import com.kh.narumaru.member.model.exception.nameChangeException;
 import com.kh.narumaru.member.model.exception.passwordChangeException;
 import com.kh.narumaru.member.model.exception.phoneChangeException;
+import com.kh.narumaru.member.model.exception.statusUpdateException;
 import com.kh.narumaru.member.model.vo.Member;
 
 
@@ -119,6 +120,16 @@ public class MemberDaoImpl implements MemberDao{
 		
 		if(result <= 0){
 			throw new passwordChangeException("비밀번호 변경 실패!!");
+		}
+	}
+
+
+	@Override
+	public void memberStatusUpdate(SqlSessionTemplate sqlSession, Member m) throws statusUpdateException {
+		int result = sqlSession.update("Member.statusUpdate",m);
+		
+		if(result <= 0){
+			throw new statusUpdateException("회원 상태정보 변경 실패-탈퇴");
 		}
 	}
 
