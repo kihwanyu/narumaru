@@ -8,4 +8,6 @@ public interface noticeDao {
 
 	ArrayList<Notice> noticeSelectList(Notice n);
 
+	Notice showNoticeDetailView(int bno);
+
 }

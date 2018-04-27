@@ -8,4 +8,6 @@ public interface noticeService {
 
 	ArrayList<Notice> noticeSelectList(Notice n);
 
+	Notice showNoticeDetailView(int bno);
+
 }

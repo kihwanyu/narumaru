@@ -58,9 +58,9 @@ public class NarumaruController {
 		
 		ArrayList<Board> list = nms.selectBoardList(nmno);
 		ArrayList<Board> colist = nms.selectCommentList(nmno);
+		Narumaru nm = nms.selectNarumaruOne(nmno);
 		if(list.size() == 0){
 			Board newB = new Board();
-			
 			newB.setbWriter("");
 			newB.setbType(0);
 			newB.setNmno(nmno);
@@ -74,14 +74,18 @@ public class NarumaruController {
 			newB.setIsOpen("all");
 			newB.setComments(0);
 			newB.setbLevel(0);
-			newB.setbContent("나루 가입을 환영합니다! 마음껏 글을 작성해보세요.");
+			if(nm.getNmCategory()==2){
+				newB.setbContent("나루 가입을 환영합니다! 마음껏 글을 작성해보세요.");				
+			}else{
+				newB.setbContent("마루 가입을 환영합니다! 마음껏 글을 작성해보세요.");
+			}
 			
 			list.add(newB);
-		}
-		Narumaru nm = nms.selectNarumaruOne(nmno);
+		}		
 		boolean isOwner = nms.checkNarumaruOwner(nmno, loginUser);
 		mv.addObject("nm", nm);
 		mv.addObject("list", list);
+		System.out.println("colist:"+colist);
 		mv.addObject("colist", colist);
 		mv.addObject("isOwner", isOwner);
 		if(nm.getNmCategory() ==2){
@@ -142,14 +146,15 @@ public class NarumaruController {
 	}
 	
 	@RequestMapping("insertNarumaruBoard.nm")
-	public String insertNaruBoard( int nmno, HttpServletRequest request) throws NarumaruException{
+	public String insertNaruBoard( int nmno, HttpServletRequest request, @RequestParam(name="file", required=false) MultipartFile file) throws NarumaruException{
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String filePath = root + "\\uploadFiles";
 		
 		System.out.println(nmno);
 		Enumeration iter = request.getParameterNames();
 		while(iter.hasMoreElements()){
-			System.out.println(iter.nextElement());
+			String parameterName = (String) iter.nextElement();
+			System.out.println(parameterName + ":" + request.getParameter(parameterName));
 		}
 		
 		Member loginUser = (Member)request.getSession().getAttribute("loginUser"); 
@@ -175,7 +180,7 @@ public class NarumaruController {
 		String replyCondition = request.getParameter("replyCondition");
 		
 		System.out.println(boardTitle);
-		System.out.println(boardContent);
+		System.out.println(boardContent); 
 		System.out.println(boardHidden);
 		System.out.println("채널:" + channel);
 		System.out.println(category);
@@ -194,7 +199,7 @@ public class NarumaruController {
 			b.setbHidden(boardHidden);
 		}
 		b.setCno(channel);
-		
+
 		if(nms.selectNarumaruType(nmno) == 1){
 			// 마루일때
 			bType = 200;
@@ -289,6 +294,7 @@ public class NarumaruController {
 		b.setbLevel(1);
 		b.setTargetBno(bno);
 		b.setNmno(nmno);
+		b.setbType(bType);
 		b.setMno(loginUser.getMid());
 		b.setIsOpen("all");
 		b.setNeedPoint(0);
@@ -305,7 +311,7 @@ public class NarumaruController {
 	}
 	
 	@RequestMapping("insertNarumaru.nm")
-	public ModelAndView insertNarumaru(Narumaru nm, ModelAndView mv, HttpServletRequest request){
+	public String insertNarumaru(Narumaru nm, ModelAndView mv, HttpServletRequest request){
 		System.out.println(nm);
 		try {
 			int nmno = nms.insertNarumaru(nm).getNmno();
@@ -317,8 +323,6 @@ public class NarumaruController {
 			mm.setConLevel(0);
 			System.out.println("mm:"+mm);
 			ms.insertMaruMember(mm);
-			mv.addObject("nm", nm);
-			mv.setViewName("maru/maruBoard");
 		} catch (NarumaruException e) {
 			mv.addObject("message", e.getMessage());
 			mv.setViewName("common/errorPage");			
@@ -327,7 +331,7 @@ public class NarumaruController {
 			mv.setViewName("common/errorPage");	
 		}
 		
-		return mv;
+		return "redirect:/boardListAll.bo?nmno="+nm.getNmno();
 	}
 	
 }

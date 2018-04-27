@@ -33,13 +33,13 @@ public class Notice implements java.io.Serializable{
 
 
 	
-	public int getNid() {
+	public int getnid() {
 		return nid;
 	}
 
 
 
-	public void setNid(int nid) {
+	public void setnid(int nid) {
 		this.nid = nid;
 	}
 

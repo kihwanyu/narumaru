@@ -62,7 +62,6 @@
        		(SELECT SUM(AMOUNT) FROM PAYMENT WHERE PAYDAY = SYSDATE) AS TODAYAMOUNT, 
        		(SELECT COUNT(*) FROM DECLARATION WHERE POL_DATE = SYSDATE ) AS TODAYDECLATION
 		FROM MEMBER GROUP BY 2;
-	
 	</select>
 	<update id="profileChange">
 		UPDATE MEMBER SET PROFILENAME=#{profileName} WHERE MNO=#{mid}
@@ -88,7 +87,6 @@
 	<insert id="memberChannelInsert">
 		INSERT INTO MCHANNEL VALUES (SEQ_MCNO.NEXTVAL, #{mno}, #{cno})
 	</insert>
-	
 	<select id="memberList" resultMap="memberResultSet" resultType="Member">
 		SELECT * FROM MEMBER
 	</select>

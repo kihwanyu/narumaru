@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
+<%
+	pageContext.setAttribute("nr", "\r\n");
+	pageContext.setAttribute("br", "<br>");
+%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -97,22 +102,14 @@
 						
 						<article>
 							<header>
-								<label>다국어 서비스 관련해 안내드립니다. </label>
-								<p>2018년 4월 4일 오후 2:00 </p>
+								<label>${ n.noTitle } </label>
+								<p>${ n.createDate } </p>
 							</header>
 							
 							<hr>
-			
-							안녕하세요, 나루마루팀입니다.<br/>
-							<br/>
-							항상 나루마루를 사랑해주고 계신 여러분께 감사드리며, 오늘은 아쉬운 소식 한가지를 전해드립니다.<br/>
-							<br/>
-							나루마루에서 제공되고 있던 다국어 서비스 중 독일어, 프랑스어 지원이 2018년 4월 3일부터 순차적으로 중단됩니다. 이에 따라, 그동안 밴드를 독일어와 프랑스어로 보고 계셨던 분들은 영어로 밴드 서비스를 이용하게 됩니다. <br/>
-							<br/>
-							나루마루는 더 나은 글로벌 서비스를 제공하기 위해 언어별 지원체계에 대해 전체적으로 점검하는 시간을 갖고자 합니다. 프랑스어, 독일어로 밴드를 이용하시던 분들께는 넓은 이해를 부탁드리며, ​향후 더욱 좋은 서비스로 찾아뵐 수 있도록 최선을 다하겠습니다.<br/> 
-							<br/>
-							감사합니다.<br/>
-							
+							${fn:replace(n.noContent,nr,br)}
+					
+							<br><br>
 						</article>
 					</li>
 					

@@ -27,33 +27,13 @@
 			<br>
 			<div class="boardInsert">
 				<form action="insertNarumaruBoard.nm" method="post" id="boardInsert">
+					<textarea class="summernote" name="boardContent"></textarea>
 					<input type="hidden" name="bType" value="200"/>
 					<input type="hidden" name="bLevel" value="0"/>
-					<textarea id="summernote" name="boardContent"></textarea>
 					<input type="hidden" name="boardTitle" value="asd"/>
 					<input type="hidden" name="openLevel" value="all"/>
 					<input type="hidden" name="mno" value="${ loginUser.mid }"/>
 					<input type="hidden" name="nmno" value="${ nm.nmno }"/>
-					<%-- <c:out value="${ nm.nmno }"/> --%>
-					<%-- <div class="boardInsertcontent">
-						<input type="hidden" name="boardTitle" value="asd"/>
-						<input type="hidden" name="openLevel" value="all"/>
-						<input type="hidden" name="mno" value="${ loginUser.mid }"/>
-						<input type="hidden" name=nmno value="${ nm.nmno }"/>
-						<input type="file" name="photo" id="photo" style="display:none;"/>
-						<input type="text" class="textArea" name="boardContent"/>
-					</div>
-					<div class="boardInsertTab">					
-						<ul class="ul boardInsertUl">
-							<li id="photoUpload">사</li>
-							<li>탭2</li>
-							<li>탭3</li>
-							<li>탭4</li>
-							<li>탭5</li>
-							<li>탭6</li>
-						</ul>			
-						<button class="floatRight inertBoardBtn">작성</button>
-					</div> --%>
 				</form>
 			</div>
 
@@ -79,14 +59,39 @@
 						<img src="resources/images/menu.png" class="modifyMenu size100per">
 						<div class="sub boardSub">
 							<ul>
-								<li>주소복사</li>
-								<li>공유하기</li>
-								<li>북마크</li>
-								<li>신고하기</li>
+								<li class="pointer" onclick="modifyBoard(${b.bno});">수정하기</li>
+								<li class="pointer" onclick="deleteBoard(${b.bno});">삭제하기</li>
 							</ul>
 						</div>
-					</div>
+								<div class="modal fade" id="myModal" role="dialog">
+									<div class="modal-dialog">
+
+										<!-- Modal content-->
+										<div class="modal-content">
+											<div class="modal-body">
+												<form action="updateBoardOne.nm" method="post"
+													id="boardInsert">
+													<textarea class="summernote" name="boardContent" value="${b.bContent}"></textarea>
+													<input type="hidden" name="bno" value="${b.bno}"/>
+													<input type="hidden" name="bType" value="200" /> <input
+														type="hidden" name="bLevel" value="0" />
+													<input type="hidden" name="boardTitle" value="asd" /> <input
+														type="hidden" name="openLevel" value="all" /> <input
+														type="hidden" name="mno" value="${ loginUser.mid }" /> <input
+														type="hidden" name="nmno" value="${ nm.nmno }" />
+												</form>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default"
+													data-dismiss="modal">Close</button>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
 				</div>
+				<br>
 				<div class="boardContent">${b.bContent}</div>
 				<div class="boardfoot">
 					<hr>
@@ -94,35 +99,36 @@
 						<li class="showSub emotionBtn" onclick="submenuOpen(this);"><span>이모티콘</span>
 							<div class="sub emotionSub">이모티콘</div>
 						</li>
-						<li class="insertReplyShow" onclick="replyOpen(this, ${ b.bno });"><span>댓글보기()</span></li>
+						<li class="insertReplyShow" onclick="replyOpen(this, ${ b.bno });"><span>댓글보기</span></li>
 						<li class="showSub shereBtn" onclick="submenuOpen(this);"><span>공유하기</span>
 							<div class="sub shereSub">개발중인 기능입니다</div>
 						</li>
 					</ul>
 				</div>
 				<div class="insertReply">
-					<hr>
-					<form action="insertNarumaruBoard.nm" method="post" id="replyInsert">
-					<textarea class="summernote2" name="boardContent"></textarea>
-					<input type="hidden" name="bType" value="201"/>
-					<input type="hidden" name="bLevel" value="1"/>
-					<input type="hidden" name="targetBno" value="${ b.bno }"/>
-					<input type="hidden" name="boardTitle" value="asd"/>
-					<input type="hidden" name="openLevel" value="all"/>
-					<input type="hidden" name="mno" value="${ loginUser.mid }"/>
-					<input type="hidden" name="nmno" value="${ nm.nmno }"/>
-					</form>
 					<div class="replyArea">
 						 <c:forEach var="b2" begin="${beginPage}" end="${newPage}" items="${ list }" varStatus="i2">
-							<c:if test = "${ b.bno eq b2.targetBno and b2.bType == 201}">
+							<c:if test = "${ b.bno eq b2.targetBno}">
 							<div style="height:100px;">
-								<hr>
+								
 								<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
 								<label>${ b2.bWriter }</label> <label class="floatRight">${b2.createDate}</label>
 								<div class="replyContent" style="clear:both;">${b2.bContent}</div>
 							</div>
+							<hr>
 							</c:if>
 						</c:forEach>
+						
+						<form action="insertNarumaruBoard.nm" method="post" id="replyInsert">
+							<textarea class="summernote2" name="boardContent"></textarea>
+							<input type="hidden" name="bType" value="201"/>
+							<input type="hidden" name="bLevel" value="1"/>
+							<input type="hidden" name="targetBno" value="${ b.bno }"/>
+							<input type="hidden" name="boardTitle" value="asd"/>
+							<input type="hidden" name="openLevel" value="all"/>
+							<input type="hidden" name="mno" value="${ loginUser.mid }"/>
+							<input type="hidden" name="nmno" value="${ nm.nmno }"/>
+						</form>
 					</div>
 				</div>
 			</div>	
@@ -141,6 +147,80 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/lang/summernote-ko-KR.js"></script>
 	<script>
+	var submitButton = function (context) {
+		  var ui = $.summernote.ui;
+
+		  // create button
+		  var button = ui.button({
+		    contents: '<i class="fa fa-child"/> 등록하기',
+		    tooltip: '등록하기',
+		    click: function () {
+		    	console.log($("#summernote").val());
+		    	$(this).parents("form").submit();
+		    }
+		  });
+
+		  return button.render();   // return button as jquery object
+		}
+	
+	var submitButton2 = function (context) {
+		  var ui = $.summernote.ui;
+
+		  // create button
+		  var button = ui.button({
+		    contents: '<i class="fa fa-child"/> 등록하기',
+		    tooltip: '등록하기',
+		    click: function () {
+		      $(this).parents("form").submit();
+		    }
+		  });
+
+		  return button.render();   // return button as jquery object
+		}
+	
+	function summernote1() {
+		  $('.summernote').summernote({
+			  height: 150, 
+			  lang: 'ko-KR',
+			  toolbar: [
+				    ['style', ['bold', 'italic', 'underline', 'clear']],
+				    ['fontsize', ['fontsize']],
+				    ['color', ['color']],
+				    ['para', ['ul', 'ol', 'paragraph']],
+				    ['Insert',['picture'], ['video']],
+				    ['mybutton', ['submit']]
+				  ],
+			buttons: {
+				submit: submitButton
+			}
+		  });
+	}
+
+	
+	function summernote2() {
+		console.log($('.summernote2'));
+		  $('.summernote2').summernote({
+			  height: 80, 
+			  lang: 'ko-KR',
+			  toolbar: [
+				    ['style', ['bold', 'italic', 'underline', 'clear']],
+				    ['fontsize', ['fontsize']],
+				    ['color', ['color']],
+				    ['para', ['ul', 'ol', 'paragraph']],
+				    ['Insert',['picture'], ['video']],
+				    ['mybutton', ['submit']]
+				  ],
+			buttons: {
+				submit: submitButton2
+			}
+		  });			  
+	}
+	$(document).ready(function(){
+		summernote1();
+		summernote2();
+	});
+	
+	
 	var isEnd = false;
 	var newPage = ${newPage};
 	var listSize = ${list.size()};
@@ -150,7 +230,7 @@
 		if(listSize <=4){
 			isEnd = true;
 		}
-	})
+	});
 
 	$(document).scroll(function(){
 		//더이상 가져올 글이 없으면 그냥 종료한다
@@ -193,104 +273,122 @@
 	        	
 	        	
 	        	//페이지 한번 클리어
-	        	$(".content").html("");
+	        	$(".content").html(""); 
 	        	
 	        	$(".content").append('<div class="searchArea">'
-				+ '<input type="text" name="search" style="background:none; width:440px; height:40px;">'
-				+ '<button class="floatRight searchBtn"><img src="${contextPath }/resources/images/find.png" style="width:35px; height:35px;"></button>'
-			    + '</div>'
-				+ '<br>'
-				+ '<div class="boardInsert">'
-				+'<form action="insertNarumaruBoard.nm" method="post">'
-				+ '<div class="boardInsertcontent">'
-				+'<input type="hidden" name="boardTitle" value="asd"/>'
-				+'<input type="hidden" name="openLevel" value="all"/>'
-				+'<input type="hidden" name="mno" value="${ loginUser.mid }"/>'
-				+'<input type="hidden" name=nmno value="${ nm.nmno }"/>'
-				+ '<input type="text" class="textArea"  name="boardContent">'
-				+ '</div>'
-				+ '<div class="boardInsertTab">'	
-				+ '<ul class="ul boardInsertUl">'
-				+		'<li>탭1</li>'
-				+		'<li>탭2</li>'
-				+		'<li>탭3</li>'
-				+		'<li>탭4</li>'
-				+		'<li>탭5</li>'
-				+		'<li>탭6</li>'
-				+	'</ul>	'		
-				+	'<button class="floatRight inertBoardBtn">작성</button>'
-				+	'</div>'
-				+'</form>'
-				+	'</div>')
+	    				+'<input type="text" name="search" style="background:none; width:440px; height:40px;">'
+	    				+'<button class="floatRight searchBtn"><img src="${contextPath }/resources/images/find.png" style="width:35px; height:35px;"></button>'
+	    				+'</div>'
+	    				+'<br>'
+	    				+'<div class="boardInsert">'
+	    				+'<form action="insertNarumaruBoard.nm" method="post" id="boardInsert">'
+	    				+'	<textarea id="summernote" name="boardContent"></textarea>'
+	    				+'	<input type="hidden" name="bType" value="200"/>'
+	    				+'	<input type="hidden" name="bLevel" value="0"/>'
+	    				+'	<input type="hidden" name="boardTitle" value="asd"/>'
+	    				+'	<input type="hidden" name="openLevel" value="all"/>'
+	    				+'	<input type="hidden" name="mno" value="${ loginUser.mid }"/>'
+	    				+'	<input type="hidden" name="nmno" value="${ nm.nmno }"/>'
+	    				+'</form>'
+	    				+'</div>');
 				
 	        	
 	        	//페이지 전부 다시불러옴
 	        	<c:forEach var="b" begin="0" end="${list.size()}" items="${list}" varStatus="i">
+	        	<c:if test="${ b.bLevel == 0 }">
 	        		//새로 가져오려는게 적으면
 		        	<c:if test="${newPage < i.count}">
 		        		return;
 		        	</c:if>
 	        	/* for(var i = 0; i < newPage; i++){ */
 	        		$(".content").append('<div class="board">'
-							+'<div class="boardInfo">'
-							+'<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
-							+'<label>${b.bWriter}</label><br><label>${b.createDate}</label>'
-							+'<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">'
-							+'	<img src="resources/images/menu.png" class="modifyMenu size100per">'
-							+'		<div class="sub boardSub">'
-							+'			<ul>'
-							+'				<li>주소복사</li>'
-							+'				<li>공유하기</li>'
-							+'				<li>북마크</li>'
-							+'				<li>신고하기</li>'
-							+'			</ul>'
-							+'		</div>'
-							+'	</div>'
+				+'<div class="boardInfo">'
+				+'	<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
+				+'	<div style="display:inline-block;"><label>${b.bWriter}</label><br><label>${b.createDate}</label></div>'
+				+'	<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">'
+				+'		<img src="resources/images/menu.png" class="modifyMenu size100per">'
+				+'		<div class="sub boardSub">'
+				+'			<ul>'
+				+'				<li class="pointer" onclick="modifyBoard(${b.bno});">수정하기</li>'
+				+'				<li class="pointer" onclick="deleteBoard(${b.bno});">삭제하기</li>'
+				+'			</ul>'
+				+'		</div>'
+				+'<div class="modal fade" id="myModal" role="dialog">'
+				+'<div class="modal-dialog">'
+
+				+'	<!-- Modal content-->'
+				+'	<div class="modal-content">'
+				+'		<div class="modal-body">'
+				+'			<form action="updateBoardOne.nm" method="post"'
+				+'				id="boardInsert">'
+				+'				<textarea class="summernote" name="boardContent"></textarea>'
+				+'				<input type="hidden" name="bType" value="200" /> <input'
+				+'					type="hidden" name="bLevel" value="0" />'
+				+'				<input type="hidden" name="boardTitle" value="asd" /> <input'
+				+'					type="hidden" name="openLevel" value="all" /> <input'
+				+'					type="hidden" name="mno" value="${ loginUser.mid }" /> <input'
+				+'					type="hidden" name="nmno" value="${ nm.nmno }" />'
+				+'			</form>'
+				+'		</div>'
+				+'		<div class="modal-footer">'
+				+'			<button type="button" class="btn btn-default"'
+				+'				data-dismiss="modal">Close</button>'
+				+'		</div>'
+				+'	</div>'
+
+				+'</div>'
+				+'</div>'
+				+'	</div>'
+				+'</div>'
+				+'<br>'
+				+'<div class="boardContent">${b.bContent}</div>'
+				+'<div class="boardfoot">'
+				+'	<hr>'
+				+'	<ul class="footUl">'
+				+'		<li class="showSub emotionBtn" onclick="submenuOpen(this);"><span>이모티콘</span>'
+				+'			<div class="sub emotionSub">이모티콘</div>'
+				+'		</li>'
+				+'		<li class="insertReplyShow" onclick="replyOpen(this, ${ b.bno });"><span>댓글보기</span></li>'
+				+'		<li class="showSub shereBtn" onclick="submenuOpen(this);"><span>공유하기</span>'
+				+'			<div class="sub shereSub">개발중인 기능입니다</div>'
+				+'		</li>'
+				+'	</ul>'
+				+'</div>'
+				+'<div class="insertReply">'
+				+'	<div class="replyArea">'
+						 <c:forEach var="b2" begin="${beginPage}" end="${newPage}" items="${ list }" varStatus="i2">
+							<c:if test = "${ b.bno eq b2.targetBno}">
+							+'			<div style="height:100px;">'
+							
+							+'	<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
+							+'	<label>${ b2.bWriter }</label> <label class="floatRight">${b2.createDate}</label>'
+							+'	<div class="replyContent" style="clear:both;">${b2.bContent}</div>'
 							+'</div>'
-							+'<div class="boardContent">${b.bContent}</div>'
-							+'<div class="boardfoot">'
 							+'	<hr>'
-							+'	<ul class="footUl">'
-							+'		<li class="showSub emotionBtn" onclick="submenuOpen(this);"><span>이모티콘</span>'
-							+'			<div class="sub emotionSub">이모티콘</div>'
-							+'		</li>'
-							+'			<li class="insertReplyShow" onclick="replyOpen(this);"><span>댓글보기()</span></li>'
-							+'		<li class="showSub shereBtn" onclick="submenuOpen(this);"><span>공유하기</span>'
-							+'			<div class="sub shereSub">개발중인 기능입니다</div>'
-							+'		</li>'
-							+'	</ul>'
-							+'</div>'
-							+'<div class="insertReply">'
-							+'	<hr>'
-							+'	<button class="showSub attachBtn" onclick="submenuOpen(this);">'
-							+'		+'
-							+'		<div class="sub attachSub">'
-							+'			<ul>'
-							+'				<li>사진</li>'
-							+'				<li>파일</li>'
-							+'			</ul>'
-							+'		</div>'
-							+'	</button>'
-							+'	<input type="text" name="insertReply"'
-							+'		style="background: none; width: 400px; height: 40px;">'
-							+'	<button class="floatRight insertReplyBtn">등록</button>'
-							+'	<div class="replyArea">'
-							+'		<hr>'
-							+'		<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
-							+'		<label>이름</label> <label>날짜</label>'
-							+'		<div class="replyContent" style="clear:both;">내용</div>'
-							+'	</div>'
-							+'	</div>'
-							+'</div>');
-	        	/* } */
+							</c:if>
+						</c:forEach>
+				+'	<form action="insertNarumaruBoard.nm" method="post" id="replyInsert">'
+				+'	<textarea class="summernote2" name="boardContent"></textarea>'
+				+'	<input type="hidden" name="bType" value="201"/>'
+				+'	<input type="hidden" name="bLevel" value="1"/>'
+				+'	<input type="hidden" name="targetBno" value="${ b.bno }"/>'
+				+'	<input type="hidden" name="boardTitle" value="asd"/>'
+				+'	<input type="hidden" name="openLevel" value="all"/>'
+				+'	<input type="hidden" name="mno" value="${ loginUser.mid }"/>'
+				+'	<input type="hidden" name="nmno" value="${ nm.nmno }"/>'
+				+'	</form>'
+						+'	</div>'
+						+'</div>'
+						+'</div>');
+	        	</c:if>
 	        	</c:forEach>
-	        	
+	        	summernote1();
+	        	summernote2();
 	        }
 		}, 2000);
 	});
 		function replyOpen(btn, bno){
-			$(btn).parent().parent().siblings(".insertReply").toggle();
-			
+			$(btn).parent().parent().siblings(".insertReply").toggle();			
 		}
 		function submenuOpen(btn){
 			$(btn).children(".sub").toggle();
@@ -298,75 +396,13 @@
 		$("#photoUpload").click(function(){
 				$("#photo").click();
 		});
-		
-		
-		var submitButton = function (context) {
-			  var ui = $.summernote.ui;
-
-			  // create button
-			  var button = ui.button({
-			    contents: '<i class="fa fa-child"/> 등록하기',
-			    tooltip: '등록하기',
-			    click: function () {
-			      $("#boardInsert").submit();
-			    }
-			  });
-
-			  return button.render();   // return button as jquery object
-			}
-		
-		var submitButton2 = function (context) {
-			  var ui = $.summernote.ui;
-
-			  // create button
-			  var button = ui.button({
-			    contents: '<i class="fa fa-child"/> 등록하기',
-			    tooltip: '등록하기',
-			    click: function () {
-			      $("#replyInsert").submit();
-			    }
-			  });
-
-			  return button.render();   // return button as jquery object
-			}
-		
-		$(document).ready(function() {
-			  $('#summernote').summernote({
-				  height: 150, 
-				  lang: 'ko-KR',
-				  toolbar: [
-					    ['style', ['bold', 'italic', 'underline', 'clear']],
-					    ['fontsize', ['fontsize']],
-					    ['color', ['color']],
-					    ['para', ['ul', 'ol', 'paragraph']],
-					    ['Insert',['picture'], ['video']],
-					    ['mybutton', ['submit']]
-					  ],
-				buttons: {
-					submit: submitButton
-				}
-			  });			  
-		});
-		
-		$(document).ready(function() {
-			console.log($('.summernote2'));
-			  $('.summernote2').summernote({
-				  height: 50, 
-				  lang: 'ko-KR',
-				  toolbar: [
-					    ['style', ['bold', 'italic', 'underline', 'clear']],
-					    ['fontsize', ['fontsize']],
-					    ['color', ['color']],
-					    ['para', ['ul', 'ol', 'paragraph']],
-					    ['Insert',['picture'], ['video']],
-					    ['mybutton', ['submit']]
-					  ],
-				buttons: {
-					submit: submitButton2
-				}
-			  });			  
-		});
-		
+		function modifyBoard(bno){
+			$("#myModal").modal();		
+			/* location.href="updateBoardOne.nm?bno="+bno + "&nmno=${nm.nmno}"; */
+		}
+		function deleteBoard(bno){
+			location.href="deleteBoardOne.nm?bno="+bno + "&nmno=${nm.nmno}";
+		}
 	</script>
 </body>
 </html>
