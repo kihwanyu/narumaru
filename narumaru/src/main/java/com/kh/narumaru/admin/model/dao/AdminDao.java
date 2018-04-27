@@ -12,10 +12,15 @@ import java.util.ArrayList;
 
 import com.kh.narumaru.member.model.vo.Member;
 public interface AdminDao {
-
+ 
 	ArrayList<Admin> showTotalMemberView(ArrayList<Admin> a);
+
+  ArrayList<Member> memberList();
+
+	Member memberRevenue(); 
 
 	int insertNotice(SqlSessionTemplate sqlSession, Notice n, int subType);
   public HashMap selectEnrollDateList();
+
 
 }
