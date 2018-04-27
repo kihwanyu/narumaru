@@ -71,6 +71,6 @@ public class AdminDaoImpl implements AdminDao{
 	  Member member = (Member) sqlSession.selectList("Admin.memberRevenue");
 	  System.out.println(member);
 	  
-	 return member;
+	 return member; 
   }
 }

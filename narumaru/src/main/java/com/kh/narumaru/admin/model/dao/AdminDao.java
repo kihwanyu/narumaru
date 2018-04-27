@@ -20,6 +20,6 @@ public interface AdminDao {
 
   	ArrayList<Member> memberList();
 
-	Member memberRevenue();
+	Member memberRevenue(); 
 
 }
