@@ -57,7 +57,7 @@ public class AdminServiceImpl implements AdminService {
 	public Member memberRevenue(){
 		System.out.println("결제 나오니?");
 		Member member = ad.memberRevenue();
-		return member;
+		return member; 
 	}
 
 }
