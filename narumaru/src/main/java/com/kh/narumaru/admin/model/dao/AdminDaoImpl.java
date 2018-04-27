@@ -45,7 +45,7 @@ public class AdminDaoImpl implements AdminDao{
 		ArrayList list2 = (ArrayList)sqlSession.selectList("Admin.selectEnroll2");
 		System.out.println(list1);
 		System.out.println(list2);
-		
+		 
 		HashMap hmap = new HashMap();
 		hmap.put("date", list2);
 		hmap.put("count", list1);

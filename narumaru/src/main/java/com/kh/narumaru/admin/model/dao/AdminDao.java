@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import com.kh.narumaru.member.model.vo.Member;
 public interface AdminDao {
-
+ 
 	ArrayList<Admin> showTotalMemberView(ArrayList<Admin> a);
 
 	int insertNotice(SqlSessionTemplate sqlSession, Notice n);
