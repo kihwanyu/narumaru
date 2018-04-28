@@ -79,4 +79,19 @@ public class NarumaruServiceImpl implements NarumaruService {
 	public int selectNarumaruType(int nmno) {
 		return nmd.selectNarumaruType(nmno);
 	}
+
+	@Override
+	public ArrayList<Board> selectWritedBoardList(int mid) {
+		return nmd.selectWritedBoardList(mid);
+	}
+
+	@Override
+	public ArrayList<Board> selectWritedCommentList(int mid) {
+		return nmd.selectWritedCommentList(mid);
+	}
+
+	@Override
+	public ArrayList<Board> selectCommentListAll() {
+		return nmd.selectCommentListAll();
+	}
 }

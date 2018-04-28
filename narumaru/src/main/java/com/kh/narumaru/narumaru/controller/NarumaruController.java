@@ -1,10 +1,9 @@
 package com.kh.narumaru.narumaru.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.Iterator;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +20,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.kh.narumaru.maru.exception.MaruException;
 import com.kh.narumaru.maru.model.service.MaruService;
-import com.kh.narumaru.maru.model.service.MaruServiceImpl;
 import com.kh.narumaru.maru.model.vo.MaruMember;
 import com.kh.narumaru.member.model.exception.selectChanelException;
 import com.kh.narumaru.member.model.service.ChannelService;
@@ -98,18 +96,43 @@ public class NarumaruController {
 		return mv;
 	}
 	
+	@RequestMapping(value = "selectBoardListAjax.bo")
+	public void selectBoardListAjax(HttpServletRequest request, HttpServletResponse response){
+		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+		
+		try {
+			ArrayList<Board> list = null;
+			ArrayList<Board> colist = null;
+			
+			list = nms.selectWritedBoardList(loginUser.getMid());
+			colist = nms.selectCommentListAll();
+
+			HashMap resultMap = new HashMap();
+			
+			resultMap.put("list", list);
+			resultMap.put("colist", colist);
+			
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			new Gson().toJson(resultMap, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@RequestMapping(value="selectChannelList.nm")
 	public void checkNarumaruOwner(HttpServletRequest request, HttpServletResponse response) throws selectChanelException{
 		try {
 			ArrayList<Channel> clist = cs.selectAllChannel();
+			
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			new Gson().toJson(clist, response.getWriter());
 		} catch (JsonIOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -275,9 +298,6 @@ public class NarumaruController {
 	
 	@RequestMapping("insertComment.nm")
 	public void insertComment(HttpServletRequest request, int nmno, int bno, String bContent) throws NarumaruException{
-		System.out.println("insertComment-nmno:"+nmno);
-		System.out.println("insertComment-bno:"+bno);
-		System.out.println("insertComment-bContent:"+bContent);
 		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
 		Board b = new Board();
 		

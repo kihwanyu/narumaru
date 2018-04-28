@@ -36,6 +36,7 @@
 		<result property="status" column="STATUS"/>
 
 	</resultMap>
+	
 	<select id="selectBoardList" resultMap="boardResultSet" parameterType="_int">
 		SELECT BNO, B_TNO, B_TYPE, B_TITLE, B_CONTENT, B_HIDDEN, b.MNO, M.NICNAME, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, NMNO, CANO, CNO, B_LEVEL, TARGET_BNO, IS_OPEN, NEED_POINT,
     	(SELECT COUNT(*) FROM BOARD WHERE TARGET_BNO = B.BNO) AS COMMENTS
@@ -50,6 +51,29 @@
 		FROM BOARD B
 		JOIN MEMBER M ON(B.MNO = M.MNO)
 		WHERE NMNO = #{nmno} AND B.STATUS = 'Y' AND (B_TYPE = 101 OR B_TYPE = 201)
+	</select>
+	
+	<select id="selectWritedBoardList" resultMap="boardResultSet" parameterType="_int">
+		SELECT BNO, B_TNO, B_TYPE, B_TITLE, B_CONTENT, B_HIDDEN, b.MNO, M.NICNAME, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, NMNO, CANO, CNO, B_LEVEL, TARGET_BNO, IS_OPEN, NEED_POINT,
+    	(SELECT COUNT(*) FROM BOARD WHERE TARGET_BNO = B.BNO) AS COMMENTS
+		FROM BOARD B
+		JOIN MEMBER M ON(B.MNO = M.MNO)
+		WHERE B.MNO = #{mid} AND B.STATUS = 'Y' AND (B_TYPE = 200 OR B_TYPE = 100)
+		ORDER BY BNO DESC
+	</select>
+	
+	<select id="selectWritedCommentList" resultMap="boardResultSet" parameterType="_int">
+		SELECT BNO, B_TNO, B_TYPE, B_TITLE, B_CONTENT, B_HIDDEN, b.MNO, M.NICNAME, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, NMNO, CANO, CNO, B_LEVEL, TARGET_BNO, IS_OPEN, NEED_POINT
+		FROM BOARD B
+		JOIN MEMBER M ON(B.MNO = M.MNO)
+		WHERE B.MNO = #{mid} AND B.STATUS = 'Y' AND (B_TYPE = 101 OR B_TYPE = 201)
+	</select>
+	
+	<select id="selectCommentListAll" resultMap="boardResultSet">
+		SELECT BNO, B_TNO, B_TYPE, B_TITLE, B_CONTENT, B_HIDDEN, b.MNO, M.NICNAME, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, NMNO, CANO, CNO, B_LEVEL, TARGET_BNO, IS_OPEN, NEED_POINT
+		FROM BOARD B
+		JOIN MEMBER M ON(B.MNO = M.MNO)
+		WHERE B.STATUS = 'Y' AND (B_TYPE = 101 OR B_TYPE = 201)
 	</select>
 	
 	<select id="selectBoardOne" resultMap="boardResultSet" parameterType="_int">

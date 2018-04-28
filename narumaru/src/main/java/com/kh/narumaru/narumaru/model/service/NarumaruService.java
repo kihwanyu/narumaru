@@ -29,5 +29,12 @@ public interface NarumaruService {
 
 	void insertComment(Board b) throws NarumaruException;
 
-	int selectNarumaruType(int nmno); 
+	int selectNarumaruType(int nmno);
+
+	ArrayList<Board> selectWritedBoardList(int mid);
+
+	ArrayList<Board> selectWritedCommentList(int mid);
+
+
+	ArrayList<Board> selectCommentListAll(); 
 }
