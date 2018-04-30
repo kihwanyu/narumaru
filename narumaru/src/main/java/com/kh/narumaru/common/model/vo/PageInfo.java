@@ -1,4 +1,4 @@
-package com.kh.narumaru.common.vo;
+package com.kh.narumaru.common.model.vo;
 
 public class PageInfo {
 	private int currentPage;

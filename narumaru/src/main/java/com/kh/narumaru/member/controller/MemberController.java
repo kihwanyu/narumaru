@@ -50,8 +50,7 @@ import com.kh.narumaru.payment.model.vo.Bank;
 import com.kh.narumaru.payment.model.vo.Payment;
 import com.kh.narumaru.payment.model.vo.Withdraw;
 import com.github.scribejava.core.model.OAuth2AccessToken;
-
-import com.kh.narumaru.common.vo.PageInfo;
+import com.kh.narumaru.common.model.vo.PageInfo;
 import com.kh.narumaru.maru.model.service.MaruService;
 import com.kh.narumaru.maru.model.vo.MaruMember;
 import com.kh.narumaru.member.model.exception.LoginException;
