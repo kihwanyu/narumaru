@@ -103,7 +103,27 @@
 						<article>
 							<header>
 								<label>${ n.noTitle } </label>
-								<p>${ n.createDate } </p>
+								
+								<!-- 관리자일 경우에만 보이도록 -->
+									<div style="float:right">
+										<input type = "button" class= "NoticeDelete" value= "삭제하기">
+										<input type = "button" class= "NoticeUpdate" value= "수정하기">
+									</div>
+									
+								<script>
+									$(".NoticeDelete").click(function(){
+										
+									});
+									
+									$(".NoticeUpdate").click(function(){
+										location.href= "noticeUpdate.no?bno=${n.nid}";
+									});
+								</script>
+								
+								
+								<p> 최초 작성 날짜: ${ n.createDate } </p>
+								<p> 마지막 수정 날짜 : ${ n.modifyDate }</p>
+									
 							</header>
 							
 							<hr>
