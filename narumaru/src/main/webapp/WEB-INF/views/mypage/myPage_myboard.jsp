@@ -205,6 +205,37 @@
 					
 					console.log(colist);
 					
+					//작성한 댓글 리스트 추가
+					for(var co in colist){
+						if(colist[co].mno == ${loginUser.mid}){
+							$.ajax({
+								url:'selectNarumaruName.bo',
+								type:'post',
+								data:{"nmno":colist[co].nmno,"bWriter":colist[co].bWriter,"bContent":colist[co].bContent,"createDate":colist[co].createDate},
+								success:function(data){
+										$("#comment-contants").append('<li class="board-li" style="color: black;">'
+							            	+	'<div style="margin-bottom: 20px;">'
+							           		+	'<div style="margin-top: 20px; margin-left: 20px;">'
+							           		+		'<span><font size="3px">' + data["bWriter"] + '</font>&nbsp;&nbsp;<font color="darkgray">댓글</font></span>'
+							           		+	'</div>' 
+							            	+	'</div>'
+							            	+	'<br>'
+							            	+	'<div style="margin-bottom: 20px; padding-left: 20px; padding-right: 20px;">'
+							            	+		'<div style="padding-bottom: 10px;">' + data["bContent"] + '</div>'
+							            	+		'<div style="padding-bottom: 10px; color: darkgray; text-align: right;">' + data["createDate"] + '</div>'
+							            	+		'<div style="border-top: solid 1px darkgray; padding-top: 40px; font-size: 15px;">'
+							            	+			data["nmName"]
+							            	+		'</div>'
+											+		'<br>'
+							            	+	'</div>'
+											+'</li>');
+								},
+								error:function(){
+									}
+							});
+						}
+					}
+					
 					for(var b in list){
 						// 나루 글이 아니면 다음껄로
 						if(list[b].bType != 100) continue;
@@ -240,36 +271,6 @@
 						        +    	'</div>';
 						        
 						        str += strTemp;
-						        
-							}
-							
-							if(colist[co].mno == ${loginUser.mid}){
-								$.ajax({
-									url:'selectNarumaruName.bo',
-									type:'post',
-									data:{"nmno":colist[co].nmno,"bWriter":colist[co].bWriter,"bContent":colist[co].bContent,"createDate":colist[co].createDate},
-									success:function(data){
-										//여긴 작성한 댓글 리스트 추가하기
-											$("#comment-contants").append('<li class="board-li" style="color: black;">'
-								            	+	'<div style="margin-bottom: 20px;">'
-							            		+	'<div style="margin-top: 20px; margin-left: 20px;">'
-							            		+		'<span><font size="3px">' + data["bWriter"] + '</font>&nbsp;&nbsp;<font color="darkgray">댓글</font></span>'
-							            		+	'</div>' 
-								            	+	'</div>'
-								            	+	'<br>'
-								            	+	'<div style="margin-bottom: 20px; padding-left: 20px; padding-right: 20px;">'
-								            	+		'<div style="padding-bottom: 10px;">' + data["bContent"] + '</div>'
-								            	+		'<div style="padding-bottom: 10px; color: darkgray; text-align: right;">' + data["createDate"] + '</div>'
-								            	+		'<div style="border-top: solid 1px darkgray; padding-top: 40px; font-size: 15px;">'
-								            	+			data["nmName"]
-								            	+		'</div>'
-												+		'<br>'
-								            	+	'</div>'
-												+'</li>');
-									},
-									error:function(){
-										}
-								});
 							}
 						}
 						
@@ -305,9 +306,6 @@
 							+ str
 							+	'</div>'
 							+'</li>');
-						
-						
-						
 					}
 				},
 				error:function(data){
