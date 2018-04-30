@@ -46,8 +46,6 @@
 		<aop:pointcut expression="execution(* com.kh.narumaru..*MemberServiceImpl.*(..))" id="serviceMethod"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod" id="transactionAdvisor"/>
 	</aop:config>
-	
-	
 		
 </beans>
 

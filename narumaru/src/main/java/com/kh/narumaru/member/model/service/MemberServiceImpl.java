@@ -14,6 +14,7 @@ import com.kh.narumaru.member.model.exception.genderChangeException;
 import com.kh.narumaru.member.model.exception.nameChangeException;
 import com.kh.narumaru.member.model.exception.passwordChangeException;
 import com.kh.narumaru.member.model.exception.phoneChangeException;
+import com.kh.narumaru.member.model.exception.statusUpdateException;
 import com.kh.narumaru.member.model.vo.Member;
 
 @Service
@@ -81,6 +82,13 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public void passwordChange(Member m) throws passwordChangeException {
 		md.passwordChange(sqlSession, m);
+	}
+
+
+
+	@Override
+	public void memberStatusUpdate(Member m) throws statusUpdateException {
+		md.memberStatusUpdate(sqlSession, m);
 	}
 
 }

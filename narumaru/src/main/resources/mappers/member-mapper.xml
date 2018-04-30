@@ -90,7 +90,9 @@
 	<select id="memberList" resultMap="memberResultSet" resultType="Member">
 		SELECT * FROM MEMBER
 	</select>
-	
+	<update id="statusUpdate">
+		UPDATE MEMBER SET STATUS=#{status} WHERE MNO=#{mid}
+	</update>
 </mapper>
 
 

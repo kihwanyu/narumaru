@@ -130,273 +130,7 @@
 				    <!-- #tab1 -->
 			        <div id="tab1" class="tab_content">
 			            <ul id="board-contants">
-			            	<li class="board-li" style="color: black;">
-			            		<div class="board-li-title">
-			            			나루/마루 이름
-			            		</div>
-			            		<div style="margin-bottom: 20px;">
-			            			<div style="width: 40px; height: 40px; float: left; margin-right: 10px;">
-			            				<img src="resources/images/profile_defalt.png" style="width: 100%; height: 100%">
-			            			</div>
-			            			<c:set var="number" value="1"/>
-			            				<!-- div id에 게시판의 번호를 달아준다.  -->
-			            			<div style="float: right; width: 40px; height: 40px; margin-right: 20px;" onclick="clickMenu(${number});">
-										<img alt="" src="resources/images/menu.png" style="width: 100%; height: 100%;">			            			
-			            				<div id="board-menu-down${number }" class="board-menu-down">
-											<ul>
-												<li><a href="#">글 수정 </a></li>
-												<li><a href="#">공지등록</a></li>
-												<li><a href="#">삭제</a></li>
-											</ul>
-										</div>
-			            			</div>
-									
-			            			<div style="margin-top: 20px;">
-			            				<span>유기환<br></span>
-			            				<span>2018.04.09</span>
-			            			</div>
-			            		</div>
-			            		<div style="margin-bottom: 20px; padding-bottom: 10px; padding-left: 20px; padding-right: 20px;">
-			            			<div style="padding-bottom: 10px;">
-			            				생명을 너의 천고에 길을 대한 노래하며 것이다. 생명을 거선의 있는 뭇 풍부하게 두기 이상의 청춘이 운다. 
-										광야에서 품에 인생에 구하지 소금이라 피고, 스며들어 얼마나 있는가? 희망의 충분히 사랑의 대중을 그들을 구하기 목숨을 힘있다. 
-										이상의 따뜻한 그들은 같이, 청춘의 인간에 품으며, 충분히 그리하였는가? 그들의 같으며, 있는 인간은 하는 뿐이다. 
-										청춘의 원질이 더운지라 듣기만 것이다. 곧 밥을 인생의 이것을 어디 소리다.이것은 피가 이상의 운다. 그들은 있는 그러므로 크고 청춘의 있다.
-										생명을 너의 천고에 길을 대한 노래하며 것이다. 생명을 거선의 있는 뭇 풍부하게 두기 이상의 청춘이 운다. 
-										광야에서 품에 인생에 구하지 소금이라 피고, 스며들어 얼마나 있는가? 희망의 충분히 사랑의 대중을 그들을 구하기 목숨을 힘있다. 
-										이상의 따뜻한 그들은 같이, 청춘의 인간에 품으며, 충분히 그리하였는가? 그들의 같으며, 있는 인간은 하는 뿐이다. 
-										청춘의 원질이 더운지라 듣기만 것이다. 곧 밥을 인생의 이것을 어디 소리다.이것은 피가 이상의 운다. 그들은 있는 그러므로 크고 청춘의 있다.	
-			            			</div>
-			            			<div style="padding-top: 10px; border-top: solid 1px gray;">
-										<div style="float: left;">
-											댓글<img src="resources/images/comments_down.png" id="commentToggle" height="20px;" width="20px;" onclick="commentViews(this,1);">
-											<!-- 번호 전달할때 게시글의 번호 값 전달. -->
-										</div>
-										<div style="float: right;">
-									 		조회수 : 5
-										</div>									
-									</div>
-									<br>
-									<!-- div의 id를 comments(게시글 번호로 줄 것.) id="comments"+ -->
-									<%-- <c:set var="number" value="1"/> --%>
-									<div id="comments${number}" style="margin-top:20px; padding-top: 10px; border-top: solid 1px gray; display: none;" >
-										<div style="margin-bottom: 20px; -webkit-box-shadow: 1px 1px 5px gray;
-											-moz-box-shadow: 1px 1px 5px gray; padding-top: 20px; padding-bottom: 20px;">
-					            			<div style="width: 40px; height: 40px; float: left; margin-right: 10px; " >
-					            				<img src="resources/images/profile_defalt.png" style="width: 100%; height: 100%">
-					            			</div>
-					            			<c:set var="number" value="1"/>
-					            				<!-- div id에 게시판의 번호를 달아준다.  -->
-					            			<div style="float: right; width: 40px; height: 40px; margin-right: 20px;" onclick="clickMenuComment(${number});">
-												<img alt="" src="resources/images/menu.png" style="width: 100%; height: 100%;">			            			
-					            				<div id="board-comment-menu-down${number }" class="board-menu-down">
-													<ul>
-														<li><a href="#">댓글 수정 </a></li>
-														<li><a href="#">댓글 삭제 </a></li>
-													</ul>
-												</div>
-					            			</div>
-					            			<div style="margin-top: 10px; padding-bottom:10px; border: solid 1px white;">
-					            				<span>유기환<br><br></span>
-					            				
-					            				<div style="padding-left: 10px; padding-right: 10px;">
-					            				생명을 너의 천고에 길을 대한 노래하며 것이다. 생명을 거선의 있는 뭇 풍부하게 두기 이상의 청춘이 운다. 
-												광야에서 품에 인생에 구하지 소금이라 피고, 스며들어 얼마나 있는가? 희망의 충분히 사랑의 대중을 그들을 구하기 목숨을 힘있다. 
-												이상의 따뜻한 그들은 같이, 청춘의 인간에 품으며, 충분히 그리하였는가? 그들의 같으며, 있는 인간은 하는 뿐이다. 
-												청춘의 원질이 더운지라 듣기만 것이다. 곧 밥을 인생의 이것을 어디 소리다.이것은 피가 이상의 운다. 그들은 있는 그러므로 크고 청춘의 있다.<br>
-					            				</div>
-					            				<span style="float: right;">2018.04.09&nbsp;오후 3:40&nbsp;&nbsp;<br></span>
-					            			</div>
-					            		</div>
-					            		<div align="center" style=" border-top: 1px solid gray; padding-top: 10px;" >
-											<div style="float: left;">
-						            			<textarea rows="2" cols="60" style="resize: none;"></textarea>
-						            		</div>
-						            		<div style="padding-top: 3px; padding-bottom: 3px;"> 
-						            			&nbsp;&nbsp;<input type="button" value="보내기" class="btn btn-default">
-						            		</div>					            		
-					            		</div>
-									</div>
-			            		</div>
-							</li>
-							<li class="board-li" style="color: black;">
-			            		<div class="board-li-title">
-			            			나루/마루 이름
-			            		</div>
-			            		<div style="margin-bottom: 20px;">
-			            			<div style="width: 40px; height: 40px; float: left; margin-right: 10px;">
-			            				<img src="resources/images/profile_defalt.png" style="width: 100%; height: 100%">
-			            			</div>
-			            			<c:set var="number" value="1"/>
-			            				<!-- div id에 게시판의 번호를 달아준다.  -->
-			            			<div style="float: right; width: 40px; height: 40px; margin-right: 20px;" onclick="clickMenu(${number});">
-										<img alt="" src="resources/images/menu.png" style="width: 100%; height: 100%;">			            			
-			            				<div id="board-menu-down${number }" class="board-menu-down">
-											<ul>
-												<li><a href="#">글 수정 </a></li>
-												<li><a href="#">공지등록</a></li>
-												<li><a href="#">삭제</a></li>
-											</ul>
-										</div>
-			            			</div>
-									
-			            			<div style="margin-top: 20px;">
-			            				<span>유기환<br></span>
-			            				<span>2018.04.09</span>
-			            			</div>
-			            		</div>
-			            		<div style="margin-bottom: 20px; padding-bottom: 10px; padding-left: 20px; padding-right: 20px;">
-			            			<div style="padding-bottom: 10px;">
-			            				생명을 너의 천고에 길을 대한 노래하며 것이다. 생명을 거선의 있는 뭇 풍부하게 두기 이상의 청춘이 운다. 
-										광야에서 품에 인생에 구하지 소금이라 피고, 스며들어 얼마나 있는가? 희망의 충분히 사랑의 대중을 그들을 구하기 목숨을 힘있다. 
-										이상의 따뜻한 그들은 같이, 청춘의 인간에 품으며, 충분히 그리하였는가? 그들의 같으며, 있는 인간은 하는 뿐이다. 
-										청춘의 원질이 더운지라 듣기만 것이다. 곧 밥을 인생의 이것을 어디 소리다.이것은 피가 이상의 운다. 그들은 있는 그러므로 크고 청춘의 있다.
-										생명을 너의 천고에 길을 대한 노래하며 것이다. 생명을 거선의 있는 뭇 풍부하게 두기 이상의 청춘이 운다. 
-										광야에서 품에 인생에 구하지 소금이라 피고, 스며들어 얼마나 있는가? 희망의 충분히 사랑의 대중을 그들을 구하기 목숨을 힘있다. 
-										이상의 따뜻한 그들은 같이, 청춘의 인간에 품으며, 충분히 그리하였는가? 그들의 같으며, 있는 인간은 하는 뿐이다. 
-										청춘의 원질이 더운지라 듣기만 것이다. 곧 밥을 인생의 이것을 어디 소리다.이것은 피가 이상의 운다. 그들은 있는 그러므로 크고 청춘의 있다.	
-			            			</div>
-			            			<div style="padding-top: 10px; border-top: solid 1px gray;">
-										<div style="float: left;">
-											댓글<img src="resources/images/comments_down.png" id="commentToggle" height="20px;" width="20px;" onclick="commentViews(this,1);">
-											<!-- 번호 전달할때 게시글의 번호 값 전달. -->
-										</div>
-										<div style="float: right;">
-									 		조회수 : 5
-										</div>									
-									</div>
-									<br>
-									<!-- div의 id를 comments(게시글 번호로 줄 것.) id="comments"+ -->
-									<%-- <c:set var="number" value="1"/> --%>
-									<div id="comments${number}" style="margin-top:20px; padding-top: 10px; border-top: solid 1px gray; display: none;" >
-										<div style="margin-bottom: 20px; -webkit-box-shadow: 1px 1px 5px gray;
-											-moz-box-shadow: 1px 1px 5px gray; padding-top: 20px; padding-bottom: 20px;">
-					            			<div style="width: 40px; height: 40px; float: left; margin-right: 10px; " >
-					            				<img src="resources/images/profile_defalt.png" style="width: 100%; height: 100%">
-					            			</div>
-					            			<c:set var="number" value="1"/>
-					            				<!-- div id에 게시판의 번호를 달아준다.  -->
-					            			<div style="float: right; width: 40px; height: 40px; margin-right: 20px;" onclick="clickMenuComment(${number});">
-												<img alt="" src="resources/images/menu.png" style="width: 100%; height: 100%;">			            			
-					            				<div id="board-comment-menu-down${number }" class="board-menu-down">
-													<ul>
-														<li><a href="#">댓글 수정 </a></li>
-														<li><a href="#">댓글 삭제 </a></li>
-													</ul>
-												</div>
-					            			</div>
-					            			<div style="margin-top: 10px; padding-bottom:10px; border: solid 1px white;">
-					            				<span>유기환<br><br></span>
-					            				
-					            				<div style="padding-left: 10px; padding-right: 10px;">
-					            				생명을 너의 천고에 길을 대한 노래하며 것이다. 생명을 거선의 있는 뭇 풍부하게 두기 이상의 청춘이 운다. 
-												광야에서 품에 인생에 구하지 소금이라 피고, 스며들어 얼마나 있는가? 희망의 충분히 사랑의 대중을 그들을 구하기 목숨을 힘있다. 
-												이상의 따뜻한 그들은 같이, 청춘의 인간에 품으며, 충분히 그리하였는가? 그들의 같으며, 있는 인간은 하는 뿐이다. 
-												청춘의 원질이 더운지라 듣기만 것이다. 곧 밥을 인생의 이것을 어디 소리다.이것은 피가 이상의 운다. 그들은 있는 그러므로 크고 청춘의 있다.<br>
-					            				</div>
-					            				<span style="float: right;">2018.04.09&nbsp;오후 3:40&nbsp;&nbsp;<br></span>
-					            			</div>
-					            		</div>
-					            		<div align="center" style=" border-top: 1px solid gray; padding-top: 10px;" >
-											<div style="float: left;">
-						            			<textarea rows="2" cols="60" style="resize: none;"></textarea>
-						            		</div>
-						            		<div style="padding-top: 3px; padding-bottom: 3px;"> 
-						            			&nbsp;&nbsp;<input type="button" value="보내기" class="btn btn-default">
-						            		</div>					            		
-					            		</div>
-									</div>
-			            		</div>
-							</li>
-							<li class="board-li" style="color: black;">
-			            		<div class="board-li-title">
-			            			나루/마루 이름
-			            		</div>
-			            		<div style="margin-bottom: 20px;">
-			            			<div style="width: 40px; height: 40px; float: left; margin-right: 10px;">
-			            				<img src="resources/images/profile_defalt.png" style="width: 100%; height: 100%">
-			            			</div>
-			            			<c:set var="number" value="1"/>
-			            				<!-- div id에 게시판의 번호를 달아준다.  -->
-			            			<div style="float: right; width: 40px; height: 40px; margin-right: 20px;" onclick="clickMenu(${number});">
-										<img alt="" src="resources/images/menu.png" style="width: 100%; height: 100%;">			            			
-			            				<div id="board-menu-down${number }" class="board-menu-down">
-											<ul>
-												<li><a href="#">글 수정 </a></li>
-												<li><a href="#">공지등록</a></li>
-												<li><a href="#">삭제</a></li>
-											</ul>
-										</div>
-			            			</div>
-									
-			            			<div style="margin-top: 20px;">
-			            				<span>유기환<br></span>
-			            				<span>2018.04.09</span>
-			            			</div>
-			            		</div>
-			            		<div style="margin-bottom: 20px; padding-bottom: 10px; padding-left: 20px; padding-right: 20px;">
-			            			<div style="padding-bottom: 10px;">
-			            				생명을 너의 천고에 길을 대한 노래하며 것이다. 생명을 거선의 있는 뭇 풍부하게 두기 이상의 청춘이 운다. 
-										광야에서 품에 인생에 구하지 소금이라 피고, 스며들어 얼마나 있는가? 희망의 충분히 사랑의 대중을 그들을 구하기 목숨을 힘있다. 
-										이상의 따뜻한 그들은 같이, 청춘의 인간에 품으며, 충분히 그리하였는가? 그들의 같으며, 있는 인간은 하는 뿐이다. 
-										청춘의 원질이 더운지라 듣기만 것이다. 곧 밥을 인생의 이것을 어디 소리다.이것은 피가 이상의 운다. 그들은 있는 그러므로 크고 청춘의 있다.
-										생명을 너의 천고에 길을 대한 노래하며 것이다. 생명을 거선의 있는 뭇 풍부하게 두기 이상의 청춘이 운다. 
-										광야에서 품에 인생에 구하지 소금이라 피고, 스며들어 얼마나 있는가? 희망의 충분히 사랑의 대중을 그들을 구하기 목숨을 힘있다. 
-										이상의 따뜻한 그들은 같이, 청춘의 인간에 품으며, 충분히 그리하였는가? 그들의 같으며, 있는 인간은 하는 뿐이다. 
-										청춘의 원질이 더운지라 듣기만 것이다. 곧 밥을 인생의 이것을 어디 소리다.이것은 피가 이상의 운다. 그들은 있는 그러므로 크고 청춘의 있다.	
-			            			</div>
-			            			<div style="padding-top: 10px; border-top: solid 1px gray;">
-										<div style="float: left;">
-											댓글<img src="resources/images/comments_down.png" id="commentToggle" height="20px;" width="20px;" onclick="commentViews(this,1);">
-											<!-- 번호 전달할때 게시글의 번호 값 전달. -->
-										</div>
-										<div style="float: right;">
-									 		조회수 : 5
-										</div>									
-									</div>
-									<br>
-									<!-- div의 id를 comments(게시글 번호로 줄 것.) id="comments"+ -->
-									<%-- <c:set var="number" value="1"/> --%>
-									<div id="comments${number}" style="margin-top:20px; padding-top: 10px; border-top: solid 1px gray; display: none;" >
-										<div style="margin-bottom: 20px; -webkit-box-shadow: 1px 1px 5px gray;
-											-moz-box-shadow: 1px 1px 5px gray; padding-top: 20px; padding-bottom: 20px;">
-					            			<div style="width: 40px; height: 40px; float: left; margin-right: 10px; " >
-					            				<img src="resources/images/profile_defalt.png" style="width: 100%; height: 100%">
-					            			</div>
-					            			<c:set var="number" value="1"/>
-					            				<!-- div id에 게시판의 번호를 달아준다.  -->
-					            			<div style="float: right; width: 40px; height: 40px; margin-right: 20px;" onclick="clickMenuComment(${number});">
-												<img alt="" src="resources/images/menu.png" style="width: 100%; height: 100%;">			            			
-					            				<div id="board-comment-menu-down${number }" class="board-menu-down">
-													<ul>
-														<li><a href="#">댓글 수정 </a></li>
-														<li><a href="#">댓글 삭제 </a></li>
-													</ul>
-												</div>
-					            			</div>
-					            			<div style="margin-top: 10px; padding-bottom:10px; border: solid 1px white;">
-					            				<span>유기환<br><br></span>
-					            				
-					            				<div style="padding-left: 10px; padding-right: 10px;">
-					            				생명을 너의 천고에 길을 대한 노래하며 것이다. 생명을 거선의 있는 뭇 풍부하게 두기 이상의 청춘이 운다. 
-												광야에서 품에 인생에 구하지 소금이라 피고, 스며들어 얼마나 있는가? 희망의 충분히 사랑의 대중을 그들을 구하기 목숨을 힘있다. 
-												이상의 따뜻한 그들은 같이, 청춘의 인간에 품으며, 충분히 그리하였는가? 그들의 같으며, 있는 인간은 하는 뿐이다. 
-												청춘의 원질이 더운지라 듣기만 것이다. 곧 밥을 인생의 이것을 어디 소리다.이것은 피가 이상의 운다. 그들은 있는 그러므로 크고 청춘의 있다.<br>
-					            				</div>
-					            				<span style="float: right;">2018.04.09&nbsp;오후 3:40&nbsp;&nbsp;<br></span>
-					            			</div>
-					            		</div>
-					            		<div align="center" style=" border-top: 1px solid gray; padding-top: 10px;" >
-											<div style="float: left;">
-						            			<textarea rows="2" cols="60" style="resize: none;"></textarea>
-						            		</div>
-						            		<div style="padding-top: 3px; padding-bottom: 3px;"> 
-						            			&nbsp;&nbsp;<input type="button" value="보내기" class="btn btn-default">
-						            		</div>					            		
-					            		</div>
-									</div>
-			            		</div>
-							</li>
+							<!-- 글 추가될곳 -->
 			            </ul>
 			            <div align="center" class="loadingArea" style="display: none;">
 							<img alt="" src="resources/images/lodingImg.gif">
@@ -404,67 +138,8 @@
 			        </div>
 			        
 			        <div id="tab2" class="tab_content">
-			        	 <ul id="comment-contants">
-			            	<li class="board-li" style="color: black;">
-			            		<div style="margin-bottom: 20px;">
-			            			<div style="margin-top: 20px; margin-left: 20px;">
-			            				<span><font size="3px">유기환</font>&nbsp;&nbsp;<font color="darkgray">댓글</font></span>
-			            			</div> 
-			            		</div>
-			            		<br>
-			            		<div style="margin-bottom: 20px; padding-left: 20px; padding-right: 20px;">
-			            			<div style="padding-bottom: 10px;">
-			            				생명을 너의 천고에 길을 대한 노래하며 것이다. 생명을 거선의 있는 뭇 풍부하게 두기 이상의 청춘이 운다. 
-			            			</div>
-			            			<div style="padding-bottom: 10px; color: darkgray; text-align: right;">
-			            				2018년 4월 10일 오전 2시 29분
-			            			</div>
-			            			<div style="border-top: solid 1px darkgray; padding-top: 40px; font-size: 15px;">
-			            				나루/마루 이름
-			            			</div>
-									<br>
-			            		</div>
-							</li>
-							<li class="board-li" style="color: black;">
-			            		<div style="margin-bottom: 20px;">
-			            			<div style="margin-top: 20px; margin-left: 20px;">
-			            				<span><font size="3px">유기환</font>&nbsp;&nbsp;<font color="darkgray">댓글</font></span>
-			            			</div> 
-			            		</div>
-			            		<br>
-			            		<div style="margin-bottom: 20px; padding-left: 20px; padding-right: 20px;">
-			            			<div style="padding-bottom: 10px;">
-			            				생명을 너의 천고에 길을 대한 노래하며 것이다. 생명을 거선의 있는 뭇 풍부하게 두기 이상의 청춘이 운다. 
-			            			</div>
-			            			<div style="padding-bottom: 10px; color: darkgray; text-align: right;">
-			            				2018년 4월 10일 오전 2시 29분
-			            			</div>
-			            			<div style="border-top: solid 1px darkgray; padding-top: 40px; font-size: 15px;">
-			            				나루/마루 이름
-			            			</div>
-									<br>
-			            		</div>
-							</li>
-							<li class="board-li" style="color: black;">
-			            		<div style="margin-bottom: 20px;">
-			            			<div style="margin-top: 20px; margin-left: 20px;">
-			            				<span><font size="3px">유기환</font>&nbsp;&nbsp;<font color="darkgray">댓글</font></span>
-			            			</div> 
-			            		</div>
-			            		<br>
-			            		<div style="margin-bottom: 20px; padding-left: 20px; padding-right: 20px;">
-			            			<div style="padding-bottom: 10px;">
-			            				생명을 너의 천고에 길을 대한 노래하며 것이다. 생명을 거선의 있는 뭇 풍부하게 두기 이상의 청춘이 운다. 
-			            			</div>
-			            			<div style="padding-bottom: 10px; color: darkgray; text-align: right;">
-			            				2018년 4월 10일 오전 2시 29분
-			            			</div>
-			            			<div style="border-top: solid 1px darkgray; padding-top: 40px; font-size: 15px;">
-			            				나루/마루 이름
-			            			</div>
-									<br>
-			            		</div>
-							</li>
+			        	<ul id="comment-contants">
+							<!-- 댓글 추가하는 부분 -->
 			            </ul>
 						<div align="center" class="loadingArea" style="display: none;">
 							<img alt="" src="resources/images/lodingImg.gif">
@@ -504,10 +179,141 @@
 				$("#board-comment-menu-down"+number).hide();
 			}
 		}
+        
+        function modifyBoard(bno, nmno){
+        	location.href="toUpdateBoardPage.nm?bno=" + bno + "&nmno=" + nmno;
+        }
+        
+        function deleteBoard(bno, nmno){
+			location.href="deleteBoardOne.nm?bno="+ bno + "&nmno=" + nmno + "&type=2";
+		}
 
         </script>
 		<jsp:include page="../common/myPage_RightSideBar.jsp"/>
 		<script type="text/javascript">
+		
+		//글 리스트 불러오기
+		$(function(){
+			$.ajax({
+				url:'selectBoardListAjax.bo',
+				type:'post',
+				success:function(data){
+					var list = data["list"];
+					var colist = data["colist"];
+					
+					var tempI = 0; // number 대용
+					
+					console.log(colist);
+					
+					//작성한 댓글 리스트 추가
+					for(var co in colist){
+						if(colist[co].mno == ${loginUser.mid}){
+							$.ajax({
+								url:'selectNarumaruName.bo',
+								type:'post',
+								data:{"nmno":colist[co].nmno,"bWriter":colist[co].bWriter,"bContent":colist[co].bContent,"createDate":colist[co].createDate},
+								success:function(data){
+										$("#comment-contants").append('<li class="board-li" style="color: black;">'
+							            	+	'<div style="margin-bottom: 20px;">'
+							           		+	'<div style="margin-top: 20px; margin-left: 20px;">'
+							           		+		'<span><font size="3px">' + data["bWriter"] + '</font>&nbsp;&nbsp;<font color="darkgray">댓글</font></span>'
+							           		+	'</div>' 
+							            	+	'</div>'
+							            	+	'<br>'
+							            	+	'<div style="margin-bottom: 20px; padding-left: 20px; padding-right: 20px;">'
+							            	+		'<div style="padding-bottom: 10px;">' + data["bContent"] + '</div>'
+							            	+		'<div style="padding-bottom: 10px; color: darkgray; text-align: right;">' + data["createDate"] + '</div>'
+							            	+		'<div style="border-top: solid 1px darkgray; padding-top: 40px; font-size: 15px;">'
+							            	+			data["nmName"]
+							            	+		'</div>'
+											+		'<br>'
+							            	+	'</div>'
+											+'</li>');
+								},
+								error:function(){
+									}
+							});
+						}
+					}
+					
+					for(var b in list){
+						// 나루 글이 아니면 다음껄로
+						if(list[b].bType != 100) continue;
+						else if(tempI > 10) break;
+						//ㄴ 최초 10개의 글만 불러오게 만듬.
+						
+						// 추가될 댓글 스트링
+						var str = '';
+						var tempJ = 0; // number 대용
+						
+						for(var co in colist){
+							if(colist[co].targetBno == list[b].bno){
+								var strTemp = '<div id="comments' + tempI + '" style="margin-top:20px; padding-top: 10px; border-top: solid 1px gray; display: none;" >'
+								+			'<div style="margin-bottom: 20px; -webkit-box-shadow: 1px 1px 5px gray; -moz-box-shadow: 1px 1px 5px gray; padding-top: 20px; padding-bottom: 20px;">'
+						        +    			'<div style="width: 40px; height: 40px; float: left; margin-right: 10px; " >'
+						        +    				'<img src="resources/images/profile_defalt.png" style="width: 100%; height: 100%">'
+						        +    			'</div>'
+						        +    			'<div style="float: right; width: 40px; height: 40px; margin-right: 20px;" onclick="clickMenuComment(' + tempJ +');">'
+								+					'<img alt="" src="resources/images/menu.png" style="width: 100%; height: 100%;">'			            			
+						        +   				'<div id="board-comment-menu-down' + tempJ++ +'" class="board-menu-down">'
+								+						'<ul>'
+								+							'<li><a href="#">댓글 수정 </a></li>'
+								+							'<li><a href="#">댓글 삭제 </a></li>'
+								+						'</ul>'
+								+					'</div>'
+						        +    			'</div>'
+						        +    			'<div style="margin-top: 10px; padding-bottom:10px; border: solid 1px white;">'
+							    +    				'<span>' + colist[co].bWriter + '<br><br></span>'
+						        +    				'<div style="padding-left: 10px; padding-right: 10px;">' + colist[co].bContent + '</div>'
+						        +    				'<span style="float: right;">' + colist[co].createDate + '<br></span> '
+						        +    			'</div>'
+						        +    		'</div>'
+						        +    	'</div>';
+						        
+						        str += strTemp;
+							}
+						}
+						
+						$("#board-contants").append('<li class="board-li" style="color: black;">'
+				            +	'<div class="board-li-title">' + list[b].bTitle + '</div>'
+			            	+	'<div style="margin-bottom: 20px;">'
+			            	+		'<div style="width: 40px; height: 40px; float: left; margin-right: 10px;">'
+			            	+			'<img src="resources/images/profile_defalt.png" style="width: 100%; height: 100%">'
+			            	+		'</div>'
+			            	+		'<div style="float: right; width: 40px; height: 40px; margin-right: 20px;" onclick="clickMenu(' + tempI +');">'
+							+			'<img alt="" src="resources/images/menu.png" style="width: 100%; height: 100%;">'		            			
+			            	+			'<div id="board-menu-down' + tempI +'" class="board-menu-down">'
+							+				'<ul>'
+							+					'<li><a onclick="modifyBoard(' + list[b].bno +', ' + list[b].nmno +')">글 수정 </a></li>'
+							+					'<li><a href="#">공지등록</a></li>'
+							+					'<li><a onclick="deleteBoard(' + list[b].bno +', ' + list[b].nmno +')">삭제</a></li>'
+							+				'</ul>'
+							+			'</div>'
+			            	+		'</div>'
+			            	+		'<div style="margin-top: 20px;">'
+			            	+			'<span>' + list[b].bWriter + '<br></span>'
+			            	+			'<span>' + list[b].createDate + '</span>'
+			            	+		'</div>'
+			            	+	'</div>'
+			            	+	'<div style="margin-bottom: 20px; padding-bottom: 10px; padding-left: 20px; padding-right: 20px;">'
+			            	+		'<div style="padding-bottom: 10px;">' + list[b].bContent + '</div>'
+			            	+		'<div style="padding-top: 10px; border-top: solid 1px gray;">'
+							+			'<div style="float: left;">'
+							+				'댓글<img src="resources/images/comments_down.png" id="commentToggle" height="20px;" width="20px;" onclick="commentViews(this,' + tempI++ + ');">'
+							+			'</div>'
+							+		'</div>'
+							+		'<br>'
+							+ str
+							+	'</div>'
+							+'</li>');
+					}
+				},
+				error:function(data){
+				}
+			})
+		});
+		
+		
 		$(function(){
 			var boardCheack = 1;
 			$(".tab_content").hide();

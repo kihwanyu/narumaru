@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 
-import com.kh.narumaru.common.vo.PageInfo;
+import com.kh.narumaru.common.model.vo.PageInfo;
 import com.kh.narumaru.payment.model.exception.PaymentInsertException;
 import com.kh.narumaru.payment.model.exception.PaymentListSelectException;
 import com.kh.narumaru.payment.model.exception.WithdrawListSelectException;

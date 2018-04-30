@@ -9,6 +9,7 @@ public class Notice implements java.io.Serializable{
 	private String noContent;
 	private int writerId;
 	private Date createDate;
+	private Date modifyDate;
 	private String status;
 	
 	
@@ -18,9 +19,10 @@ public class Notice implements java.io.Serializable{
 	}
 
 
-
-
-	public Notice(int nid, int noType, String noTitle, String noContent, int writerId, Date createDate, String status) {
+	
+	
+	public Notice(int nid, int noType, String noTitle, String noContent, int writerId, Date createDate, Date modifyDate,
+			String status) {
 		super();
 		this.nid = nid;
 		this.noType = noType;
@@ -28,11 +30,13 @@ public class Notice implements java.io.Serializable{
 		this.noContent = noContent;
 		this.writerId = writerId;
 		this.createDate = createDate;
+		this.modifyDate = modifyDate;
 		this.status = status;
 	}
 
 
-	
+
+
 	public int getnid() {
 		return nid;
 	}
@@ -117,11 +121,30 @@ public class Notice implements java.io.Serializable{
 
 
 
+	public Date getModifyDate() {
+		return modifyDate;
+	}
+
+
+
+
+	public void setModifyDate(Date modifyDate) {
+		this.modifyDate = modifyDate;
+	}
+
+
+
+
 	@Override
 	public String toString() {
 		return "Notice [nid=" + nid + ", noType=" + noType + ", noTitle=" + noTitle + ", noContent=" + noContent
-				+ ", writerId=" + writerId + ", createDate=" + createDate + ", status=" + status + "]";
+				+ ", writerId=" + writerId + ", createDate=" + createDate + ", modifyDate=" + modifyDate + ", status="
+				+ status + "]";
 	}
+
+
+
+
 	
 	
 

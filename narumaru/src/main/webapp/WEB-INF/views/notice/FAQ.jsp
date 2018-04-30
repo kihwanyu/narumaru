@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -150,14 +151,14 @@
 					<input type = "text" class ="keyWordSearch" placeholder="검색어를 입력해주세요"/>
 				</div>
 				<div class="tab">
-					  <button class="tablinks" onclick="openCity(event, 'commonQuestion')">자주 묻는 질문</button>
-					  <button class="tablinks" onclick="openCity(event, 'JoinLogin')">회원가입, 로그인 질문</button>
-					  <button class="tablinks" onclick="openCity(event, 'newAlram')">알림, 새소식</button>
+					  <button class="tablinks faq801" onclick="openCity(event, 'commonQuestion')">자주 묻는 질문</button>
+					  <button class="tablinks faq802" onclick="openCity(event, 'JoinLogin')">회원가입, 로그인 질문</button>
+					  <button class="tablinks faq803 " onclick="openCity(event, 'newAlram')">알림, 새소식</button>
 				</div>
 				<div class="tab">
-					  <button class="tablinks" onclick="openCity(event, 'London')">나루마루 설정</button>
-					  <button class="tablinks" onclick="openCity(event, 'Paris')">마루 멤버</button>
-					  <button class="tablinks" onclick="openCity(event, 'Tokyo')">기타</button>
+					  <button class="tablinks faq804" onclick="openCity(event, 'narumaruSetting')">나루마루 설정</button>
+					  <button class="tablinks faq805" onclick="openCity(event, 'maruMember')">마루 멤버</button>
+					  <button class="tablinks faq806" onclick="openCity(event, 'etc')">기타</button>
 				</div>
 				
 				
@@ -168,12 +169,17 @@
 						</div>
 						 
 						<ul class = "FAQcontent">
-							<li><a href = "noticeDetail.no">
-								<p>다국어 서비스 관련해 안내해드립니다.</p>
-								<p>2018년 4월 4일 오후 2:00</p>
-								</a>	
-							</li>
-								
+							<c:forEach items ="${ nlist }" var="Notice">
+								<c:if test="${ Notice.noType == 801}" >
+								<li>
+									<a href = "noticeDetail.no?bno=${Notice.nid}">
+									<p>${ Notice.noTitle }</p>
+									<p>${ Notice.createDate }</p>
+									</a>
+								</li>
+								</c:if>
+							</c:forEach>
+							
 							<li>
 								<p>Naru Maru 6.3 업데이트 소식.</p>
 								<p>2018년 3월 23일 오후 2:00</p>
@@ -204,11 +210,16 @@
 						</div>
 						 
 						<ul class = "FAQcontent">
-							<li><a href = "noticeDetail.no">
-								<p>다국어 서비스 관련해 안내해드립니다.</p>
-								<p>2018년 4월 4일 오후 2:00</p>
-								</a>	
-							</li>
+							<c:forEach items ="${ nlist }" var="Notice">
+								<c:if test="${ Notice.noType == 802}" >
+								<li>
+									<a href = "noticeDetail.no?bno=${Notice.nid}">
+									<p>${ Notice.noTitle }</p>
+									<p>${ Notice.createDate }</p>
+									</a>
+								</li>
+								</c:if>
+							</c:forEach>
 								
 							<li>
 								<p>Naru Maru 6.3 업데이트 소식.</p>
@@ -239,11 +250,16 @@
 						</div>
 						 
 						<ul class = "FAQcontent">
-							<li><a href = "noticeDetail.no">
-								<p>다국어 서비스 관련해 안내해드립니다.</p>
-								<p>2018년 4월 4일 오후 2:00</p>
-								</a>	
-							</li>
+							<c:forEach items ="${ nlist }" var="Notice">
+								<c:if test="${ Notice.noType == 803}" >
+								<li>
+									<a href = "noticeDetail.no?bno=${Notice.nid}">
+									<p>${ Notice.noTitle }</p>
+									<p>${ Notice.createDate }</p>
+									</a>
+								</li>
+								</c:if>
+							</c:forEach>
 								
 							<li>
 								<p>Naru Maru 6.3 업데이트 소식.</p>
@@ -268,6 +284,128 @@
 					</div>
 				</div>
 				
+				<div id="narumaruSetting" class="tabcontent">
+					  <div>
+						<div  class ="noTitle">
+							<label> 나루마루 설정 </label>
+						</div>
+						 
+						<ul class = "FAQcontent">
+							<c:forEach items ="${ nlist }" var="Notice">
+								<c:if test="${ Notice.noType == 804}" >
+								<li>
+									<a href = "noticeDetail.no?bno=${Notice.nid}">
+									<p>${ Notice.noTitle }</p>
+									<p>${ Notice.createDate }</p>
+									</a>
+								</li>
+								</c:if>
+							</c:forEach>
+								
+							<li>
+								<p>Naru Maru 6.3 업데이트 소식.</p>
+								<p>2018년 3월 23일 오후 2:00</p>
+							</li>
+							
+							<li>
+								<p>Naru Maru 4.3 업데이트 소식.</p>
+								<p>2018년 3월 23일 오후 2:00</p>
+							</li>
+							
+							<li>
+								<p>Naru Maru 3.3 업데이트 소식.</p>
+								<p>2018년 3월 23일 오후 2:00</p>
+							</li>
+							
+							<li>
+								<p>Naru Maru 1.1 업데이트 소식.</p>
+								<p>2018년 3월 23일 오후 2:00</p>
+							</li>
+						</ul>
+					</div>
+				</div>
+				
+				<div id="maruMember" class="tabcontent">
+					  <div>
+						<div  class ="noTitle">
+							<label> 마루 멤버 </label>
+						</div>
+						 
+						<ul class = "FAQcontent">
+							<c:forEach items ="${ nlist }" var="Notice">
+								<c:if test="${ Notice.noType == 805}" >
+								<li>
+									<a href = "noticeDetail.no?bno=${Notice.nid}">
+									<p>${ Notice.noTitle }</p>
+									<p>${ Notice.createDate }</p>
+									</a>
+								</li>
+								</c:if>
+							</c:forEach>
+								
+							<li>
+								<p>Naru Maru 6.3 업데이트 소식.</p>
+								<p>2018년 3월 23일 오후 2:00</p>
+							</li>
+							
+							<li>
+								<p>Naru Maru 4.3 업데이트 소식.</p>
+								<p>2018년 3월 23일 오후 2:00</p>
+							</li>
+							
+							<li>
+								<p>Naru Maru 3.3 업데이트 소식.</p>
+								<p>2018년 3월 23일 오후 2:00</p>
+							</li>
+							
+							<li>
+								<p>Naru Maru 1.1 업데이트 소식.</p>
+								<p>2018년 3월 23일 오후 2:00</p>
+							</li>
+						</ul>
+					</div>
+				</div>
+				
+				<div id="etc" class="tabcontent">
+					  <div>
+						<div  class ="noTitle">
+							<label> 기타 </label>
+						</div>
+						 
+						<ul class = "FAQcontent">
+							<c:forEach items ="${ nlist }" var="Notice">
+								<c:if test="${ Notice.noType == 806}" >
+								<li>
+									<a href = "noticeDetail.no?bno=${Notice.nid}">
+									<p>${ Notice.noTitle }</p>
+									<p>${ Notice.createDate }</p>
+									</a>
+								</li>
+								</c:if>
+							</c:forEach>
+								
+							<li>
+								<p>Naru Maru 6.3 업데이트 소식.</p>
+								<p>2018년 3월 23일 오후 2:00</p>
+							</li>
+							
+							<li>
+								<p>Naru Maru 4.3 업데이트 소식.</p>
+								<p>2018년 3월 23일 오후 2:00</p>
+							</li>
+							
+							<li>
+								<p>Naru Maru 3.3 업데이트 소식.</p>
+								<p>2018년 3월 23일 오후 2:00</p>
+							</li>
+							
+							<li>
+								<p>Naru Maru 1.1 업데이트 소식.</p>
+								<p>2018년 3월 23일 오후 2:00</p>
+							</li>
+						</ul>
+					</div>
+				</div>
 			</div>
 			
 			

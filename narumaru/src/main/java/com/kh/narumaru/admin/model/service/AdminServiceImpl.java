@@ -14,6 +14,7 @@ import com.kh.narumaru.admin.model.dao.AdminDao;
 import com.kh.narumaru.admin.model.vo.Admin;
 import com.kh.narumaru.notice.model.vo.Notice;
 import com.kh.narumaru.member.model.vo.Member;
+import com.kh.narumaru.narumaru.model.vo.Narumaru;
 @Service
 public class AdminServiceImpl implements AdminService {
 
@@ -58,4 +59,12 @@ public class AdminServiceImpl implements AdminService {
 	public void insertNotice(Notice n, int subType) {
 		 ad.insertNotice(sqlSession, n, subType);
   }
+
+	@Override
+	public ArrayList<Narumaru> maruView() {
+		System.out.println("adMaru서비스야 나오니?");
+		ArrayList<Narumaru> ma = ad.maruView();
+		
+		return ma;
+	}
 }

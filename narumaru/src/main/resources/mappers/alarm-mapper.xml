@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="Alarm">
+	
+	<resultMap type="Alarm" id="paymentResultSet">
+		<id property="ano" column="ANO"/>
+		<result property="atno" column="ATNO"/>
+		<result property="type_name" column="TYPE_NAME"/>
+		<result property="alarm_date" column="ALARM_DATE"/>
+		<result property="receive_mno" column="RECEIVE_MNO"/>
+		<result property="send_mno" column="SEND_MNO"/>
+		<result property="send_nmno" column="SEND_NMNO"/>
+		<result property="send_bno" column="SEND_BNO"/>
+		<result property="title" column="TITLE"/>
+		<result property="content" column="CONTENT"/>
+		<result property="status" column="STATUS"/>
+ 	</resultMap>
+	
+	<insert id="alarmRequest">
+		INSERT INTO ALARM VALUES(SEQ_ANO.NEXTVAL, #{atno}, #{type_name}
+								, sysdate, #{receivce_mno}, #{send_mno}
+								, #{send_nmno}, #{send_bno}, #{title}
+								, #{content}, default)
+	</insert>	
+</mapper>

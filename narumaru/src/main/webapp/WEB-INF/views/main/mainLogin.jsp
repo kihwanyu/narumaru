@@ -3,7 +3,7 @@
 <%@ page import="java.net.URLEncoder" %>
 <%@ page import="java.security.SecureRandom" %>
 <%@ page import="java.math.BigInteger" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
 <link href='https://fonts.googleapis.com/css?family=Roboto:300,400' rel='stylesheet' type='text/css'>
@@ -13,6 +13,8 @@
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 <html>
 <head>
 <style>
@@ -407,11 +409,11 @@ $font-default: 'Roboto', sans-serif;
 	        <form action="login.me" method="post">
 	          <div class="form-element form-stack">
 	            <label for="username-login" class="form-label">이메일</label>
-	            <input id="username-login" type="text" name="email">
+	            <input id="username-login" type="text" name="email" value="pogonon@naver.com">
 	          </div>
 	          <div class="form-element form-stack">
 	            <label for="password-login" class="form-label">비밀번호</label>
-	            <input id="password-login" type="password" name="userPwd">
+	            <input id="password-login" type="password" name="userPwd" value="asdf">
 	          </div>
 	          <div class="form-element form-submit">
 	            <button id="logIn" class="login" type="submit" name="login">로그인</button>

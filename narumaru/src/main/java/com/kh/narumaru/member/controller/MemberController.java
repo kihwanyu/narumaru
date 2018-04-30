@@ -50,8 +50,7 @@ import com.kh.narumaru.payment.model.vo.Bank;
 import com.kh.narumaru.payment.model.vo.Payment;
 import com.kh.narumaru.payment.model.vo.Withdraw;
 import com.github.scribejava.core.model.OAuth2AccessToken;
-
-import com.kh.narumaru.common.vo.PageInfo;
+import com.kh.narumaru.common.model.vo.PageInfo;
 import com.kh.narumaru.maru.model.service.MaruService;
 import com.kh.narumaru.maru.model.vo.MaruMember;
 import com.kh.narumaru.member.model.exception.LoginException;
@@ -63,6 +62,7 @@ import com.kh.narumaru.member.model.exception.nameChangeException;
 import com.kh.narumaru.member.model.exception.passwordChangeException;
 import com.kh.narumaru.member.model.exception.phoneChangeException;
 import com.kh.narumaru.member.model.exception.selectChanelException;
+import com.kh.narumaru.member.model.exception.statusUpdateException;
 import com.kh.narumaru.member.model.service.ChannelService;
 import com.kh.narumaru.member.model.service.MemberService;
 import com.kh.narumaru.member.model.vo.Channel;
@@ -157,7 +157,6 @@ public class MemberController {
 	
 	@RequestMapping(value="memberInsert.me")
 	public String memberInsert(Member m, Model model, HttpServletRequest request){
-		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
 		
 		if(m.getGender().equals("M")){
 			m.setGender("남");
@@ -174,18 +173,18 @@ public class MemberController {
 		
 		try{
 			m.setUserPwd(passwordEncoder.encode(m.getUserPwd()));
-			System.out.println("컨트롤러 회원가입: " + m);
 			ms.insertMember(m);
+			System.out.println("컨트롤러 회원가입: " + m);
 			m.setUserPwd(request.getParameter("userPwd"));
-			//loginUser = ms.loginMember(m);
+			Member loginUser = ms.loginMember(m);
 			int nmno = nms.insertNarumaru(nm).getNmno();
 			
-			/*MaruMember mm = new MaruMember();
+			MaruMember mm = new MaruMember();
 			mm.setMno(loginUser.getMid());
 			mm.setNmno(nmno);
 			mm.setConLevel(0);
 			System.out.println("mm:"+mm);
-			mas.insertMaruMember(mm);*/
+			mas.insertMaruMember(mm);
 			
 			return "main/mainLogin";
 			
@@ -607,6 +606,25 @@ public class MemberController {
 			e.printStackTrace();
 		}*/
 	}
+	@RequestMapping(value="memberDropout.me")
+	public ModelAndView memberDropout(ModelAndView mv, Member m, HttpSession session){
+		/*탈퇴 N*/
+		m.setStatus("N");
+		
+		try {
+			ms.memberStatusUpdate(m);
+			
+			session.removeAttribute("loginUser");
+			mv.setViewName("main/mainLogin");
+		} catch (statusUpdateException e) {
+			mv.addObject("message", e.getMessage());
+			mv.setViewName("common/errorPage");
+		}
+		
+		return mv;
+	}
+	
+	
 	//마이페이지 Info end//
 	
 	// 마이페이지 페이지 이동 start

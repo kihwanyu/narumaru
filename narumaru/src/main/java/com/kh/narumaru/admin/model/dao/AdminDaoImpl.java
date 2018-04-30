@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.narumaru.admin.model.vo.Admin;
 import com.kh.narumaru.notice.model.vo.Notice;
 import com.kh.narumaru.member.model.vo.Member;
+import com.kh.narumaru.narumaru.model.vo.Narumaru;
 @Repository
 public class AdminDaoImpl implements AdminDao{
 	@Autowired
@@ -73,5 +74,15 @@ public class AdminDaoImpl implements AdminDao{
 		System.out.println("insertNotice Dao : " + n );
 		
 		return sqlSession.insert("Board.insertNotice", n);
+	}
+
+
+	@Override
+	public ArrayList<Narumaru> maruView() {
+		System.out.println("adDAO 나오는거지?");
+		ArrayList<Narumaru> ma = (ArrayList)sqlSession.selectList("Admin.maruView");
+		System.out.println("DAO ma : " + ma);
+		
+		return ma;
 	}
 }
