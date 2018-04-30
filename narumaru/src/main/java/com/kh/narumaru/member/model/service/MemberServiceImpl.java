@@ -33,14 +33,10 @@ public class MemberServiceImpl implements MemberService{
 
 		return md.loginCheck(m);
 	}
-
-
-	
 	@Override
 	public void insertMember(Member m) {
 		
 		int result = md.insertMember(sqlSession, m);
-		
 		
 	}
 
@@ -84,11 +80,34 @@ public class MemberServiceImpl implements MemberService{
 		md.passwordChange(sqlSession, m);
 	}
 
-
-
+	
 	@Override
 	public void memberStatusUpdate(Member m) throws statusUpdateException {
 		md.memberStatusUpdate(sqlSession, m);
 	}
+	
+	
+	@Override
+	public String findEmail(Member m) {
+		
+		return md.findEmail(sqlSession, m);
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

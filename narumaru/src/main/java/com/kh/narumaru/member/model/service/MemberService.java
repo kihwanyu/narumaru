@@ -30,4 +30,6 @@ public interface MemberService {
 
 	void memberStatusUpdate(Member m) throws statusUpdateException;
 
+	String findEmail(Member m);
+
 }

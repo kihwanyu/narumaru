@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.junit.runner.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpRequest;
@@ -105,6 +106,56 @@ public class MemberController {
 	}*/
 	
 	
+	@RequestMapping(value="findMember.me")
+	public String findMember(){
+		
+		return "member/findMember";
+	}
+	
+	@RequestMapping(value="findEmail.me")
+	public ModelAndView findEmail(ModelAndView mv,HttpServletRequest request, HttpServletResponse response){
+		
+		String name = request.getParameter("name");
+		String phone = request.getParameter("phone");
+		
+		System.out.println("이메일찾기" + name + "  " + phone);
+		
+		Member m = new Member();
+		
+		m.setNickName(name);
+		m.setPhone(phone);
+		
+		String email = ms.findEmail(m);
+		System.out.println(email);
+		
+		m.setEmail(email);
+		
+		mv.addObject("Member", m);
+		mv.setViewName("jsonView");	
+		
+		return mv;
+		
+	}
+	
+	@RequestMapping(value="searchPwd.me")
+	public ModelAndView searchPwd(ModelAndView mv,HttpServletRequest request, HttpServletResponse response){
+		
+		String email = request.getParameter("email");
+		String phone = request.getParameter("phone");
+		
+		System.out.println("비밀번호찾기" + email + "  " + phone);
+		
+		Member m = new Member();
+		
+		m.setEmail(email);
+		m.setPhone(phone);
+		
+		
+		
+		
+		return mv;
+	}
+	
 	@RequestMapping(value="login.me", method=RequestMethod.POST)
 	public ModelAndView showMainView(Member m, ModelAndView mv, SessionStatus status ){
 		
@@ -121,10 +172,6 @@ public class MemberController {
 		
 		System.out.println(userIp);
 		*/
-		
-		
-		
-		
 		try {
 			Member loginUser = ms.loginMember(m);
 			

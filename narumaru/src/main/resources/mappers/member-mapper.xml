@@ -93,6 +93,10 @@
 	<update id="statusUpdate">
 		UPDATE MEMBER SET STATUS=#{status} WHERE MNO=#{mid}
 	</update>
+	
+	<select id="findEmail" resultType="java.lang.String" parameterType="Member">
+		SELECT EMAIL FROM MEMBER WHERE NICNAME = #{nickName} AND PHONE = #{phone}
+	</select>
 </mapper>
 
 
