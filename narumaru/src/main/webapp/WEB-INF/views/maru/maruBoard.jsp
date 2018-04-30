@@ -53,7 +53,12 @@
 			<c:if test="${ b.bLevel == 0 }">
 			<div class="board">
 				<div class="boardInfo">
-					<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
+					<div class="writerPhoto"><c:if test="${empty b.profileName }">
+							<img style="width:100%; height:100%;" src="resources/images/profile_defalt.png" id="profileImg">
+						</c:if>
+						<c:if test="${!empty b.profileName }">
+							<img style="width:100%; height:100%;" src="resources/memberprofile/${b.profileName }" id="profileImg">
+						</c:if></div>
 					<div style="display:inline-block;"><label>${b.bWriter}</label><br><label>${b.createDate}</label></div>
 					<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">
 						<img src="resources/images/menu.png" class="modifyMenu size100per">
@@ -100,9 +105,7 @@
 							<div class="sub emotionSub">이모티콘</div>
 						</li>
 						<li class="insertReplyShow" onclick="replyOpen(this, ${ b.bno });"><span>댓글보기</span></li>
-						<li class="showSub shereBtn" onclick="submenuOpen(this);"><span>공유하기</span>
-							<div class="sub shereSub">개발중인 기능입니다</div>
-						</li>
+						<li class="showSub shereBtn" onclick="reportBoard(${ b.bno });"><span>신고하기</span></li>
 					</ul>
 				</div>
 				<div class="insertReply">
@@ -111,7 +114,12 @@
 							<c:if test = "${ b.bno eq b2.targetBno}">
 							<div style="height:100px;">
 								
-								<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
+								<div class="writerPhoto"><c:if test="${empty b2.profileName }">
+							<img style="width:100%; height:100%;" src="resources/images/profile_defalt.png" id="profileImg">
+						</c:if>
+						<c:if test="${!empty b2.profileName }">
+							<img style="width:100%; height:100%;" src="resources/memberprofile/${b2.profileName }" id="profileImg">
+						</c:if></div>
 								<label>${ b2.bWriter }</label> <label class="floatRight">${b2.createDate}</label>
 								<div class="replyContent" style="clear:both;">${b2.bContent}</div>
 							</div>
@@ -233,6 +241,8 @@
 	});
 
 	$(document).scroll(function(){
+		summernote1();
+		summernote2();
 		//더이상 가져올 글이 없으면 그냥 종료한다
 		if(isEnd) return;
 		
@@ -303,7 +313,12 @@
 	        	/* for(var i = 0; i < newPage; i++){ */
 	        		$(".content").append('<div class="board">'
 				+'<div class="boardInfo">'
-				+'	<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
+				+'	<div class="writerPhoto"><c:if test="${empty b.profileName }">'
+				+'<img style="width:100%; height:100%;" src="resources/images/profile_defalt.png" id="profileImg">'
+				+'</c:if>'
+				+'<c:if test="${!empty b.profileName }">'
+				+'	<img style="width:100%; height:100%;" src="resources/memberprofile/${b.profileName }" id="profileImg">'
+				+'</c:if></div>'
 				+'	<div style="display:inline-block;"><label>${b.bWriter}</label><br><label>${b.createDate}</label></div>'
 				+'	<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">'
 				+'		<img src="resources/images/menu.png" class="modifyMenu size100per">'
@@ -360,7 +375,12 @@
 							<c:if test = "${ b.bno eq b2.targetBno}">
 							+'			<div style="height:100px;">'
 							
-							+'	<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
+							+'	<div class="writerPhoto"><c:if test="${empty b2.profileName }">'
+							+'<img style="width:100%; height:100%;" src="resources/images/profile_defalt.png" id="profileImg">'
+							+'</c:if>'
+							+'<c:if test="${!empty b2.profileName }">'
+							+'	<img style="width:100%; height:100%;" src="resources/memberprofile/${b2.profileName }" id="profileImg">'
+							+'</c:if></div>'
 							+'	<label>${ b2.bWriter }</label> <label class="floatRight">${b2.createDate}</label>'
 							+'	<div class="replyContent" style="clear:both;">${b2.bContent}</div>'
 							+'</div>'
@@ -397,11 +417,17 @@
 				$("#photo").click();
 		});
 		function modifyBoard(bno){
-			$("#myModal").modal();		
+			$(btn).parents(".boardBtn").find("#myModal").modal();	
 			/* location.href="updateBoardOne.nm?bno="+bno + "&nmno=${nm.nmno}"; */
 		}
 		function deleteBoard(bno){
 			location.href="deleteBoardOne.nm?bno="+bno + "&nmno=${nm.nmno}";
+		}
+		function reportBoard(bno){
+			var r = confirm("이 글을 신고하시겠습니까?");
+			if (r == true) {
+				
+			}
 		}
 	</script>
 </body>

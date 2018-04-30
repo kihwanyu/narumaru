@@ -50,10 +50,15 @@
 				console.log(data);
 				for(var i = 0; i < data.length; i++){
 					console.log(data[i]);
+					if(data[i].CON_LEVEL == 0 ){data[i].NICNAME = data[i].NICNAME + " (마루장)" };
+					var profileName = 'profile_defalt.png';
+					if(data[i].PROFILENAME != null ){profileName = data[i].PROFILENAME};
 					$(".memberBody").append(
 						'<div class="memberInfo">'+
 						'<hr>'+
-						'	<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'+
+						'	<div class="writerPhoto">'+
+						'<img style="width:100%; height:100%;" src="resources/memberprofile/' + profileName + '" id="profileImg">'+
+						'	</div>'+
 						'	<label>'+data[i].NICNAME+'</label>'+
 						'	<div class="floatRight boardBtn"><img src="resources/images/menu.png" class="modifyMenu size100per"></div>'+
 						'	<hr style="clear:both;">'+

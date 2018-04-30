@@ -33,10 +33,14 @@ public class MaruDaoImpl implements MaruDao{
 
 	@Override
 	public void insertMaruMember(MaruMember mm) throws MaruException {
-		
-		int result = sqlSession.insert("Maru.insertMaruMember", mm);
-		if(result<0){
-			throw new MaruException("마루 가입 실패");
+		int check = sqlSession.selectOne("Maru.checkMaruMember", mm);
+		if(check==0){
+			int result = sqlSession.insert("Maru.insertMaruMember", mm);			
+			if(result<0){
+				throw new MaruException("마루 가입 실패");
+			}
+		}else{
+			throw new MaruException("이미 가입된 회원입니다");
 		}
 		
 	}

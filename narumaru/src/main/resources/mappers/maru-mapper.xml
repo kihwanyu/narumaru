@@ -30,6 +30,10 @@
 	<select id="selectMaruMemberList" resultType="hashmap">
 		SELECT * FROM MARU_MEMBER MM JOIN MEMBER M ON(M.MNO=MM.MNO) WHERE MM.NMNO=#{nmno}
 	</select>
+	
+	<select id="checkMaruMember" resultType="_int">
+		SELECT COUNT(*) FROM MARU_MEMBER WHERE NMNO=#{nmno} AND MNO=#{mno}
+	</select>
 </mapper>
 
 

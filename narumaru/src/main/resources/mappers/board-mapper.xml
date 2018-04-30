@@ -10,6 +10,7 @@
 		<result property="bTno" column="B_TNO"/>
 		<result property="bType" column="B_TYPE"/>
 		<result property="bTitle" column="B_TITLE"/>
+		<result property="profileName" column="PROFILENAME"/>
 		<result property="bContent" column="B_CONTENT"/>
 		<result property="bHidden" column="B_HIDDEN"/>
 		<result property="mno" column="MNO"/>
@@ -37,7 +38,7 @@
 
 	</resultMap>
 	<select id="selectBoardList" resultMap="boardResultSet" parameterType="_int">
-		SELECT BNO, B_TNO, B_TYPE, B_TITLE, B_CONTENT, B_HIDDEN, b.MNO, M.NICNAME, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, NMNO, CANO, CNO, B_LEVEL, TARGET_BNO, IS_OPEN, NEED_POINT,
+		SELECT BNO, B_TNO, B_TYPE, B_TITLE, M.PROFILENAME, B_CONTENT, B_HIDDEN, B.MNO, M.NICNAME, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, NMNO, CANO, CNO, B_LEVEL, TARGET_BNO, IS_OPEN, NEED_POINT,
     	(SELECT COUNT(*) FROM BOARD WHERE TARGET_BNO = B.BNO) AS COMMENTS
 		FROM BOARD B
 		JOIN MEMBER M ON(B.MNO = M.MNO)
