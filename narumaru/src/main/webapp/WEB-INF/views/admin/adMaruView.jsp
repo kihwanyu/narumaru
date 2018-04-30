@@ -74,11 +74,13 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>Edinburgh</td>
-                        </tr>
+                        <c:forEach items="${ma}" var="maruview">
+                        	<tr>
+                        		<td>${maruview.NM_TITLE}</td>
+                        		<td>${maruview.MARUADMIN}</td>
+                        		<td>${maruview.MARUMAEMBER}</td>
+                        	</tr>
+                        </c:forEach>
                       </tbody>
                     </table>
                   </div>
