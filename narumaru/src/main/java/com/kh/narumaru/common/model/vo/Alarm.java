@@ -11,29 +11,37 @@ public class Alarm implements Serializable{
 	private String type_name;
 	private String alarm_date;
 	private int receive_mno;
+	private String receive_nicname;
 	private int send_mno;
+	private String send_nicname;
 	private int send_nmno;
+	private String nm_title;
 	private int send_bno;
-	private String title;
-	private String content;
+	private String b_title;
+	private String b_content;
 	private int status;
 	
 	public Alarm() {
 		super();
 	}
 
-	public Alarm(int ano, int atno, String type_name, String alarm_date, int receive_mno, int send_mno, int send_nmno,
-			String title, String content, int status) {
+	public Alarm(int ano, int atno, String type_name, String alarm_date, int receive_mno, String receive_nicname,
+			int send_mno, String send_nicname, int send_nmno, String nm_title, int send_bno, String b_title,
+			String b_content, int status) {
 		super();
 		this.ano = ano;
 		this.atno = atno;
 		this.type_name = type_name;
 		this.alarm_date = alarm_date;
 		this.receive_mno = receive_mno;
+		this.receive_nicname = receive_nicname;
 		this.send_mno = send_mno;
+		this.send_nicname = send_nicname;
 		this.send_nmno = send_nmno;
-		this.title = title;
-		this.content = content;
+		this.nm_title = nm_title;
+		this.send_bno = send_bno;
+		this.b_title = b_title;
+		this.b_content = b_content;
 		this.status = status;
 	}
 
@@ -77,12 +85,28 @@ public class Alarm implements Serializable{
 		this.receive_mno = receive_mno;
 	}
 
+	public String getReceive_nicname() {
+		return receive_nicname;
+	}
+
+	public void setReceive_nicname(String receive_nicname) {
+		this.receive_nicname = receive_nicname;
+	}
+
 	public int getSend_mno() {
 		return send_mno;
 	}
 
 	public void setSend_mno(int send_mno) {
 		this.send_mno = send_mno;
+	}
+
+	public String getSend_nicname() {
+		return send_nicname;
+	}
+
+	public void setSend_nicname(String send_nicname) {
+		this.send_nicname = send_nicname;
 	}
 
 	public int getSend_nmno() {
@@ -93,20 +117,36 @@ public class Alarm implements Serializable{
 		this.send_nmno = send_nmno;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getNm_title() {
+		return nm_title;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setNm_title(String nm_title) {
+		this.nm_title = nm_title;
 	}
 
-	public String getContent() {
-		return content;
+	public int getSend_bno() {
+		return send_bno;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setSend_bno(int send_bno) {
+		this.send_bno = send_bno;
+	}
+
+	public String getB_title() {
+		return b_title;
+	}
+
+	public void setB_title(String b_title) {
+		this.b_title = b_title;
+	}
+
+	public String getB_content() {
+		return b_content;
+	}
+
+	public void setB_content(String b_content) {
+		this.b_content = b_content;
 	}
 
 	public int getStatus() {
@@ -120,7 +160,10 @@ public class Alarm implements Serializable{
 	@Override
 	public String toString() {
 		return "Alarm [ano=" + ano + ", atno=" + atno + ", type_name=" + type_name + ", alarm_date=" + alarm_date
-				+ ", receive_mno=" + receive_mno + ", send_mno=" + send_mno + ", send_nmno=" + send_nmno + ", title="
-				+ title + ", content=" + content + ", status=" + status + "]";
+				+ ", receive_mno=" + receive_mno + ", receive_nicname=" + receive_nicname + ", send_mno=" + send_mno
+				+ ", send_nicname=" + send_nicname + ", send_nmno=" + send_nmno + ", nm_title=" + nm_title
+				+ ", send_bno=" + send_bno + ", b_title=" + b_title + ", b_content=" + b_content + ", status=" + status
+				+ "]";
 	}
+	
 }
