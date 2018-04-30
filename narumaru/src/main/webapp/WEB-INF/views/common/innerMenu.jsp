@@ -25,10 +25,11 @@
 				<div class="floatRight pointer maruMemberInvateView">
 					초대
 				</div>
-				
-				<div style="margin-top:10px; text-align:center; background:black; color:white;" class="pointer" id="insertMaruMember">
-					가입하기
-				</div>
+				<c:if test='${ nm.isOpen ne "비공개"}'>
+					<div style="margin-top:10px; text-align:center; background:black; color:white;" class="pointer" id="insertMaruMember">
+						가입하기
+					</div> 
+				</c:if>
 			</div>
 			<div class="pointer maruSetting">
 			<hr>
@@ -76,7 +77,20 @@
 		var r = confirm("이 마루에 가입하시겠습니까?");
 		if (r == true) {
 		  console.log("${loginUser.mid} ${nm.nmno}");
-		  location.href="insertMaruMember.ma?mno=${loginUser.mid}&nmno=${nm.nmno}";
+
+		  var nmno=${nm.nmno};
+		  var mno=${loginUser.mid};
+		  $.ajax({
+				url:"insertMaruMember.ma",
+				type:"get",
+				data:{"nmno":nmno, "mno":mno},
+				success:function(data){
+					alert(data);
+				},
+				error:function(data){
+					alert(data);
+				}			
+			});
 		  
 		}		
 	});

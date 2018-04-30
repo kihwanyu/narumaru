@@ -69,7 +69,7 @@ public class NarumaruController {
 			newB.setBno(0);
 			newB.setCano(0);
 			newB.setCno(0);
-			newB.setIsOpen("all");
+			newB.setIsOpen("all"); 
 			newB.setComments(0);
 			newB.setbLevel(0);
 			if(nm.getNmCategory()==2){

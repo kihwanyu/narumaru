@@ -20,7 +20,7 @@ import com.kh.narumaru.maru.model.vo.MaruMember;
 import com.kh.narumaru.narumaru.model.vo.Narumaru;
 
 @Controller
-@SessionAttributes("Maru")
+@SessionAttributes("nm")
 public class MaruController {
 	@Autowired
 	private MaruService ms;
@@ -70,16 +70,21 @@ public class MaruController {
 	}
 	
 	@RequestMapping("insertMaruMember.ma")
-	public ModelAndView insertMaruMameber(MaruMember mm, ModelAndView mv){
+	public void insertMaruMameber(MaruMember mm, HttpServletResponse response){
 		try {
 			ms.insertMaruMember(mm);
-			 
-		} catch (MaruException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().print("회원가입 완료");
+		} catch (MaruException | IOException e) {
+			try {
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().print(e.getMessage());
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
-		
-		return mv;
+
 	}
 	
 	@RequestMapping("countMaruMember.ma")
@@ -139,7 +144,7 @@ public class MaruController {
 			response.setCharacterEncoding("UTF-8");
 			new Gson().toJson(maruMemberList, response.getWriter());
 		} catch (MaruException e) {
-			// TODO Auto-generated catch block
+			// TODO Auto-generated catch block 
 			e.printStackTrace();
 		} catch (JsonIOException e) {
 			// TODO Auto-generated catch block
