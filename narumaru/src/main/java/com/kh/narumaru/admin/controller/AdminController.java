@@ -33,6 +33,7 @@ import com.kh.narumaru.notice.model.vo.Notice;
 import com.kh.narumaru.admin.model.service.AdminService;
 import com.kh.narumaru.admin.model.service.AdminServiceImpl;
 import com.kh.narumaru.member.model.vo.Member;
+import com.kh.narumaru.narumaru.model.vo.Narumaru;
 
 
 @Controller
@@ -93,9 +94,14 @@ public class AdminController {
 	}
 	
 	@RequestMapping("adMaruView.ad")
-	public String showmAdminMaruView(){
+	public ModelAndView showmAdminMaruView(Narumaru maru, ModelAndView mv){
+		ArrayList<Narumaru> ma = as.maruView();
+		System.out.println("컨트롤러 ma : " + ma);
 		
-		return "admin/adMaruView";
+		mv.addObject("ma", ma);
+		mv.setViewName("admin/adMaruView");
+		
+		return mv;
 	}
 	
 	@RequestMapping("adLoginManagView.ad")
