@@ -96,6 +96,31 @@ public class NarumaruController {
 		return mv;
 	}
 	
+	@RequestMapping(value = "selectNarumaruName.bo")
+	public void selectNarumaruName(HttpServletResponse response, int nmno, String bWriter, String bContent, String createDate){
+		Narumaru nm = nms.selectNarumaruOne(nmno);
+		
+		try {
+			HashMap hm = new HashMap();
+			String nmName = nm.getNmTitle();
+			
+			hm.put("nmName", nmName);
+			hm.put("bWriter", bWriter);
+			hm.put("bContent", bContent);
+			hm.put("createDate", createDate);
+			
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			new Gson().toJson(hm, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	@RequestMapping(value = "selectBoardListAjax.bo")
 	public void selectBoardListAjax(HttpServletRequest request, HttpServletResponse response){
 		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
@@ -324,10 +349,11 @@ public class NarumaruController {
 	}
 	
 	@RequestMapping("deleteBoardOne.nm")
-	public String deleteBoardOne(int bno, int nmno) throws NarumaruException{
+	public String deleteBoardOne(int bno, int nmno, int type) throws NarumaruException{
 		nms.deleteBoardOne(bno);
 		
-		return "redirect:/boardListAll.bo?nmno="+nmno;
+		if(type == 1) return "redirect:/boardListAll.bo?nmno="+nmno;
+		else return "redirect:myboardView.me";
 	}
 	
 	@RequestMapping("insertNarumaru.nm")
