@@ -138,67 +138,8 @@
 			        </div>
 			        
 			        <div id="tab2" class="tab_content">
-			        	 <ul id="comment-contants">
-			            	<li class="board-li" style="color: black;">
-			            		<div style="margin-bottom: 20px;">
-			            			<div style="margin-top: 20px; margin-left: 20px;">
-			            				<span><font size="3px">유기환</font>&nbsp;&nbsp;<font color="darkgray">댓글</font></span>
-			            			</div> 
-			            		</div>
-			            		<br>
-			            		<div style="margin-bottom: 20px; padding-left: 20px; padding-right: 20px;">
-			            			<div style="padding-bottom: 10px;">
-			            				생명을 너의 천고에 길을 대한 노래하며 것이다. 생명을 거선의 있는 뭇 풍부하게 두기 이상의 청춘이 운다. 
-			            			</div>
-			            			<div style="padding-bottom: 10px; color: darkgray; text-align: right;">
-			            				2018년 4월 10일 오전 2시 29분
-			            			</div>
-			            			<div style="border-top: solid 1px darkgray; padding-top: 40px; font-size: 15px;">
-			            				나루/마루 이름
-			            			</div>
-									<br>
-			            		</div>
-							</li>
-							<li class="board-li" style="color: black;">
-			            		<div style="margin-bottom: 20px;">
-			            			<div style="margin-top: 20px; margin-left: 20px;">
-			            				<span><font size="3px">유기환</font>&nbsp;&nbsp;<font color="darkgray">댓글</font></span>
-			            			</div> 
-			            		</div>
-			            		<br>
-			            		<div style="margin-bottom: 20px; padding-left: 20px; padding-right: 20px;">
-			            			<div style="padding-bottom: 10px;">
-			            				생명을 너의 천고에 길을 대한 노래하며 것이다. 생명을 거선의 있는 뭇 풍부하게 두기 이상의 청춘이 운다. 
-			            			</div>
-			            			<div style="padding-bottom: 10px; color: darkgray; text-align: right;">
-			            				2018년 4월 10일 오전 2시 29분
-			            			</div>
-			            			<div style="border-top: solid 1px darkgray; padding-top: 40px; font-size: 15px;">
-			            				나루/마루 이름
-			            			</div>
-									<br>
-			            		</div>
-							</li>
-							<li class="board-li" style="color: black;">
-			            		<div style="margin-bottom: 20px;">
-			            			<div style="margin-top: 20px; margin-left: 20px;">
-			            				<span><font size="3px">유기환</font>&nbsp;&nbsp;<font color="darkgray">댓글</font></span>
-			            			</div> 
-			            		</div>
-			            		<br>
-			            		<div style="margin-bottom: 20px; padding-left: 20px; padding-right: 20px;">
-			            			<div style="padding-bottom: 10px;">
-			            				생명을 너의 천고에 길을 대한 노래하며 것이다. 생명을 거선의 있는 뭇 풍부하게 두기 이상의 청춘이 운다. 
-			            			</div>
-			            			<div style="padding-bottom: 10px; color: darkgray; text-align: right;">
-			            				2018년 4월 10일 오전 2시 29분
-			            			</div>
-			            			<div style="border-top: solid 1px darkgray; padding-top: 40px; font-size: 15px;">
-			            				나루/마루 이름
-			            			</div>
-									<br>
-			            		</div>
-							</li>
+			        	<ul id="comment-contants">
+							<!-- 댓글 추가하는 부분 -->
 			            </ul>
 						<div align="center" class="loadingArea" style="display: none;">
 							<img alt="" src="resources/images/lodingImg.gif">
@@ -238,6 +179,14 @@
 				$("#board-comment-menu-down"+number).hide();
 			}
 		}
+        
+        function modifyBoard(bno, nmno){
+        	location.href="toUpdateBoardPage.nm?bno=" + bno + "&nmno=" + nmno;
+        }
+        
+        function deleteBoard(bno, nmno){
+			location.href="deleteBoardOne.nm?bno="+ bno + "&nmno=" + nmno + "&type=2";
+		}
 
         </script>
 		<jsp:include page="../common/myPage_RightSideBar.jsp"/>
@@ -259,6 +208,9 @@
 					for(var b in list){
 						// 나루 글이 아니면 다음껄로
 						if(list[b].bType != 100) continue;
+						else if(tempI > 10) break;
+						//ㄴ 최초 10개의 글만 불러오게 만듬.
+						
 						// 추가될 댓글 스트링
 						var str = '';
 						var tempJ = 0; // number 대용
@@ -288,6 +240,36 @@
 						        +    	'</div>';
 						        
 						        str += strTemp;
+						        
+							}
+							
+							if(colist[co].mno == ${loginUser.mid}){
+								$.ajax({
+									url:'selectNarumaruName.bo',
+									type:'post',
+									data:{"nmno":colist[co].nmno,"bWriter":colist[co].bWriter,"bContent":colist[co].bContent,"createDate":colist[co].createDate},
+									success:function(data){
+										//여긴 작성한 댓글 리스트 추가하기
+											$("#comment-contants").append('<li class="board-li" style="color: black;">'
+								            	+	'<div style="margin-bottom: 20px;">'
+							            		+	'<div style="margin-top: 20px; margin-left: 20px;">'
+							            		+		'<span><font size="3px">' + data["bWriter"] + '</font>&nbsp;&nbsp;<font color="darkgray">댓글</font></span>'
+							            		+	'</div>' 
+								            	+	'</div>'
+								            	+	'<br>'
+								            	+	'<div style="margin-bottom: 20px; padding-left: 20px; padding-right: 20px;">'
+								            	+		'<div style="padding-bottom: 10px;">' + data["bContent"] + '</div>'
+								            	+		'<div style="padding-bottom: 10px; color: darkgray; text-align: right;">' + data["createDate"] + '</div>'
+								            	+		'<div style="border-top: solid 1px darkgray; padding-top: 40px; font-size: 15px;">'
+								            	+			data["nmName"]
+								            	+		'</div>'
+												+		'<br>'
+								            	+	'</div>'
+												+'</li>');
+									},
+									error:function(){
+										}
+								});
 							}
 						}
 						
@@ -301,9 +283,9 @@
 							+			'<img alt="" src="resources/images/menu.png" style="width: 100%; height: 100%;">'		            			
 			            	+			'<div id="board-menu-down' + tempI +'" class="board-menu-down">'
 							+				'<ul>'
-							+					'<li><a href="#">글 수정 </a></li>'
+							+					'<li><a onclick="modifyBoard(' + list[b].bno +', ' + list[b].nmno +')">글 수정 </a></li>'
 							+					'<li><a href="#">공지등록</a></li>'
-							+					'<li><a href="#">삭제</a></li>'
+							+					'<li><a onclick="deleteBoard(' + list[b].bno +', ' + list[b].nmno +')">삭제</a></li>'
 							+				'</ul>'
 							+			'</div>'
 			            	+		'</div>'
@@ -323,6 +305,9 @@
 							+ str
 							+	'</div>'
 							+'</li>');
+						
+						
+						
 					}
 				},
 				error:function(data){

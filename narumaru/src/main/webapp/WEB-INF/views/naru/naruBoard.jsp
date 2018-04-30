@@ -402,7 +402,7 @@
 		}
 		
 		function deleteBoard(bno){
-			location.href="deleteBoardOne.nm?bno="+ bno + "&nmno=${nm.nmno}";
+			location.href="deleteBoardOne.nm?bno="+ bno + "&nmno=${nm.nmno}&type=1";
 		}
 		
 		function addReply(btn, bno){
