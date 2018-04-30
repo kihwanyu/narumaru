@@ -28,7 +28,7 @@
 				<c:if test='${ nm.isOpen ne "비공개"}'>
 					<div style="margin-top:10px; text-align:center; background:black; color:white;" class="pointer" id="insertMaruMember">
 						가입하기
-					</div>
+					</div> 
 				</c:if>
 			</div>
 			<div class="pointer maruSetting">

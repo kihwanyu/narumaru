@@ -383,7 +383,7 @@
 							+'</c:if></div>'
 							+'	<label>${ b2.bWriter }</label> <label class="floatRight">${b2.createDate}</label>'
 							+'	<div class="replyContent" style="clear:both;">${b2.bContent}</div>'
-							+'</div>'
+							+'</div>' 
 							+'	<hr>'
 							</c:if>
 						</c:forEach>

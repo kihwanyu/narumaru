@@ -97,7 +97,7 @@
 				</tr>
 			</table>
 		</div> <!-- 마루 이름 -->
-		
+		 
 		<div id="middle-marucover">
 			<img src="${contextPath}/resources/images/cosmos.jpg" style="float:left; width:300px; height:225px;">
 			

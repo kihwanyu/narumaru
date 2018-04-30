@@ -200,7 +200,7 @@ public class Board implements java.io.Serializable {
 	}
 
 	public int getNeedPoint() {
-		return needPoint;
+		return needPoint; 
 	}
 
 	public void setNeedPoint(int needPoint) {

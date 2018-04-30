@@ -144,7 +144,7 @@ public class MaruController {
 			response.setCharacterEncoding("UTF-8");
 			new Gson().toJson(maruMemberList, response.getWriter());
 		} catch (MaruException e) {
-			// TODO Auto-generated catch block
+			// TODO Auto-generated catch block 
 			e.printStackTrace();
 		} catch (JsonIOException e) {
 			// TODO Auto-generated catch block

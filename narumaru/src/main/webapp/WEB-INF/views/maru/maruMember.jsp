@@ -52,7 +52,7 @@
 					console.log(data[i]);
 					if(data[i].CON_LEVEL == 0 ){data[i].NICNAME = data[i].NICNAME + " (마루장)" };
 					var profileName = 'profile_defalt.png';
-					if(data[i].PROFILENAME != null ){profileName = data[i].PROFILENAME};
+					if(data[i].PROFILENAME != null ){profileName = data[i].PROFILENAME}; 
 					$(".memberBody").append(
 						'<div class="memberInfo">'+
 						'<hr>'+

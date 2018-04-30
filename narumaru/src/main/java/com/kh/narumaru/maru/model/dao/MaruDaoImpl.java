@@ -40,7 +40,7 @@ public class MaruDaoImpl implements MaruDao{
 				throw new MaruException("마루 가입 실패");
 			}
 		}else{
-			throw new MaruException("이미 가입된 회원입니다");
+			throw new MaruException("이미 가입된 회원입니다"); 
 		}
 		
 	}
