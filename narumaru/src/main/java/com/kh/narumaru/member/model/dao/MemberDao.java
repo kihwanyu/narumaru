@@ -32,5 +32,7 @@ public interface MemberDao {
 
 	void memberStatusUpdate(SqlSessionTemplate sqlSession, Member m) throws statusUpdateException;
 
+	String findEmail(SqlSessionTemplate sqlSession, Member m);
+
 
 }

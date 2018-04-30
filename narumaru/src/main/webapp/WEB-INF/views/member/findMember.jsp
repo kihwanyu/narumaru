@@ -4,6 +4,7 @@
 <html>
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <head>
 <style>
 		* {
@@ -260,17 +261,16 @@
 	<div class="idArea">
 		<label for="inputId" class="col-lg-2 control-label">이름</label>
          <div class="col-lg-10">
-              <input type="text" class="form-control onlyAlphabetAndNumber" id="id" data-rule-required="true" placeholder="가입시 사용한 이름을 입력하세요" maxlength="20">
+              <input type="text" class="form-control" name="name" id="name" data-rule-required="true" placeholder="가입시 사용한 이름을 입력하세요" maxlength="20">
          </div>
          <br><br>
          <label for="inputPhoneNumber" class="col-lg-2 control-label">휴대폰 번호</label>
            <div class="col-lg-10">
-               <input type="tel" class="form-control onlyNumber" id="phoneNumber" data-rule-required="true" placeholder="-를 제외하고 숫자만 입력하세요." maxlength="11">
+               <input type="tel" class="form-control onlyNumber" name="phone" id="phone" data-rule-required="true" placeholder="-를 제외하고 숫자만 입력하세요." maxlength="20">
            </div>
            <br><br><br>
-       	  <!-- <button class="idBtn btn btn-default">이메일 찾기</button> -->
        	  <div align="center">
-	       	  <label class="btn_label idBtn btn btn-default" for="open-pop">이메일 찾기</label>
+	       	  <label class="btn_label idBtn btn btn-default" for="open-pop" onclick="searchEmail();">이메일 찾기</label>
     	   	  <label class="btn_label btn btn-default">메인으로 돌아기기</label>
        	  </div>
 	</div>
@@ -280,22 +280,68 @@
 	<div class="passArea">
 		<label for="inputId" class="col-lg-2 control-label">이메일</label>
          <div class="col-lg-10">
-              <input type="text" class="form-control onlyAlphabetAndNumber" id="id" data-rule-required="true" placeholder="30자이내의 알파벳, 언더스코어(_), 숫자만 입력 가능합니다." maxlength="30">
+              <input type="text" class="form-control" name="email" id="email" data-rule-required="true" placeholder="30자이내의 알파벳, 언더스코어(_), 숫자만 입력 가능합니다." maxlength="30">
          </div>
          <br><br>
          <label for="inputPhoneNumber" class="col-lg-2 control-label">휴대폰 번호</label>
            <div class="col-lg-10">
-               <input type="tel" class="form-control onlyNumber" id="phoneNumber" data-rule-required="true" placeholder="-를 제외하고 숫자만 입력하세요." maxlength="11">
+               <input type="tel" class="form-control onlyNumber" name="phone2" id="phoneNumber" data-rule-required="true" placeholder="-를 제외하고 숫자만 입력하세요." maxlength="11">
            </div>
            <br><br><br>
            <div align="center">
-       	   <label class="btn_label passBtn btn btn-default" for="open-pop2">비밀번호 찾기</label>
+       	   <label class="btn_label passBtn btn btn-default" for="open-pop2" onclick="searchPwd();">비밀번호 찾기</label>
        	   <label class="btn_label btn btn-default">메인으로 돌아가기</label>
            
            </div>
 	</div>
 	
 <br><br><hr>
+
+	<script>
+		function searchEmail(){
+				var name = $("#name").val();
+				var phone = $("#phone").val();
+				var email = null;
+				$.ajax({
+					url:"findEmail.me",
+					type:"post",
+					data:{name:name, phone:phone},
+					success:function(data){
+						email = data.Member.email;
+						
+						if(!email){
+							$("#findEmail").html("가입된 Email이 없습니다.");
+						}else{
+							$("#findEmail").html("가입하신 Email은"+"<a href='#'>"+ email +"</a>" + "입니다.");
+							
+						}
+						
+					}
+				});
+				return false;
+		}
+		
+		function searchPwd(){
+			
+			var email = $("#email").val();
+			var phone = $("#phone2").val();
+			
+			$.ajax({
+				url:"searchPwd.me",
+				type:"post",
+				data:{email:email, phone:phone},
+				success:function(data){
+					
+					//가입하신 <a href="#" id="findPwd"></a> 로 비밀번호가 발송 되었습니다.
+					
+				}
+			});
+			return false;
+		}
+		
+		
+	
+	</script>
 
 
 	<input class="modal-id-state" id="open-pop" type="checkbox" />
@@ -305,7 +351,7 @@
 				<label class="modal-id_close" for="open-pop"></label>
 				<h2 style="padding-bottom: 40px;">아이디 확인</h2>
 				
-				<h3 style="vertical-align: middle;">가입하신 아이디는 <a href="#">wlgus12312@naver.com</a> 입니다.</h3>
+				<h3 id="findEmail" style="vertical-align: middle;"> </h3>
 				
 			</div>
 		</div>
@@ -318,7 +364,7 @@
 				<label class="modal-pass_close" for="open-pop2"></label>
 				<h2 style="padding-bottom: 40px;">비밀번호확 확인</h2>
 				
-				<h3 style="vertical-align: middle;">가입하신 <a href="#">wlgus12312@naver.com</a> 로 비밀번호가 발송 되었습니다.</h3>
+				<h3 style="vertical-align: middle;"></h3>
 				
 			</div>
 		</div>

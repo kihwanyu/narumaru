@@ -409,16 +409,16 @@ $font-default: 'Roboto', sans-serif;
 	        <form action="login.me" method="post">
 	          <div class="form-element form-stack">
 	            <label for="username-login" class="form-label">이메일</label>
-	            <input id="username-login" type="text" name="email" value="pogonon@naver.com">
+	            <input id="username-login" type="text" name="email" value="">
 	          </div>
 	          <div class="form-element form-stack">
 	            <label for="password-login" class="form-label">비밀번호</label>
-	            <input id="password-login" type="password" name="userPwd" value="asdf">
+	            <input id="password-login" type="password" name="userPwd" value="">
 	          </div>
 	          <div class="form-element form-submit">
 	            <button id="logIn" class="login" type="submit" name="login">로그인</button>
 	            <button id="goRight" class="login off" name="signup" type="button">회원가입</button>
-	            <%-- <button class="login" type="button" onclick="location.href='${contextPath}/naverLogin.me'">네이버 로그인페이지가기</button> --%>
+	            <button id="goFind" class="login off" name="findId" type="button">아이디/비밀번호찾기</button>
 	          </div>
 	        </form>
 	      </div>
@@ -427,20 +427,14 @@ $font-default: 'Roboto', sans-serif;
 	</div>
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	<script>
+	
+		$(function(){
+			$("#goFind").click(function(){
+				location.href="${contextPath}/findMember.me";				
+				
+			});
+		});
 	
 		$(document).ready(function(){
 			  $('#goRight').on('click', function(){

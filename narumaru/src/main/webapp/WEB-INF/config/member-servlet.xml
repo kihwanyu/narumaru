@@ -24,6 +24,7 @@
 	</beans:bean>
 	
 	
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
 	
 	<beans:bean id="jsonView" class="net.sf.json.spring.web.servlet.view.JsonView"/>
 	
@@ -36,7 +37,6 @@
 		<!-- 10M  -->
 	</beans:bean>
 	
-	<context:component-scan base-package="com.kh.narumaru" />
-	<aop:aspectj-autoproxy proxy-target-class="true"/>
+	<context:component-scan base-package="com.kh.narumaru"/>
 	
 </beans:beans>

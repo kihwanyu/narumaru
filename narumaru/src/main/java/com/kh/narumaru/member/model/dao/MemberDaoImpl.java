@@ -133,4 +133,13 @@ public class MemberDaoImpl implements MemberDao{
 		}
 	}
 
+
+	@Override
+	public String findEmail(SqlSessionTemplate sqlSession, Member m) {
+		
+		String email = sqlSession.selectOne("Member.findEmail", m); 
+		
+		return email;
+	}
+
 }
