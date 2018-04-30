@@ -25,6 +25,7 @@ import com.kh.narumaru.member.model.exception.selectChanelException;
 import com.kh.narumaru.member.model.service.ChannelService;
 import com.kh.narumaru.member.model.vo.Channel;
 import com.kh.narumaru.member.model.vo.Member;
+import com.kh.narumaru.naru.model.vo.Theme;
 import com.kh.narumaru.narumaru.exception.NarumaruException;
 import com.kh.narumaru.narumaru.model.service.NarumaruService;
 import com.kh.narumaru.narumaru.model.vo.Board;
@@ -57,6 +58,7 @@ public class NarumaruController {
 		ArrayList<Board> list = nms.selectBoardList(nmno);
 		ArrayList<Board> colist = nms.selectCommentList(nmno);
 		Narumaru nm = nms.selectNarumaruOne(nmno);
+		Theme theme = nms.selectThemeOne(nmno);
 		if(list.size() == 0){
 			Board newB = new Board();
 			newB.setbWriter("");
@@ -83,9 +85,9 @@ public class NarumaruController {
 		boolean isOwner = nms.checkNarumaruOwner(nmno, loginUser);
 		mv.addObject("nm", nm);
 		mv.addObject("list", list);
-		System.out.println("colist:"+colist);
 		mv.addObject("colist", colist);
 		mv.addObject("isOwner", isOwner);
+		mv.addObject("theme", theme);
 		if(nm.getNmCategory() ==2){
 			mv.setViewName("naru/naruBoard"); 
 		}else{

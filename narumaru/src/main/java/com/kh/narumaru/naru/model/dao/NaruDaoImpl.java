@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.narumaru.naru.model.exception.NaruException;
 import com.kh.narumaru.naru.model.vo.Category;
+import com.kh.narumaru.naru.model.vo.Theme;
 
 @Repository
 public class NaruDaoImpl implements NaruDao{
@@ -56,6 +57,18 @@ public class NaruDaoImpl implements NaruDao{
 		if(result <= 0){
 			System.out.println("해당하는 카테고리 없음");
 		}
+	}
+
+	@Override
+	public void updateTheme(int nmno, String themeValue, String boardValue, String fontValue, SqlSessionTemplate sqlSession) {
+		Theme t = new Theme();
+		
+		t.setNmno(nmno);
+		t.setTheme(themeValue);
+		t.setBoard(boardValue);
+		t.setFont(fontValue);
+		
+		int result = sqlSession.update("Naru.updateTheme", t);
 	}
 
 }
