@@ -25,8 +25,11 @@
 				<div class="floatRight pointer maruMemberInvateView">
 					초대
 				</div>
+				
+				<div style="margin-top:10px; text-align:center; background:black; color:white;" class="pointer" id="insertMaruMember">
+					가입하기
+				</div>
 			</div>
-			<br>
 			<div class="pointer maruSetting">
 			<hr>
 				마루 설정				
@@ -68,6 +71,14 @@
 	});
 	$(".maruSetting").click(function(){
 	    location.href="showMaruSetting.ma";
+	});
+	$("#insertMaruMember").click(function(){
+		var r = confirm("이 마루에 가입하시겠습니까?");
+		if (r == true) {
+		  console.log("${loginUser.mid} ${nm.nmno}");
+		  location.href="insertMaruMember.ma?mno=${loginUser.mid}&nmno=${nm.nmno}";
+		  
+		}		
 	});
 	
 	$(function(){

@@ -221,7 +221,7 @@
 							</td>
 							<td width="15%">
 								<div align="center">
-									<input type="button" value="탈퇴 " class="btn btn-default">
+									<label class="btn_label" for="open-pop1">탈퇴</label>
 								</div>
 							</td>
 						</tr>
@@ -272,7 +272,7 @@
 							$(".name-div-true").show();
 							$(".name-div-false").hide();
 							
-							if(namePass > 1 && namePass <= 8){
+							if(namePass.length > 1 && namePass.length <= 8){
 								var nickName = $("#nicName").val().trim();
 								
 								$.ajax({
@@ -435,7 +435,7 @@
 							변경 비밀번호 재입력&nbsp;<input type="password" style="margin-top: 10px;" class="form-control" id="password3">
 						</div>			
 						<div class="password-div">
-							<input type="button" id="passwordChangeBtn" value="비밀번호 변경" class="btn btn-default" onclick="">
+							<input type="button" id="passwordChangeBtn" value="비밀번호 변경" class="btn btn-default">
 						</div>						
 					</div>
 				</form>
@@ -461,10 +461,40 @@
 							}
 						}
 					}); 
-				});
+				}); 
 			});
 			</script>
 		</div>
+		<input class="modal-q-state" id="open-pop1" type="checkbox" />
+		<div class="modal-q">
+			<label class="modal-q_bg" for="open-pop1"></label>
+			<div class="modal-q_inner">
+				<label class="modal-q_close" for="open-pop1"></label>
+				<div style="width: 70%; margin-top: 100px; margin-bottom: 100px; border: 1px solid black; padding: 50px;" align="left">
+					<div align="center" style="font-size: 20px;">회원 탈퇴 안내</div>
+					<div align="center" style="font-size: 20px;">[회원탈퇴 약관]</div>
+					<br>
+					<p>환경권의 내용과 행사에 관하여는 법률로 정한다. 대통령의 임기가 만료되는 때에는 임기만료 70일 내지 40일전에 후임자를 선거한다. 모든 국민은 법 앞에 평등하다. 누구든지 성별·종교 또는 사회적 신분에 의하여 정치적·경제적·사회적·문화적 생활의 모든 영역에 있어서 차별을 받지 아니한다.</p>
+					<p>사면·감형 및 복권에 관한 사항은 법률로 정한다. 법원은 최고법원인 대법원과 각급법원으로 조직된다. 이 헌법시행 당시의 대법원장과 대법원판사가 아닌 법관은 제1항 단서의 규정에 불구하고 이 헌법에 의하여 임명된 것으로 본다.</p>
+					<p>국회에 제출된 법률안 기타의 의안은 회기중에 의결되지 못한 이유로 폐기되지 아니한다. 다만, 국회의원의 임기가 만료된 때에는 그러하지 아니하다. 행정권은 대통령을 수반으로 하는 정부에 속한다.</p>
+					<p>국가원로자문회의의 조직·직무범위 기타 필요한 사항은 법률로 정한다. 대한민국의 경제질서는 개인과 기업의 경제상의 자유와 창의를 존중함을 기본으로 한다.</p>
+					<p>대한민국의 영토는 한반도와 그 부속도서로 한다. 모든 국민은 헌법과 법률이 정한 법관에 의하여 법률에 의한 재판을 받을 권리를 가진다. 위원은 정당에 가입하거나 정치에 관여할 수 없다.<p>
+					<p>탄핵소추의 의결을 받은 자는 탄핵심판이 있을 때까지 그 권한행사가 정지된다. 의무교육은 무상으로 한다. 모든 국민은 종교의 자유를 가진다. 법관은 탄핵 또는 금고 이상의 형의 선고에 의하지 아니하고는 파면되지 아니하며, 징계처분에 의하지 아니하고는 정직·감봉 기타 불리한 처분을 받지 아니한다.</p>
+					<p>훈장등의 영전은 이를 받은 자에게만 효력이 있고, 어떠한 특권도 이에 따르지 아니한다. 재판의 심리와 판결은 공개한다. 다만, 심리는 국가의 안전보장 또는 안녕질서를 방해하거나 선량한 풍속을 해할 염려가 있을 때에는 법원의 결정으로 공개하지 아니할 수 있다.</p>
+					<p>국가는 지역간의 균형있는 발전을 위하여 지역경제를 육성할 의무를 진다. 헌법개정안이 제2항의 찬성을 얻은 때에는 헌법개정은 확정되며, 대통령은 즉시 이를 공포하여야 한다.	</p>
+					<br>
+					<div align="center">
+						<label for="agreement">약관에 동의 하시겠습니까?</label>&nbsp;
+						<input type="checkbox" id="agreement">
+					</div>
+					<br>
+					<div align="center">
+						<input type="button" value="탈퇴하기" id="dropoutBtn">
+					</div>
+				</div>
+			</div>
+		</div>
+		
 		<form id="profileChage-form" method="post" action="profileChange.me" enctype="multipart/form-data">
 			<input type="file" id="profile-file" name="profile-file" onchange="LoadImg(this);">
 		</form>
@@ -501,7 +531,15 @@
 						}
 					});
 				}
-				
+			});
+			$('#dropoutBtn').click(function(){
+				if($('#agreement').is(':checked')){
+					if(confirm("정말로 탈퇴하시겠습니까?")){
+						location.href="memberDropout.me?mid="+${loginUser.mid};					
+					}
+				} else {
+					alert("약관에 동의해주세요.");
+				}
 			});
 		});
 		
@@ -515,6 +553,8 @@
 			reader.readAsDataURL(value.files[0]);
 			}
 		}
+		
+		
 		</script>
 	</body>
 </html>

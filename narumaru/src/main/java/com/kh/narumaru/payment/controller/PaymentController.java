@@ -1,5 +1,8 @@
 package com.kh.narumaru.payment.controller;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.narumaru.member.model.vo.Member;
 import com.kh.narumaru.payment.model.exception.PaymentInsertException;
+import com.kh.narumaru.payment.model.exception.WithdrawListSelectException;
 import com.kh.narumaru.payment.model.exception.refundInsertException;
 import com.kh.narumaru.payment.model.service.PaymentService;
 import com.kh.narumaru.payment.model.vo.Payment;
@@ -74,7 +78,7 @@ public class PaymentController {
 	
 	/* 포인트 환급 */
 	@RequestMapping(value="pointRefund.pa")
-	public ModelAndView pointRefund(ModelAndView mv, Withdraw w, HttpSession Session){
+	public ModelAndView pointRefund(ModelAndView mv, Withdraw w, HttpSession Session, @RequestParam(name="currentPoint") int currentPoint){
 		
 		System.out.println("w : " + w);
 		/*수수료*/
@@ -89,15 +93,40 @@ public class PaymentController {
 		
 		try {
 			ps.refundInsert(w);
-			//mv.setViewName("common/");
+			
+			mv.addObject("currentPoint", currentPoint);
+			mv.addObject("amount", amount);
+			mv.addObject("point", w.getPoint());
+			
+			mv.setViewName("mypage/myPage_refundResult");
 		} catch (refundInsertException e) {
-			mv.addObject("message", e.getMessage());
-			mv.setViewName("common/errorPage");
+			mv.addObject("currentPoint", currentPoint);
+			
+			mv.setViewName("mypage/myPage_refundResult");
 		}
 		
 		return mv;
 	}
+	/*포인트 환급 취소*/
 	
+	@RequestMapping(value="withDrawDelete.pa")
+	public void withdrawDelete(@RequestParam(value="wno") int wno, HttpServletResponse response){
+		System.out.println("wno : " + wno);
+		
+		try {
+			ps.deleteWithdraw(wno);
+			response.getWriter().print("Y");
+		} catch (WithdrawListSelectException | IOException e) {
+			try {
+				response.getWriter().print("N");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
+		
+	}
 	/* 계좌 인증 - 미완성 */
 	/*@RequestMapping(value="accountCertified.pa")
 	public ModelAndView accountCertified(ModelAndView mv){

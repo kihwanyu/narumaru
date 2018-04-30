@@ -38,7 +38,7 @@
 	
 	<select id="selectPwd" resultType="java.lang.String" parameterType="java.lang.String">
 		<!-- SELECT PASSWORD FROM MEMBER WHERE EMAIL=#{email} AND STATUS = 'Y' -->
-		SELECT PASSWORD FROM MEMBER WHERE EMAIL like #{email}||'%' AND STATUS = 'Y'
+		SELECT PASSWORD FROM MEMBER WHERE EMAIL like #{id}||'%' AND STATUS = 'Y'
 	</select>
 	
 	<select id="selectAllChanel" resultMap="channelResultSet">
@@ -62,7 +62,6 @@
        		(SELECT SUM(AMOUNT) FROM PAYMENT WHERE PAYDAY = SYSDATE) AS TODAYAMOUNT, 
        		(SELECT COUNT(*) FROM DECLARATION WHERE POL_DATE = SYSDATE ) AS TODAYDECLATION
 		FROM MEMBER GROUP BY 2;
-	
 	</select>
 	<update id="profileChange">
 		UPDATE MEMBER SET PROFILENAME=#{profileName} WHERE MNO=#{mid}
@@ -88,11 +87,12 @@
 	<insert id="memberChannelInsert">
 		INSERT INTO MCHANNEL VALUES (SEQ_MCNO.NEXTVAL, #{mno}, #{cno})
 	</insert>
-	
 	<select id="memberList" resultMap="memberResultSet" resultType="Member">
 		SELECT * FROM MEMBER
 	</select>
-	
+	<update id="statusUpdate">
+		UPDATE MEMBER SET STATUS=#{status} WHERE MNO=#{mid}
+	</update>
 </mapper>
 
 

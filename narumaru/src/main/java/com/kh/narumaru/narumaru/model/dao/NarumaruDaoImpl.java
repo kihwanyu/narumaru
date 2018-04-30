@@ -21,8 +21,6 @@ public class NarumaruDaoImpl implements NarumaruDao {
 		
 		ArrayList<Board> list = (ArrayList)sqlSession.selectList("Board.selectBoardList", nmno);
 		
-		System.out.println(list);
-		
 		return list;
 	}
 
@@ -134,6 +132,29 @@ public class NarumaruDaoImpl implements NarumaruDao {
 		System.out.println(nm);
 		
 		return nm.getNmCategory();
+	}
+
+	@Override
+	public ArrayList<Board> selectWritedBoardList(int mid) {
+		
+		ArrayList<Board> list = (ArrayList)sqlSession.selectList("Board.selectWritedBoardList", mid);
+		
+		return list;
+	}
+
+	@Override
+	public ArrayList<Board> selectWritedCommentList(int mid) {
+		
+		ArrayList<Board> list = (ArrayList)sqlSession.selectList("Board.selectWritedCommentList", mid);
+		
+		return list;
+	}
+
+	@Override
+	public ArrayList<Board> selectCommentListAll() {
+		ArrayList<Board> list = (ArrayList)sqlSession.selectList("Board.selectCommentListAll");
+		
+		return list;
 	}
 
 }

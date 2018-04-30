@@ -18,11 +18,12 @@ public class Member implements java.io.Serializable{
 	private Date enroll_date;
 	private Date modify_date;
 	private String status;
+	private int total_amount;
 	
 	public Member(){}
 
 	public Member(int mid, String email, String userPwd, String nickName, String profileName, String gender,
-			Date birthDay, String phone, Date enroll_date, Date modify_date, String status) {
+			Date birthDay, String phone, Date enroll_date, Date modify_date, String status, int total_amount) {
 		super();
 		this.mid = mid;
 		this.email = email;
@@ -35,6 +36,7 @@ public class Member implements java.io.Serializable{
 		this.enroll_date = enroll_date;
 		this.modify_date = modify_date;
 		this.status = status;
+		this.total_amount = total_amount;
 	}
 
 	public int getMid() {
@@ -125,11 +127,20 @@ public class Member implements java.io.Serializable{
 		this.status = status;
 	}
 
+	public int getTotal_amount() {
+		return total_amount;
+	}
+
+	public void setTotal_amount(int total_amount) {
+		this.total_amount = total_amount;
+	}
+
 	@Override
 	public String toString() {
 		return "Member [mid=" + mid + ", email=" + email + ", userPwd=" + userPwd + ", nickName=" + nickName
 				+ ", profileName=" + profileName + ", gender=" + gender + ", birthDay=" + birthDay + ", phone=" + phone
-				+ ", enroll_date=" + enroll_date + ", modify_date=" + modify_date + ", status=" + status + "]";
+				+ ", enroll_date=" + enroll_date + ", modify_date=" + modify_date + ", status=" + status
+				+ ", total_amount=" + total_amount + "]";
 	}
 
 	

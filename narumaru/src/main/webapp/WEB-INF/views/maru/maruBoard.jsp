@@ -27,9 +27,9 @@
 			<br>
 			<div class="boardInsert">
 				<form action="insertNarumaruBoard.nm" method="post" id="boardInsert">
+					<textarea class="summernote" name="boardContent"></textarea>
 					<input type="hidden" name="bType" value="200"/>
 					<input type="hidden" name="bLevel" value="0"/>
-					<textarea id="summernote" name="boardContent"></textarea>
 					<input type="hidden" name="boardTitle" value="asd"/>
 					<input type="hidden" name="openLevel" value="all"/>
 					<input type="hidden" name="mno" value="${ loginUser.mid }"/>
@@ -59,14 +59,39 @@
 						<img src="resources/images/menu.png" class="modifyMenu size100per">
 						<div class="sub boardSub">
 							<ul>
-								<li>주소복사</li>
-								<li>공유하기</li>
-								<li>북마크</li>
-								<li>신고하기</li>
+								<li class="pointer" onclick="modifyBoard(${b.bno});">수정하기</li>
+								<li class="pointer" onclick="deleteBoard(${b.bno});">삭제하기</li>
 							</ul>
 						</div>
-					</div>
+								<div class="modal fade" id="myModal" role="dialog">
+									<div class="modal-dialog">
+
+										<!-- Modal content-->
+										<div class="modal-content">
+											<div class="modal-body">
+												<form action="updateBoardOne.nm" method="post"
+													id="boardInsert">
+													<textarea class="summernote" name="boardContent" value="${b.bContent}"></textarea>
+													<input type="hidden" name="bno" value="${b.bno}"/>
+													<input type="hidden" name="bType" value="200" /> <input
+														type="hidden" name="bLevel" value="0" />
+													<input type="hidden" name="boardTitle" value="asd" /> <input
+														type="hidden" name="openLevel" value="all" /> <input
+														type="hidden" name="mno" value="${ loginUser.mid }" /> <input
+														type="hidden" name="nmno" value="${ nm.nmno }" />
+												</form>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default"
+													data-dismiss="modal">Close</button>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
 				</div>
+				<br>
 				<div class="boardContent">${b.bContent}</div>
 				<div class="boardfoot">
 					<hr>
@@ -81,28 +106,29 @@
 					</ul>
 				</div>
 				<div class="insertReply">
-					<hr>
-					<form action="insertNarumaruBoard.nm" method="post" id="replyInsert">
-					<textarea class="summernote2" name="boardContent"></textarea>
-					<input type="hidden" name="bType" value="201"/>
-					<input type="hidden" name="bLevel" value="1"/>
-					<input type="hidden" name="targetBno" value="${ b.bno }"/>
-					<input type="hidden" name="boardTitle" value="asd"/>
-					<input type="hidden" name="openLevel" value="all"/>
-					<input type="hidden" name="mno" value="${ loginUser.mid }"/>
-					<input type="hidden" name="nmno" value="${ nm.nmno }"/>
-					</form>
 					<div class="replyArea">
 						 <c:forEach var="b2" begin="${beginPage}" end="${newPage}" items="${ list }" varStatus="i2">
 							<c:if test = "${ b.bno eq b2.targetBno}">
 							<div style="height:100px;">
-								<hr>
+								
 								<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
 								<label>${ b2.bWriter }</label> <label class="floatRight">${b2.createDate}</label>
 								<div class="replyContent" style="clear:both;">${b2.bContent}</div>
 							</div>
+							<hr>
 							</c:if>
 						</c:forEach>
+						
+						<form action="insertNarumaruBoard.nm" method="post" id="replyInsert">
+							<textarea class="summernote2" name="boardContent"></textarea>
+							<input type="hidden" name="bType" value="201"/>
+							<input type="hidden" name="bLevel" value="1"/>
+							<input type="hidden" name="targetBno" value="${ b.bno }"/>
+							<input type="hidden" name="boardTitle" value="asd"/>
+							<input type="hidden" name="openLevel" value="all"/>
+							<input type="hidden" name="mno" value="${ loginUser.mid }"/>
+							<input type="hidden" name="nmno" value="${ nm.nmno }"/>
+						</form>
 					</div>
 				</div>
 			</div>	
@@ -130,7 +156,7 @@
 		    tooltip: '등록하기',
 		    click: function () {
 		    	console.log($("#summernote").val());
-		      $("#boardInsert").submit();
+		    	$(this).parents("form").submit();
 		    }
 		  });
 
@@ -153,7 +179,7 @@
 		}
 	
 	function summernote1() {
-		  $('#summernote').summernote({
+		  $('.summernote').summernote({
 			  height: 150, 
 			  lang: 'ko-KR',
 			  toolbar: [
@@ -174,7 +200,7 @@
 	function summernote2() {
 		console.log($('.summernote2'));
 		  $('.summernote2').summernote({
-			  height: 50, 
+			  height: 80, 
 			  lang: 'ko-KR',
 			  toolbar: [
 				    ['style', ['bold', 'italic', 'underline', 'clear']],
@@ -256,9 +282,9 @@
 	    				+'<br>'
 	    				+'<div class="boardInsert">'
 	    				+'<form action="insertNarumaruBoard.nm" method="post" id="boardInsert">'
+	    				+'	<textarea id="summernote" name="boardContent"></textarea>'
 	    				+'	<input type="hidden" name="bType" value="200"/>'
 	    				+'	<input type="hidden" name="bLevel" value="0"/>'
-	    				+'	<textarea id="summernote" name="boardContent"></textarea>'
 	    				+'	<input type="hidden" name="boardTitle" value="asd"/>'
 	    				+'	<input type="hidden" name="openLevel" value="all"/>'
 	    				+'	<input type="hidden" name="mno" value="${ loginUser.mid }"/>'
@@ -283,14 +309,38 @@
 				+'		<img src="resources/images/menu.png" class="modifyMenu size100per">'
 				+'		<div class="sub boardSub">'
 				+'			<ul>'
-				+'				<li>주소복사</li>'
-				+'				<li>공유하기</li>'
-				+'				<li>북마크</li>'
-				+'				<li>신고하기</li>'
+				+'				<li class="pointer" onclick="modifyBoard(${b.bno});">수정하기</li>'
+				+'				<li class="pointer" onclick="deleteBoard(${b.bno});">삭제하기</li>'
 				+'			</ul>'
 				+'		</div>'
+				+'<div class="modal fade" id="myModal" role="dialog">'
+				+'<div class="modal-dialog">'
+
+				+'	<!-- Modal content-->'
+				+'	<div class="modal-content">'
+				+'		<div class="modal-body">'
+				+'			<form action="updateBoardOne.nm" method="post"'
+				+'				id="boardInsert">'
+				+'				<textarea class="summernote" name="boardContent"></textarea>'
+				+'				<input type="hidden" name="bType" value="200" /> <input'
+				+'					type="hidden" name="bLevel" value="0" />'
+				+'				<input type="hidden" name="boardTitle" value="asd" /> <input'
+				+'					type="hidden" name="openLevel" value="all" /> <input'
+				+'					type="hidden" name="mno" value="${ loginUser.mid }" /> <input'
+				+'					type="hidden" name="nmno" value="${ nm.nmno }" />'
+				+'			</form>'
+				+'		</div>'
+				+'		<div class="modal-footer">'
+				+'			<button type="button" class="btn btn-default"'
+				+'				data-dismiss="modal">Close</button>'
+				+'		</div>'
+				+'	</div>'
+
+				+'</div>'
+				+'</div>'
 				+'	</div>'
 				+'</div>'
+				+'<br>'
 				+'<div class="boardContent">${b.bContent}</div>'
 				+'<div class="boardfoot">'
 				+'	<hr>'
@@ -305,7 +355,18 @@
 				+'	</ul>'
 				+'</div>'
 				+'<div class="insertReply">'
-				+'	<hr>'
+				+'	<div class="replyArea">'
+						 <c:forEach var="b2" begin="${beginPage}" end="${newPage}" items="${ list }" varStatus="i2">
+							<c:if test = "${ b.bno eq b2.targetBno}">
+							+'			<div style="height:100px;">'
+							
+							+'	<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
+							+'	<label>${ b2.bWriter }</label> <label class="floatRight">${b2.createDate}</label>'
+							+'	<div class="replyContent" style="clear:both;">${b2.bContent}</div>'
+							+'</div>'
+							+'	<hr>'
+							</c:if>
+						</c:forEach>
 				+'	<form action="insertNarumaruBoard.nm" method="post" id="replyInsert">'
 				+'	<textarea class="summernote2" name="boardContent"></textarea>'
 				+'	<input type="hidden" name="bType" value="201"/>'
@@ -316,26 +377,14 @@
 				+'	<input type="hidden" name="mno" value="${ loginUser.mid }"/>'
 				+'	<input type="hidden" name="nmno" value="${ nm.nmno }"/>'
 				+'	</form>'
-				+'	<div class="replyArea">'
-						 <c:forEach var="b2" begin="${beginPage}" end="${newPage}" items="${ list }" varStatus="i2">
-							<c:if test = "${ b.bno eq b2.targetBno}">
-							+'			<div style="height:100px;">'
-							+'	<hr>'
-							+'	<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
-							+'	<label>${ b2.bWriter }</label> <label class="floatRight">${b2.createDate}</label>'
-							+'	<div class="replyContent" style="clear:both;">${b2.bContent}</div>'
-							+'</div>'
-							</c:if>
-						</c:forEach>
 						+'	</div>'
 						+'</div>'
 						+'</div>');
-	        	/* } */
 	        	</c:if>
 	        	</c:forEach>
-	        }
 	        	summernote1();
 	        	summernote2();
+	        }
 		}, 2000);
 	});
 		function replyOpen(btn, bno){
@@ -347,7 +396,13 @@
 		$("#photoUpload").click(function(){
 				$("#photo").click();
 		});
-		
+		function modifyBoard(bno){
+			$("#myModal").modal();		
+			/* location.href="updateBoardOne.nm?bno="+bno + "&nmno=${nm.nmno}"; */
+		}
+		function deleteBoard(bno){
+			location.href="deleteBoardOne.nm?bno="+bno + "&nmno=${nm.nmno}";
+		}
 	</script>
 </body>
 </html>

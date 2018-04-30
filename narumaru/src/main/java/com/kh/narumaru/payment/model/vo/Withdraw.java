@@ -8,8 +8,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class Withdraw implements Serializable{
 	private int wno;
-	private Date w_date;
-	private Date w_dateStr;
+	private Date resister_date;
+	private String resister_dateStr;
+	private Date withdraw_date;
+	private String withdraw_dateStr;
 	private int mno;
 	private int point;
 	private int amount;
@@ -17,18 +19,21 @@ public class Withdraw implements Serializable{
 	private String bank_name;
 	private String account_number;
 	private String account_holder;
-	private String w_value;
+	private String status;
 	
 	public Withdraw() {
 		super();
 	}
 
-	public Withdraw(int wno, Date w_date, Date w_dateStr, int mno, int point, int amount, String bcode,
-			String bank_name, String account_number, String account_holder, String w_value) {
+	public Withdraw(int wno, Date resister_date, String resister_dateStr, Date withdraw_date, String withdraw_dateStr,
+			int mno, int point, int amount, String bcode, String bank_name, String account_number,
+			String account_holder, String status) {
 		super();
 		this.wno = wno;
-		this.w_date = w_date;
-		this.w_dateStr = w_dateStr;
+		this.resister_date = resister_date;
+		this.resister_dateStr = resister_dateStr;
+		this.withdraw_date = withdraw_date;
+		this.withdraw_dateStr = withdraw_dateStr;
 		this.mno = mno;
 		this.point = point;
 		this.amount = amount;
@@ -36,7 +41,7 @@ public class Withdraw implements Serializable{
 		this.bank_name = bank_name;
 		this.account_number = account_number;
 		this.account_holder = account_holder;
-		this.w_value = w_value;
+		this.status = status;
 	}
 
 	public int getWno() {
@@ -47,20 +52,36 @@ public class Withdraw implements Serializable{
 		this.wno = wno;
 	}
 
-	public Date getW_date() {
-		return w_date;
+	public Date getResister_date() {
+		return resister_date;
 	}
 
-	public void setW_date(Date w_date) {
-		this.w_date = w_date;
+	public void setResister_date(Date resister_date) {
+		this.resister_date = resister_date;
 	}
 
-	public Date getW_dateStr() {
-		return w_dateStr;
+	public String getResister_dateStr() {
+		return resister_dateStr;
 	}
 
-	public void setW_dateStr(Date w_dateStr) {
-		this.w_dateStr = w_dateStr;
+	public void setResister_dateStr(String resister_dateStr) {
+		this.resister_dateStr = resister_dateStr;
+	}
+
+	public Date getWithdraw_date() {
+		return withdraw_date;
+	}
+
+	public void setWithdraw_date(Date withdraw_date) {
+		this.withdraw_date = withdraw_date;
+	}
+
+	public String getWithdraw_dateStr() {
+		return withdraw_dateStr;
+	}
+
+	public void setWithdraw_dateStr(String withdraw_dateStr) {
+		this.withdraw_dateStr = withdraw_dateStr;
 	}
 
 	public int getMno() {
@@ -119,20 +140,21 @@ public class Withdraw implements Serializable{
 		this.account_holder = account_holder;
 	}
 
-	public String getW_value() {
-		return w_value;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setW_value(String w_value) {
-		this.w_value = w_value;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	@Override
 	public String toString() {
-		return "Withdraw [wno=" + wno + ", w_date=" + w_date + ", w_dateStr=" + w_dateStr + ", mno=" + mno + ", point="
-				+ point + ", amount=" + amount + ", bcode=" + bcode + ", bank_name=" + bank_name + ", account_number="
-				+ account_number + ", account_holder=" + account_holder + ", w_value=" + w_value + "]";
+		return "Withdraw [wno=" + wno + ", resister_date=" + resister_date + ", resister_dateStr=" + resister_dateStr
+				+ ", withdraw_date=" + withdraw_date + ", withdraw_dateStr=" + withdraw_dateStr + ", mno=" + mno
+				+ ", point=" + point + ", amount=" + amount + ", bcode=" + bcode + ", bank_name=" + bank_name
+				+ ", account_number=" + account_number + ", account_holder=" + account_holder + ", status=" + status
+				+ "]";
 	}
-	
 	
 }
