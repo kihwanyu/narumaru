@@ -140,8 +140,9 @@
 						</tr>
 						<tr>
 							<td width="30%" style="vertical-align: middle;">
-								<c:set var="phoneSize" value="${fn:length(loginUser.phone)}"/>
-								<c:set var="phoneStr" value="0${fn:substring(loginUser.phone,3,phoneSize)}"/>
+								<!-- 국제번호 -->
+								<%-- <c:set var="phoneSize" value="${fn:length(loginUser.phone)}"/>
+								<c:set var="phoneStr" value="0${fn:substring(loginUser.phone,3,phoneSize)}"/> --%>
 								<div class="phone-div-true">
 									휴대폰번호&nbsp;&nbsp;&nbsp;${loginUser.phone }
 								</div>
@@ -150,7 +151,9 @@
 										휴대폰번호&nbsp;
 									</div>
 									<div style="float: left; width: 67%;">
-										<input type="tel" name="phone" id="phone" value="${phoneStr }" maxlength="11" class="form-control" placeholder="-없이 입력해주세요. 예)01012345678">
+										<input type="tel" name="phone" id="phone" value="${loginUser.phone }" maxlength="11" class="form-control" placeholder="-없이 입력해주세요. 예)01012345678">
+										<!-- 국제번호 -->
+										<%-- <input type="tel" name="phone" id="phone" value="${phoneStr }" maxlength="11" class="form-control" placeholder="-없이 입력해주세요. 예)01012345678"> --%>
 										<label class="tel-label" style="display: none; color: red;">숫자만 입력해주세요.</label>
 									</div>
 								</div>	
@@ -194,7 +197,7 @@
 									<!-- count 변수 1씩 증가시킴 -->
 									<c:set var="count" value="${count+1 }"/>
 									<!-- count가 5의 배수일 경우, <br> 태그 출력  -->
-									<c:if test="${count%5 == 0 }">
+									<c:if test="${count%4 == 0 }">
 									<br>
 									</c:if>
 								</c:forEach>
