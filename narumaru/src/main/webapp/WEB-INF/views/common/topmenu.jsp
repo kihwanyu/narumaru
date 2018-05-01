@@ -112,6 +112,9 @@
 		margin-bottom: 10px;
 		color: yellowgreen;
 	}
+	.alarmBackground{
+		background: pink;
+	}
 </style>
 	<div id="wrap">
 		<div id="band_top">
@@ -133,7 +136,7 @@
 				</div>
 				<div id="alram" onclick="clickAlram(this)">
 					<div style="width:18px;height:18px;border-radius:20px;color:#ffffff;background-color:#ff2200;color:10px;font-size:12px;position:relative;right:-10px;top:-5px;text-align:center;">
-						<p style="text-align:center;">8</p>
+						<p style="text-align:center;" id="alarmCount"></p>
 					</div>
 					
 					<div id="aArea" class="alram-dropdown" style="display:none;">
@@ -162,6 +165,22 @@
 	<script src="http://code.jquery.com/jquery-1.7.2.min.js" type="text/javascript"></script>
 	<script>
 		$(function(){
+			/* 알람 개수 ajax */
+			$.ajax({
+				url:"alarmStatusCount.al",
+				type:"get",
+				success:function(data){
+					console.log("서버 전송 성공!");
+					console.log(data);
+					
+					$("#alarmCount").text(data);
+					
+				},
+				error:function(data){
+					console.log("서버 전송 실패..");
+				},
+			});
+			/* 알람 리스트 ajax */
 			$.ajax({
 				url:"alarmList.al",
 				type:"get",
@@ -177,8 +196,13 @@
 						switch (value.atno) {
 						case 100: /* 관리자-공지사항 */
 							var infoStr = "공지사항이 등록 되었습니다.";
+							var $innerDiv;
+							if(value.status == 1){
+								$innerDiv =  $("<div class='new-innerdiv alarmBackground' onclick='clickNoticeAlarm("+value.ano+","+value.bno+");'>");
+							} else {
+								$innerDiv =  $("<div class='new-innerdiv' onclick='clickNoticeAlarm("+value.ano+","+value.send_bno+");'>");
+							}
 							
-							var $innerDiv = $("<div class='new-innerdiv'>");
 							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
 							var $alarmTitle = $("<div class='alarmTitle'>").text(value.b_title);
 							var $alarmComment = $("<div class='alarmComment'>").text(value.b_content);
@@ -378,6 +402,23 @@
 		    }
 		}
 		
+		/* 공지사항 알람 클릭 이벤트 */
+		function clickNoticeAlarm(ano, bno){
+			
+			$.ajax({
+				url:"alarmStatusUpdate.al",
+				data:{ano,ano},
+				type:"get",
+				success:function(data){
+					console.log("서버 전송 성공!");
+				},
+				error:function(data){
+					console.log("서버 전송 실패..");
+				},
+			});
+			
+			location.href = "noticeDetail.no?bno="+bno;
+		}
 		function clickAlram(div){
 			var con = document.getElementById("aArea");
 			
