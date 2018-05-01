@@ -113,7 +113,15 @@
                         </tr>
                       </thead>
                       <tbody>
-                      
+                      	  <c:forEach items="${RevenueMember}" var="RevenueMember">
+                        	<tr>
+                        		<td>${RevenueMember.EMAIL }</td>
+                        		<td>${RevenueMember.NICNAME }</td>
+                        		<td>${RevenueMember.PAYDAY }</td>
+                        		<td>${RevenueMember.AMOUNT }</td>
+                        		<td>${RevenueMember.POINT }</td>
+                        	</tr>
+                        </c:forEach>
                       </tbody>
                     </table>
                   </div>
@@ -151,33 +159,14 @@
                           <th>50대 이상</th>
                         </tr>
                       </thead>
-
+					
 
                       <tbody>
-                        <tr>
-                          <th>2016</th>
-                          <td>System Architect</td>
-                          <td>Edinburgh</td>
-                          <td>61</td>
-                          <td>2011/04/25</td>
-                          <td>$320,800</td>
-                        </tr>
-                        <tr>
-                          <th>2017</th>
-                          <td>Accountant</td>
-                          <td>Tokyo</td>
-                          <td>63</td>
-                          <td>2011/07/25</td>
-                          <td>$170,750</td>
-                        </tr>
-                        <tr>
-                          <th>2018</th>
-                          <td>Junior Technical Author</td>
-                          <td>San Francisco</td>
-                          <td>66</td>
-                          <td>2009/01/12</td>
-                          <td>$86,000</td>
-                        </tr>
+                       	<c:forEach items="${totalAge}" var="totalAge" >
+                        	<tr>
+                        		<td><c:out value="${totalAge[0]}"/></td>
+                        	</tr>
+                        </c:forEach>
                       </tbody>
                     </table>
                   </div>

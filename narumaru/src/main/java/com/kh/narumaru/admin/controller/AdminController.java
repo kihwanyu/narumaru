@@ -56,7 +56,24 @@ public class AdminController {
 			System.out.println("에베베" + EnrollDateList.get(iter.next()));
 		}
 		
+		int totalMember = as.selectTotalMember();
+		System.out.println("회원수 : " + totalMember);
+		mv.addObject("totalMember", totalMember);// 회원수
+		
+		int totalMaru = as.selectTotalMaru();
+		System.out.println("마루수 : " + totalMaru);
+		mv.addObject("totalMaru", totalMaru);
+		
+		int sysDateJoinMember = as.selectDateJoinMember();
+		System.out.println("금일 회원가입수 : " + sysDateJoinMember);
+		mv.addObject("sysDateJoinMember", sysDateJoinMember);//금일 회원가입수
+		
+		int payDaySysDate = as.selectPayDaySysDate();
+		System.out.println("금일 결제 금액" + payDaySysDate);
+		mv.addObject("payDaySysDate", payDaySysDate);
+		
 		mv.setViewName("admin/adMain");
+		
 		return mv;
 	}
 	
@@ -117,9 +134,19 @@ public class AdminController {
 	}
 	
 	@RequestMapping("adRevenueView.ad")
-	public String showmAdminRevenueView(){
+	public ModelAndView showmAdminRevenueView(ModelAndView mv){
+		ArrayList RevenueMember = as.RevenueMember();
+		System.out.println("RevenueMember : " + RevenueMember);
 		
-		return "admin/adRevenueView";
+		mv.addObject("RevenueMember", RevenueMember);
+		
+		ArrayList totalAge = as.totalAge();
+		System.out.println("totalAge" + totalAge);
+		mv.addObject("totalAge", totalAge);
+		
+		mv.setViewName("admin/adRevenueView");
+		
+		return mv;
 	}
 	
 	
