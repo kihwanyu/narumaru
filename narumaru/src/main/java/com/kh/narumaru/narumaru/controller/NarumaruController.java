@@ -382,4 +382,17 @@ public class NarumaruController {
 		return "redirect:/boardListAll.bo?nmno="+nm.getNmno();
 	}
 	
+	@RequestMapping("updateDefault.nm")
+	public String updateDefault(int nmno, HttpServletRequest request){
+		Narumaru nm = new Narumaru();
+		
+		nm.setNmno(nmno);
+		nm.setNmTitle(request.getParameter("nmTitle"));
+		nm.setNmIntro(request.getParameter("nmIntro"));
+		
+		nms.updateDefault(nm);
+		
+		return "redirect:/boardListAll.bo?nmno="+nmno;
+	}
+	
 }

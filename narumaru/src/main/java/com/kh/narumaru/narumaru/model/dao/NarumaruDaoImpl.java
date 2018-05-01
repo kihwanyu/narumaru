@@ -164,4 +164,10 @@ public class NarumaruDaoImpl implements NarumaruDao {
 		return theme;
 	}
 
+	@Override
+	public void updateDefault(Narumaru nm, SqlSessionTemplate sqlSession) {
+		int result = sqlSession.update("Narumaru.updateDefault",nm);
+		
+	}
+
 }

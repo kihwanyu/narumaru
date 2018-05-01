@@ -100,4 +100,9 @@ public class NarumaruServiceImpl implements NarumaruService {
 	public Theme selectThemeOne(int nmno) {
 		return nmd.selectThemeOne(nmno);
 	}
+
+	@Override
+	public void updateDefault(Narumaru nm) {
+		nmd.updateDefault(nm, sqlSession);
+	}
 }
