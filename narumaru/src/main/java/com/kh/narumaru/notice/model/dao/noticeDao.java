@@ -14,6 +14,8 @@ public interface noticeDao {
 	ArrayList<Notice> faqSelectList(Notice n);
 
 
-	void updateNoticeCommit(Notice n) throws NoticeUpdateException; 
+	void updateNoticeCommit(Notice n) throws NoticeUpdateException;
+
+	Notice showFaqDetailView(int bno); 
 
 }

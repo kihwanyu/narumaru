@@ -41,12 +41,21 @@ public class noticeServiceImpl implements noticeService {
 	}	
 		
 	//FAQ 전체 조회하기
-	@Override
-	public ArrayList<Notice> faqSelectList(Notice n) {
-		System.out.println("noticeService faqSelectList "); 
-		
-		return nd.faqSelectList(n);
-	}
+		@Override
+		public ArrayList<Notice> faqSelectList(Notice n) {
+			System.out.println("noticeService faqSelectList ");
+			
+			return nd.faqSelectList(n);
+		}
+
+		//faq detail 조회하기 
+		@Override
+		public Notice showFaqDetailView(int bno) {
+			System.out.println("noticeService noticeSelectList ");
+			
+			return nd.showFaqDetailView(bno);
+		}
+
 
 
 
