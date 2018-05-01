@@ -409,11 +409,11 @@ $font-default: 'Roboto', sans-serif;
 	        <form action="login.me" method="post">
 	          <div class="form-element form-stack">
 	            <label for="username-login" class="form-label">이메일</label>
-	            <input id="username-login" type="text" name="email" value="pogonon@naver.com">
+	            <input id="username-login" type="text" name="email" value="">
 	          </div>
 	          <div class="form-element form-stack">
 	            <label for="password-login" class="form-label">비밀번호</label>
-	            <input id="password-login" type="password" name="userPwd" value="asdf">
+	            <input id="password-login" type="password" name="userPwd" value="">
 	          </div>
 	          <div class="form-element form-submit">
 	            <button id="logIn" class="login" type="submit" name="login">로그인</button>
