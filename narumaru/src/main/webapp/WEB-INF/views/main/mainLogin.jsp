@@ -388,13 +388,9 @@ $font-default: 'Roboto', sans-serif;
 	            
 	          </div>
 	          <div class="form-element form-stack">
-	            <label for="password-signup" class="form-label">비밀번호</label>
-	            <input id="password-signup" type="password" name="password">
 	          </div>
 	          
 	          <div class="form-element form-checkbox">
-	            <input id="confirm-terms" type="checkbox" name="confirm" value="yes" class="checkbox">
-	            <label for="confirm-terms"><a href="#">서비스 약관</a> 및 <a href="#">개인정보 정책</a></label>
 	          </div>
 	          <div class="form-element form-submit">
 	            <button id="signUp" class="signup" type="submit" name="signup">회원가입</button>
