@@ -1,5 +1,7 @@
 package com.kh.narumaru.common.controller;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -60,17 +62,21 @@ public class AlarmController {
 		INSERT INTO ALARM VALUES(SEQ_ANO.NEXTVAL, 302, sysdate, 1, 2, 4, null, default);
 		INSERT INTO ALARM VALUES(SEQ_ANO.NEXTVAL, 303, sysdate, 1, 2, 4, null, default);
 		INSERT INTO ALARM VALUES(SEQ_ANO.NEXTVAL, 304, sysdate, 1, 2, 4, null, default);
-		INSERT INTO ALARM VALUES(SEQ_ANO.NEXTVAL, 304, sysdate, 1, 2, 4, null, default);*/
+		INSERT INTO ALARM VALUES(SEQ_ANO.NEXTVAL, 305, sysdate, 1, 2, 4, null, default);*/
 		
 		int mno = loginUser.getMid();
 		
-		Alarm alarm = new Alarm();
+		ArrayList<Alarm> alarm = new ArrayList<>();
+		// 보낼 유저의 번호를 구한다.
+		ArrayList<Integer> sendUser = null;
 		
 		/*Controller에서 Alarm객체에 값을 채운 후 Service로 보내주세요.*/
-		alarm.setSend_mno(mno);
+		for(int i = 0; i < sendUser.size(); i++){
+			alarm.get(i).setSend_mno(mno);
+		}
 		
 		try {
-			as.alarmRequest(alarm);
+			as.alarmRequest(alarm, sendUser);
 		} catch (alarmRequestException e) {
 			e.printStackTrace();
 		}
