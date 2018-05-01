@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.narumaru.member.model.vo.Member;
+import com.kh.narumaru.naru.model.vo.Theme;
 import com.kh.narumaru.narumaru.exception.NarumaruException;
 import com.kh.narumaru.narumaru.model.vo.Board;
 import com.kh.narumaru.narumaru.model.vo.Narumaru;
@@ -28,10 +29,11 @@ public class NarumaruDaoImpl implements NarumaruDao {
 	public Narumaru insertNarumaru(SqlSessionTemplate sqlSession, Narumaru nm) throws NarumaruException {
 		
 		int result = sqlSession.insert("Narumaru.insertNarumaru", nm);
+		
 		if(result<0){
-			throw new NarumaruException("생성 실패");
+			throw new NarumaruException("나루마루 생성 실패");
 		}else{
-			
+			int result2 = sqlSession.insert("Narumaru.insertTheme", nm.getNmno());
 		}
 		return nm;
 	}
@@ -155,6 +157,18 @@ public class NarumaruDaoImpl implements NarumaruDao {
 		ArrayList<Board> list = (ArrayList)sqlSession.selectList("Board.selectCommentListAll");
 		
 		return list;
+	}
+
+	@Override
+	public Theme selectThemeOne(int nmno) {
+		Theme theme = (Theme)sqlSession.selectOne("Naru.selectThemeOne",nmno);
+		return theme;
+	}
+
+	@Override
+	public void updateDefault(Narumaru nm, SqlSessionTemplate sqlSession) {
+		int result = sqlSession.update("Narumaru.updateDefault",nm);
+		
 	}
 
 }

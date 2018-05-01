@@ -8,6 +8,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
 
 import com.kh.narumaru.member.model.vo.Member;
+import com.kh.narumaru.naru.model.vo.Theme;
 import com.kh.narumaru.narumaru.exception.NarumaruException;
 import com.kh.narumaru.narumaru.model.dao.NarumaruDao;
 import com.kh.narumaru.narumaru.model.vo.Board;
@@ -93,5 +94,15 @@ public class NarumaruServiceImpl implements NarumaruService {
 	@Override
 	public ArrayList<Board> selectCommentListAll() {
 		return nmd.selectCommentListAll();
+	}
+
+	@Override
+	public Theme selectThemeOne(int nmno) {
+		return nmd.selectThemeOne(nmno);
+	}
+
+	@Override
+	public void updateDefault(Narumaru nm) {
+		nmd.updateDefault(nm, sqlSession);
 	}
 }

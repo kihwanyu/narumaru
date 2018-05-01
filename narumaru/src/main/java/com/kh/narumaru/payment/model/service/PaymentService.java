@@ -2,7 +2,7 @@ package com.kh.narumaru.payment.model.service;
 
 import java.util.ArrayList;
 
-import com.kh.narumaru.common.vo.PageInfo;
+import com.kh.narumaru.common.model.vo.PageInfo;
 import com.kh.narumaru.payment.model.exception.PaymentInsertException;
 import com.kh.narumaru.payment.model.exception.PaymentListSelectException;
 import com.kh.narumaru.payment.model.exception.WithdrawListSelectException;

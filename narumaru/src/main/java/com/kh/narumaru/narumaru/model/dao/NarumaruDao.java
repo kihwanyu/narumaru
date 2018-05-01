@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.narumaru.member.model.vo.Member;
+import com.kh.narumaru.naru.model.vo.Theme;
 import com.kh.narumaru.narumaru.exception.NarumaruException;
 import com.kh.narumaru.narumaru.model.vo.Board;
 import com.kh.narumaru.narumaru.model.vo.Narumaru;
@@ -38,4 +39,8 @@ public interface NarumaruDao {
 	ArrayList<Board> selectWritedCommentList(int mid);
 
 	ArrayList<Board> selectCommentListAll();
+
+	Theme selectThemeOne(int nmno);
+
+	void updateDefault(Narumaru nm, SqlSessionTemplate sqlSession);
 } 

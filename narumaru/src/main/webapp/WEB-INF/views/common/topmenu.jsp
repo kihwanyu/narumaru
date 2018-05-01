@@ -80,6 +80,7 @@
 		top:20px;
 		left:-200px;
 		width:300px;
+		overflow-y: scroll; 
 		height:400px;
 	    display: none;
 	    position: relative;
@@ -92,8 +93,27 @@
 	.profile-dropdown ul{
 		padding:15px;
 	}
-	#new-innerdiv:hover{
+	.new-innerdiv:hover{
 		background:#68a2ff;
+	}
+	.new-innerdiv{
+		vertical-align:middle;
+		border-bottom:1px solid lightgray; 
+		padding: 20px;
+	}
+	.alarmTitle{
+		font-size: 15px;
+	}
+	.alarmComment{
+		margin-top: 10px;
+		color: gray;
+	}
+	.alarmInfo{
+		margin-bottom: 10px;
+		color: yellowgreen;
+	}
+	.alarmBackground{
+		background: pink;
 	}
 </style>
 	<div id="wrap">
@@ -116,17 +136,10 @@
 				</div>
 				<div id="alram" onclick="clickAlram(this)">
 					<div style="width:18px;height:18px;border-radius:20px;color:#ffffff;background-color:#ff2200;color:10px;font-size:12px;position:relative;right:-10px;top:-5px;text-align:center;">
-						<p style="text-align:center;">8</p>
+						<p style="text-align:center;" id="alarmCount"></p>
 					</div>
 					
 					<div id="aArea" class="alram-dropdown" style="display:none;">
-		               <h4 style="margin:15px;">새 소식</h4>
-		               <hr style="margin-bottom:0;">
-		               <c:forEach var="i" begin="1" end="5">
-		               <div id="new-innerdiv" style="vertical-align:middle;border-bottom:1px solid lightgray; line-height:60px; height:60px;">
-		               		<img src="${contextPath}/resources/images/cosmos.jpg" style="margin:5px; width:50px; height:50px; border-radius: 150px;"/>&nbsp;<label style="position:absolute;">맞짱 신청을 받았습니다</label>
-		               </div>
-		               </c:forEach>
 		            </div>
 				</div>
 				
@@ -151,6 +164,232 @@
 	</div>
 	<script src="http://code.jquery.com/jquery-1.7.2.min.js" type="text/javascript"></script>
 	<script>
+		$(function(){
+			/* 알람 개수 ajax */
+			$.ajax({
+				url:"alarmStatusCount.al",
+				type:"get",
+				success:function(data){
+					console.log("서버 전송 성공!");
+					console.log(data);
+					
+					$("#alarmCount").text(data);
+					
+				},
+				error:function(data){
+					console.log("서버 전송 실패..");
+				},
+			});
+			/* 알람 리스트 ajax */
+			$.ajax({
+				url:"alarmList.al",
+				type:"get",
+				success:function(data){
+					console.log("서버 전송 성공!");
+					console.log(data);
+					
+					var $aArea = $("#aArea");
+					
+					$aArea.html('');
+					
+					$.each(data, function(index, value){
+						switch (value.atno) {
+						case 100: /* 관리자-공지사항 */
+							var infoStr = "공지사항이 등록 되었습니다.";
+							var $innerDiv;
+							if(value.status == 1){
+								$innerDiv =  $("<div class='new-innerdiv alarmBackground' onclick='clickNoticeAlarm("+value.ano+","+value.bno+");'>");
+							} else {
+								$innerDiv =  $("<div class='new-innerdiv' onclick='clickNoticeAlarm("+value.ano+","+value.send_bno+");'>");
+							}
+							
+							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
+							var $alarmTitle = $("<div class='alarmTitle'>").text(value.b_title);
+							var $alarmComment = $("<div class='alarmComment'>").text(value.b_content);
+
+							$innerDiv.append($innerDiv);
+							$innerDiv.append($alarmInfo);
+							$innerDiv.append($alarmTitle);
+							$innerDiv.append($alarmComment);
+							$aArea.append($innerDiv);
+							$aArea.append("</div>");
+							break;
+						case 101: /* 관리자-QA 답변 */
+							var infoStr = "Q&A 답변이 등록되었습니다.";
+							
+							var $innerDiv = $("<div class='new-innerdiv'>");
+							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
+							var $alarmTitle = $("<div class='alarmTitle'>").text(value.b_title);
+							var $alarmComment = $("<div class='alarmComment'>").text(value.b_content);
+
+							$innerDiv.append($innerDiv);
+							$innerDiv.append($alarmInfo);
+							$innerDiv.append($alarmTitle);
+							$innerDiv.append($alarmComment);
+							$aArea.append($innerDiv);
+							$aArea.append("</div>");
+							break;
+						case 200: /* 나루-게시글 댓글 */
+							var infoStr = value.send_nicname+"님이 " + value.b_title + " 게시글에 댓글을 작성했습니다.";
+							
+							var $innerDiv = $("<div class='new-innerdiv'>");
+							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
+							var $alarmTitle = $("<div class='alarmTitle'>").text(value.b_title);
+							var $alarmComment = $("<div class='alarmComment'>").text(value.b_content);
+
+							$innerDiv.append($innerDiv);
+							$innerDiv.append($alarmInfo);
+							$innerDiv.append($alarmTitle);
+							$innerDiv.append($alarmComment);
+							$aArea.append($innerDiv);
+							$aArea.append("</div>");
+							break;
+						case 201: /* 나루-게시글 등록(이웃) */
+							var infoStr = value.send_nicname+"님이 게시글을 작성했습니다.";
+							
+							var $innerDiv = $("<div class='new-innerdiv'>");
+							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
+							var $alarmTitle = $("<div class='alarmTitle'>").text(value.b_title);
+							var $alarmComment = $("<div class='alarmComment'>").text(value.b_content);
+
+							$innerDiv.append($innerDiv);
+							$innerDiv.append($alarmInfo);
+							$innerDiv.append($alarmTitle);
+							$innerDiv.append($alarmComment);
+							$aArea.append($innerDiv);
+							$aArea.append("</div>");
+							break;
+						case 202: /* 나루-이웃 신청 */
+							var infoStr = value.send_nicname+"님이  이웃을 신청했습니다.";
+							
+							var $innerDiv = $("<div class='new-innerdiv'>");
+							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
+							var $alarmComment = $("<div class='alarmComment'>").text("환영해주세요!");
+
+							$innerDiv.append($innerDiv);
+							$innerDiv.append($alarmInfo);
+							$innerDiv.append($alarmComment);
+							$aArea.append($innerDiv);
+							$aArea.append("</div>");
+							break;					
+						break;
+						case 203: /* 나루-이웃 수락 */
+							var infoStr = value.send_nicname+"님이  이웃을 수락했습니다.";
+							
+							var $innerDiv = $("<div class='new-innerdiv'>");
+							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
+							var $alarmComment = $("<div class='alarmComment'>").text("사랑해주세요!");
+
+							$innerDiv.append($innerDiv);
+							$innerDiv.append($alarmInfo);
+							$innerDiv.append($alarmComment);
+							$aArea.append($innerDiv);
+							$aArea.append("</div>");
+							break;
+						case 204: /* 나루-결제선 구매 */
+							var infoStr = value.send_nicname+"님이  " + value.b_title + " 게시글의 결제선을 이용하셨습니다.";
+							
+							var $innerDiv = $("<div class='new-innerdiv'>");
+							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
+							var $alarmComment = $("<div class='alarmComment'>").text("100P를 받으셨습니다.");
+
+							$innerDiv.append($innerDiv);
+							$innerDiv.append($alarmInfo);
+							$innerDiv.append($alarmComment);
+							$aArea.append($innerDiv);
+							$aArea.append("</div>");
+							break;
+							break;
+						case 300: /* 마루-게시글 댓글 */
+							var infoStr = value.send_nicname+"님이 \"" + value.nm_title + "\" 마루의 " + value.b_title + " 게시글에 댓글을 작성했습니다.";
+							
+							var $innerDiv = $("<div class='new-innerdiv'>");
+							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
+							var $alarmTitle = $("<div class='alarmTitle'>").text(value.b_title);
+							var $alarmComment = $("<div class='alarmComment'>").text(value.b_content);
+
+							$innerDiv.append($innerDiv);
+							$innerDiv.append($alarmInfo);
+							$innerDiv.append($alarmTitle);
+							$innerDiv.append($alarmComment);
+							$aArea.append($innerDiv);
+							$aArea.append("</div>");
+							break;
+						case 301: /* 마루-게시글 등록(회원) */
+							var infoStr = value.send_nicname+"님이 \"" + value.nm_title + "\" 마루의 게시글을 작성했습니다.";
+							
+							var $innerDiv = $("<div class='new-innerdiv'>");
+							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
+							var $alarmTitle = $("<div class='alarmTitle'>").text(value.b_title);
+							var $alarmComment = $("<div class='alarmComment'>").text(value.b_content);
+	
+							$innerDiv.append($innerDiv);
+							$innerDiv.append($alarmInfo);
+							$innerDiv.append($alarmTitle);
+							$innerDiv.append($alarmComment);
+							$aArea.append($innerDiv);
+							$aArea.append("</div>");
+							break;
+						case 302: /* 마루-회원 초대 */
+							var infoStr = value.send_nicname+"님이 \"" + value.nm_title + "\" 마루에 초대하셨습니다.";
+							
+							var $innerDiv = $("<div class='new-innerdiv'>");
+							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
+							var $alarmComment = $("<div class='alarmComment'>").text("함께해주세요!");
+	
+							$innerDiv.append($innerDiv);
+							$innerDiv.append($alarmInfo);
+							$innerDiv.append($alarmComment);
+							$aArea.append($innerDiv);
+							$aArea.append("</div>");
+							break;
+						case 303: /* 마루-회원 가입신청 */
+							var infoStr = value.send_nicname+"님이 \"" + value.nm_title + "\" 마루의 가입신청을 했습니다.";
+							
+							var $innerDiv = $("<div class='new-innerdiv'>");
+							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
+							var $alarmComment = $("<div class='alarmComment'>").text("환영해주세요!");
+	
+							$innerDiv.append($innerDiv);
+							$innerDiv.append($alarmInfo);
+							$innerDiv.append($alarmComment);
+							$aArea.append($innerDiv);
+							$aArea.append("</div>");
+							break;
+						case 304: /* 마루-회원 가입승인 */
+							var infoStr = value.send_nicname+"님이 \"" + value.nm_title + "\" 마루에 가입승인이 됬습니다.";
+							
+							var $innerDiv = $("<div class='new-innerdiv'>");
+							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
+							var $alarmComment = $("<div class='alarmComment'>").text("축하합니다.");
+	
+							$innerDiv.append($innerDiv);
+							$innerDiv.append($alarmInfo);
+							$innerDiv.append($alarmComment);
+							$aArea.append($innerDiv);
+							$aArea.append("</div>");
+							break;
+						default: /* 305 - 마루-회원 가입소개 */
+							var infoStr = value.send_nicname+"님이 \"" + value.nm_title + "\" 마루에 가입했습니다.";
+						
+							var $innerDiv = $("<div class='new-innerdiv'>");
+							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
+							var $alarmComment = $("<div class='alarmComment'>").text("환영해주세요!");
+	
+							$innerDiv.append($innerDiv);
+							$innerDiv.append($alarmInfo);
+							$innerDiv.append($alarmComment);
+							$aArea.append($innerDiv);
+							$aArea.append("</div>");
+							break;
+						}
+					});
+				},
+				error:function(data){
+					console.log("서버 전송 실패..");
+				},
+			});
+		});
 		function clickProfile(div){
 			var con = document.getElementById("pArea");
 			
@@ -163,6 +402,23 @@
 		    }
 		}
 		
+		/* 공지사항 알람 클릭 이벤트 */
+		function clickNoticeAlarm(ano, bno){
+			
+			$.ajax({
+				url:"alarmStatusUpdate.al",
+				data:{ano,ano},
+				type:"get",
+				success:function(data){
+					console.log("서버 전송 성공!");
+				},
+				error:function(data){
+					console.log("서버 전송 실패..");
+				},
+			});
+			
+			location.href = "noticeDetail.no?bno="+bno;
+		}
 		function clickAlram(div){
 			var con = document.getElementById("aArea");
 			

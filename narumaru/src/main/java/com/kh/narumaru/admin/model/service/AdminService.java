@@ -17,5 +17,11 @@ public interface AdminService {
 	ArrayList<Member> memberView();//회원목록 조회
 	Member memberRevenue();//결제
 	ArrayList<Narumaru> maruView();//마루조회
+	int selectTotalMember(); //총 회원수
+	int selectTotalMaru();//총 마루수
+	int selectDateJoinMember();//금일 가입 회원
+	int selectPayDaySysDate();//금일 결제금액
+	ArrayList RevenueMember();//결제회원 조회
+	ArrayList totalAge();//연령대 별 결제 금액
   
 }

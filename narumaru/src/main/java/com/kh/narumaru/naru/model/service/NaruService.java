@@ -15,4 +15,6 @@ public interface NaruService {
 
 	void disableCategory(String caName, int nmno);
 
+	void updateTheme(int nmno, String themeValue, String boardValue, String fontValue);
+
 }

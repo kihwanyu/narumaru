@@ -25,6 +25,7 @@ import com.kh.narumaru.member.model.exception.selectChanelException;
 import com.kh.narumaru.member.model.service.ChannelService;
 import com.kh.narumaru.member.model.vo.Channel;
 import com.kh.narumaru.member.model.vo.Member;
+import com.kh.narumaru.naru.model.vo.Theme;
 import com.kh.narumaru.narumaru.exception.NarumaruException;
 import com.kh.narumaru.narumaru.model.service.NarumaruService;
 import com.kh.narumaru.narumaru.model.vo.Board;
@@ -57,6 +58,7 @@ public class NarumaruController {
 		ArrayList<Board> list = nms.selectBoardList(nmno);
 		ArrayList<Board> colist = nms.selectCommentList(nmno);
 		Narumaru nm = nms.selectNarumaruOne(nmno);
+		Theme theme = nms.selectThemeOne(nmno);
 		if(list.size() == 0){
 			Board newB = new Board();
 			newB.setbWriter("");
@@ -69,7 +71,7 @@ public class NarumaruController {
 			newB.setBno(0);
 			newB.setCano(0);
 			newB.setCno(0);
-			newB.setIsOpen("all");
+			newB.setIsOpen("all"); 
 			newB.setComments(0);
 			newB.setbLevel(0);
 			if(nm.getNmCategory()==2){
@@ -83,9 +85,9 @@ public class NarumaruController {
 		boolean isOwner = nms.checkNarumaruOwner(nmno, loginUser);
 		mv.addObject("nm", nm);
 		mv.addObject("list", list);
-		System.out.println("colist:"+colist);
 		mv.addObject("colist", colist);
 		mv.addObject("isOwner", isOwner);
+		mv.addObject("theme", theme);
 		if(nm.getNmCategory() ==2){
 			mv.setViewName("naru/naruBoard"); 
 		}else{
@@ -94,6 +96,31 @@ public class NarumaruController {
 		
 		
 		return mv;
+	}
+	
+	@RequestMapping(value = "selectNarumaruName.bo")
+	public void selectNarumaruName(HttpServletResponse response, int nmno, String bWriter, String bContent, String createDate){
+		Narumaru nm = nms.selectNarumaruOne(nmno);
+		
+		try {
+			HashMap hm = new HashMap();
+			String nmName = nm.getNmTitle();
+			
+			hm.put("nmName", nmName);
+			hm.put("bWriter", bWriter);
+			hm.put("bContent", bContent);
+			hm.put("createDate", createDate);
+			
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			new Gson().toJson(hm, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@RequestMapping(value = "selectBoardListAjax.bo")
@@ -324,10 +351,11 @@ public class NarumaruController {
 	}
 	
 	@RequestMapping("deleteBoardOne.nm")
-	public String deleteBoardOne(int bno, int nmno) throws NarumaruException{
+	public String deleteBoardOne(int bno, int nmno, int type) throws NarumaruException{
 		nms.deleteBoardOne(bno);
 		
-		return "redirect:/boardListAll.bo?nmno="+nmno;
+		if(type == 1) return "redirect:/boardListAll.bo?nmno="+nmno;
+		else return "redirect:myboardView.me";
 	}
 	
 	@RequestMapping("insertNarumaru.nm")
@@ -337,12 +365,15 @@ public class NarumaruController {
 			int nmno = nms.insertNarumaru(nm).getNmno();
 			System.out.println(nmno);
 			Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+			
+			//나루마루의 주인을 추가함
 			MaruMember mm = new MaruMember();
 			mm.setMno(loginUser.getMid());
 			mm.setNmno(nmno);
 			mm.setConLevel(0);
 			System.out.println("mm:"+mm);
 			ms.insertMaruMember(mm);
+			
 		} catch (NarumaruException e) {
 			mv.addObject("message", e.getMessage());
 			mv.setViewName("common/errorPage");			
@@ -352,6 +383,19 @@ public class NarumaruController {
 		}
 		
 		return "redirect:/boardListAll.bo?nmno="+nm.getNmno();
+	}
+	
+	@RequestMapping("updateDefault.nm")
+	public String updateDefault(int nmno, HttpServletRequest request){
+		Narumaru nm = new Narumaru();
+		
+		nm.setNmno(nmno);
+		nm.setNmTitle(request.getParameter("nmTitle"));
+		nm.setNmIntro(request.getParameter("nmIntro"));
+		
+		nms.updateDefault(nm);
+		
+		return "redirect:/boardListAll.bo?nmno="+nmno;
 	}
 	
 }

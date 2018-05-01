@@ -91,6 +91,17 @@ public class NaruController {
 		return "redirect:/boardListAll.bo?nmno="+nmno;
 	}
 	
+	@RequestMapping("updateTheme.na")
+	public String updateTheme(int nmno, HttpServletRequest request){
+		String themeValue = "#" + request.getParameter("themeValue");
+		String boardValue = "#" + request.getParameter("boardValue");
+		String fontValue = request.getParameter("fontValue");
+		
+		ns.updateTheme(nmno, themeValue,boardValue,fontValue);
+		
+		return "redirect:/boardListAll.bo?nmno="+nmno;
+	}
+	
 	@RequestMapping("disableCategory.na")
 	public void disableCategory(String caName, int nmno){
 		System.out.println("disabled go");

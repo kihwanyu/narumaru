@@ -7,7 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.narumaru.common.vo.PageInfo;
+import com.kh.narumaru.common.model.vo.PageInfo;
 import com.kh.narumaru.payment.model.dao.PaymentDao;
 import com.kh.narumaru.payment.model.exception.PaymentInsertException;
 import com.kh.narumaru.payment.model.exception.PaymentListSelectException;

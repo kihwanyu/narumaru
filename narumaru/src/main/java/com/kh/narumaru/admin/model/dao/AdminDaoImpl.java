@@ -85,4 +85,52 @@ public class AdminDaoImpl implements AdminDao{
 		
 		return ma;
 	}
+
+
+	@Override
+	public int selectTotalMember() {
+		System.out.println("totalMember 나오는거지?");
+		int totalMember = sqlSession.selectOne("Admin.totalMember");
+		
+		return totalMember;
+	}
+
+
+	@Override
+	public int selectTotalMaru() {
+		System.out.println("totalMaru 나오니?");
+		int totalMaru = sqlSession.selectOne("Admin.totalMaru");
+		
+		return totalMaru;
+	}
+
+
+	@Override
+	public int selectDateJoinMember() {
+		int selectDateJoinMember = sqlSession.selectOne("Admin.selectDateJoinMember");
+		
+		return selectDateJoinMember;
+	}
+
+
+	@Override
+	public int selectPayDaySysDate() {
+		int selectPayDaySysDate = sqlSession.selectOne("Admin.selectPayDaySysDate");
+		
+		return selectPayDaySysDate;
+	}
+
+
+	@Override
+	public ArrayList RevenueMember() {
+		ArrayList RevenueMember = (ArrayList) sqlSession.selectList("Admin.RevenueMember");
+		return RevenueMember;
+	}
+
+
+	@Override
+	public ArrayList totalAge() {
+		ArrayList totalAge = (ArrayList) sqlSession.selectList("Admin.totalAge");
+		return totalAge;
+	}
 }

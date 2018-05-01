@@ -58,6 +58,14 @@
 	<insert id="insertComment">
 		INSERT INTO BOARD VALUES(SEQ_BNO.NEXTVAL, 0, #{bType}, NULL, #{bContent}, NULL, #{mno}, SYSDATE, SYSDATE, 'Y', #{nmno}, NULL, NULL, 0, ${targetBno}, #{isOpen}, NULL) 
 	</insert>
+	
+	<update id="updateDefault" parameterType="Narumaru">
+		UPDATE NARUMARU SET NM_TITLE = #{nmTitle}, NM_INTRO = #{nmIntro} WHERE NMNO = #{nmno}
+	</update>
+	
+	<insert id="insertTheme" parameterType="_int">
+		INSERT INTO THEME VALUES(SEQ_TNO.NEXTVAL, #{nmno}, '#eef0f3', NULL, '#ffffff')
+	</insert>
 </mapper>
 
 

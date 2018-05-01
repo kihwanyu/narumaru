@@ -25,31 +25,26 @@
           <div class="row tile_count">
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> 총 회원</span>
-              <div class="count">2500</div>
+              <div class="count" id="totalMember1">${totalMember }</div>
             
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <span class="count_top"><i class="fa fa-clock-o"></i> 금일 가입 회원 </span>
-              <div class="count">123.50</div>
+              <div class="count">${sysDateJoinMember }</div>
              
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> 총 마루 </span>
-              <div class="count green">2,500</div>
+              <div class="count green">${totalMaru }</div>
              
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> 금일 결제 금액  </span>
-              <div class="count">4,567</div>
+              <div class="count">${payDaySysDate }</div>
              
             </div>
-            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> 금일 신고 횟수 </span>
-              <div class="count">2,315</div>
-             
-            </div>
-           
           </div>
+          
           <!-- /top tiles -->
 		  
 		 <script>

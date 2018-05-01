@@ -387,8 +387,6 @@ $font-default: 'Roboto', sans-serif;
 			  <a href="<%=apiURL%>"><img height="50" src="http://static.nid.naver.com/oauth/small_g_in.PNG"/></a>
 	            
 	          </div>
-	          <div class="form-element form-stack">
-	          </div>
 	          
 	          <div class="form-element form-checkbox">
 	          </div>

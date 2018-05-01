@@ -9,6 +9,7 @@ public class Board implements java.io.Serializable {
 	private int bno;
 	private int bTno;
 	private int bType;
+	private String profileName;
 	private String bTitle;
 	private String bContent;
 	private String bHidden;
@@ -28,13 +29,14 @@ public class Board implements java.io.Serializable {
 	
 	public Board(){}
 
-	public Board(int bno, int bTno, int bType, String bTitle, String bContent, String bHidden, int mno, String bWriter,
-			String createDate, Date modifyDate, String status, int nmno, int cano, int cno, int bLevel, int targetBno,
-			String isOpen, int needPoint, int comments) {
+	public Board(int bno, int bTno, int bType, String profileName, String bTitle, String bContent, String bHidden,
+			int mno, String bWriter, String createDate, Date modifyDate, String status, int nmno, int cano, int cno,
+			int bLevel, int targetBno, String isOpen, int needPoint, int comments) {
 		super();
 		this.bno = bno;
 		this.bTno = bTno;
 		this.bType = bType;
+		this.profileName = profileName;
 		this.bTitle = bTitle;
 		this.bContent = bContent;
 		this.bHidden = bHidden;
@@ -75,6 +77,14 @@ public class Board implements java.io.Serializable {
 
 	public void setbType(int bType) {
 		this.bType = bType;
+	}
+
+	public String getProfileName() {
+		return profileName;
+	}
+
+	public void setProfileName(String profileName) {
+		this.profileName = profileName;
 	}
 
 	public String getbTitle() {
@@ -188,29 +198,30 @@ public class Board implements java.io.Serializable {
 	public void setIsOpen(String isOpen) {
 		this.isOpen = isOpen;
 	}
-	
-	public int getNeedPoint(){
-		return needPoint;
+
+	public int getNeedPoint() {
+		return needPoint; 
 	}
-	
-	public void setNeedPoint(int needPoint){
+
+	public void setNeedPoint(int needPoint) {
 		this.needPoint = needPoint;
 	}
-	
-	public int getComments(){
+
+	public int getComments() {
 		return comments;
 	}
-	
-	public void setComments(int comments){
+
+	public void setComments(int comments) {
 		this.comments = comments;
 	}
 
 	@Override
 	public String toString() {
-		return "Board [bno=" + bno + ", bTno=" + bTno + ", bType=" + bType + ", bTitle=" + bTitle + ", bContent="
-				+ bContent + ", bHidden=" + bHidden + ", mno=" + mno + ", bWriter=" + bWriter + ", createDate="
-				+ createDate + ", modifyDate=" + modifyDate + ", status=" + status + ", nmno=" + nmno + ", cano=" + cano
-				+ ", cno=" + cno + ", bLevel=" + bLevel + ", targetBno=" + targetBno + ", isOpen=" + isOpen + ", needPoint=" + needPoint + "]";
+		return "Board [bno=" + bno + ", bTno=" + bTno + ", bType=" + bType + ", profileName=" + profileName
+				+ ", bTitle=" + bTitle + ", bContent=" + bContent + ", bHidden=" + bHidden + ", mno=" + mno
+				+ ", bWriter=" + bWriter + ", createDate=" + createDate + ", modifyDate=" + modifyDate + ", status="
+				+ status + ", nmno=" + nmno + ", cano=" + cano + ", cno=" + cno + ", bLevel=" + bLevel + ", targetBno="
+				+ targetBno + ", isOpen=" + isOpen + ", needPoint=" + needPoint + ", comments=" + comments + "]";
 	}
 
 	
