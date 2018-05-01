@@ -6,7 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.kh.narumaru.notice.Exception.NoticeUpdateException;
+import com.kh.narumaru.notice.exception.NoticeUpdateException;
 import com.kh.narumaru.notice.model.vo.Notice;
 
 
@@ -52,7 +52,7 @@ public class noticeDaoImpl implements noticeDao{
 		int result = sqlSession.update("Board.updateNoticeCommit", n);
 		
 		if(result < 0){
-			throw new NoticeUpdateException("수정 실패~");
+			throw new NoticeUpdateException("수정 실패~"); 
 			
 		} 
 	}
