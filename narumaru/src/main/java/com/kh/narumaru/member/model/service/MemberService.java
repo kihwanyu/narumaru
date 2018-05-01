@@ -32,4 +32,8 @@ public interface MemberService {
 
 	String findEmail(Member m);
 
+	boolean sendPwd(Member m);
+
+	void sendUpdatePwd(Member m2);
+
 }

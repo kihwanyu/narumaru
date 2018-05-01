@@ -34,5 +34,9 @@ public interface MemberDao {
 
 	String findEmail(SqlSessionTemplate sqlSession, Member m);
 
+	String sendPwd(SqlSessionTemplate sqlSession, Member m);
+
+	void sendUpdatePwd(SqlSessionTemplate sqlSession, Member m);
+
 
 }
