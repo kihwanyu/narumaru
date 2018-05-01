@@ -67,4 +67,48 @@ public class AdminServiceImpl implements AdminService {
 		
 		return ma;
 	}
+
+	@Override
+	public int selectTotalMember() {
+		System.out.println("총 회원수 구해지니?");
+		int totalMember = ad.selectTotalMember();
+		
+		return totalMember;
+	}
+
+	@Override
+	public int selectTotalMaru() {
+		System.out.println("총 마루수 구해지니?");
+		int totalMaru = ad.selectTotalMaru();
+		
+		return totalMaru;
+	}
+
+	@Override
+	public int selectDateJoinMember() {
+		int selectDateJoinMember = ad.selectDateJoinMember();
+		
+		return selectDateJoinMember;
+	}
+
+	@Override
+	public int selectPayDaySysDate() {
+		int selectPayDaySysDate = ad.selectPayDaySysDate();
+		
+		return selectPayDaySysDate;
+	}
+
+	@Override
+	public ArrayList RevenueMember() {
+		ArrayList RevenueMember = ad.RevenueMember();
+		
+		return RevenueMember;
+	}
+
+	@Override
+	public ArrayList totalAge() {
+		ArrayList totalAge = ad.totalAge();
+		
+		return totalAge;
+	}
 }

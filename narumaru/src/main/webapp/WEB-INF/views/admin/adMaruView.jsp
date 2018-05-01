@@ -63,7 +63,7 @@
                   </div>
                   <div class="x_content">
                     <p class="text-muted font-13 m-b-30">
-                      	나루검색
+                      	마루검색
                     </p>
                     <table id="datatable" class="table table-striped table-bordered">
                       <thead>
