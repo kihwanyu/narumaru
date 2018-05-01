@@ -41,7 +41,7 @@
 		UPDATE THEME SET THEME = #{theme}, BOARD = #{board} WHERE NMNO = #{nmno}
 	</update>
 	
-	<select id="selectThemeOne" parameterType="_int">
+	<select id="selectThemeOne" resultMap="ThemeResultSet" parameterType="_int">
 		SELECT * FROM THEME WHERE NMNO = #{nmno}
 	</select>
 </mapper>
