@@ -12,8 +12,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="resources/css/naruInsertBoard.css">
+<script type="text/javascript" src="${contextPath}/resources/js/jscolor.js"></script>
 </head>
-<body>
+<body id="thisisbody">
 	<jsp:include page="../common/topmenu.jsp"/>
 	<jsp:include page="middleMenu.jsp"/>
 	<jsp:include page="innerMenu.jsp"/>
@@ -116,31 +117,35 @@
 			</div>
 	 	</div>
 	 	<!-- 테마  -->
-	 	<div class="modal_inner" id="modal_theme" style="display:none;">
-			<div class="row">
-				<label class="btn_label modify-basic">기본</label>
-				<label class="btn_label modify-theme"><b>테마</b></label>
-				<label class="btn_label modify-category">카테고리</label>
-				<label class="btn_label modify-neighbor">이웃</label>
-				<label class="modal_close" for="open-pop2"></label>
-			</div>
-			<div class="row">
-				<label class="modal-leftlabel">테마 색상</label>
-				<select>
-					<option>기본</option>
-					<option>구매한 색상1</option>
-					<option>구매한 색상2</option>
-				</select>
-			</div>
-			<div class="row">
-				<label class="modal-leftlabel">폰트</label>
-				<select style="margin-left:31px;">
-					<option>기본</option>
-					<option>구매한 폰트1</option>
-					<option>구매한 폰트22</option>
-				</select>
-			</div>
-	 	 </div>
+	 	<form id="themeModify" action="updateTheme.na" method="post">
+	 		<input type="hidden" name="nmno" value="${nm.nmno}">
+			<div class="modal_inner" id="modal_theme" style="display:none;">
+				<div class="row">
+					<label class="btn_label modify-basic">기본</label>
+					<label class="btn_label modify-theme"><b>테마</b></label>
+					<label class="btn_label modify-category">카테고리</label>
+					<label class="btn_label modify-neighbor">이웃</label>
+					<label class="modal_close" for="open-pop2"></label>
+				</div>
+				<input type="submit" class="btn_label" id="updateThemeBtn" style="margin-bottom:15px; height:40px;" value="수정완료">
+				<div class="row">
+					<label class="modal-leftlabel">테마 색상</label>
+					<input name="themeValue" class="jscolor {valueElement:'chosen-value', onFineChange:'setTextColor(this)'}" style="width:79.1%; float:right; height:25px;" id="chosen-value" value="000000">
+				</div>
+				<div class="row">
+					<label class="modal-leftlabel">글 배경색</label>
+					<input name="boardValue" class="jscolor {valueElement:'chosen-value2', onFineChange:'setTextColor(this)'}" style="width:79.1%; float:right; height:25px;" id="chosen-value2" value="000000">
+				</div>
+				<div class="row">
+					<label class="modal-leftlabel">폰트</label>
+					<select name="fontValue" style="margin-left:31px;">
+						<option>기본</option>
+						<option>구매한 폰트1</option>
+						<option>구매한 폰트22</option>
+					</select>
+				</div>
+		 	 </div>
+		</form>
 	 	 <form id="categoryModify" action="updateCategory.na" method="post">
 	 	 	<input type="hidden" name="nmno" value="${nm.nmno}">
 		 	 <!-- 카테고리 -->
@@ -283,6 +288,9 @@
 			if(listSize <=4){
 				isEnd = true;
 			}
+			
+			//배경색
+			$("#thisisbody").css({"background":"${theme.theme}"});
 		})
 	
 		$(document).scroll(function(){

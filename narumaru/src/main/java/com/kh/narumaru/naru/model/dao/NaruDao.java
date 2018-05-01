@@ -16,4 +16,6 @@ public interface NaruDao {
 
 	void disableCategory(SqlSessionTemplate sqlSession, String caName, int nmno);
 
+	void updateTheme(int nmno, String themeValue, String boardValue, String fontValue, SqlSessionTemplate sqlSession);
+
 }

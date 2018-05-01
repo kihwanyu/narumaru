@@ -19,6 +19,7 @@
       <typeAlias alias="Admin" type="com.kh.narumaru.member.model.vo.Member"/>
       <typeAlias alias="Category" type="com.kh.narumaru.naru.model.vo.Category"/>
       <typeAlias alias="Alarm" type="com.kh.narumaru.common.model.vo.Alarm"/>
+      <typeAlias alias="Theme" type="com.kh.narumaru.naru.model.vo.Theme"/>
    </typeAliases>
    
    <mappers>

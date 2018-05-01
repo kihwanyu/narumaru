@@ -13,6 +13,14 @@
 		<result property="status" column="STATUS"/>
 	</resultMap> 
 	
+	<resultMap type="Theme" id="ThemeResultSet">
+		<id property="tno" column="TNO"/>
+		<result property="nmno" column="NMNO"/>
+		<result property="theme" column="THEME"/>
+		<result property="font" column="FONT"/>
+		<result property="board" column="BOARD"/>
+	</resultMap>
+	
 	<select id="selectCategoryAll" resultMap="CategoryResultSet" parameterType="_int">
 		SELECT * FROM CATEGORY WHERE NMNO = #{nmno} AND STATUS = 'Y'
 	</select>
@@ -28,6 +36,14 @@
 	<update id="disableCategory" parameterType="Category">
 		UPDATE CATEGORY SET STATUS = 'N' WHERE CANAME = #{caName} AND NMNO = #{nmno}
 	</update>
+	
+	<update id="updateTheme" parameterType="Theme">
+		UPDATE THEME SET THEME = #{theme}, BOARD = #{board} WHERE NMNO = #{nmno}
+	</update>
+	
+	<select id="selectThemeOne" parameterType="_int">
+		SELECT * FROM THEME WHERE NMNO = #{nmno}
+	</select>
 </mapper>
 
 

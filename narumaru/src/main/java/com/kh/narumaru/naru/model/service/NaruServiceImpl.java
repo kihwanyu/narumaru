@@ -35,4 +35,9 @@ public class NaruServiceImpl implements NaruService{
 		nd.disableCategory(sqlSession, caName, nmno);
 	}
 
+	@Override
+	public void updateTheme(int nmno, String themeValue, String boardValue, String fontValue) {
+		nd.updateTheme(nmno, themeValue, boardValue, fontValue, sqlSession);
+	}
+
 }
