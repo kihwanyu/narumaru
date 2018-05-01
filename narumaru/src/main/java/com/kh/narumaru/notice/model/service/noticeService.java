@@ -15,6 +15,6 @@ public interface noticeService {
 
 	
 
-	void updateNoticeCommit(Notice n) throws NoticeUpdateException;
+	void updateNoticeCommit(Notice n) throws NoticeUpdateException; 
 
 }

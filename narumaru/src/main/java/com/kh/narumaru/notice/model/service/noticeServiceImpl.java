@@ -43,7 +43,7 @@ public class noticeServiceImpl implements noticeService {
 	//FAQ 전체 조회하기
 	@Override
 	public ArrayList<Notice> faqSelectList(Notice n) {
-		System.out.println("noticeService faqSelectList ");
+		System.out.println("noticeService faqSelectList "); 
 		
 		return nd.faqSelectList(n);
 	}

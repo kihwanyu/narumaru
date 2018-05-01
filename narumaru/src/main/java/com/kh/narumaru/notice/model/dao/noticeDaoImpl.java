@@ -52,7 +52,7 @@ public class noticeDaoImpl implements noticeDao{
 		int result = sqlSession.update("Board.updateNoticeCommit", n);
 		
 		if(result < 0){
-			throw new NoticeUpdateException("수정 실패~");
+			throw new NoticeUpdateException("수정 실패~"); 
 			
 		} 
 	}
