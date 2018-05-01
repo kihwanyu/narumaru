@@ -24,14 +24,17 @@
 				</div>
 			</div>
 			<br>
+			<div class="pointer maruSetting">
+			<hr>
 			<c:if test="${isOwner}">
-				<div class="pointer maruSetting">
-				<hr>
 				<br>
 				<label class="btn_label" for="open-pop2" style="margin-bottom:10px;">나루 설정</label>
 				<label class="btn_label" onclick="toWrite()">글 작성</label>			
-				</div>
 			</c:if>
+			<c:if test="${!isOwner}">
+				<label class="btn_label" onclick="addNeighbor()" style="margin-bottom:10px;">이웃 추가</label>
+			</c:if>
+			</div>
 		</div>
 		
 		<!-- <div class="floatRight rightArea">
@@ -60,6 +63,12 @@
 	<script>
 		function toWrite(){
 			location.href="toNaruBoardWrite.na?nmno=" + ${nm.nmno};
+		}
+		
+		function addNeighbor(){
+			if(confirm("이웃으로 추가하시겠습니까?")){
+				location.href="insertNeighbor.na?nmno=" + ${nm.nmno};
+			}
 		}
 	
 	</script>

@@ -13,6 +13,11 @@
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="resources/css/naruInsertBoard.css">
 <script type="text/javascript" src="${contextPath}/resources/js/jscolor.js"></script>
+<style>
+	.replyArea{
+		border-bottom:1px solid lightgray;
+	}
+</style>
 </head>
 <body id="thisisbody">
 	<jsp:include page="../common/topmenu.jsp"/>

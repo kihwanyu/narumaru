@@ -40,4 +40,9 @@ public class NaruServiceImpl implements NaruService{
 		nd.updateTheme(nmno, themeValue, boardValue, fontValue, sqlSession);
 	}
 
+	@Override
+	public void insertNeighbor(int nmno, int mid) {
+		nd.insertNeighbor(nmno, mid, sqlSession);
+	}
+
 }
