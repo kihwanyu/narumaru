@@ -62,6 +62,10 @@
 	<update id="updateDefault" parameterType="Narumaru">
 		UPDATE NARUMARU SET NM_TITLE = #{nmTitle}, NM_INTRO = #{nmIntro} WHERE NMNO = #{nmno}
 	</update>
+	
+	<insert id="insertTheme" parameterType="_int">
+		INSERT INTO THEME VALUES(SEQ_TNO.NEXTVAL, #{nmno}, '#eef0f3', NULL, '#ffffff')
+	</insert>
 </mapper>
 
 

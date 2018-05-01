@@ -425,7 +425,9 @@
 		}
 		
 		function deleteBoard(bno){
-			location.href="deleteBoardOne.nm?bno="+ bno + "&nmno=${nm.nmno}&type=1";
+			if(confirm("정말로 삭제하시겠습니까?")){
+				location.href="deleteBoardOne.nm?bno="+ bno + "&nmno=${nm.nmno}&type=1";
+			}
 		}
 		
 		function addReply(btn, bno){
@@ -439,7 +441,7 @@
 			
 			$(replyArea).append('<div class="replyArea">'
 					+ '<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
-					+ '<label>이름</label><br><label>' + strDate + '</label>'
+					+ '<label>${loginUser.nickName}</label><br><label>' + strDate + '</label>'
 					+ '<div class="replyContent" style="clear:both;">'+ comment +' </div>'
 					+ '</div>');
 			

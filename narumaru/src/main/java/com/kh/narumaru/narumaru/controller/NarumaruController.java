@@ -365,12 +365,15 @@ public class NarumaruController {
 			int nmno = nms.insertNarumaru(nm).getNmno();
 			System.out.println(nmno);
 			Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+			
+			//나루마루의 주인을 추가함
 			MaruMember mm = new MaruMember();
 			mm.setMno(loginUser.getMid());
 			mm.setNmno(nmno);
 			mm.setConLevel(0);
 			System.out.println("mm:"+mm);
 			ms.insertMaruMember(mm);
+			
 		} catch (NarumaruException e) {
 			mv.addObject("message", e.getMessage());
 			mv.setViewName("common/errorPage");			
