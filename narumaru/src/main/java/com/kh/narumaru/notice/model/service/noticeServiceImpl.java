@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.narumaru.notice.Exception.NoticeUpdateException;
+import com.kh.narumaru.notice.exception.NoticeUpdateException;
 import com.kh.narumaru.notice.model.dao.noticeDao;
 import com.kh.narumaru.notice.model.vo.Notice;
 

@@ -6,7 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.kh.narumaru.notice.Exception.NoticeUpdateException;
+import com.kh.narumaru.notice.exception.NoticeUpdateException;
 import com.kh.narumaru.notice.model.vo.Notice;
 
 
