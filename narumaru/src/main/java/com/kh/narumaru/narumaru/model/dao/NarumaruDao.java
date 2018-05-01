@@ -43,4 +43,6 @@ public interface NarumaruDao {
 	Theme selectThemeOne(int nmno);
 
 	void updateDefault(Narumaru nm, SqlSessionTemplate sqlSession);
+
+	int checkNeighbor(int nmno, Member loginUser);
 } 

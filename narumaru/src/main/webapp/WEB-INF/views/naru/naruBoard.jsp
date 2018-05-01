@@ -139,7 +139,7 @@
 				<label class="btn_label" id="updateThemeBtn" onclick="themeModifyBtn()" style="margin-bottom:15px;">수정완료</label>
 				<div class="row">
 					<label class="modal-leftlabel">테마 색상</label>
-					<input name="themeValue" class="jscolor {valueElement:'chosen-value', onFineChange:'setTextColor(this)'}" style="width:79.1%; float:right; height:25px;" id="chosen-value" value="${theme.theme}}">
+					<input name="themeValue" class="jscolor {valueElement:'chosen-value', onFineChange:'setTextColor(this)'}" style="width:79.1%; float:right; height:25px;" id="chosen-value" value="${theme.color}}">
 				</div>
 				<div class="row">
 					<label class="modal-leftlabel">글 배경색</label>
@@ -307,7 +307,7 @@
 			}
 			
 			//배경색
-			$("#thisisbody").css({"background":"${theme.theme}"});
+			$("#thisisbody").css({"background":"${theme.color}"});
 			
 			//글배경색
 			$(".board").css({"background":"${theme.board}"});

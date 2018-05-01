@@ -70,6 +70,10 @@
 	<insert id="insertTheme" parameterType="_int">
 		INSERT INTO THEME VALUES(SEQ_TNO.NEXTVAL, #{nmno}, '#eef0f3', NULL, '#ffffff')
 	</insert>
+	
+	<select id="selectNeighborList" resultMap="NarumaruResultSet" parameterType="_int">
+		SELECT * FROM NARUMARU WHERE NMNO IN(SELECT NMNO FROM MARU_MEMBER WHERE MNO IN (SELECT NEIGHBOR_MNO FROM NEIGHBOR WHERE MNO = #{mno}))
+	</select>
 </mapper>
 
 
