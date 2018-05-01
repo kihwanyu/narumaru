@@ -12,12 +12,6 @@
 		<link rel="stylesheet" type="text/css" href="resources/css/mypage.css"> <!-- mypageCss -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<style type="text/css">
-		* {
-			color: black;
-		}
-		
-		</style>
 	</head>
 	<body>
 	<!--  -->
@@ -28,7 +22,7 @@
 		<div id="container" style="margin-top: 50px;">
 		<c:set var="pageValue" value="loginRecord" scope="request" />
 		<jsp:include page="../common/myPage_LeftSideBar.jsp"/>	
-			<div id="contents" style="background: white;">
+			<div id="contents" style="background: white; color: black;">
 				<div style="font-size: 15px; margin-bottom: 15px;">
 					로그인 기록
 				</div>		

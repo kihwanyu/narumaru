@@ -550,7 +550,8 @@ public class MemberController {
 		
 		String phone = m.getPhone();
 		
-		phone = "82+" + phone.substring(1, phone.length());
+		//국제 번호
+		//phone = "82+" + phone.substring(1, phone.length());
 		
 		m.setMid(loginUser.getMid());
 		m.setPhone(phone);
