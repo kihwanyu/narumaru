@@ -215,10 +215,13 @@
   		border:1px solid lightgray;
   		margin:10px;
   	}
+  	#band_top{
+	  	border-bottom:1px solid lightgray;
+  	}
 </style>
 </head>
 <body>
-	<div class="innerTop">
+<!-- 	<div class="innerTop">
 		<div class="marginAuto innerTopMenu">
 			<ul class="ul innerTopUl marginAuto">
 				<li><a href="insertDetail.ma">전체글</a></li>
@@ -227,6 +230,6 @@
 				<li><a href="showMaruMember.ma">멤버</a></li>
 			</ul>
 		</div>
-	</div>
+	</div> -->
 </body>
 </html>

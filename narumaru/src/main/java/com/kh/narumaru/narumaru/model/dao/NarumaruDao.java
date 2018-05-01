@@ -41,4 +41,6 @@ public interface NarumaruDao {
 	ArrayList<Board> selectCommentListAll();
 
 	Theme selectThemeOne(int nmno);
+
+	void updateDefault(Narumaru nm, SqlSessionTemplate sqlSession);
 } 
