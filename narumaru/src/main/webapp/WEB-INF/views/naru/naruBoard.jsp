@@ -130,11 +130,11 @@
 				<input type="submit" class="btn_label" id="updateThemeBtn" style="margin-bottom:15px; height:40px;" value="수정완료">
 				<div class="row">
 					<label class="modal-leftlabel">테마 색상</label>
-					<input name="themeValue" class="jscolor {valueElement:'chosen-value', onFineChange:'setTextColor(this)'}" style="width:79.1%; float:right; height:25px;" id="chosen-value" value="000000">
+					<input name="themeValue" class="jscolor {valueElement:'chosen-value', onFineChange:'setTextColor(this)'}" style="width:79.1%; float:right; height:25px;" id="chosen-value" value="${theme.theme}}">
 				</div>
 				<div class="row">
 					<label class="modal-leftlabel">글 배경색</label>
-					<input name="boardValue" class="jscolor {valueElement:'chosen-value2', onFineChange:'setTextColor(this)'}" style="width:79.1%; float:right; height:25px;" id="chosen-value2" value="000000">
+					<input name="boardValue" class="jscolor {valueElement:'chosen-value2', onFineChange:'setTextColor(this)'}" style="width:79.1%; float:right; height:25px;" id="chosen-value2" value="${theme.board}}">
 				</div>
 				<div class="row">
 					<label class="modal-leftlabel">폰트</label>
@@ -291,6 +291,9 @@
 			
 			//배경색
 			$("#thisisbody").css({"background":"${theme.theme}"});
+			
+			//글배경색
+			$(".board").css({"background":"${theme.board}"});
 		})
 	
 		$(document).scroll(function(){

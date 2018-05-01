@@ -4,8 +4,8 @@ public class Theme {
 	private int tno;
 	private int nmno;
 	private String theme;
-	private String board;
 	private String font;
+	private String board;
 	
 	public Theme(){}
 	
@@ -13,8 +13,8 @@ public class Theme {
 		this.tno = tno;
 		this.nmno = nmno;
 		this.theme = theme;
-		this.board = board;
 		this.font = font;
+		this.board = board;
 	}
 
 	public int getTno() {
