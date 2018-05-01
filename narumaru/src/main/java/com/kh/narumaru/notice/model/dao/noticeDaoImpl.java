@@ -60,19 +60,33 @@ public class noticeDaoImpl implements noticeDao{
 	
 	
 	//FAQ 전체 list 조회
-	@Override
-	public ArrayList<Notice> faqSelectList(Notice n) {
-		n.setNoType(80);
-		System.out.println("noticeDao faqSelectList n : " + n);
-		ArrayList<Notice> nlist = null;
-		
-		nlist = (ArrayList)sqlSession.selectList("Board.noticeSelectList");
-		
-		System.out.println("noticeDao faqSelectList nlist"  + nlist);
+		@Override
+		public ArrayList<Notice> faqSelectList(Notice n) {
+			n.setNoType(80);
+			System.out.println("noticeDao faqSelectList n : " + n);
+			ArrayList<Notice> nlist = null;
+			
+			nlist = (ArrayList)sqlSession.selectList("Board.noticeSelectList");
+			
+			System.out.println("noticeDao faqSelectList nlist"  + nlist);
 
-		return nlist;
-		
-	}
+			return nlist;
+			
+		}
+
+
+		//faq detail 조회
+		@Override
+		public Notice showFaqDetailView(int bno) {
+			Notice n = null;
+			System.out.println("noticeDaoImpl showNoticeDetailView");
+			
+			n = (Notice) sqlSession.selectOne("Board.noticeSelectListOne", bno);
+			System.out.println("noticeDaoImpl showNoticeDetailView n " + n);
+			
+			return n;
+		}
+
 
 
 	
