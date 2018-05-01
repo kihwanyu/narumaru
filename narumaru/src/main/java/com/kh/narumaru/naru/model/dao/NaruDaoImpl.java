@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.narumaru.naru.model.exception.NaruException;
 import com.kh.narumaru.naru.model.vo.Category;
+import com.kh.narumaru.naru.model.vo.Neighbor;
 import com.kh.narumaru.naru.model.vo.Theme;
 
 @Repository
@@ -69,6 +70,16 @@ public class NaruDaoImpl implements NaruDao{
 		t.setFont(fontValue);
 		
 		int result = sqlSession.update("Naru.updateTheme", t);
+	}
+
+	@Override
+	public void insertNeighbor(int nmno, int mid, SqlSessionTemplate sqlSession) {
+		Neighbor nb = new Neighbor();
+		
+		nb.setNmno(nmno);
+		nb.setNeighborNmno(sqlSession.selectOne("Narumaru.checkMembersNarumaru", mid));
+		
+		sqlSession.insert("Naru.insertNeightbor", nb);
 	}
 
 }

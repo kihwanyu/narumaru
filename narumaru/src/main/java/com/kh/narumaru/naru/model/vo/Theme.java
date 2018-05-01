@@ -1,6 +1,9 @@
 package com.kh.narumaru.naru.model.vo;
 
-public class Theme {
+import org.springframework.stereotype.Component;
+
+@Component
+public class Theme implements java.io.Serializable{
 	private int tno;
 	private int nmno;
 	private String theme;

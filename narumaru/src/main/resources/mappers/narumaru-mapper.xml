@@ -40,6 +40,10 @@
 		SELECT * FROM NARUMARU WHERE NMNO = #{nmno}
 	</select>
 	
+	<select id="checkMembersNarumaru" resultType="_int" parameterType="_int">
+		SELECT NMNO FROM MARU_MEMBER WHERE MNO = #{mid}
+	</select>
+	
 	<select id="checkNarumaruOwner" resultType="_int" parameterType="_int">
 		SELECT MNO FROM MARU_MEMBER WHERE NMNO = #{nmno} AND CON_LEVEL = 0
 	</select>
