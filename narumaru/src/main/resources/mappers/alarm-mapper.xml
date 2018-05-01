@@ -34,9 +34,9 @@
 		    , M2.NICNAME SEND_NICNAME, A.SEND_NMNO, N.NM_TITLE
 		    , A.SEND_BNO, B.B_TITLE, 
             CASE 
-            WHEN LENGTH(B.B_CONTENT)>9 
-               THEN SUBSTR(B.B_CONTENT,0,10)||'..'
-               ELSE B.B_CONTENT 
+            WHEN LENGTH(B.B_CONTENT)>20 
+               THEN SUBSTR(B.B_CONTENT,0,20)||'..'
+               ELSE B.B_CONTENT
             END as B_CONTENT
 		    ,A.STATUS 
 		FROM ALARM A 

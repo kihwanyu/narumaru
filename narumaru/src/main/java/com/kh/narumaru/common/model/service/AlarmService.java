@@ -8,7 +8,7 @@ import com.kh.narumaru.common.model.vo.Alarm;
 
 public interface AlarmService {
 
-	void alarmRequest(Alarm alarm) throws alarmRequestException;
+	void alarmRequest(ArrayList<Alarm> alarm, ArrayList<Integer> sendUser) throws alarmRequestException;
 
 	ArrayList<Alarm> alarmResponse(int mno) throws alarmResponseException;
 
