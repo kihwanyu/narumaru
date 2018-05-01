@@ -12,4 +12,8 @@ public interface AlarmService {
 
 	ArrayList<Alarm> alarmResponse(int mno) throws alarmResponseException;
 
+	int alarmStatusCount(int mno);
+
+	void alarmStatusUpdate(int ano);
+
 }

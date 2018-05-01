@@ -1,7 +1,5 @@
 package com.kh.narumaru.common.controller;
 
-import static org.hamcrest.CoreMatchers.nullValue;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -11,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -83,7 +82,31 @@ public class AlarmController {
 		
 		return mv;
 	}
-	
+	/*알람 상태 개수*/
+	@RequestMapping(value="alarmStatusCount.al")
+	public void alarmStatusCount(HttpSession session, HttpServletResponse response){
+		
+		Member loginUser = (Member) session.getAttribute("loginUser");
+		
+		int mno = loginUser.getMid();
+		
+		int count = as.alarmStatusCount(mno);
+		
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		
+		try {
+			new Gson().toJson(count, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
+	}
+	/*알람 리스트 불러오기*/
 	@RequestMapping(value="alarmList.al")
 	public void alarmResponse(HttpSession session, HttpServletResponse response){
 		
@@ -112,6 +135,12 @@ public class AlarmController {
 		} catch (alarmResponseException e) {
 			e.getStackTrace();
 		}
+	}
+	/*알람 상태 수정*/
+	@RequestMapping(value="alarmStatusUpdate.al")
+	public void alarmStatusUpdate(@RequestParam(value="ano") int ano){
 		
+			as.alarmStatusUpdate(ano);
+			
 	}
 }

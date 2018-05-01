@@ -35,5 +35,20 @@ public class AlarmServiceImpl implements AlarmService{
 			ad.alarmRequest(sqlSession ,alarm.get(i));
 		}
 	}
+
+	@Override
+	public int alarmStatusCount(int mno) {
+		
+		int count = ad.alarmStatusCount(sqlSession, mno);
+		
+		return count;
+	}
+
+	@Override
+	public void alarmStatusUpdate(int ano) {
+		
+		ad.alarmStatusUpdate(sqlSession, ano);
+		
+	}
 	
 }
