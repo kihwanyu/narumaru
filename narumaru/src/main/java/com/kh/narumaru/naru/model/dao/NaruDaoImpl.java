@@ -2,6 +2,7 @@ package com.kh.narumaru.naru.model.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -9,6 +10,7 @@ import com.kh.narumaru.naru.model.exception.NaruException;
 import com.kh.narumaru.naru.model.vo.Category;
 import com.kh.narumaru.naru.model.vo.Neighbor;
 import com.kh.narumaru.naru.model.vo.Theme;
+import com.kh.narumaru.narumaru.model.vo.Narumaru;
 
 @Repository
 public class NaruDaoImpl implements NaruDao{
@@ -65,7 +67,7 @@ public class NaruDaoImpl implements NaruDao{
 		Theme t = new Theme();
 		
 		t.setNmno(nmno);
-		t.setTheme(themeValue);
+		t.setColor(themeValue);
 		t.setBoard(boardValue);
 		t.setFont(fontValue);
 		
@@ -76,10 +78,31 @@ public class NaruDaoImpl implements NaruDao{
 	public void insertNeighbor(int nmno, int mid, SqlSessionTemplate sqlSession) {
 		Neighbor nb = new Neighbor();
 		
-		nb.setNmno(nmno);
-		nb.setNeighborNmno(sqlSession.selectOne("Narumaru.checkMembersNarumaru", mid));
+		nb.setMno(mid);
+		nb.setNeighborMno(sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno));
 		
-		sqlSession.insert("Naru.insertNeightbor", nb);
+		sqlSession.insert("Naru.insertNeighbor", nb);
+	}
+
+	@Override
+	public ArrayList<Narumaru> selectNeighborList(int nmno, SqlSessionTemplate sqlSession) {
+		//해당 나루의 주인을 찾아옴
+		int mno = sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno);
+		
+		//해당 나루의 이웃들을 가져옴
+		ArrayList<Narumaru> list = (ArrayList)sqlSession.selectList("Narumaru.selectNeighborList", mno);
+		
+		return list;
+	}
+
+	@Override
+	public void deleteNeighbor(int nmno, int mid, SqlSessionTemplate sqlSession) {
+		Neighbor nb = new Neighbor();
+		
+		nb.setMno(mid);
+		nb.setNeighborMno(sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno));
+		
+		sqlSession.delete("Naru.deleteNeighbor", nb);
 	}
 
 }

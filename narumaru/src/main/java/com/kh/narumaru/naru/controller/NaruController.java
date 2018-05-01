@@ -117,4 +117,13 @@ public class NaruController {
 		return "redirect:/boardListAll.bo?nmno="+nmno;
 	}
 	
+	@RequestMapping("deleteNeighbor.na")
+	public String deleteNeighbor(int nmno, HttpServletRequest request){
+		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+		System.out.println(loginUser);
+		ns.deleteNeighbor(nmno, loginUser.getMid());
+		
+		return "redirect:/boardListAll.bo?nmno="+nmno;
+	}
+	
 }

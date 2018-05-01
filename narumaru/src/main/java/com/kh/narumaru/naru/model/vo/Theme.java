@@ -6,16 +6,16 @@ import org.springframework.stereotype.Component;
 public class Theme implements java.io.Serializable{
 	private int tno;
 	private int nmno;
-	private String theme;
+	private String color;
 	private String font;
 	private String board;
 	
 	public Theme(){}
 	
-	public Theme(int tno, int nmno, String theme, String board, String font) {
+	public Theme(int tno, int nmno, String color, String board, String font) {
 		this.tno = tno;
 		this.nmno = nmno;
-		this.theme = theme;
+		this.color = color;
 		this.font = font;
 		this.board = board;
 	}
@@ -36,12 +36,12 @@ public class Theme implements java.io.Serializable{
 		this.nmno = nmno;
 	}
 
-	public String getTheme() {
-		return theme;
+	public String getColor() {
+		return color;
 	}
 
-	public void setTheme(String theme) {
-		this.theme = theme;
+	public void setColor(String color) {
+		this.color = color;
 	}
 
 	public String getBoard() {
@@ -62,7 +62,7 @@ public class Theme implements java.io.Serializable{
 
 	@Override
 	public String toString() {
-		return "Theme [tno=" + tno + ", nmno=" + nmno + ", theme=" + theme + ", board=" + board + ", font=" + font
+		return "Theme [tno=" + tno + ", nmno=" + nmno + ", color=" + color + ", board=" + board + ", font=" + font
 				+ "]";
 	}
 	

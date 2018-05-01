@@ -79,7 +79,7 @@
 		margin-top:50px;
 		position:fixed;
 	}
-	.chatContent{
+	.neighborContent{
 		padding:10px;
 		border:1px solid lightgray;
 	}

@@ -5,16 +5,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class Neighbor implements java.io.Serializable{
 	private int nno;
-	private int nmno;
-	private int neighborNmno;
+	private int mno;
+	private int neighborMno;
 	
 	public Neighbor(){}
 
-	public Neighbor(int nno, int nmno, int neighborNmno) {
+	public Neighbor(int nno, int mno, int neighborMno) {
 		super();
 		this.nno = nno;
-		this.nmno = nmno;
-		this.neighborNmno = neighborNmno;
+		this.mno = mno;
+		this.neighborMno = neighborMno;
 	}
 
 	public int getNno() {
@@ -25,21 +25,25 @@ public class Neighbor implements java.io.Serializable{
 		this.nno = nno;
 	}
 
-	public int getNmno() {
-		return nmno;
+	public int getMno() {
+		return mno;
 	}
 
-	public void setNmno(int nmno) {
-		this.nmno = nmno;
+	public void setMno(int mno) {
+		this.mno = mno;
 	}
 
-	public int getNeighborNmno() {
-		return neighborNmno;
+	public int getNeighborMno() {
+		return neighborMno;
 	}
 
-	public void setNeighborNmno(int neighborNmno) {
-		this.neighborNmno = neighborNmno;
+	public void setNeighborMno(int neighborMno) {
+		this.neighborMno = neighborMno;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Neighbor [nno=" + nno + ", mno=" + mno + ", neighborMno=" + neighborMno + "]";
+	}
 	
 }

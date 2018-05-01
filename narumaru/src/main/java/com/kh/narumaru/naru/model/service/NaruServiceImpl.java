@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.narumaru.naru.model.dao.NaruDao;
 import com.kh.narumaru.naru.model.exception.NaruException;
 import com.kh.narumaru.naru.model.vo.Category;
+import com.kh.narumaru.narumaru.model.vo.Narumaru;
 
 @Service
 public class NaruServiceImpl implements NaruService{
@@ -43,6 +44,16 @@ public class NaruServiceImpl implements NaruService{
 	@Override
 	public void insertNeighbor(int nmno, int mid) {
 		nd.insertNeighbor(nmno, mid, sqlSession);
+	}
+
+	@Override
+	public ArrayList<Narumaru> selectNeighborList(int nmno) {
+		return nd.selectNeighborList(nmno, sqlSession);
+	}
+
+	@Override
+	public void deleteNeighbor(int nmno, int mid) {
+		nd.deleteNeighbor(nmno, mid, sqlSession);
 	}
 
 }

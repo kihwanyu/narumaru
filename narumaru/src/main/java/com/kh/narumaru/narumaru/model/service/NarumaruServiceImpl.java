@@ -105,4 +105,9 @@ public class NarumaruServiceImpl implements NarumaruService {
 	public void updateDefault(Narumaru nm) {
 		nmd.updateDefault(nm, sqlSession);
 	}
+
+	@Override
+	public int checkNeighbor(int nmno, Member loginUser) {
+		return nmd.checkNeighbor(nmno, loginUser);
+	}
 }
