@@ -21,7 +21,7 @@
 		<result property="board" column="BOARD"/>
 	</resultMap>
 	
-	<resultMap type="Neighbor" id="NeighborResultSet">
+	<resultMap type="Neighbor_naru" id="NeighborResultSet">
 		<id property="nno" column="NNO"/>
 		<result property="mno" column="MNO"/>
 		<result property="neighborMno" column="NEIGHBOR_MNO"/>
