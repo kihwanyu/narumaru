@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.narumaru.naru.model.exception.NaruException;
 import com.kh.narumaru.naru.model.vo.Category;
-import com.kh.narumaru.naru.model.vo.Neighbor;
+import com.kh.narumaru.common.model.vo.Neighbor;
 import com.kh.narumaru.naru.model.vo.Theme;
 import com.kh.narumaru.narumaru.model.vo.Narumaru;
 
@@ -78,8 +78,8 @@ public class NaruDaoImpl implements NaruDao{
 	public void insertNeighbor(int nmno, int mid, SqlSessionTemplate sqlSession) {
 		Neighbor nb = new Neighbor();
 		
-		nb.setMno(mid);
-		nb.setNeighborMno(sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno));
+		nb.setUser_mno(mid);
+		nb.setMno(sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno));
 		
 		sqlSession.insert("Naru.insertNeighbor", nb);
 	}
@@ -98,8 +98,8 @@ public class NaruDaoImpl implements NaruDao{
 	public void deleteNeighbor(int nmno, int mid, SqlSessionTemplate sqlSession) {
 		Neighbor nb = new Neighbor();
 		
-		nb.setMno(mid);
-		nb.setNeighborMno(sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno));
+		nb.setUser_mno(mid);
+		nb.setMno(sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno));
 		
 		sqlSession.delete("Naru.deleteNeighbor", nb);
 	}
