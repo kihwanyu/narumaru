@@ -80,4 +80,10 @@ public class MaruDaoImpl implements MaruDao{
 		return mn;
 	}
 
+	@Override
+	public int getMaruMaster(int nmno) {
+		int masterMno = sqlSession.selectOne("Maru.selectMasterMno", nmno);
+		return masterMno;
+	}
+
 }

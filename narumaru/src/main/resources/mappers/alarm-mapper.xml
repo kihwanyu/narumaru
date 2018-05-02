@@ -24,7 +24,7 @@
 	
 	<insert id="alarmRequest">
 		INSERT INTO ALARM VALUES(SEQ_ANO.NEXTVAL, #{atno}, sysdate
-								, #{receivce_mno}, #{send_mno}, #{send_nmno}
+								, #{receive_mno}, #{send_mno}, #{send_nmno}
 								, #{send_bno}, default)
 	</insert>	
 	<select id="alarmStatusCount" resultType="_int" parameterType="_int">

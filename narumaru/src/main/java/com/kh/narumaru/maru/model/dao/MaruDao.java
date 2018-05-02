@@ -20,5 +20,7 @@ public interface MaruDao {
 
 	ArrayList selectMaruList(int mno) throws MaruException;
 
-	Narumaru selectOneMaru(int nmno) throws MaruException; 
+	Narumaru selectOneMaru(int nmno) throws MaruException;
+
+	int getMaruMaster(int nmno); 
 }

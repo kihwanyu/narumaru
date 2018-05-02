@@ -25,7 +25,7 @@
 				<button class="floatRight searchBtn"><img src="${contextPath }/resources/images/find.png" style="width:35px; height:35px;"></button>
 			</div>
 			<br>
-			<div class="boardInsert">
+			<div class="boardInsert" style="z-index:0;">
 				<form action="insertNarumaruBoard.nm" method="post" id="boardInsert">
 					<textarea class="summernote" name="boardContent"></textarea>
 					<input type="hidden" name="bType" value="200"/>

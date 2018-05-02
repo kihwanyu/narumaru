@@ -182,9 +182,15 @@ public class NarumaruDaoImpl implements NarumaruDao {
 	}
 
 	@Override
+	public int getBoardWriter(Board b) {
+		int oriWriterMno = sqlSession.selectOne("Board.getBoardWriter",b);
+    
+		return oriWriterMno;
+  }
+
+  @Override
 	public void updateDefault(Narumaru nm, SqlSessionTemplate sqlSession) {
 		int result = sqlSession.update("Narumaru.updateDefault",nm);
-		
 	}
 
 }
