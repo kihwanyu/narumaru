@@ -22,6 +22,7 @@
 		position:relative;			
 	}
 	.innerTop{
+		z-index:1;
 		background:yellowgreen;
 		height:30px;
 		width:100%;

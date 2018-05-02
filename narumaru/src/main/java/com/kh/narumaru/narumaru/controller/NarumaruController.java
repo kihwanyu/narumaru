@@ -109,7 +109,6 @@ public class NarumaruController {
 			mv.setViewName("maru/maruBoard"); 
 		}
 		
-		
 		return mv;
 	}
 	
@@ -267,10 +266,18 @@ public class NarumaruController {
 
 		if(nms.selectNarumaruType(nmno) == 1){
 			// 마루일때
-			bType = 200;
+			if(targetBno==0){
+				bType = 200;				
+			}else{
+				bType = 201;	
+			}
 		}else{
 			// 나루일때
-			bType = 100;
+			if(targetBno==0){
+				bType = 100;				
+			}else{
+				bType = 101;
+			}
 		}
 		b.setbType(bType);
 		b.setMno(loginUser.getMid());
