@@ -79,7 +79,7 @@
 		margin-top:50px;
 		position:fixed;
 	}
-	.neighborContent{
+	.neighborContent, .categoryContent{
 		padding:10px;
 		border:1px solid lightgray;
 	}

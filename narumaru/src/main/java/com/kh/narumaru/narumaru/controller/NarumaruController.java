@@ -28,7 +28,9 @@ import com.kh.narumaru.member.model.exception.selectChanelException;
 import com.kh.narumaru.member.model.service.ChannelService;
 import com.kh.narumaru.member.model.vo.Channel;
 import com.kh.narumaru.member.model.vo.Member;
+import com.kh.narumaru.naru.model.service.HiddenService;
 import com.kh.narumaru.naru.model.service.NaruService;
+import com.kh.narumaru.naru.model.vo.HiddenPayment;
 import com.kh.narumaru.naru.model.vo.Theme;
 import com.kh.narumaru.narumaru.exception.NarumaruException;
 import com.kh.narumaru.narumaru.model.service.NarumaruService;
@@ -49,6 +51,8 @@ public class NarumaruController {
 	private AlarmService as;
 	@Autowired
 	private NaruService ns;
+	@Autowired
+	private HiddenService hs;
 	
 	@RequestMapping("goHome.nm")
 	public String goHome(){
@@ -100,9 +104,10 @@ public class NarumaruController {
 			Theme theme = nms.selectThemeOne(nmno); // 나루의 테마
 			int isNeighbor = nms.checkNeighbor(nmno, loginUser); // 이웃 여부
 			ArrayList<Narumaru> neighborList = ns.selectNeighborList(nmno); // 해당 나루의 이웃 리스트
-			
+			ArrayList<HiddenPayment> hpayList = hs.selectHiddenPaymentList(loginUser.getMid()); // 로그인 유저의 구매리스트
 			mv.addObject("theme", theme);
 			mv.addObject("isNeighbor",isNeighbor);
+			mv.addObject("hpayList",hpayList);
 			mv.addObject("neList",neighborList);
 			
 			mv.setViewName("naru/naruBoard"); 
