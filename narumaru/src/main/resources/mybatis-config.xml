@@ -20,6 +20,7 @@
       <typeAlias alias="Category" type="com.kh.narumaru.naru.model.vo.Category"/>
       <typeAlias alias="Alarm" type="com.kh.narumaru.common.model.vo.Alarm"/>
       <typeAlias alias="Theme" type="com.kh.narumaru.naru.model.vo.Theme"/>
+      <typeAlias alias="Neighbor" type="com.kh.narumaru.common.model.vo.Neighbor"/>
    </typeAliases>
    
    <mappers>
@@ -32,6 +33,7 @@
       <mapper resource="mappers/maru-mapper.xml"/>
       <mapper resource="mappers/naru-mapper.xml"/>
       <mapper resource="mappers/alarm-mapper.xml"/>
+      <mapper resource="mappers/neighbor-mapper.xml"/>
    </mappers>
    
 </configuration>

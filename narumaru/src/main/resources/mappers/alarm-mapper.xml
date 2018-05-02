@@ -23,9 +23,28 @@
  	</resultMap>
 	
 	<insert id="alarmRequest">
-		INSERT INTO ALARM VALUES(SEQ_ANO.NEXTVAL, #{atno}, sysdate
-								, #{receivce_mno}, #{send_mno}, #{send_nmno}
-								, #{send_bno}, default)
+		<!-- INSERT INTO ALARM(ANO,
+			,ATNO
+			,ALARM_DATE
+			,RECEIVE_MNO
+			,SEND_MNO
+			,SEND_NMNO
+			,SEND_BNO
+			,STATUS) 
+			VALUES(SEQ_ANO.NEXTVAL, #{atno}, sysdate
+					, #{receive_mno}, #{send_mno}, #{send_nmno}
+					, #{send_bno}, default) -->
+		<if test="atno == 202">
+			INSERT INTO ALARM(ANO
+			,ATNO
+			,ALARM_DATE
+			,RECEIVE_MNO
+			,SEND_MNO
+			,STATUS) 
+			VALUES(SEQ_ANO.NEXTVAL, #{atno}, sysdate
+					, #{receive_mno}, #{send_mno}, default)
+		</if>
+		
 	</insert>	
 	<select id="alarmStatusCount" resultType="_int" parameterType="_int">
 		SELECT SUM(STATUS) FROM ALARM WHERE RECEIVE_MNO=#{mno}
