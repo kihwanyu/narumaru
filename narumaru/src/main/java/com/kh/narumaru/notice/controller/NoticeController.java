@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.narumaru.notice.exception.NoticeDeleteException;
 import com.kh.narumaru.notice.exception.NoticeUpdateException;
 import com.kh.narumaru.notice.model.service.noticeService;
 import com.kh.narumaru.notice.model.vo.Notice;
@@ -87,7 +88,7 @@ public class NoticeController {
 		return mv;
 	}
 	
-	//NoticeUpdateCommit
+	//Notice, FAQ 수정 저장
 	@RequestMapping(value="noticeUpdateCommit.no"/*, method=RequestMethod.POST*/)
 	public String updateNoticeCommit(Notice n){
 		
@@ -105,6 +106,22 @@ public class NoticeController {
 		return "redirect:/noticeDetail.no?bno="+n.getnid();
 	}
 	
+	//Notice, FAQ 삭제
+	@RequestMapping(value="noticeDelete.no")
+	public String deleteNotice(int bno){
+		System.out.println("NoticeController deleteNotice bnn : "+ bno);
+		
+		try {
+			ns.deleteNotice(bno);
+		} catch (NoticeDeleteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return "notice/NoticeList";
+		
+	}
 	
 	
 	//FAQ 조회
@@ -161,6 +178,7 @@ public class NoticeController {
 			
 			return mv;
 		}
+		
 		
 		//1:1 문의하기
 		@RequestMapping(value = "question.no")

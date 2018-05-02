@@ -172,7 +172,7 @@
 							<c:forEach items ="${ nlist }" var="Notice">
 								<c:if test="${ Notice.noType == 801}" >
 								<li>
-									<a href = "noticeDetail.no?bno=${Notice.nid}">
+									<a href = "faqDetail.no?bno=${Notice.nid}">
 									<p>${ Notice.noTitle }</p>
 									<p>${ Notice.createDate }</p>
 									</a>
@@ -213,7 +213,7 @@
 							<c:forEach items ="${ nlist }" var="Notice">
 								<c:if test="${ Notice.noType == 802}" >
 								<li>
-									<a href = "noticeDetail.no?bno=${Notice.nid}">
+									<a href = "faqDetail.no?bno=${Notice.nid}">
 									<p>${ Notice.noTitle }</p>
 									<p>${ Notice.createDate }</p>
 									</a>
@@ -253,7 +253,7 @@
 							<c:forEach items ="${ nlist }" var="Notice">
 								<c:if test="${ Notice.noType == 803}" >
 								<li>
-									<a href = "noticeDetail.no?bno=${Notice.nid}">
+									<a href = "faqDetail.no?bno=${Notice.nid}">
 									<p>${ Notice.noTitle }</p>
 									<p>${ Notice.createDate }</p>
 									</a>
@@ -294,7 +294,7 @@
 							<c:forEach items ="${ nlist }" var="Notice">
 								<c:if test="${ Notice.noType == 804}" >
 								<li>
-									<a href = "noticeDetail.no?bno=${Notice.nid}">
+									<a href = "faqDetail.no?bno=${Notice.nid}">
 									<p>${ Notice.noTitle }</p>
 									<p>${ Notice.createDate }</p>
 									</a>
@@ -335,7 +335,7 @@
 							<c:forEach items ="${ nlist }" var="Notice">
 								<c:if test="${ Notice.noType == 805}" >
 								<li>
-									<a href = "noticeDetail.no?bno=${Notice.nid}">
+									<a href = "faqDetail.no?bno=${Notice.nid}">
 									<p>${ Notice.noTitle }</p>
 									<p>${ Notice.createDate }</p>
 									</a>
@@ -376,7 +376,7 @@
 							<c:forEach items ="${ nlist }" var="Notice">
 								<c:if test="${ Notice.noType == 806}" >
 								<li>
-									<a href = "noticeDetail.no?bno=${Notice.nid}">
+									<a href = "faqDetail.no?bno=${Notice.nid}">
 									<p>${ Notice.noTitle }</p>
 									<p>${ Notice.createDate }</p>
 									</a>
