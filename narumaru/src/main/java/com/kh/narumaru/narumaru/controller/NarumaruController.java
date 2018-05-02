@@ -34,7 +34,7 @@ import com.kh.narumaru.narumaru.model.vo.Narumaru;
 @Controller
 @SessionAttributes("nm")
 public class NarumaruController {
-	
+	/**/
 	@Autowired
 	private NarumaruService nms;
 	@Autowired
