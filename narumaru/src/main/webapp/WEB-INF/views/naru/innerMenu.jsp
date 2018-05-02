@@ -24,42 +24,86 @@
 				</div>
 			</div>
 			<br>
+			<div class="maruSetting">
+			<hr>
+			<br>
 			<c:if test="${isOwner}">
-				<div class="pointer maruSetting">
-				<hr>
-				<br>
 				<label class="btn_label" for="open-pop2" style="margin-bottom:10px;">나루 설정</label>
 				<label class="btn_label" onclick="toWrite()">글 작성</label>			
-				</div>
 			</c:if>
+			<c:if test="${!isOwner && isNeighbor == 0}">
+				<label class="btn_label" onclick="addNeighbor()" style="margin-bottom:10px;">이웃 추가</label>
+			</c:if>
+			<c:if test="${!isOwner && isNeighbor >= 1}">
+				<label class="btn_label" onclick="deleteNeighbor()" style="margin-bottom:10px;">이웃</label>
+			</c:if>
+			</div>
 		</div>
 		
-		<!-- <div class="floatRight rightArea">
+		<div class="floatRight rightArea">
 			<div class="rightMenu chat">
-				<div class="rightTitle">
-					채팅
-					<div class="pointer floatRight newChat">새 채팅<div class="sub chatSub"><ul><li>비공개 채팅</li><li>공개 채팅</li></ul></div></div>
-				</div>
-				<div class="chatContent">
-					<div class="chatPhoto"></div>
-					<label>채팅방 이름</label>
+				<div class="rightTitle">이 나루의 이웃</div>
+				<div class="neighborContent">
+					<c:if test="${neList.size() == 0}">
+						<label>아직 이웃이 없습니다.</label>
+					</c:if>
+					<c:forEach var="i" items="${neList}">
+						<label class="pointer" onclick="location.href='boardListAll.bo?nmno=${i.nmno}'">${i.nmTitle}</label>
+					</c:forEach>
 				</div>
 			</div>
-			
 			<div class="rightMenu album" style="top:200px;">
-				<div class="rightTitle">
-					앨범
-					<div class="floatRight pointer moreAlbum"><a href="showMaruAlbum.ma">더보기</a></div>
+				<div class="rightTitle">카테고리<img src="resources/images/comments_up.png" id="commentToggle" height="20px;" width="20px;" onclick="categoryViews(this);"></div>
+				<div class="categoryContent">
+					<label class="pointer" onclick="location.href='boardListAll.bo?nmno=${nm.nmno}'">전체 보기</label>
+					<br>
 				</div>
-				<div class="albumMiniContent">
-					<div class="photoThumb"></div>
-				</div>
-			</div>
-		</div> -->
+			</div>			
+		</div>
 	</div>
 	<script>
+		$(function(){
+			//카테고리 리스트 불러옴
+			$.ajax({
+				url:"selectCategoryList.na",
+				type:"get",
+				data:{"nmno":${nm.nmno}},
+				success:function(data){
+					for(var i in data){
+						var href = "location.href='boardListAll.bo?nmno=" + data[i].nmno + "'";
+						$(".categoryContent").append("<label class='pointer' onclick=" + href + ">" + data[i].caName + "</label><br>");
+					}
+				},
+				error:function(request,status,error){
+					console.log("카테고리 리스트 ajax 실패")
+				}
+			});
+		})
+	
+		function categoryViews(toggle){
+	   		if(toggle.getAttribute('src') === 'resources/images/comments_down.png'){
+	        	toggle.setAttribute('src', 'resources/images/comments_up.png');
+	        	$(".categoryContent").show();
+	   		} else {
+	        	toggle.setAttribute('src', 'resources/images/comments_down.png');
+	        	$(".categoryContent").hide();
+	   		}
+	    }
+		
 		function toWrite(){
 			location.href="toNaruBoardWrite.na?nmno=" + ${nm.nmno};
+		}
+		
+		function addNeighbor(){
+			if(confirm("이웃으로 추가하시겠습니까?")){
+				location.href="insertNeighbor.na?nmno=" + ${nm.nmno};
+			}
+		}
+		
+		function deleteNeighbor(){
+			if(confirm("이웃을 해제하겠습니까?")){
+				location.href="deleteNeighbor.na?nmno=" + ${nm.nmno};
+			}
 		}
 	
 	</script>

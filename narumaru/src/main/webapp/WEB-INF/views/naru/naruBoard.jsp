@@ -13,6 +13,11 @@
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="resources/css/naruInsertBoard.css">
 <script type="text/javascript" src="${contextPath}/resources/js/jscolor.js"></script>
+<style>
+	.replyArea{
+		border-bottom:1px solid lightgray;
+	}
+</style>
 </head>
 <body id="thisisbody">
 	<jsp:include page="../common/topmenu.jsp"/>
@@ -51,6 +56,27 @@
 					</div>
 				</div>
 				<div class="boardContent">${fn:replace(b.bContent,nr,br)}</div>
+				<!-- 이하 히든 컨텐츠, 구매 여부를 체크함 -->
+				<c:if test="${b.bHidden ne null}">
+					<%-- 볼수 있는지 여부, break문이 불가능해서 forEach가 끝날때까지 false면 구매 안한걸로 간주함 --%>
+					<c:set var="canView" value="false"/>
+					<c:forEach var="h" items="${hpayList}">
+						<%--첫번째when은 구매여부, 두번째when은 작성자일때 --%>
+						<c:choose>
+							<c:when test="${h.bno eq b.bno}">
+								<div class="boardContent">${fn:replace(b.bHidden,nr,br)}</div>
+								<c:set var="canView" value="true"/>
+							</c:when>
+							<c:when test="${b.mno eq loginUser.mid }">
+								<div class="boardContent">${fn:replace(b.bHidden,nr,br)}</div>
+								<c:set var="canView" value="true"/>
+							</c:when>
+						</c:choose>
+					</c:forEach>
+					<c:if test="${canView eq 'false'}">
+						<div class="boardContent">이하는 구매 후 열람이 가능한 컨텐츠입니다.<label class="btn_label">구매 후 열람</label></div>
+					</c:if>
+				</c:if>
 				<div class="boardfoot">
 					<hr>
 					<ul class="footUl">
@@ -134,7 +160,7 @@
 				<label class="btn_label" id="updateThemeBtn" onclick="themeModifyBtn()" style="margin-bottom:15px;">수정완료</label>
 				<div class="row">
 					<label class="modal-leftlabel">테마 색상</label>
-					<input name="themeValue" class="jscolor {valueElement:'chosen-value', onFineChange:'setTextColor(this)'}" style="width:79.1%; float:right; height:25px;" id="chosen-value" value="${theme.theme}}">
+					<input name="themeValue" class="jscolor {valueElement:'chosen-value', onFineChange:'setTextColor(this)'}" style="width:79.1%; float:right; height:25px;" id="chosen-value" value="${theme.color}}">
 				</div>
 				<div class="row">
 					<label class="modal-leftlabel">글 배경색</label>
@@ -302,7 +328,7 @@
 			}
 			
 			//배경색
-			$("#thisisbody").css({"background":"${theme.theme}"});
+			$("#thisisbody").css({"background":"${theme.color}"});
 			
 			//글배경색
 			$(".board").css({"background":"${theme.board}"});

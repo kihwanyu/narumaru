@@ -14,7 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
+import com.kh.narumaru.member.model.vo.Member;
 import com.kh.narumaru.naru.model.exception.NaruException;
+import com.kh.narumaru.naru.model.service.HiddenService;
 import com.kh.narumaru.naru.model.service.NaruService;
 import com.kh.narumaru.naru.model.vo.Category;
 
@@ -22,6 +24,8 @@ import com.kh.narumaru.naru.model.vo.Category;
 public class NaruController {
 	@Autowired
 	private NaruService ns;
+	@Autowired
+	private HiddenService hs;
 	
 	@RequestMapping("naruMain.na")
 	public String showNaruMainView(){
@@ -104,8 +108,25 @@ public class NaruController {
 	
 	@RequestMapping("disableCategory.na")
 	public void disableCategory(String caName, int nmno){
-		System.out.println("disabled go");
 		ns.disableCategory(caName, nmno);
+	}
+	
+	@RequestMapping("insertNeighbor.na")
+	public String insertNeighbor(int nmno, HttpServletRequest request){
+		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+		System.out.println(loginUser);
+		ns.insertNeighbor(nmno, loginUser.getMid());
+		
+		return "redirect:/boardListAll.bo?nmno="+nmno;
+	}
+	
+	@RequestMapping("deleteNeighbor.na")
+	public String deleteNeighbor(int nmno, HttpServletRequest request){
+		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+		System.out.println(loginUser);
+		ns.deleteNeighbor(nmno, loginUser.getMid());
+		
+		return "redirect:/boardListAll.bo?nmno="+nmno;
 	}
 	
 }

@@ -57,4 +57,10 @@ public class MaruServiceImpl implements MaruService{
 		return md.selectOneMaru(nmno);
 	}
 
+	@Override
+	public int getMaruMaster(int nmno) {
+		
+		return md.getMaruMaster(nmno);
+	}
+
 }

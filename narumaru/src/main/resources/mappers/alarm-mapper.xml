@@ -44,7 +44,6 @@
 			VALUES(SEQ_ANO.NEXTVAL, #{atno}, sysdate
 					, #{receive_mno}, #{send_mno}, default)
 		</if>
-		
 	</insert>	
 	<select id="alarmStatusCount" resultType="_int" parameterType="_int">
 		SELECT SUM(STATUS) FROM ALARM WHERE RECEIVE_MNO=#{mno}

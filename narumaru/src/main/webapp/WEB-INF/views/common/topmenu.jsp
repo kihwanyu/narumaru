@@ -142,7 +142,7 @@
 						<p style="text-align:center;" id="alarmCount"></p>
 					</div>
 					
-					<div id="aArea" class="alram-dropdown" style="display:none;">
+					<div id="aArea" class="alram-dropdown" style="display:none; z-index:5;">
 		            </div>
 				</div>
 				

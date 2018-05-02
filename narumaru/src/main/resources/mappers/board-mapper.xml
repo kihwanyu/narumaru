@@ -125,10 +125,19 @@
 	<update id= "updateNoticeCommit" parameterType = "Notice">
 		UPDATE BOARD
 		SET B_TITLE = #{noTitle}, B_CONTENT =#{noContent}, MODIFY_DATE = SYSDATE 
-		WHERE BNO = #{nid}
-		
-	
+		WHERE BNO = #{nid}	
 	</update>
+	
+
+	<select id="getBoardWriter" resultType="_int">
+		SELECT MNO FROM BOARD WHERE BNO=#{targetBno}
+	</select>
+
+	<delete id ="deleteNotice" parameterType="_int" >
+		DELETE FROM BOARD
+		WHERE BNO = #{nid}
+	</delete>
+
 </mapper>
 
 

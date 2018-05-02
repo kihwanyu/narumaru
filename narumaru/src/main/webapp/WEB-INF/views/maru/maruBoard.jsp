@@ -25,7 +25,7 @@
 				<button class="floatRight searchBtn"><img src="${contextPath }/resources/images/find.png" style="width:35px; height:35px;"></button>
 			</div>
 			<br>
-			<div class="boardInsert">
+			<div class="boardInsert" style="z-index:0;">
 				<form action="insertNarumaruBoard.nm" method="post" id="boardInsert">
 					<textarea class="summernote" name="boardContent"></textarea>
 					<input type="hidden" name="bType" value="200"/>
@@ -241,8 +241,8 @@
 	});
 
 	$(document).scroll(function(){
-		summernote1();
-		summernote2();
+		/* summernote1();
+		summernote2(); */
 		//더이상 가져올 글이 없으면 그냥 종료한다
 		if(isEnd) return;
 		
@@ -292,7 +292,7 @@
 	    				+'<br>'
 	    				+'<div class="boardInsert">'
 	    				+'<form action="insertNarumaruBoard.nm" method="post" id="boardInsert">'
-	    				+'	<textarea id="summernote" name="boardContent"></textarea>'
+	    				+'	<textarea class="summernote" name="boardContent"></textarea>'
 	    				+'	<input type="hidden" name="bType" value="200"/>'
 	    				+'	<input type="hidden" name="bLevel" value="0"/>'
 	    				+'	<input type="hidden" name="boardTitle" value="asd"/>'
@@ -402,8 +402,8 @@
 						+'</div>');
 	        	</c:if>
 	        	</c:forEach>
-	        	summernote1();
-	        	summernote2();
+	        	/* summernote1();
+	        	summernote2(); */
 	        }
 		}, 2000);
 	});

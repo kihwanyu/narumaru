@@ -102,7 +102,19 @@ public class NarumaruServiceImpl implements NarumaruService {
 	}
 
 	@Override
+	public int getBoardWriter(Board b) {
+		return nmd.getBoardWriter(b);
+
+  }
+  
+  @Override
 	public void updateDefault(Narumaru nm) {
 		nmd.updateDefault(nm, sqlSession);
 	}
+
+	@Override
+	public int checkNeighbor(int nmno, Member loginUser) {
+		return nmd.checkNeighbor(nmno, loginUser);
+	}
+  
 }
