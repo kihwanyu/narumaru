@@ -203,13 +203,9 @@ public class MemberController {
 		System.out.println("controller Member : " + m);
 		
 		//System.out.println("암호 일치 여부 확인 : " + passwordEncoder.matches("pass01", "$2a$10$DEDHUZOux.CEoctwh7R3ZexGZEUaCn0y8MZO.zSHoxH7zRaQhHSUu"));
-
 		/*MemberService ms = new MemberServiceImpl();*/
-		
 	/*	HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
-        
         String userIp = request.getHeader("X-FORWARDED-FOR");
-		
 		System.out.println(userIp);
 		*/
 		try {
@@ -220,21 +216,17 @@ public class MemberController {
 			/*return "main/main";*/
 			System.out.println("loginUser : " + loginUser);
 			
-			
 			mv.addObject("loginUser", loginUser);
 			mv.setViewName("main/main");
 			
 		} catch (LoginException e) {
-			
 			//model.addAttribute("message", e.getMessage());
 			//return "common/errorPage";
 			
 			mv.addObject("message", e.getMessage());
 			mv.setViewName("common/errorPage");
 		}
-		
 		return mv;
-		
 	}
 	
 	@RequestMapping(value="insertMember.me", method=RequestMethod.POST)
