@@ -16,7 +16,7 @@
     <div class="container body">
       <div class="main_container">
         <jsp:include page = "../common/adMenubar.jsp"/> 
-		<button id="Btn">aaaaaaaaaaaaaaaaaaaaaaaa</button>
+		
        
 
         <!-- page content -->

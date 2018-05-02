@@ -129,6 +129,11 @@
 		
 	
 	</update>
+	
+	<delete id ="deleteNotice" parameterType="_int" >
+		DELETE FROM BOARD
+		WHERE BNO = #{nid}
+	</delete>
 </mapper>
 
 
