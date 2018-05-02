@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="Hidden">
+	
+	<resultMap type="HiddenPayment" id="hiddenPaymentResultSet">
+		<id property="payNo" column="PAY_NO"/>
+		<result property="mno" column="MNO"/>
+		<result property="bno" column="BNO"/>
+		<result property="buyDate" column="BUY_DATE"/>
+ 	</resultMap>
+	
+	<select id="selectHiddenPaymentList" resultMap="hiddenPaymentResultSet" parameterType="_int">
+		SELECT * FROM HIDDEN_PAYMENT WHERE MNO = #{mno}
+	</select>
+
+</mapper>
