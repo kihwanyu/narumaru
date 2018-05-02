@@ -136,7 +136,7 @@
 						<p style="text-align:center;">8</p>
 					</div>
 					
-					<div id="aArea" class="alram-dropdown" style="display:none;">
+					<div id="aArea" class="alram-dropdown" style="display:none; z-index:5;">
 		            </div>
 				</div>
 				

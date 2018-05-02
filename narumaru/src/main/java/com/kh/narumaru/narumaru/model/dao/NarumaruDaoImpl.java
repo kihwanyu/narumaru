@@ -160,8 +160,14 @@ public class NarumaruDaoImpl implements NarumaruDao {
 
 	@Override
 	public Theme selectThemeOne(int nmno) {
-		Theme theme = sqlSession.selectOne("Board.selectThemeOne",nmno);
+		Theme theme = sqlSession.selectOne("Naru.selectThemeOne",nmno);
 		return theme;
+	}
+
+	@Override
+	public int getBoardWriter(Board b) {
+		int oriWriterMno = sqlSession.selectOne("Board.getBoardWriter",b);
+		return oriWriterMno;
 	}
 
 }

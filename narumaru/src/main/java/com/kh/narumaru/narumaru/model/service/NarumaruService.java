@@ -39,5 +39,7 @@ public interface NarumaruService {
 
 	ArrayList<Board> selectCommentListAll();
 
-	Theme selectThemeOne(int nmno); 
+	Theme selectThemeOne(int nmno);
+
+	int getBoardWriter(Board b); 
 }

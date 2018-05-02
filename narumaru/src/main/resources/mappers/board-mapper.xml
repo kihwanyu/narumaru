@@ -129,6 +129,10 @@
 		
 	
 	</update>
+	
+	<select id="getBoardWriter" resultType="_int">
+		SELECT MNO FROM BOARD WHERE BNO=#{targetBno}
+	</select>
 </mapper>
 
 

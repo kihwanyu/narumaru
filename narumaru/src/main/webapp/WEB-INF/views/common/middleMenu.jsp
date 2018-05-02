@@ -219,6 +219,9 @@
   		border:1px solid lightgray;
   		margin:10px;
   	}
+  	.note-editor{
+  		z-index:0;
+  	}
 </style>
 </head>
 <body>

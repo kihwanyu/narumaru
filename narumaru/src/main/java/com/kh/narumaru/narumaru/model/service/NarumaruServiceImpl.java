@@ -100,4 +100,10 @@ public class NarumaruServiceImpl implements NarumaruService {
 	public Theme selectThemeOne(int nmno) {
 		return nmd.selectThemeOne(nmno);
 	}
+
+	@Override
+	public int getBoardWriter(Board b) {
+		
+		return nmd.getBoardWriter(b);
+	}
 }
