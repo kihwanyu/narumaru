@@ -75,7 +75,7 @@ public class AlarmController {
 		}
 		
 		try {
-			as.alarmRequest(alarm, sendUser);
+			as.alarmRequest(alarm);
 		} catch (alarmRequestException e) {
 			e.printStackTrace();
 		}
