@@ -88,7 +88,6 @@ public class NaruDaoImpl implements NaruDao{
 	public ArrayList<Narumaru> selectNeighborList(int nmno, SqlSessionTemplate sqlSession) {
 		//해당 나루의 주인을 찾아옴
 		int mno = sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno);
-		
 		//해당 나루의 이웃들을 가져옴
 		ArrayList<Narumaru> list = (ArrayList)sqlSession.selectList("Narumaru.selectNeighborList", mno);
 		
