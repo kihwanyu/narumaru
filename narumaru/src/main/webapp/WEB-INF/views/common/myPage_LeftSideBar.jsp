@@ -102,7 +102,7 @@
 				</c:otherwise>
 			</c:choose>
 				<div class="left-sidebar-li" id="naruNeighborList-div">
-					나루 구독자 목록
+					나루 이웃 목록
 				</div>
 				<div align="right">
 					<img src="resources/images/right_arrow.png" height="20px">

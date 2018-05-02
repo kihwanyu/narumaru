@@ -16,9 +16,15 @@
 	<resultMap type="Theme" id="ThemeResultSet">
 		<id property="tno" column="TNO"/>
 		<result property="nmno" column="NMNO"/>
-		<result property="theme" column="THEME"/>
+		<result property="color" column="COLOR"/>
 		<result property="font" column="FONT"/>
 		<result property="board" column="BOARD"/>
+	</resultMap>
+	
+	<resultMap type="Neighbor" id="NeighborResultSet">
+		<id property="nno" column="NNO"/>
+		<result property="mno" column="MNO"/>
+		<result property="neighborMno" column="NEIGHBOR_MNO"/>
 	</resultMap>
 	
 	<select id="selectCategoryAll" resultMap="CategoryResultSet" parameterType="_int">
@@ -38,12 +44,24 @@
 	</update>
 	
 	<update id="updateTheme" parameterType="Theme">
-		UPDATE THEME SET THEME = #{theme}, BOARD = #{board} WHERE NMNO = #{nmno}
+		UPDATE THEME SET COLOR = #{color}, BOARD = #{board} WHERE NMNO = #{nmno}
 	</update>
 	
 	<select id="selectThemeOne" resultMap="ThemeResultSet" parameterType="_int">
 		SELECT * FROM THEME WHERE NMNO = #{nmno}
 	</select>
+	
+	<insert id="insertNeighbor">
+		INSERT INTO NEIGHBOR VALUES(SEQ_NEIGHBOR_NO.NEXTVAL,#{mno},#{neighborMno})
+	</insert>
+	
+	<select id="selectNeighbor" resultType="_int">
+		SELECT COUNT(*) FROM NEIGHBOR WHERE MNO = #{mno} AND NEIGHBOR_MNO = #{neighborMno}
+	</select>
+	
+	<delete id="deleteNeighbor">
+		DELETE FROM NEIGHBOR WHERE MNO = #{mno} AND NEIGHBOR_MNO = #{neighborMno}
+	</delete>
 </mapper>
 
 

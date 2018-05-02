@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.narumaru.notice.exception.NoticeDeleteException;
 import com.kh.narumaru.notice.exception.NoticeUpdateException;
 import com.kh.narumaru.notice.model.dao.noticeDao;
 import com.kh.narumaru.notice.model.vo.Notice;
@@ -31,7 +32,7 @@ public class noticeServiceImpl implements noticeService {
 		return nd.showNoticeDetailView(bno);
 	}
 
-	//공지사항 수정하기
+	//공지사항, faq 수정하기
 	@Override
 	public void updateNoticeCommit(Notice n) throws NoticeUpdateException {
 		System.out.println("noticeService updateNoticeCommit ");
@@ -39,14 +40,34 @@ public class noticeServiceImpl implements noticeService {
 		nd.updateNoticeCommit(n);
 		
 	}	
-		
-	//FAQ 전체 조회하기
+	
+	//notice, faq 삭제하기 
 	@Override
-	public ArrayList<Notice> faqSelectList(Notice n) {
-		System.out.println("noticeService faqSelectList "); 
+	public void deleteNotice(int bno) throws NoticeDeleteException {
+		System.out.println("noticeService deleteNotice bno : " + bno);
 		
-		return nd.faqSelectList(n);
+		nd.deleteNotice(bno);
+		
 	}
+
+	
+	//FAQ 전체 조회하기
+		@Override
+		public ArrayList<Notice> faqSelectList(Notice n) {
+			System.out.println("noticeService faqSelectList ");
+			
+			return nd.faqSelectList(n);
+		}
+
+		//faq detail 조회하기 
+		@Override
+		public Notice showFaqDetailView(int bno) {
+			System.out.println("noticeService noticeSelectList ");
+			
+			return nd.showFaqDetailView(bno);
+		}
+
+	
 
 
 

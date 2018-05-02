@@ -12,6 +12,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +25,9 @@ import org.junit.runner.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpRequest;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -81,6 +85,8 @@ import com.kh.narumaru.payment.model.vo.Payment;
 public class MemberController {
 	
 	@Autowired
+	private JavaMailSender mailSender;
+	@Autowired
 	private MemberService ms;
 	@Autowired
 	private ChannelService cs;
@@ -94,16 +100,6 @@ public class MemberController {
 	private PaymentService ps; 
 	@Autowired
 	private BankSevice bs;
-	
-	/* NaverLoginBO 
-	private NaverLoginBO naverLoginBO;
-
-	 NaverLoginBO 
-	@Autowired
-	private void setNaverLoginBO(NaverLoginBO naverLoginBO){
-		this.naverLoginBO = naverLoginBO;
-	}*/
-	
 	
 	@RequestMapping(value="findMember.me")
 	public String findMember(){
@@ -141,16 +137,61 @@ public class MemberController {
 		
 		String email = request.getParameter("email");
 		String phone = request.getParameter("phone");
-		
+		String message2 = "";
 		System.out.println("비밀번호찾기" + email + "  " + phone);
 		
 		Member m = new Member();
+		Member m2 = null;
 		
 		m.setEmail(email);
 		m.setPhone(phone);
 		
+		boolean result = false;
+		result = ms.sendPwd(m);
 		
+		if(result == true){
+			System.out.println("회원가입여부 있음");
+			
+			int[] newPwd = new int[6];
+			String newPwd2 = "a";
+			for(int i = 0; i < newPwd.length; i++){
+				
+				int ran = new Random().nextInt(10);
+				newPwd[i] = ran; 	
+			}
+			
+			for(int i = 0; i<newPwd.length; i++){
+				System.out.println(newPwd[i]);
+				newPwd2 += newPwd[i];
+			}
+			System.out.println(newPwd2);
+			
+			m2 = new Member();
+			m2.setEmail(email);
+			m2.setUserPwd(newPwd2);
+			
+			ms.sendUpdatePwd(m2);
+			
+			SimpleMailMessage message = new SimpleMailMessage();
+			
+			message.setFrom("wlgus12312@gmail.com");
+			message.setTo(email);
+			message.setSubject("나루마루 비밀번호 찾기안내");
+			message.setText("보이스피싱입니다. 비밀번호가 " + newPwd2 + " 로 변경되었습니다.");
+			
+			mailSender.send(message);
+			
+			message2 = "비밀번호가 가입한 메일로 전송되었습니다.";
+		}else{
+			System.out.println("회원가입여부 없음");
+			message2 = "가입한 정보가 없습니다.";
+		}
 		
+		response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+		
+		mv.addObject("Message", message2);
+		mv.setViewName("jsonView");	
 		
 		return mv;
 	}
@@ -509,7 +550,8 @@ public class MemberController {
 		
 		String phone = m.getPhone();
 		
-		phone = "82+" + phone.substring(1, phone.length());
+		//국제 번호
+		//phone = "82+" + phone.substring(1, phone.length());
 		
 		m.setMid(loginUser.getMid());
 		m.setPhone(phone);

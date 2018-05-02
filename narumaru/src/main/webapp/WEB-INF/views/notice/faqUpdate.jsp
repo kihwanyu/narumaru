@@ -89,10 +89,10 @@
 <c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application" />
 	
 		<jsp:include page = "noMenubar.jsp"/>
-
+			<form action ="noticeUpdateCommit" method="post">
 			<div class = "NoticeServiceView">
 				<div  class ="noTitle">
-					<label> 공지 사항</label>
+					<label> FAQ </label>
 					
 					<div style = "float:right; width:80px;"><img src="${ contextPath }/resources/images/noticeList.jpg" class = "listBtnImg"><a href = "Notice.no"> 목록 </a></div>
 				</div>
@@ -102,45 +102,41 @@
 						
 						<article>
 							<header>
-								<label>${ n.noTitle } </label>
+								<div style="display:none;">
+									<input type="text" name="nid" value= "${ n.nid }">
+									<input type="text" name="noType" value= "${ n.noType }">
+									<input type="text" name="writerId" value= "${ n.writerId }">
+									<input type="text" name="status" value= "${ n.status }">	
+								</div>
+							
+							
+								<input type= "text" name="noTitle" style="width:635px" value="${ n.noTitle }">
 								
 								<!-- 관리자일 경우에만 보이도록 -->
 									<div style="float:right">
-										<input type = "button" class= "NoticeDelete" value= "삭제하기">
-										<input type = "button" class= "NoticeUpdate" value= "수정하기">
+									
+										<input type = "submit" class= "NoticeUpdateCommit" value= "수정저장">
 									</div>
 									
-								<script>
-									$(".NoticeDelete").click(function(){
-										
-										if(confirm("게시물을 삭제하시겠습니까?") == true){
-											location.href= "noticeDelete.no?bno=${n.nid}";
-										}else{
-											return;
-										}
-									});
-									
-									$(".NoticeUpdate").click(function(){
-										location.href= "noticeUpdate.no?bno=${n.nid}";
-									});
-								</script>
 								
-								
+								<%-- 
 								<p> 최초 작성 날짜: ${ n.createDate } </p>
-								<p> 마지막 수정 날짜 : ${ n.modifyDate }</p>
+								<p> 마지막 수정 날짜 : ${ n.modifyDate }</p> --%>
 									
 							</header>
 							
 							<hr>
-							${fn:replace(n.noContent,nr,br)}
-					
+							<textarea name="noContent" style="resize:none;width:710px;height:250px;">
+								${fn:replace(n.noContent,nr,br)}
+							</textarea>
 							<br><br>
 						</article>
 					</li>
 					
 					
 				</ul>
-		</div>	
+		</div>
+		</form>	
 	
 	
 </body>

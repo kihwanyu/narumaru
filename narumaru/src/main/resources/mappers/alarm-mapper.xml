@@ -27,7 +27,9 @@
 								, #{receive_mno}, #{send_mno}, #{send_nmno}
 								, #{send_bno}, default)
 	</insert>	
-	
+	<select id="alarmStatusCount" resultType="_int" parameterType="_int">
+		SELECT SUM(STATUS) FROM ALARM WHERE RECEIVE_MNO=#{mno}
+	</select>
 	<select id="alarmResponse" resultMap="alarmResultSet" parameterType="_int">
 		SELECT A.ANO, A.ATNO, A.ALARM_DATE
 		    , A.RECEIVE_MNO, M1.NICNAME RECEIVE_NICNAME, A.SEND_MNO
@@ -38,7 +40,7 @@
                THEN SUBSTR(B.B_CONTENT,0,20)||'..'
                ELSE B.B_CONTENT
             END as B_CONTENT
-		    ,A.STATUS 
+		    , A.STATUS 
 		FROM ALARM A 
 		LEFT JOIN MEMBER M1 ON(A.RECEIVE_MNO=M1.MNO)
 		LEFT JOIN MEMBER M2 ON(A.SEND_MNO=M2.MNO)
@@ -47,5 +49,7 @@
 		WHERE RECEIVE_MNO=#{mno}
 		ORDER BY A.ANO DESC
 	</select>
-	
+	<update id="alarmStatusUpdate" parameterType="_int">
+		UPDATE ALARM SET STATUS=0 WHERE ANO=#{ano}
+	</update>
 </mapper>

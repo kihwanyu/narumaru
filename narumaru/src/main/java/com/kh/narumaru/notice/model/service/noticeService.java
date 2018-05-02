@@ -2,6 +2,7 @@ package com.kh.narumaru.notice.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.narumaru.notice.exception.NoticeDeleteException;
 import com.kh.narumaru.notice.exception.NoticeUpdateException;
 import com.kh.narumaru.notice.model.vo.Notice;
 
@@ -15,6 +16,10 @@ public interface noticeService {
 
 	
 
-	void updateNoticeCommit(Notice n) throws NoticeUpdateException; 
+	void updateNoticeCommit(Notice n) throws NoticeUpdateException;
+
+	Notice showFaqDetailView(int bno);
+
+	void deleteNotice(int bno) throws NoticeDeleteException; 
 
 }

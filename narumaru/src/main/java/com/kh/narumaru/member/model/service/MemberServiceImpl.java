@@ -3,6 +3,7 @@ package com.kh.narumaru.member.model.service;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,10 @@ import com.kh.narumaru.member.model.vo.Member;
 
 @Service
 public class MemberServiceImpl implements MemberService{
-
+	
+	
+	@Autowired
+    private JavaMailSender javaMailSender;
 	@Autowired
 	private MemberDao md;
 	@Autowired
@@ -91,6 +95,29 @@ public class MemberServiceImpl implements MemberService{
 	public String findEmail(Member m) {
 		
 		return md.findEmail(sqlSession, m);
+	}
+	@Override
+	public boolean sendPwd(Member m) {
+		
+		boolean result = false;
+		
+		String result1 = "";
+		
+		result1 = md.sendPwd(sqlSession, m);
+		System.out.println("result1 : " + result1);
+		
+		if(result1 != null){
+			result = true;
+		}
+		
+		return result;
+	}
+	
+	@Override
+	public void sendUpdatePwd(Member m) {
+		
+		md.sendUpdatePwd(sqlSession, m);
+		
 	}
 
 }

@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kh.narumaru.notice.Exception.NoticeUpdateException;
+import com.kh.narumaru.notice.exception.NoticeDeleteException;
+import com.kh.narumaru.notice.exception.NoticeUpdateException;
 import com.kh.narumaru.notice.model.service.noticeService;
 import com.kh.narumaru.notice.model.vo.Notice;
 
@@ -87,8 +88,8 @@ public class NoticeController {
 		return mv;
 	}
 	
-	//NoticeUpdateCommit
-	@RequestMapping(value="/hihihihi.no", method=RequestMethod.POST)
+	//Notice, FAQ 수정 저장
+	@RequestMapping(value="noticeUpdateCommit.no"/*, method=RequestMethod.POST*/)
 	public String updateNoticeCommit(Notice n){
 		
 		System.out.println("NoticeController updateNoticeCommit n : " + n);
@@ -105,38 +106,85 @@ public class NoticeController {
 		return "redirect:/noticeDetail.no?bno="+n.getnid();
 	}
 	
+	//Notice, FAQ 삭제
+	@RequestMapping(value="noticeDelete.no")
+	public String deleteNotice(int bno){
+		System.out.println("NoticeController deleteNotice bnn : "+ bno);
+		
+		try {
+			ns.deleteNotice(bno);
+		} catch (NoticeDeleteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return "notice/NoticeList";
+		
+	}
 	
 	
 	//FAQ 조회
-	@RequestMapping(value = "FAQ.no")
-	public ModelAndView showFAQView(Notice n, 
-			ModelAndView mv, SessionStatus status){
-		System.out.println("noticeController showFAQView n : " + n);
+		@RequestMapping(value = "FAQ.no")
+		public ModelAndView showFAQView(Notice n, 
+				ModelAndView mv, SessionStatus status){
+			System.out.println("noticeController showFAQView n : " + n);
+			
+			ArrayList<Notice> nlist = ns.faqSelectList(n);
+			System.out.println("noticeController showFAQView nlist = "  +nlist);
+			
+			
+			mv.addObject("nlist", nlist);
+			status.setComplete();
+			
+			mv.setViewName("notice/FAQ");
+			
+			return mv;
+		}
 		
-		ArrayList<Notice> nlist = ns.faqSelectList(n);
-		System.out.println("noticeController showFAQView nlist = " +nlist);
+		
+		//Faq Detail 
+		@RequestMapping(value = "faqDetail.no")
+		public ModelAndView showFaqDetailView(ModelAndView mv,SessionStatus status, int bno){
+			
+			System.out.println("noticeController showFaqDetailView bno : " + bno);
+		
+			Notice n = ns.showFaqDetailView(bno);
+			System.out.println("noticeController showFaqDetailView n : " + n);
+			
+			mv.addObject("n" ,n);
+			status.setComplete();
+			
+			mv.setViewName("notice/faqDetail");
+			
+			return mv;
+		}
+		
+		//Faq 수정 페이지로 이동
+		@RequestMapping(value = "faqUpdate.no")
+		public ModelAndView updateFaq(ModelAndView mv, SessionStatus status, int bno){
+			
+			System.out.println("NoticeController updateFaq bno : " + bno);
+			
+			Notice n = ns.showFaqDetailView(bno);
+
+			System.out.println("NoticeController updateFaq n : " + n);
+			
+			mv.addObject("n", n);
+			
+			status.setComplete();
+			
+			mv.setViewName("notice/faqUpdate");
+			
+			return mv;
+		}
 		
 		
-		mv.addObject("nlist", nlist);
-		status.setComplete();
-		
-		mv.setViewName("notice/FAQ");
-		
-		return mv;
-	}
-	
-	//1:1 문의하기
-	@RequestMapping(value = "question.no")
-	public String showquestionView(){
-		
-		return "notice/question";
-	}
-	
-	
-	
-	
-	/*// FAQ 조회하기 
-	@RequestMapping(value = "FAQSelectList.no")
-	public ModelAndView */
+		//1:1 문의하기
+		@RequestMapping(value = "question.no")
+		public String showquestionView(){
+			
+			return "notice/question";
+		}
 	
 }

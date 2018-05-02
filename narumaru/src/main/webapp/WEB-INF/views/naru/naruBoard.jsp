@@ -13,6 +13,11 @@
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="resources/css/naruInsertBoard.css">
 <script type="text/javascript" src="${contextPath}/resources/js/jscolor.js"></script>
+<style>
+	.replyArea{
+		border-bottom:1px solid lightgray;
+	}
+</style>
 </head>
 <body id="thisisbody">
 	<jsp:include page="../common/topmenu.jsp"/>
@@ -66,7 +71,7 @@
 				<div class="insertReply">
 					<hr>
 					<input type="text" name="insertReply" id="insertReply"
-						style="background: none; width: 400px; height: 40px;">
+						style="background: none; width: 400px; height: 40px; background:white;">
 					<button class="floatRight insertReplyBtn" onclick="addReply(this, ${b.bno})">
 						<img src="${contextPath }/resources/images/find.png"
 							style="width: 35px; height: 35px;">
@@ -95,27 +100,31 @@
 	<div class="modal2" style="font-size:0.9em;">
 		<label class="modal_bg" for="open-pop2"></label>
 		<!-- 기본 -->
-		<div class="modal_inner" id="modal_default">
-			<div class="row">
-				<label class="btn_label modify-basic"><b>기본</b></label>
-				<label class="btn_label modify-theme">테마</label>
-				<label class="btn_label modify-category">카테고리</label>
-				<label class="btn_label modify-neighbor">이웃</label>
-				<label class="modal_close" for="open-pop2"></label>
-			</div>
-			<div class="row">
-				<label class="modal-leftlabel">나루 대표사진</label>
-				<input type="file" style="width:70%; float:right;">
-			</div>
-			<div class="row">
-				<label class="modal-leftlabel">나루 제목</label>
-				<input type="text" style="width:79.1%; float:right; height:25px;">
-			</div>
-			<div class="row">
-				<label class="modal-leftlabel">소개 문구</label>
-				<textarea style="width:78.7%; float:right; height:40px; resize:none;"></textarea>
-			</div>
-	 	</div>
+		<form id="defaultModify" action="updateDefault.nm" method="post">
+			<div class="modal_inner" id="modal_default">
+				<input type="hidden" name="nmno" value="${nm.nmno}">
+				<div class="row">
+					<label class="btn_label modify-basic"><b>기본</b></label>
+					<label class="btn_label modify-theme">테마</label>
+					<label class="btn_label modify-category">카테고리</label>
+					<label class="btn_label modify-neighbor">이웃</label>
+					<label class="modal_close" for="open-pop2"></label>
+				</div>
+				<label class="btn_label" id="updateThemeBtn" onclick="defaultModifyBtn()" style="margin-bottom:15px;">수정완료</label>
+				<div class="row">
+					<label class="modal-leftlabel">나루 대표사진</label>
+					<input type="file" style="width:70%; float:right;" name="">
+				</div>
+				<div class="row">
+					<label class="modal-leftlabel">나루 제목</label>
+					<input type="text" style="width:79.1%; float:right; height:25px;" name="nmTitle" value="${nm.nmTitle}">
+				</div>
+				<div class="row">
+					<label class="modal-leftlabel">소개 문구</label>
+					<textarea style="width:78.7%; float:right; height:40px; resize:none;" name="nmIntro">${nm.nmIntro}</textarea>
+				</div>
+		 	</div>
+		 </form>
 	 	<!-- 테마  -->
 	 	<form id="themeModify" action="updateTheme.na" method="post">
 	 		<input type="hidden" name="nmno" value="${nm.nmno}">
@@ -127,14 +136,14 @@
 					<label class="btn_label modify-neighbor">이웃</label>
 					<label class="modal_close" for="open-pop2"></label>
 				</div>
-				<input type="submit" class="btn_label" id="updateThemeBtn" style="margin-bottom:15px; height:40px;" value="수정완료">
+				<label class="btn_label" id="updateThemeBtn" onclick="themeModifyBtn()" style="margin-bottom:15px;">수정완료</label>
 				<div class="row">
 					<label class="modal-leftlabel">테마 색상</label>
-					<input name="themeValue" class="jscolor {valueElement:'chosen-value', onFineChange:'setTextColor(this)'}" style="width:79.1%; float:right; height:25px;" id="chosen-value" value="000000">
+					<input name="themeValue" class="jscolor {valueElement:'chosen-value', onFineChange:'setTextColor(this)'}" style="width:79.1%; float:right; height:25px;" id="chosen-value" value="${theme.color}}">
 				</div>
 				<div class="row">
 					<label class="modal-leftlabel">글 배경색</label>
-					<input name="boardValue" class="jscolor {valueElement:'chosen-value2', onFineChange:'setTextColor(this)'}" style="width:79.1%; float:right; height:25px;" id="chosen-value2" value="000000">
+					<input name="boardValue" class="jscolor {valueElement:'chosen-value2', onFineChange:'setTextColor(this)'}" style="width:79.1%; float:right; height:25px;" id="chosen-value2" value="${theme.board}}">
 				</div>
 				<div class="row">
 					<label class="modal-leftlabel">폰트</label>
@@ -254,6 +263,14 @@
 			})
 		})
 		
+		function themeModifyBtn(){
+	  		$("#themeModify").submit();
+	  	}
+	  	
+	  	function defaultModifyBtn(){
+	  		$("#defaultModify").submit();
+	  	}
+		
 		function deleteCategory(btn){
 	  		console.log("버튼눌름");
 	  		var categoryName = $(btn).parent().find(":text").val();
@@ -290,7 +307,10 @@
 			}
 			
 			//배경색
-			$("#thisisbody").css({"background":"${theme.theme}"});
+			$("#thisisbody").css({"background":"${theme.color}"});
+			
+			//글배경색
+			$(".board").css({"background":"${theme.board}"});
 		})
 	
 		$(document).scroll(function(){
@@ -374,7 +394,7 @@
 								+'<div class="insertReply">'
 								+'	<hr>'
 								+'	<input type="text" name="insertReply"'
-								+'		style="background: none; width: 400px; height: 40px;">'
+								+'		style="background: none; width: 400px; height: 40px; background:white;">'
 								+'	<button class="floatRight insertReplyBtn" onclick="addReply(this, ${b.bno})">'
 								+'		<img src="${contextPath }/resources/images/find.png"'
 								+'			style="width: 35px; height: 35px;">'
@@ -410,7 +430,9 @@
 		}
 		
 		function deleteBoard(bno){
-			location.href="deleteBoardOne.nm?bno="+ bno + "&nmno=${nm.nmno}&type=1";
+			if(confirm("정말로 삭제하시겠습니까?")){
+				location.href="deleteBoardOne.nm?bno="+ bno + "&nmno=${nm.nmno}&type=1";
+			}
 		}
 		
 		function addReply(btn, bno){
@@ -424,7 +446,7 @@
 			
 			$(replyArea).append('<div class="replyArea">'
 					+ '<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
-					+ '<label>이름</label><br><label>' + strDate + '</label>'
+					+ '<label>${loginUser.nickName}</label><br><label>' + strDate + '</label>'
 					+ '<div class="replyContent" style="clear:both;">'+ comment +' </div>'
 					+ '</div>');
 			

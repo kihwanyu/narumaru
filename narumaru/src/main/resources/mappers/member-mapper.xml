@@ -95,8 +95,16 @@
 	</update>
 	
 	<select id="findEmail" resultType="java.lang.String" parameterType="Member">
-		SELECT EMAIL FROM MEMBER WHERE NICNAME = #{nickName} AND PHONE = #{phone}
+		SELECT EMAIL FROM MEMBER WHERE NICNAME = #{nickName} AND PHONE = #{phone} AND STATUS = 'Y'
 	</select>
+	
+	<select id="selectPwd2" resultType="java.lang.String" parameterType="Member">
+		SELECT PASSWORD FROM MEMBER WHERE EMAIL like #{email}||'%' AND PHONE = #{phone} AND STATUS = 'Y'
+	</select>
+	
+	<update id="sendUpdatePwd2">
+		UPDATE MEMBER SET PASSWORD = #{userPwd} WHERE EMAIL LIKE #{email}||'%'
+	</update>
 </mapper>
 
 

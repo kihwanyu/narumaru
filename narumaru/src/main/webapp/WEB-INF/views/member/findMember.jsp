@@ -285,7 +285,7 @@
          <br><br>
          <label for="inputPhoneNumber" class="col-lg-2 control-label">휴대폰 번호</label>
            <div class="col-lg-10">
-               <input type="tel" class="form-control onlyNumber" name="phone2" id="phoneNumber" data-rule-required="true" placeholder="-를 제외하고 숫자만 입력하세요." maxlength="11">
+               <input type="tel" class="form-control onlyNumber" name="phone2" id="phone2" data-rule-required="true" placeholder="-를 제외하고 숫자만 입력하세요." maxlength="11">
            </div>
            <br><br><br>
            <div align="center">
@@ -332,7 +332,10 @@
 				data:{email:email, phone:phone},
 				success:function(data){
 					
-					//가입하신 <a href="#" id="findPwd"></a> 로 비밀번호가 발송 되었습니다.
+					console.log(data);
+					
+					$("#findPassword").text(data.Message);
+					
 					
 				}
 			});
@@ -364,7 +367,7 @@
 				<label class="modal-pass_close" for="open-pop2"></label>
 				<h2 style="padding-bottom: 40px;">비밀번호확 확인</h2>
 				
-				<h3 style="vertical-align: middle;"></h3>
+				<h3 id="findPassword" style="vertical-align: middle;"></h3>
 				
 			</div>
 		</div>

@@ -14,4 +14,8 @@ public interface AlarmDao {
 
 	ArrayList<Alarm> alarmResponse(SqlSessionTemplate sqlSession, int mno) throws alarmResponseException;
 
+	int alarmStatusCount(SqlSessionTemplate sqlSession, int mno);
+
+	void alarmStatusUpdate(SqlSessionTemplate sqlSession, int ano);
+
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.narumaru.member.model.vo.Member;
+import com.kh.narumaru.naru.model.vo.Neighbor;
 import com.kh.narumaru.naru.model.vo.Theme;
 import com.kh.narumaru.narumaru.exception.NarumaruException;
 import com.kh.narumaru.narumaru.model.vo.Board;
@@ -29,10 +30,11 @@ public class NarumaruDaoImpl implements NarumaruDao {
 	public Narumaru insertNarumaru(SqlSessionTemplate sqlSession, Narumaru nm) throws NarumaruException {
 		
 		int result = sqlSession.insert("Narumaru.insertNarumaru", nm);
+		
 		if(result<0){
-			throw new NarumaruException("생성 실패");
+			throw new NarumaruException("나루마루 생성 실패");
 		}else{
-			
+			int result2 = sqlSession.insert("Narumaru.insertTheme", nm.getNmno());
 		}
 		return nm;
 	}
@@ -57,6 +59,21 @@ public class NarumaruDaoImpl implements NarumaruDao {
 		if(loginUser.getMid() == ownerMno) isOwner = true;
 		
 		return isOwner;
+	}
+	
+	@Override
+	public int checkNeighbor(int nmno, Member loginUser) {
+		Neighbor n = new Neighbor();
+		
+		int ownerMno = sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno);
+		
+		n.setNeighborMno(ownerMno);
+		n.setMno(loginUser.getMid());
+		
+		int resultNeighbor = sqlSession.selectOne("Naru.selectNeighbor", n);
+		
+		//1개 이상 리턴되면 이웃을 걸어놨다는 뜻
+		return resultNeighbor;
 	}
 
 	@Override
@@ -160,14 +177,20 @@ public class NarumaruDaoImpl implements NarumaruDao {
 
 	@Override
 	public Theme selectThemeOne(int nmno) {
-		Theme theme = sqlSession.selectOne("Naru.selectThemeOne",nmno);
+		Theme theme = (Theme)sqlSession.selectOne("Naru.selectThemeOne",nmno);
 		return theme;
 	}
 
 	@Override
 	public int getBoardWriter(Board b) {
 		int oriWriterMno = sqlSession.selectOne("Board.getBoardWriter",b);
+    
 		return oriWriterMno;
+  }
+
+  @Override
+	public void updateDefault(Narumaru nm, SqlSessionTemplate sqlSession) {
+		int result = sqlSession.update("Narumaru.updateDefault",nm);
 	}
 
 }

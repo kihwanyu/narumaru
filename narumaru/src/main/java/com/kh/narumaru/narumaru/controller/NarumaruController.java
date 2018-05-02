@@ -28,6 +28,7 @@ import com.kh.narumaru.member.model.exception.selectChanelException;
 import com.kh.narumaru.member.model.service.ChannelService;
 import com.kh.narumaru.member.model.vo.Channel;
 import com.kh.narumaru.member.model.vo.Member;
+import com.kh.narumaru.naru.model.service.NaruService;
 import com.kh.narumaru.naru.model.vo.Theme;
 import com.kh.narumaru.narumaru.exception.NarumaruException;
 import com.kh.narumaru.narumaru.model.service.NarumaruService;
@@ -46,6 +47,7 @@ public class NarumaruController {
 	private MaruService ms;
 	@Autowired
 	private AlarmService as;
+	private NaruService ns;
 	
 	@RequestMapping("goHome.nm")
 	public String goHome(){
@@ -63,7 +65,6 @@ public class NarumaruController {
 		ArrayList<Board> list = nms.selectBoardList(nmno);
 		ArrayList<Board> colist = nms.selectCommentList(nmno);
 		Narumaru nm = nms.selectNarumaruOne(nmno);
-		Theme theme = nms.selectThemeOne(nmno);
 		if(list.size() == 0){
 			Board newB = new Board();
 			newB.setbWriter("");
@@ -88,12 +89,21 @@ public class NarumaruController {
 			list.add(newB);
 		}		
 		boolean isOwner = nms.checkNarumaruOwner(nmno, loginUser);
+		
 		mv.addObject("nm", nm);
 		mv.addObject("list", list);
 		mv.addObject("colist", colist);
 		mv.addObject("isOwner", isOwner);
-		mv.addObject("theme", theme);
+
 		if(nm.getNmCategory() ==2){
+			Theme theme = nms.selectThemeOne(nmno); // 나루의 테마
+			int isNeighbor = nms.checkNeighbor(nmno, loginUser); // 이웃 여부
+			ArrayList<Narumaru> neighborList = ns.selectNeighborList(nmno); // 해당 나루의 이웃 리스트
+			
+			mv.addObject("theme", theme);
+			mv.addObject("isNeighbor",isNeighbor);
+			mv.addObject("neList",neighborList);
+			
 			mv.setViewName("naru/naruBoard"); 
 		}else{
 			mv.setViewName("maru/maruBoard"); 
@@ -425,12 +435,15 @@ public class NarumaruController {
 			int nmno = nms.insertNarumaru(nm).getNmno();
 			System.out.println(nmno);
 			Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+			
+			//나루마루의 주인을 추가함
 			MaruMember mm = new MaruMember();
 			mm.setMno(loginUser.getMid());
 			mm.setNmno(nmno);
 			mm.setConLevel(0);
 			System.out.println("mm:"+mm);
 			ms.insertMaruMember(mm);
+			
 		} catch (NarumaruException e) {
 			mv.addObject("message", e.getMessage());
 			mv.setViewName("common/errorPage");			
@@ -440,6 +453,19 @@ public class NarumaruController {
 		}
 		
 		return "redirect:/boardListAll.bo?nmno="+nm.getNmno();
+	}
+	
+	@RequestMapping("updateDefault.nm")
+	public String updateDefault(int nmno, HttpServletRequest request){
+		Narumaru nm = new Narumaru();
+		
+		nm.setNmno(nmno);
+		nm.setNmTitle(request.getParameter("nmTitle"));
+		nm.setNmIntro(request.getParameter("nmIntro"));
+		
+		nms.updateDefault(nm);
+		
+		return "redirect:/boardListAll.bo?nmno="+nmno;
 	}
 	
 }

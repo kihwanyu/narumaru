@@ -92,7 +92,7 @@
 
 			<div class = "NoticeServiceView">
 				<div  class ="noTitle">
-					<label> 공지 사항</label>
+					<label> FAQ </label>
 					
 					<div style = "float:right; width:80px;"><img src="${ contextPath }/resources/images/noticeList.jpg" class = "listBtnImg"><a href = "Notice.no"> 목록 </a></div>
 				</div>
@@ -112,16 +112,19 @@
 									
 								<script>
 									$(".NoticeDelete").click(function(){
-										
 										if(confirm("게시물을 삭제하시겠습니까?") == true){
 											location.href= "noticeDelete.no?bno=${n.nid}";
 										}else{
 											return;
 										}
+									
 									});
 									
 									$(".NoticeUpdate").click(function(){
-										location.href= "noticeUpdate.no?bno=${n.nid}";
+										
+											location.href= "faqUpdate.no?bno=${n.nid}";
+										
+										
 									});
 								</script>
 								

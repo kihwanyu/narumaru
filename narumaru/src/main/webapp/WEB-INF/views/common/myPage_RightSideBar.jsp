@@ -55,9 +55,9 @@
 		<div class="menubar-div" align="center">
 			<div>
 				<div class="list-group">
-				  <a href="#" class="list-group-item">공지사항</a>
-				  <a href="#" class="list-group-item">1:1 문의</a>
-				  <a href="#" class="list-group-item">FAQ</a>
+				  <a href="noticeSelectList.no" class="list-group-item">공지사항</a>
+				  <a href="question.no" class="list-group-item">1:1 문의</a>
+				  <a href="FAQ.no" class="list-group-item">FAQ</a>
 				</div>
 			</div>
 		</div>

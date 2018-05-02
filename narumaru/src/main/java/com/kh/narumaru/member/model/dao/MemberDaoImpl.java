@@ -142,4 +142,37 @@ public class MemberDaoImpl implements MemberDao{
 		return email;
 	}
 
+
+	@Override
+	public String sendPwd(SqlSessionTemplate sqlSession, Member m) {
+		
+		String id = m.getEmail().substring(0, m.getEmail().lastIndexOf('@'));
+		m.setEmail(id);
+		System.out.println("비밀번호 찾기 멤버 : "+m);
+		String result = sqlSession.selectOne("Member.selectPwd2", m);
+		
+		return result;
+	}
+
+	
+	@Override
+	public void sendUpdatePwd(SqlSessionTemplate sqlSession, Member m) {
+		
+		String id = m.getEmail().substring(0, m.getEmail().lastIndexOf('@'));
+		m.setEmail(id);
+		int result = sqlSession.update("Member.sendUpdatePwd2", m);
+		
+	}
+
 }
+
+
+
+
+
+
+
+
+
+
+
