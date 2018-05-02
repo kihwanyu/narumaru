@@ -47,6 +47,7 @@ public class NarumaruController {
 	private MaruService ms;
 	@Autowired
 	private AlarmService as;
+	@Autowired
 	private NaruService ns;
 	
 	@RequestMapping("goHome.nm")
