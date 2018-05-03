@@ -23,5 +23,9 @@ public interface AdminService {
 	int selectPayDaySysDate();//금일 결제금액
 	ArrayList RevenueMember();//결제회원 조회
 	ArrayList totalAge();//연령대 별 결제 금액
+	ArrayList selectChannel();//채널조회
+	ArrayList selectChCount();//채널 수 조회
+	ArrayList<Narumaru> naruView();//나루목록조회
+
   
 }

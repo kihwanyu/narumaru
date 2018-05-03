@@ -22,6 +22,7 @@
 		position:relative;			
 	}
 	.innerTop{
+		z-index:1;
 		background:yellowgreen;
 		height:30px;
 		width:100%;
@@ -218,6 +219,9 @@
   		height:100px;
   		border:1px solid lightgray;
   		margin:10px;
+  	}
+  	.note-editor{
+  		z-index:0;
   	}
 </style>
 </head>

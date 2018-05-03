@@ -42,7 +42,12 @@
 			<div class="board">
 				<div class="boardInfo">
 					<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
-					<div style="display:inline-block;"><label>${b.bTitle}</label><br><label>${b.createDate}</label></div>
+					<div style="display:inline-block;"><label>${b.bTitle}</label>
+					<br>
+					<label>${b.createDate}</label>
+					<br>
+					<label>${b.caname }</label>
+					</div>
 					<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">
 						<img src="resources/images/menu.png" class="modifyMenu size100per">
 						<div class="sub boardSub">
@@ -56,6 +61,27 @@
 					</div>
 				</div>
 				<div class="boardContent">${fn:replace(b.bContent,nr,br)}</div>
+				<!-- 이하 히든 컨텐츠, 구매 여부를 체크함 -->
+				<c:if test="${b.bHidden ne null}">
+					<%-- 볼수 있는지 여부, break문이 불가능해서 forEach가 끝날때까지 false면 구매 안한걸로 간주함 --%>
+					<c:set var="canView" value="false"/>
+					<c:forEach var="h" items="${hpayList}">
+						<%--첫번째when은 구매여부, 두번째when은 작성자일때 --%>
+						<c:choose>
+							<c:when test="${h.bno eq b.bno}">
+								<div class="boardContent">${fn:replace(b.bHidden,nr,br)}</div>
+								<c:set var="canView" value="true"/>
+							</c:when>
+							<c:when test="${b.mno eq loginUser.mid }">
+								<div class="boardContent">${fn:replace(b.bHidden,nr,br)}</div>
+								<c:set var="canView" value="true"/>
+							</c:when>
+						</c:choose>
+					</c:forEach>
+					<c:if test="${canView eq 'false'}">
+						<div class="boardContent">이하는 구매 후 열람이 가능한 컨텐츠입니다.<label class="btn_label">구매 후 열람</label></div>
+					</c:if>
+				</c:if>
 				<div class="boardfoot">
 					<hr>
 					<ul class="footUl">
@@ -190,8 +216,41 @@
 	
 	<script>
 		var added = 0;
-	
+		//내가 최근에 방문한 나루
+		$(function(){
+			//localStorage.clear();
+			
+			var nmno1 = localStorage.getItem("nmno1");
+			var nmno2 = localStorage.getItem("nmno2");
+			var nmno3 = localStorage.getItem("nmno3");
+			var temp = 0;
+			var nmno = ${nm.nmno};
+			//console.log("localStorage start : "+ localStorage.getItem("nmno"));
+			/* 하나라도 null 이존재한다면 */
+			if(nmno1 != null && nmno1 != null && nmno1 != null){
+				/* 세개의 변수 중 nmno와 같은 값을 가지고 있는 변수가 있다면 */
+				if(nmno1 != nmno && nmno2 != nmno && nmno3 != nmno){
+					nmno3 = nmno2;
+					nmno2 = nmno1;
+					nmno1 = nmno;
+				}
+			} else {
+				nmno3 = nmno2;
+				nmno2 = nmno1;
+				nmno1 = nmno;
+			}
+			
+			localStorage.setItem("nmno1", nmno1);
+			localStorage.setItem("nmno2", nmno2);
+			localStorage.setItem("nmno3", nmno3);
+	  		
+			console.log("localStorage end : "+ localStorage.getItem("nmno1"));
+			console.log("localStorage end : "+ localStorage.getItem("nmno2"));
+			console.log("localStorage end : "+ localStorage.getItem("nmno3"));
+		});
+		
 	  	$(function(){
+	  		
 	  		//설정해둔 카테고리 리스트 불러오기
 	  		$.ajax({
 				url:"selectCategoryList.na",
@@ -272,14 +331,12 @@
 	  	}
 		
 		function deleteCategory(btn){
-	  		console.log("버튼눌름");
 	  		var categoryName = $(btn).parent().find(":text").val();
 	  		console.log(categoryName);
 	  		$(btn).parent().find(":text").val(":none:");
 	  		console.log(categoryName);
 	  		$(btn).parent().hide();
 	  		
-	  		console.log("3");
 	  		$.ajax({
 				url:'disableCategory.na',
 				type:'get',
@@ -291,11 +348,12 @@
 					console.log(data);
 				}
 			})
-			console.log("4");
 	  	}
 	  </script>
 	
 	<script>
+	
+	
 		var isEnd = false;
 		var newPage = ${newPage};
 		var listSize = ${list.size()};

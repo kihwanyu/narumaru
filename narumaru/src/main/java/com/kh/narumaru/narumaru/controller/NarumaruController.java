@@ -18,6 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
+import com.kh.narumaru.common.model.exception.alarmRequestException;
+import com.kh.narumaru.common.model.service.AlarmService;
+import com.kh.narumaru.common.model.vo.Alarm;
 import com.kh.narumaru.maru.exception.MaruException;
 import com.kh.narumaru.maru.model.service.MaruService;
 import com.kh.narumaru.maru.model.vo.MaruMember;
@@ -25,17 +28,21 @@ import com.kh.narumaru.member.model.exception.selectChanelException;
 import com.kh.narumaru.member.model.service.ChannelService;
 import com.kh.narumaru.member.model.vo.Channel;
 import com.kh.narumaru.member.model.vo.Member;
+import com.kh.narumaru.naru.model.service.HiddenService;
 import com.kh.narumaru.naru.model.service.NaruService;
+import com.kh.narumaru.naru.model.vo.HiddenPayment;
 import com.kh.narumaru.naru.model.vo.Theme;
 import com.kh.narumaru.narumaru.exception.NarumaruException;
 import com.kh.narumaru.narumaru.model.service.NarumaruService;
 import com.kh.narumaru.narumaru.model.vo.Board;
 import com.kh.narumaru.narumaru.model.vo.Narumaru;
 
+import oracle.net.ns.NSProtocol;
+
 @Controller
 @SessionAttributes("nm")
 public class NarumaruController {
-	
+	/**/
 	@Autowired
 	private NarumaruService nms;
 	@Autowired
@@ -43,7 +50,11 @@ public class NarumaruController {
 	@Autowired
 	private MaruService ms;
 	@Autowired
+	private AlarmService as;
+	@Autowired
 	private NaruService ns;
+	@Autowired
+	private HiddenService hs;
 	
 	@RequestMapping("goHome.nm")
 	public String goHome(){
@@ -95,9 +106,10 @@ public class NarumaruController {
 			Theme theme = nms.selectThemeOne(nmno); // 나루의 테마
 			int isNeighbor = nms.checkNeighbor(nmno, loginUser); // 이웃 여부
 			ArrayList<Narumaru> neighborList = ns.selectNeighborList(nmno); // 해당 나루의 이웃 리스트
-			
+			ArrayList<HiddenPayment> hpayList = hs.selectHiddenPaymentList(loginUser.getMid()); // 로그인 유저의 구매리스트
 			mv.addObject("theme", theme);
 			mv.addObject("isNeighbor",isNeighbor);
+			mv.addObject("hpayList",hpayList);
 			mv.addObject("neList",neighborList);
 			
 			mv.setViewName("naru/naruBoard"); 
@@ -263,10 +275,19 @@ public class NarumaruController {
 
 		if(nms.selectNarumaruType(nmno) == 1){
 			// 마루일때
-			bType = 200;
+			
+			if(targetBno!=0){
+				bType = 201;
+			}else{
+				bType = 200;
+			}
 		}else{
 			// 나루일때
-			bType = 100;
+			if(targetBno!=0){
+				bType = 101;
+			}else{
+				bType = 100;
+			}
 		}
 		b.setbType(bType);
 		b.setMno(loginUser.getMid());
@@ -277,6 +298,33 @@ public class NarumaruController {
 		b.setTargetBno(targetBno);
 		b.setbType(bType);
 		nms.insertNarumaruBoard(b);
+		
+		if(targetBno!=0){
+			ArrayList<Alarm> alarm = new ArrayList<>();
+			// 보낼 유저의 번호를 구한다. 
+			ArrayList<Integer> sendUser = null;
+			sendUser = new ArrayList<>();
+			sendUser.add(b.getMno());
+			
+			int oriWriterMo = nms.getBoardWriter(b);
+			
+			//Controller에서 Alarm객체에 값을 채운 후 Service로 보내주세요.
+			for(int i = 0; i < sendUser.size(); i++){
+				alarm.add(new Alarm());
+				alarm.get(i).setReceive_mno(oriWriterMo);
+				alarm.get(i).setSend_mno(sendUser.get(i));
+				alarm.get(i).setSend_bno(b.getTargetBno());
+				alarm.get(i).setAtno(300);
+				alarm.get(i).setSend_nmno(nmno);
+				System.out.println(alarm);
+			}
+			
+			try {
+				as.alarmRequest(alarm);
+			} catch (alarmRequestException e) {
+				e.printStackTrace();
+			}
+		}
 		
 		return "redirect:/boardListAll.bo?nmno="+nmno;
 	}
@@ -358,6 +406,31 @@ public class NarumaruController {
 		b.setNeedPoint(0);
 		
 		nms.insertComment(b);
+		
+		ArrayList<Alarm> alarm = new ArrayList<>();
+		// 보낼 유저의 번호를 구한다.
+		ArrayList<Integer> sendUser = null;
+		sendUser = new ArrayList<>();
+		sendUser.add(b.getMno());
+		
+		int oriWriterMo = nms.getBoardWriter(b);
+		
+		//Controller에서 Alarm객체에 값을 채운 후 Service로 보내주세요.
+		for(int i = 0; i < sendUser.size(); i++){
+			alarm.add(new Alarm());
+			alarm.get(i).setReceive_mno(oriWriterMo);
+			alarm.get(i).setSend_mno(sendUser.get(i));
+			alarm.get(i).setSend_bno(b.getTargetBno());
+			alarm.get(i).setAtno(300);
+			alarm.get(i).setSend_nmno(nmno);
+			System.out.println(alarm);
+		}
+		
+		try {
+			as.alarmRequest(alarm);
+		} catch (alarmRequestException e) {
+			e.printStackTrace();
+		}
 		System.out.println("인서트됨");
 	}
 	
@@ -407,6 +480,26 @@ public class NarumaruController {
 		nms.updateDefault(nm);
 		
 		return "redirect:/boardListAll.bo?nmno="+nmno;
+	}
+	
+	@RequestMapping("narumaruSelectOne.nm")
+	public void narumaruSelectOne(@RequestParam(value="nmno") int nmno, HttpServletRequest request, HttpServletResponse response){
+		
+		
+		Narumaru nm = nms.selectNarumaruOne(nmno); 
+		
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		
+		try {
+			new Gson().toJson(nm, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

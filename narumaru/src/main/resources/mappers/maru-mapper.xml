@@ -34,6 +34,10 @@
 	<select id="checkMaruMember" resultType="_int"> 
 		SELECT COUNT(*) FROM MARU_MEMBER WHERE NMNO=#{nmno} AND MNO=#{mno}
 	</select>
+	
+	<select id="selectMasterMno" resultType="_int">
+		SELECT MNO FROM MARU_MEMBER WHERE CON_LEVEL=0 AND NMNO=#{nmno}
+	</select>
 </mapper>
 
 

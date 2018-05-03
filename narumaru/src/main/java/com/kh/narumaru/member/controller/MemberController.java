@@ -55,6 +55,8 @@ import com.kh.narumaru.payment.model.vo.Bank;
 import com.kh.narumaru.payment.model.vo.Payment;
 import com.kh.narumaru.payment.model.vo.Withdraw;
 import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.kh.narumaru.common.model.service.NeighborService;
+import com.kh.narumaru.common.model.vo.Neighbor;
 import com.kh.narumaru.common.model.vo.PageInfo;
 import com.kh.narumaru.maru.model.service.MaruService;
 import com.kh.narumaru.maru.model.vo.MaruMember;
@@ -100,6 +102,8 @@ public class MemberController {
 	private PaymentService ps; 
 	@Autowired
 	private BankSevice bs;
+	@Autowired
+	private NeighborService nc;
 	
 	@RequestMapping(value="findMember.me")
 	public String findMember(){
@@ -744,16 +748,7 @@ public class MemberController {
 		
 		return mv;
 	}
-	@RequestMapping(value="myboardView.me")
-	public ModelAndView myBoardForward(ModelAndView mv){
-		int b_type = 100; /*나루 초기값*/
-		
-		
-		
-		mv.setViewName("mypage/myPage_myboard");
-		
-		return mv;
-	}
+	
 	@RequestMapping(value="myLoginView.me")
 	public ModelAndView myLoginForward(ModelAndView mv){
 		
@@ -776,8 +771,42 @@ public class MemberController {
 		return mv;
 	}
 	@RequestMapping(value="naruNeighborListView.me")
-	public ModelAndView NaruNeighborListForward(ModelAndView mv){
+	public ModelAndView NaruNeighborListForward(ModelAndView mv, HttpSession session, @RequestParam(defaultValue="1") int currentPage){
 		
+		Member loginUser = (Member) session.getAttribute("loginUser");
+		
+		int mno = loginUser.getMid();	
+		
+		//페이징처리
+		int limit;
+		int maxPage;
+		int startPage;
+		int endPage;
+		
+		/*limit = 10;*/
+		limit = 5;
+		
+		int listCount = 0;
+		
+		listCount = nc.getNeighborListCount(mno);
+		
+		System.out.println("listCount : " + listCount);
+		
+		maxPage = (int)((double)listCount / limit + 0.9);
+		startPage = ((int)((double)currentPage / limit + 0.9) - 1)*limit + 1;
+		endPage = startPage + limit -1;
+		if(maxPage<endPage){
+			endPage = maxPage;
+		}
+		
+		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage, mno);
+		
+		ArrayList<Neighbor> nList = nc.selectNeighborList(pi);
+		
+		System.out.println("nList : " + nList);
+		
+		mv.addObject("nList", nList);
+		mv.addObject("pi", pi);
 		mv.setViewName("mypage/myPage_NaruNeighborList");
 		
 		return mv;
@@ -825,6 +854,12 @@ public class MemberController {
 			mv.addObject("message", e.getMessage());
 			mv.setViewName("common/errorPage");
 		}
+		return mv;
+	}
+	@RequestMapping(value="myboardView.me")
+	public ModelAndView myBoardForward(ModelAndView mv){
+		mv.setViewName("mypage/myPage_myboard"); 
+		
 		return mv;
 	}
 	@RequestMapping(value="refundView.me")

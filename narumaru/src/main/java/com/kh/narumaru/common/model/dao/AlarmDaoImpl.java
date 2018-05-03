@@ -35,7 +35,13 @@ public class AlarmDaoImpl implements AlarmDao {
 	@Override
 	public int alarmStatusCount(SqlSessionTemplate sqlSession, int mno) {
 		
-		int count = sqlSession.selectOne("Alarm.alarmStatusCount",mno);
+		int count = 0;
+		
+		Integer result = sqlSession.selectOne("Alarm.alarmStatusCount",mno);
+		
+		if(result != null){
+			count = result;
+		}
 		
 		return count;
 	}

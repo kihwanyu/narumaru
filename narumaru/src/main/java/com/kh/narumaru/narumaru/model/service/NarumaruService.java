@@ -41,6 +41,8 @@ public interface NarumaruService {
 
 	Theme selectThemeOne(int nmno);
 
+	int getBoardWriter(Board b); 
+
 	void updateDefault(Narumaru nm);
 
 	int checkNeighbor(int nmno, Member loginUser); 

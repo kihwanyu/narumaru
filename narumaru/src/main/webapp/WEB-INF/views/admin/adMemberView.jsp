@@ -72,6 +72,7 @@
                           <th>생일</th>
                           <th>휴대폰 번호</th>
                           <th>결제금액</th>
+                          <th>회원상태</th>
                         </tr>
                       </thead>
 						
@@ -84,6 +85,7 @@
                         		<td>${memberView.birthDay}</td>
                         		<td>${memberView.phone}</td>
                         		<td>${memberView.total_amount}</td>
+                        		<td><input type="button" value="Y" onclick="memberStatus"></td>
                         	</tr>
                         </c:forEach>
                       </tbody>
@@ -163,7 +165,9 @@
     <!-- /footer content -->
 	
 	<script type="text/javascript">
-		
+		function memberStatus(){
+			
+		}
 	</script>
 	
 </body>
