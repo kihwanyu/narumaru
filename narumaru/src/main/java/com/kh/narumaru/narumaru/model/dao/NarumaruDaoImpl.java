@@ -67,10 +67,10 @@ public class NarumaruDaoImpl implements NarumaruDao {
 		
 		int ownerMno = sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno);
 		
-		n.setMno(ownerMno);
-		n.setUser_mno(loginUser.getMid());
+		n.setMno(loginUser.getMid());
+		n.setUser_mno(ownerMno);
 		
-		int resultNeighbor = sqlSession.selectOne("Naru.selectNeighbor", n);
+		int resultNeighbor = sqlSession.selectOne("Neighbor.selectNeighbor", n);
 		
 		//1개 이상 리턴되면 이웃을 걸어놨다는 뜻
 		return resultNeighbor;
