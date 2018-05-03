@@ -28,7 +28,7 @@ public interface AdminDao {
 	ArrayList totalAge();//연령대별 결제금액
 	ArrayList selectChannel();//채널조회
 	ArrayList selectChCount();//채널수 조회
-	
+	ArrayList<Narumaru> naruView();//나루 조회
 	
 	
 	

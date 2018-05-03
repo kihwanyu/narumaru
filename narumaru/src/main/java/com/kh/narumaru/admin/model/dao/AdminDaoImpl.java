@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.narumaru.admin.model.vo.Admin;
 import com.kh.narumaru.notice.model.vo.Notice;
+
+
 import com.kh.narumaru.member.model.vo.Member;
 import com.kh.narumaru.narumaru.model.vo.Narumaru;
 @Repository
@@ -147,5 +149,12 @@ public class AdminDaoImpl implements AdminDao{
 	public ArrayList selectChCount() {
 		ArrayList chCount = (ArrayList) sqlSession.selectList("Admin.selectchCount");
 		return chCount;
+	}
+
+
+	@Override
+	public ArrayList<Narumaru> naruView() {
+		ArrayList<Narumaru> naruView = (ArrayList) sqlSession.selectList("Admin.selectNaruView");
+		return naruView;
 	}
 }

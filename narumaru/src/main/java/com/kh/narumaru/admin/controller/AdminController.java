@@ -113,9 +113,15 @@ public class AdminController {
 	}
 	
 	@RequestMapping("adNaruView.ad")
-	public String showAdminNaruView(){
-		   
-		return "admin/adNaruView";
+	public ModelAndView showAdminNaruView(Narumaru naru, ModelAndView mv){
+		ArrayList<Narumaru> na = as.naruView();
+		System.out.println(na);
+		
+		mv.addObject("na", na);
+		mv.setViewName("admin/adNaruView");
+		
+		
+		return mv;
 	}
 	
 	@RequestMapping("adMaruView.ad")
