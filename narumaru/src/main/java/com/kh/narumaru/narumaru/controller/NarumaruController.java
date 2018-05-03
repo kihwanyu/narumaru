@@ -18,7 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
+import com.kh.narumaru.common.model.exception.alarmRequestException;
 import com.kh.narumaru.common.model.service.AlarmService;
+import com.kh.narumaru.common.model.vo.Alarm;
 import com.kh.narumaru.maru.exception.MaruException;
 import com.kh.narumaru.maru.model.service.MaruService;
 import com.kh.narumaru.maru.model.vo.MaruMember;
@@ -271,10 +273,19 @@ public class NarumaruController {
 
 		if(nms.selectNarumaruType(nmno) == 1){
 			// 마루일때
-			bType = 200;
+			
+			if(targetBno!=0){
+				bType = 201;
+			}else{
+				bType = 200;
+			}
 		}else{
 			// 나루일때
-			bType = 100;
+			if(targetBno!=0){
+				bType = 101;
+			}else{
+				bType = 100;
+			}
 		}
 		b.setbType(bType);
 		b.setMno(loginUser.getMid());
@@ -285,6 +296,33 @@ public class NarumaruController {
 		b.setTargetBno(targetBno);
 		b.setbType(bType);
 		nms.insertNarumaruBoard(b);
+		
+		if(targetBno!=0){
+			ArrayList<Alarm> alarm = new ArrayList<>();
+			// 보낼 유저의 번호를 구한다.
+			ArrayList<Integer> sendUser = null;
+			sendUser = new ArrayList<>();
+			sendUser.add(b.getMno());
+			
+			int oriWriterMo = nms.getBoardWriter(b);
+			
+			//Controller에서 Alarm객체에 값을 채운 후 Service로 보내주세요.
+			for(int i = 0; i < sendUser.size(); i++){
+				alarm.add(new Alarm());
+				alarm.get(i).setReceive_mno(oriWriterMo);
+				alarm.get(i).setSend_mno(sendUser.get(i));
+				alarm.get(i).setSend_bno(b.getTargetBno());
+				alarm.get(i).setAtno(300);
+				alarm.get(i).setSend_nmno(nmno);
+				System.out.println(alarm);
+			}
+			
+			try {
+				as.alarmRequest(alarm);
+			} catch (alarmRequestException e) {
+				e.printStackTrace();
+			}
+		}
 		
 		return "redirect:/boardListAll.bo?nmno="+nmno;
 	}
@@ -366,6 +404,31 @@ public class NarumaruController {
 		b.setNeedPoint(0);
 		
 		nms.insertComment(b);
+		
+		ArrayList<Alarm> alarm = new ArrayList<>();
+		// 보낼 유저의 번호를 구한다.
+		ArrayList<Integer> sendUser = null;
+		sendUser = new ArrayList<>();
+		sendUser.add(b.getMno());
+		
+		int oriWriterMo = nms.getBoardWriter(b);
+		
+		//Controller에서 Alarm객체에 값을 채운 후 Service로 보내주세요.
+		for(int i = 0; i < sendUser.size(); i++){
+			alarm.add(new Alarm());
+			alarm.get(i).setReceive_mno(oriWriterMo);
+			alarm.get(i).setSend_mno(sendUser.get(i));
+			alarm.get(i).setSend_bno(b.getTargetBno());
+			alarm.get(i).setAtno(300);
+			alarm.get(i).setSend_nmno(nmno);
+			System.out.println(alarm);
+		}
+		
+		try {
+			as.alarmRequest(alarm);
+		} catch (alarmRequestException e) {
+			e.printStackTrace();
+		}
 		System.out.println("인서트됨");
 	}
 	

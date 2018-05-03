@@ -151,7 +151,6 @@
                     <table id="datatable" class="table table-striped table-bordered">
                       <thead>
                         <tr>
-                          <th>년도</th>
                           <th>10대</th>
                           <th>20대</th>
                           <th>30대</th>
@@ -162,11 +161,13 @@
 					
 
                       <tbody>
-                       	<c:forEach items="${totalAge}" var="totalAge" >
+                       	
                         	<tr>
-                        		<td><c:out value="${totalAge[0]}"/></td>
+                        		<c:forEach items="${totalAge}" var="totalAge" >
+                        		<td><c:out value="${totalAge}"/></td>
+                        		</c:forEach>
                         	</tr>
-                        </c:forEach>
+                        
                       </tbody>
                     </table>
                   </div>
