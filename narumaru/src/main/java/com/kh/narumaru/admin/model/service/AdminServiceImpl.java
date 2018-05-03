@@ -111,4 +111,17 @@ public class AdminServiceImpl implements AdminService {
 		
 		return totalAge;
 	}
+
+	@Override
+	public ArrayList selectChannel() {
+		ArrayList selectChannel = ad.selectChannel();
+		System.out.println("채널 : " + selectChannel);
+		return selectChannel;
+	}
+
+	@Override
+	public ArrayList selectChCount() {
+		ArrayList chCount = ad.selectChCount();
+		return chCount;
+	}
 }

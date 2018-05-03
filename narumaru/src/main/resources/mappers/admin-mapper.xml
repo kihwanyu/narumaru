@@ -56,11 +56,19 @@
 	</select>
 	
 	<select id="totalAge" resultType="_int">
-		SELECT SUM(AMOUNT)
+		SELECT CASE WHEN SUM(AMOUNT) IS NULL THEN 0 ELSE SUM(AMOUNT) END
 		FROM MEMBER M 
-		JOIN PAYMENT P ON(M.MNO = P.MNO)
+    	LEFT JOIN PAYMENT P ON(M.MNO = P.MNO)
 		GROUP BY SUBSTR(TO_CHAR(FLOOR(MONTHS_BETWEEN(SYSDATE, BIRTHDAY)/12)), 0, 1)
 		ORDER BY SUBSTR(TO_CHAR(FLOOR(MONTHS_BETWEEN(SYSDATE, BIRTHDAY)/12)), 0, 1) ASC
+	</select>
+	
+	<select id="selectChannel" resultType="hashmap">
+		SELECT CNAME FROM CHANNEL
+	</select>
+	
+	<select id="selectchCount" resultType="hashmap">
+		SELECT C.CNO,NVL((SELECT COUNT(*) FROM NARUMARU N GROUP BY N.CNO HAVING N.CNO = C.CNO), 0) AS CHCOUNT FROM CHANNEL C
 	</select>
 	
 </mapper>
