@@ -16,7 +16,7 @@
     <div class="container body">
       <div class="main_container">
         <jsp:include page = "../common/adMenubar.jsp"/> 
-		
+		<button id="Btn">aaaaaaaaaaaaaaaaaaaaaaaa</button>
        
 
         <!-- page content -->
@@ -142,7 +142,7 @@
     </div>
     <script src="https://code.highcharts.com/highcharts.src.js"></script>
     <script type="text/javascript">
-    	
+    
     	console.log('${Date}' + "1");
     	console.log('${Count}' + "1");
     	//회원수 그래프 시작
@@ -257,187 +257,353 @@
     	    }]
     	});
     	//신고 막대그래프 끝
+    	
     	//마루 수 그래프 시작
+    	var categories = [];
+    	
+    	<c:forEach var="i" items="${channel}">
+    		categories.push("${i.CNAME}");
+    	</c:forEach>
+       console.log('${channel}' + '1');
+       console.log('${chCount}' + '123')
     	var colors = Highcharts.getOptions().colors,
-    categories = [
-        "팬클럽",
-        "방송/연예",
-        "스포츠/레저",
-        "음악",
-        "어학/외국어",
-        "취미/DIY",
-        "Other"
-    ],
-    data = [
+    	categories,
+    	data = [
+        	{
+            	"y": 3.8,
+            	"color": colors[2],
+            	"drilldown": {
+                	"name": "미분류",
+                	"categories": ["미분류"],
+                	"data": [
+                    	${chCount.get(0).CHCOUNT}
+                	]
+            	}
+        	},
+        	{
+            	"y": 3.8,
+            	"color": colors[1],
+            	"drilldown": {
+                	"name": "문화/예술",
+                	"categories": ["문화/예술"],
+                	"data": [
+                		${chCount.get(1).CHCOUNT}
+                	]
+            	}	
+        	},
+        	{
+        	    "y": 3.8,
+        	    "color": colors[0],
+            	"drilldown": {
+            	    "name": "여행",
+            	    "categories": [
+            	        "여행"
+            	    ],
+            	    "data": [
+            	    	${chCount.get(2).CHCOUNT}
+            	    ]
+            	}
+        	},
+        	{
+            	"y": 3.8,
+            "color": colors[3],
+            "drilldown": {
+                "name": "패션/뷰티",
+                "categories": [
+                    "패션/뷰티"
+                ],
+                "data": [
+                	${chCount.get(3).CHCOUNT}
+                ]
+            }
+        },
         {
-            "y": 62.74,
-            "color": colors[2],
+            "y": 3.8,
+            "color": colors[5],
             "drilldown": {
                 "name": "팬클럽",
                 "categories": [
-                    "Chrome v65.0",
-                    "Chrome v64.0",
-                    "Chrome v63.0",
-                    "Chrome v62.0",
-                    "Chrome v61.0",
-                    "Chrome v60.0",
-                    "Chrome v59.0",
-                    "Chrome v58.0",
-                    "Chrome v57.0",
-                    "Chrome v56.0",
-                    "Chrome v55.0",
-                    "Chrome v54.0",
-                    "Chrome v51.0",
-                    "Chrome v49.0",
-                    "Chrome v48.0",
-                    "Chrome v47.0",
-                    "Chrome v43.0",
-                    "Chrome v29.0"
+                    "팬클럽"
                 ],
                 "data": [
-                    0.1,
-                    1.3,
-                    53.02,
-                    1.4,
-                    0.88,
-                    0.56,
-                    0.45,
-                    0.49,
-                    0.32,
-                    0.29,
-                    0.79,
-                    0.18,
-                    0.13,
-                    2.16,
-                    0.13,
-                    0.11,
-                    0.17,
-                    0.26
+                	${chCount.get(4).CHCOUNT}
                 ]
             }
         },
         {
-            "y": 10.57,
-            "color": colors[1],
-            "drilldown": {
-                "name": "방송/연예",
-                "categories": [
-                    "Firefox v58.0",
-                    "Firefox v57.0",
-                    "Firefox v56.0",
-                    "Firefox v55.0",
-                    "Firefox v54.0",
-                    "Firefox v52.0",
-                    "Firefox v51.0",
-                    "Firefox v50.0",
-                    "Firefox v48.0",
-                    "Firefox v47.0"
-                ],
-                "data": [
-                    1.02,
-                    7.36,
-                    0.35,
-                    0.11,
-                    0.1,
-                    0.95,
-                    0.15,
-                    0.1,
-                    0.31,
-                    0.12
-                ]
-            }
-        },
-        {
-            "y": 7.23,
-            "color": colors[0],
-            "drilldown": {
-                "name": "스포츠/레저",
-                "categories": [
-                    "Internet Explorer v11.0",
-                    "Internet Explorer v10.0",
-                    "Internet Explorer v9.0",
-                    "Internet Explorer v8.0"
-                ],
-                "data": [
-                    6.2,
-                    0.29,
-                    0.27,
-                    0.47
-                ]
-            }
-        },
-        {
-            "y": 5.58,
-            "color": colors[3],
-            "drilldown": {
-                "name": "음악",
-                "categories": [
-                    "Safari v11.0",
-                    "Safari v10.1",
-                    "Safari v10.0",
-                    "Safari v9.1",
-                    "Safari v9.0",
-                    "Safari v5.1"
-                ],
-                "data": [
-                    3.39,
-                    0.96,
-                    0.36,
-                    0.54,
-                    0.13,
-                    0.2
-                ]
-            }
-        },
-        {
-            "y": 4.02,
-            "color": colors[5],
-            "drilldown": {
-                "name": "어학/외국어",
-                "categories": [
-                    "Edge v16",
-                    "Edge v15",
-                    "Edge v14",
-                    "Edge v13"
-                ],
-                "data": [
-                    2.6,
-                    0.92,
-                    0.4,
-                    0.1
-                ]
-            }
-        },
-        {
-            "y": 1.92,
+            "y": 3.8,
             "color": colors[4],
             "drilldown": {
-                "name": "취미/DIY",
+                "name": "인문/과학",
                 "categories": [
-                    "Opera v50.0",
-                    "Opera v49.0",
-                    "Opera v12.1"
+                    "인문/과학"
                 ],
                 "data": [
-                    0.96,
-                    0.82,
-                    0.14
+                	${chCount.get(5).CHCOUNT}
                 ]
             }
         },
         {
-            "y": 7.62,
+            "y": 3.8,
             "color": colors[6],
             "drilldown": {
-                "name": 'Other',
+                "name": '동물',
                 "categories": [
-                    'Other'
+                    '동물'
                 ],
                 "data": [
-                    7.62
+                	${chCount.get(6).CHCOUNT}
+                ]
+            }
+        },
+        {
+            "y": 3.8,
+            "color": colors[7],
+            "drilldown": {
+                "name": '나이',
+                "categories": [
+                    '나이'
+                ],
+                "data": [
+                	${chCount.get(7).CHCOUNT}
+                ]
+            }
+        },
+        {
+            "y": 3.8,
+            "color": colors[8],
+            "drilldown": {
+                "name": '방송/연애',
+                "categories": [
+                    '방송/연애'
+                ],
+                "data": [
+                	${chCount.get(8).CHCOUNT}
+                ]
+            }
+        },
+        {
+            "y": 3.8,
+            "color": colors[9],
+            "drilldown": {
+                "name": '친목/모임',
+                "categories": [
+                    '친목/모임'
+                ],
+                "data": [
+                	${chCount.get(9).CHCOUNT}
+                ]
+            }
+        },
+        {
+            "y": 3.8,
+            "color": colors[10],
+            "drilldown": {
+                "name": '종교/봉사',
+                "categories": [
+                    '종교/봉사'
+                ],
+                "data": [
+                	${chCount.get(10).CHCOUNT}
+                ]
+            }
+        },
+        {
+            "y": 3.8,
+            "color": colors[11],
+            "drilldown": {
+                "name": '음악',
+                "categories": [
+                    '음악'
+                ],
+                "data": [
+                	${chCount.get(11).CHCOUNT}
+                ]
+            }
+        },
+        {
+            "y": 3.8,
+            "color": colors[12],
+            "drilldown": {
+                "name": '경제',
+                "categories": [
+                    '경제'
+                ],
+                "data": [
+                	${chCount.get(12).CHCOUNT}
+                ]
+            }
+        },
+        {
+            "y": 3.8,
+            "color": colors[13],
+            "drilldown": {
+                "name": 'IT/기술',
+                "categories": [
+                    'IT/기술'
+                ],
+                "data": [
+                	${chCount.get(13).CHCOUNT}
+                ]
+            }
+        },
+        {
+            "y": 3.8,
+            "color": colors[14],
+            "drilldown": {
+                "name": '게임',
+                "categories": [
+                    '게임'
+                ],
+                "data": [
+                	${chCount.get(14).CHCOUNT}
+                ]
+            }
+        },
+        {
+            "y": 3.8,
+            "color": colors[15],
+            "drilldown": {
+                "name": '어학/외국어',
+                "categories": [
+                    '어학/외국어'
+                ],
+                "data": [
+                	${chCount.get(15).CHCOUNT}
+                ]
+            }
+        },
+        {
+            "y": 3.8,
+            "color": colors[16],
+            "drilldown": {
+                "name": '만화/애니메이션',
+                "categories": [
+                    '만화/애니메이션'
+                ],
+                "data": [
+                	${chCount.get(16).CHCOUNT}
+                ]
+            }
+        },
+        {
+            "y": 3.8,
+            "color": colors[17],
+            "drilldown": {
+                "name": '일상/이야기',
+                "categories": [
+                    '일상/이야기'
+                ],
+                "data": [
+                	${chCount.get(17).CHCOUNT}
+                ]
+            }
+        },
+        {
+            "y": 3.8,
+            "color": colors[18],
+            "drilldown": {
+                "name": '스포츠/레저',
+                "categories": [
+                    '스포츠/레저'
+                ],
+                "data": [
+                	${chCount.get(18).CHCOUNT}
+                ]
+            }
+        },
+        {
+            "y": 3.8,
+            "color": colors[19],
+            "drilldown": {
+                "name": '건강',
+                "categories": [
+                    '건강'
+                ],
+                "data": [
+                	${chCount.get(19).CHCOUNT}
+                ]
+            }
+        },
+        {
+            "y": 3.8,
+            "color": colors[20],
+            "drilldown": {
+                "name": '결혼/가정',
+                "categories": [
+                    '결혼/가정'
+                ],
+                "data": [
+                	${chCount.get(20).CHCOUNT}
+                ]
+            }
+        },
+        {
+            "y": 3.8,
+            "color": colors[21],
+            "drilldown": {
+                "name": '정치/사회',
+                "categories": [
+                    '정치/사회'
+                ],
+                "data": [
+                	${chCount.get(21).CHCOUNT}
+                ]
+            }
+        },
+        {
+            "y": 3.8,
+            "color": colors[22],
+            "drilldown": {
+                "name": '교육/공부',
+                "categories": [
+                    '교육/공부'
+                ],
+                "data": [
+                	${chCount.get(22).CHCOUNT}
+                ]
+            }
+        },
+        {
+            "y": 3.8,
+            "color": colors[23],
+            "drilldown": {
+                "name": '취미/DIY',
+                "categories": [
+                    '취미/DIY'
+                ],
+                "data": [
+                	${chCount.get(23).CHCOUNT}
+                ]
+            }
+        },
+        {
+            "y": 3.8,
+            "color": colors[24],
+            "drilldown": {
+                "name": '취업/자기개발',
+                "categories": [
+                    '취업/자기개발'
+                ],
+                "data": [
+                	${chCount.get(24).CHCOUNT}
+                ]
+            }
+        },
+        {
+            "y": 3.8,
+            "color": colors[25],
+            "drilldown": {
+                "name": '맛집/요리/생활',
+                "categories": [
+                    '맛집/요리/생활'
+                ],
+                "data": [
+                	${chCount.get(25).CHCOUNT}
                 ]
             }
         }
+        
     ],
     browserData = [],
     versionsData = [],
@@ -451,12 +617,12 @@
 // Build the data arrays
 for (i = 0; i < dataLen; i += 1) {
 
-    // add browser data
+  /*   // add browser data
     browserData.push({
         name: categories[i],
         y: data[i].y,
         color: data[i].color
-    });
+    }); */
 
     // add version data
     drillDataLen = data[i].drilldown.data.length;
@@ -479,11 +645,11 @@ Highcharts.chart('marucount', {
         text: ''
     },
     subtitle: {
-        text: 'Source: <a href="http://statcounter.com" target="_blank">statcounter.com</a>'
+        text: ''
     },
     yAxis: {
         title: {
-            text: 'Total percent market share'
+            text: ''
         }
     },
     plotOptions: {
@@ -493,10 +659,10 @@ Highcharts.chart('marucount', {
         }
     },
     tooltip: {
-        valueSuffix: '%'
+        valueSuffix: '개'
     },
     series: [{
-        name: 'Browsers',
+        name: '마루채널',
         data: browserData,
         size: '60%',
         dataLabels: {
@@ -507,7 +673,7 @@ Highcharts.chart('marucount', {
             distance: -30
         }
     }, {
-        name: 'Versions',
+        name: '채널수',
         data: versionsData,
         size: '80%',
         innerSize: '60%',
@@ -515,7 +681,7 @@ Highcharts.chart('marucount', {
             formatter: function () {
                 // display only if larger than 1
                 return this.y > 1 ? '<b>' + this.point.name + ':</b> ' +
-                    this.y + '%' : null;
+                    this.y + '개' : null;
             }
         },
         id: 'versions'

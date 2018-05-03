@@ -133,4 +133,19 @@ public class AdminDaoImpl implements AdminDao{
 		ArrayList totalAge = (ArrayList) sqlSession.selectList("Admin.totalAge");
 		return totalAge;
 	}
+
+
+	@Override
+	public ArrayList selectChannel() {
+		ArrayList selectChannel = (ArrayList) sqlSession.selectList("Admin.selectChannel");
+		System.out.println("DAO채널 : " + selectChannel);
+		return selectChannel;
+	}
+
+
+	@Override
+	public ArrayList selectChCount() {
+		ArrayList chCount = (ArrayList) sqlSession.selectList("Admin.selectchCount");
+		return chCount;
+	}
 }

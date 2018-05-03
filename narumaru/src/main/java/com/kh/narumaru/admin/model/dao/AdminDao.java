@@ -26,6 +26,8 @@ public interface AdminDao {
 	int selectPayDaySysDate();//금일 결제금액
 	ArrayList RevenueMember();//결제회원조회
 	ArrayList totalAge();//연령대별 결제금액
+	ArrayList selectChannel();//채널조회
+	ArrayList selectChCount();//채널수 조회
 	
 	
 	
