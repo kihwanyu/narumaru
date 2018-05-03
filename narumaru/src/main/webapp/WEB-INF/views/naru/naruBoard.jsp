@@ -42,7 +42,12 @@
 			<div class="board">
 				<div class="boardInfo">
 					<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
-					<div style="display:inline-block;"><label>${b.bTitle}</label><br><label>${b.createDate}</label></div>
+					<div style="display:inline-block;"><label>${b.bTitle}</label>
+					<br>
+					<label>${b.createDate}</label>
+					<br>
+					<label>${b.caname }</label>
+					</div>
 					<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">
 						<img src="resources/images/menu.png" class="modifyMenu size100per">
 						<div class="sub boardSub">
@@ -210,9 +215,9 @@
 	</div>
 	
 	<script>
+		var added = 0;
 		//내가 최근에 방문한 나루
 		$(function(){
-			var added = 0;
 			//localStorage.clear();
 			
 			var nmno1 = localStorage.getItem("nmno1");
@@ -326,14 +331,12 @@
 	  	}
 		
 		function deleteCategory(btn){
-	  		console.log("버튼눌름");
 	  		var categoryName = $(btn).parent().find(":text").val();
 	  		console.log(categoryName);
 	  		$(btn).parent().find(":text").val(":none:");
 	  		console.log(categoryName);
 	  		$(btn).parent().hide();
 	  		
-	  		console.log("3");
 	  		$.ajax({
 				url:'disableCategory.na',
 				type:'get',
@@ -345,7 +348,6 @@
 					console.log(data);
 				}
 			})
-			console.log("4");
 	  	}
 	  </script>
 	

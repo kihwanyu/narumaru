@@ -20,6 +20,7 @@ public class Board implements java.io.Serializable {
 	private String status;
 	private int nmno;
 	private int cano;
+	private String caname;
 	private int cno;
 	private int bLevel;
 	private int targetBno;
@@ -30,7 +31,7 @@ public class Board implements java.io.Serializable {
 	public Board(){}
 
 	public Board(int bno, int bTno, int bType, String profileName, String bTitle, String bContent, String bHidden,
-			int mno, String bWriter, String createDate, Date modifyDate, String status, int nmno, int cano, int cno,
+			int mno, String bWriter, String createDate, Date modifyDate, String status, int nmno, int cano, String caname, int cno,
 			int bLevel, int targetBno, String isOpen, int needPoint, int comments) {
 		super();
 		this.bno = bno;
@@ -47,6 +48,7 @@ public class Board implements java.io.Serializable {
 		this.status = status;
 		this.nmno = nmno;
 		this.cano = cano;
+		this.caname = caname;
 		this.cno = cno;
 		this.bLevel = bLevel;
 		this.targetBno = targetBno;
@@ -166,6 +168,14 @@ public class Board implements java.io.Serializable {
 	public void setCano(int cano) {
 		this.cano = cano;
 	}
+	
+	public String getCaname() {
+		return caname;
+	}
+
+	public void setCaname(String caname) {
+		this.caname = caname;
+	}
 
 	public int getCno() {
 		return cno;
@@ -220,8 +230,9 @@ public class Board implements java.io.Serializable {
 		return "Board [bno=" + bno + ", bTno=" + bTno + ", bType=" + bType + ", profileName=" + profileName
 				+ ", bTitle=" + bTitle + ", bContent=" + bContent + ", bHidden=" + bHidden + ", mno=" + mno
 				+ ", bWriter=" + bWriter + ", createDate=" + createDate + ", modifyDate=" + modifyDate + ", status="
-				+ status + ", nmno=" + nmno + ", cano=" + cano + ", cno=" + cno + ", bLevel=" + bLevel + ", targetBno="
-				+ targetBno + ", isOpen=" + isOpen + ", needPoint=" + needPoint + ", comments=" + comments + "]";
+				+ status + ", nmno=" + nmno + ", cano=" + cano + ", caname=" + caname + ", cno=" + cno + ", bLevel="
+				+ bLevel + ", targetBno=" + targetBno + ", isOpen=" + isOpen + ", needPoint=" + needPoint
+				+ ", comments=" + comments + "]";
 	}
 
 	
