@@ -210,9 +210,42 @@
 	</div>
 	
 	<script>
-		var added = 0;
-	
+		//내가 최근에 방문한 나루
+		$(function(){
+			var added = 0;
+			//localStorage.clear();
+			
+			var nmno1 = localStorage.getItem("nmno1");
+			var nmno2 = localStorage.getItem("nmno2");
+			var nmno3 = localStorage.getItem("nmno3");
+			var temp = 0;
+			var nmno = ${nm.nmno};
+			//console.log("localStorage start : "+ localStorage.getItem("nmno"));
+			/* 하나라도 null 이존재한다면 */
+			if(nmno1 != null && nmno1 != null && nmno1 != null){
+				/* 세개의 변수 중 nmno와 같은 값을 가지고 있는 변수가 있다면 */
+				if(nmno1 != nmno && nmno2 != nmno && nmno3 != nmno){
+					nmno3 = nmno2;
+					nmno2 = nmno1;
+					nmno1 = nmno;
+				}
+			} else {
+				nmno3 = nmno2;
+				nmno2 = nmno1;
+				nmno1 = nmno;
+			}
+			
+			localStorage.setItem("nmno1", nmno1);
+			localStorage.setItem("nmno2", nmno2);
+			localStorage.setItem("nmno3", nmno3);
+	  		
+			console.log("localStorage end : "+ localStorage.getItem("nmno1"));
+			console.log("localStorage end : "+ localStorage.getItem("nmno2"));
+			console.log("localStorage end : "+ localStorage.getItem("nmno3"));
+		});
+		
 	  	$(function(){
+	  		
 	  		//설정해둔 카테고리 리스트 불러오기
 	  		$.ajax({
 				url:"selectCategoryList.na",
@@ -317,6 +350,8 @@
 	  </script>
 	
 	<script>
+	
+	
 		var isEnd = false;
 		var newPage = ${newPage};
 		var listSize = ${list.size()};

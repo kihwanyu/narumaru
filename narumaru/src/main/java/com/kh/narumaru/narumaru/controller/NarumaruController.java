@@ -37,6 +37,8 @@ import com.kh.narumaru.narumaru.model.service.NarumaruService;
 import com.kh.narumaru.narumaru.model.vo.Board;
 import com.kh.narumaru.narumaru.model.vo.Narumaru;
 
+import oracle.net.ns.NSProtocol;
+
 @Controller
 @SessionAttributes("nm")
 public class NarumaruController {
@@ -478,6 +480,26 @@ public class NarumaruController {
 		nms.updateDefault(nm);
 		
 		return "redirect:/boardListAll.bo?nmno="+nmno;
+	}
+	
+	@RequestMapping("narumaruSelectOne.nm")
+	public void narumaruSelectOne(@RequestParam(value="nmno") int nmno, HttpServletRequest request, HttpServletResponse response){
+		
+		
+		Narumaru nm = nms.selectNarumaruOne(nmno); 
+		
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		
+		try {
+			new Gson().toJson(nm, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }
