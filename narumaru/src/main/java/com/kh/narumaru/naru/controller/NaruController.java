@@ -19,6 +19,11 @@ import com.kh.narumaru.naru.model.exception.NaruException;
 import com.kh.narumaru.naru.model.service.HiddenService;
 import com.kh.narumaru.naru.model.service.NaruService;
 import com.kh.narumaru.naru.model.vo.Category;
+import com.kh.narumaru.narumaru.model.service.NarumaruService;
+import com.kh.narumaru.narumaru.model.vo.Board;
+import com.kh.narumaru.payment.model.exception.PaymentListSelectException;
+import com.kh.narumaru.payment.model.service.PaymentService;
+import com.kh.narumaru.payment.model.service.UsePointService;
 
 @Controller
 public class NaruController {
@@ -26,6 +31,12 @@ public class NaruController {
 	private NaruService ns;
 	@Autowired
 	private HiddenService hs;
+	@Autowired
+	private NarumaruService nms;
+	@Autowired
+	private UsePointService ups;
+	@Autowired
+	private PaymentService ps;
 	
 	@RequestMapping("naruMain.na")
 	public String showNaruMainView(){
@@ -127,6 +138,44 @@ public class NaruController {
 		ns.deleteNeighbor(nmno, loginUser.getMid());
 		
 		return "redirect:/boardListAll.bo?nmno="+nmno;
+	}
+	
+	//비밀글 구매하기
+	@RequestMapping("buyHidden.na")
+	public void buyHidden(int bno, HttpServletRequest request, HttpServletResponse response){
+		String str = "";
+		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+		
+		Board b = nms.selectBoardOne(bno);
+		
+		int result;
+		
+		try {
+			result = ups.insertUsePoint(b, loginUser,ps.selectTotalPoint(loginUser.getMid()));
+			
+			switch(result){
+				case -1:
+					str = "잔고가 부족합니다.";
+					break;
+				default:
+					str = "구매 완료.";
+					break;
+			}
+			
+			try {
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				new Gson().toJson(str, response.getWriter());
+			} catch (JsonIOException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} catch (PaymentListSelectException e) {
+			e.printStackTrace();
+		}
+		
+		
 	}
 	
 }
