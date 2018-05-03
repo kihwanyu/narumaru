@@ -42,6 +42,14 @@
 		<result property="status" column="STATUS"/>
 	</resultMap>
 	
+	<resultMap type="UsePoint" id="usingHistoryResultSet">
+		<id property="pno" column="PNO"></id>
+		<result property="pContent" column="PCONTENT"/>
+		<result property="useDay" column="PSTATUS"/>
+		<result property="mno" column="MNO"/>
+		<result property="amount" column="AMOUNT"/>
+	</resultMap>
+	
 	<insert id="paymentInsert">
 		INSERT INTO PAYMENT VALUES(SEQ_PAY_NO.NEXTVAL, #{mno}, #{impUid}
 									, #{amount}, #{payPg}, #{payMethod}
@@ -96,6 +104,8 @@
 	<select id="deleteWithdraw" parameterType="_int">
 		DELETE FROM WITHDRAW WHERE WNO=#{wno}
 	</select>
-	
-	
+
+	<insert id="insertUsePoint" parameterType="UsePoint">
+		INSERT INTO USINGHISTORY VALUES(SEQ_PNO.NEXTVAL, #{pContent}, SYSDATE, #{mno}, #{amount})
+	</insert>	
 </mapper>

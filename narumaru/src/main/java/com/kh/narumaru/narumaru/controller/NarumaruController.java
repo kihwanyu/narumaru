@@ -297,6 +297,7 @@ public class NarumaruController {
 		b.setbLevel(bLevel);
 		b.setTargetBno(targetBno);
 		b.setbType(bType);
+		b.setNeedPoint(needPoint);
 		nms.insertNarumaruBoard(b);
 		
 		if(targetBno!=0){

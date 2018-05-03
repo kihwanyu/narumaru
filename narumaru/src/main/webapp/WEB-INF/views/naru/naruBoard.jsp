@@ -61,26 +61,30 @@
 					</div>
 				</div>
 				<div class="boardContent">${fn:replace(b.bContent,nr,br)}</div>
-				<!-- 이하 히든 컨텐츠, 구매 여부를 체크함 -->
+				<%-- 이하 히든 컨텐츠, 구매 여부를 체크함 --%>
 				<c:if test="${b.bHidden ne null}">
 					<%-- 볼수 있는지 여부, break문이 불가능해서 forEach가 끝날때까지 false면 구매 안한걸로 간주함 --%>
 					<c:set var="canView" value="false"/>
-					<c:forEach var="h" items="${hpayList}">
-						<%--첫번째when은 구매여부, 두번째when은 작성자일때 --%>
-						<c:choose>
-							<c:when test="${h.bno eq b.bno}">
-								<div class="boardContent">${fn:replace(b.bHidden,nr,br)}</div>
-								<c:set var="canView" value="true"/>
-							</c:when>
-							<c:when test="${b.mno eq loginUser.mid }">
-								<div class="boardContent">${fn:replace(b.bHidden,nr,br)}</div>
-								<c:set var="canView" value="true"/>
-							</c:when>
-						</c:choose>
-					</c:forEach>
-					<c:if test="${canView eq 'false'}">
-						<div class="boardContent">이하는 구매 후 열람이 가능한 컨텐츠입니다.<label class="btn_label">구매 후 열람</label></div>
-					</c:if>
+					<%-- 작성자일경우 --%>
+					<c:choose>
+						<c:when test="${b.mno eq loginUser.mid}">
+							<div class="boardContent" style="background:lightgray; margin:5px;">${fn:replace(b.bHidden,nr,br)}</div>
+							<c:set var="canView" value="true"/>
+						</c:when>
+						<%-- 작성자가 아니면 구매 여부 확인 --%>
+						<c:otherwise>
+							<c:forEach var="h" items="${hpayList}">
+								<c:if test="${h.bno eq b.bno}">
+									<div class="boardContent" style="background:lightgray; margin:5px;">${fn:replace(b.bHidden,nr,br)}</div>
+									<c:set var="canView" value="true"/>
+								</c:if>
+							</c:forEach>
+							<%-- 작성자도 아닌데 구매도 안했으면 --%>
+							<c:if test="${canView eq 'false'}">
+								<div class="boardContent" style="background:lightgray; margin:5px;">이하는 구매 후 열람이 가능한 컨텐츠입니다.<br><label class="btn_label" onclick="buyHidden(${b.bno}, ${b.needPoint})">구매 후 열람 (${b.needPoint}P)</label></div>
+							</c:if>
+						</c:otherwise>
+					</c:choose>
 				</c:if>
 				<div class="boardfoot">
 					<hr>
@@ -133,7 +137,7 @@
 					<label class="btn_label modify-basic"><b>기본</b></label>
 					<label class="btn_label modify-theme">테마</label>
 					<label class="btn_label modify-category">카테고리</label>
-					<label class="btn_label modify-neighbor">이웃</label>
+					<!-- <label class="btn_label modify-neighbor">이웃</label> -->
 					<label class="modal_close" for="open-pop2"></label>
 				</div>
 				<label class="btn_label" id="updateThemeBtn" onclick="defaultModifyBtn()" style="margin-bottom:15px;">수정완료</label>
@@ -159,7 +163,7 @@
 					<label class="btn_label modify-basic">기본</label>
 					<label class="btn_label modify-theme"><b>테마</b></label>
 					<label class="btn_label modify-category">카테고리</label>
-					<label class="btn_label modify-neighbor">이웃</label>
+					<!-- <label class="btn_label modify-neighbor">이웃</label> -->
 					<label class="modal_close" for="open-pop2"></label>
 				</div>
 				<label class="btn_label" id="updateThemeBtn" onclick="themeModifyBtn()" style="margin-bottom:15px;">수정완료</label>
@@ -189,7 +193,7 @@
 					<label class="btn_label modify-basic">기본</label>
 					<label class="btn_label modify-theme">테마</label>
 					<label class="btn_label modify-category">카테고리</label>
-					<label class="btn_label modify-neighbor">이웃</label>
+					<!-- <label class="btn_label modify-neighbor">이웃</label> -->
 					<label class="modal_close" for="open-pop2"></label>
 				</div>
 				<label class="btn_label" id="addCateBtn" style="margin-bottom:15px;">카테고리 추가</label>
@@ -197,7 +201,7 @@
 			 </div>
 		 </form>
 		 <!-- 이웃목록 -->
-		 <div class="modal_inner" id="modal_neighbor" style="display:none;">
+		 <%-- <div class="modal_inner" id="modal_neighbor" style="display:none;">
 			<div class="row">
 				<label class="btn_label modify-basic">기본</label>
 				<label class="btn_label modify-theme">테마</label>
@@ -211,7 +215,7 @@
 				<span style="top:5px; position:relative;"><a href="#">${i}번째 마루</a></span>
 			</div>
 			</c:forEach>
-		 </div>
+		 </div> --%>
 	</div>
 	
 	<script>
@@ -250,7 +254,6 @@
 		});
 		
 	  	$(function(){
-	  		
 	  		//설정해둔 카테고리 리스트 불러오기
 	  		$.ajax({
 				url:"selectCategoryList.na",
@@ -322,14 +325,35 @@
 			})
 		})
 		
+		//게시글 구매요청
+		function buyHidden(bno, needPoint){
+	  		if(confirm(needPoint + "포인트로 이 컨텐츠를 구매하시겠습니까?")){
+	  			$.ajax({
+					url:'buyHidden.na',
+					type:'get',
+					data: {"bno":bno},
+					success:function(data){
+						alert(data);
+	  					window.location.reload();
+					},
+					error:function(data){
+						alert("컨텐츠 구매에 실패했습니다. 관리자에게 문의해주세요. \n에러코드 : E-N1");
+					}
+				})
+	  		}
+	  	}
+		
+		//테마 수정
 		function themeModifyBtn(){
 	  		$("#themeModify").submit();
 	  	}
 	  	
+	  	//일반 수정
 	  	function defaultModifyBtn(){
 	  		$("#defaultModify").submit();
 	  	}
 		
+	  	//카테고리 삭제
 		function deleteCategory(btn){
 	  		var categoryName = $(btn).parent().find(":text").val();
 	  		console.log(categoryName);
@@ -352,8 +376,6 @@
 	  </script>
 	
 	<script>
-	
-	
 		var isEnd = false;
 		var newPage = ${newPage};
 		var listSize = ${list.size()};
