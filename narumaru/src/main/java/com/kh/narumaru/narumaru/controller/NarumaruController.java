@@ -299,7 +299,7 @@ public class NarumaruController {
 		
 		if(targetBno!=0){
 			ArrayList<Alarm> alarm = new ArrayList<>();
-			// 보낼 유저의 번호를 구한다.
+			// 보낼 유저의 번호를 구한다. 
 			ArrayList<Integer> sendUser = null;
 			sendUser = new ArrayList<>();
 			sendUser.add(b.getMno());
