@@ -56,8 +56,20 @@
 						, #{receive_mno}, #{send_mno}, #{send_bno}
 						, default)
 			</when>
+			<when test="atno == 303 and atno == 304 and atno == 305">
+				INSERT INTO ALARM(ANO
+				,ATNO
+				,ALARM_DATE
+				,RECEIVE_MNO
+				,SEND_MNO
+				,SEND_NMNO
+				,STATUS) 
+				VALUES(SEQ_ANO.NEXTVAL, #{atno}, sysdate
+						, #{receive_mno}, #{send_mno}, #{send_nmno}
+						, default)
+			</when>
 			<otherwise>
-				INSERT INTO ALARM(ANO,
+				INSERT INTO ALARM(ANO
 				,ATNO
 				,ALARM_DATE
 				,RECEIVE_MNO
