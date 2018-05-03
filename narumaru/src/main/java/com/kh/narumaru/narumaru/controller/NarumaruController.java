@@ -90,7 +90,7 @@ public class NarumaruController {
 			list.add(newB);
 		}		
 		boolean isOwner = nms.checkNarumaruOwner(nmno, loginUser);
-		
+		System.out.println(list);
 		mv.addObject("nm", nm);
 		mv.addObject("list", list);
 		mv.addObject("colist", colist);
