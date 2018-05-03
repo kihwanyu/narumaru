@@ -75,7 +75,7 @@ public class MaruController {
 	}
 	
 	@RequestMapping("insertMaruMember.ma")
-	public void insertMaruMameber(MaruMember mm, HttpServletResponse response, AlarmService as){
+	public void insertMaruMameber(MaruMember mm, HttpServletResponse response){
 		try {
 			ms.insertMaruMember(mm);
 			int masterMno = ms.getMaruMaster(mm.getNmno());

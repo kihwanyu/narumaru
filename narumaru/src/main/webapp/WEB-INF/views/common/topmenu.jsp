@@ -168,6 +168,10 @@
 	<script src="http://code.jquery.com/jquery-1.7.2.min.js" type="text/javascript"></script>
 	<script>
 		$(function(){
+			<c:if test="${empty loginUser}">
+				alert("세션 종료. 다시 로그인하세요");
+				location.href="";
+			</c:if>
 			/* 알람 개수 ajax */
 			$.ajax({
 				url:"alarmStatusCount.al",
@@ -619,4 +623,5 @@
 		$("#logo").click(function(){
 			location.href="goHome.nm";
 		});
+		
 	</script>

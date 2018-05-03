@@ -64,7 +64,7 @@
 						<img src="resources/images/menu.png" class="modifyMenu size100per">
 						<div class="sub boardSub">
 							<ul>
-								<li class="pointer" onclick="modifyBoard(${b.bno});">수정하기</li>
+								<li class="pointer" onclick="modifyBoard(this);">수정하기</li>
 								<li class="pointer" onclick="deleteBoard(${b.bno});">삭제하기</li>
 							</ul>
 						</div>
@@ -105,12 +105,12 @@
 							<div class="sub emotionSub">이모티콘</div>
 						</li>
 						<li class="insertReplyShow" onclick="replyOpen(this, ${ b.bno });"><span>댓글보기</span></li>
-						<li class="showSub shereBtn" onclick="reportBoard(${ b.bno });"><span>신고하기</span></li>
+						<li class="reportBtn" onclick="reportBoard(${ b.bno });"><span>신고하기</span></li>
 					</ul>
 				</div>
 				<div class="insertReply">
 					<div class="replyArea">
-						 <c:forEach var="b2" begin="${beginPage}" end="${newPage}" items="${ list }" varStatus="i2">
+						 <c:forEach var="b2" begin="${beginPage}" end="${newPage}" items="${ colist }" varStatus="i2">
 							<c:if test = "${ b.bno eq b2.targetBno}">
 							<div style="height:100px;">
 								
@@ -127,7 +127,7 @@
 							</c:if>
 						</c:forEach>
 						
-						<form action="insertNarumaruBoard.nm" method="post" id="replyInsert">
+						<form action="insertNarumaruBoard.nm" method="post" id="replyInsert" style="height:170px;">
 							<textarea class="summernote2" name="boardContent"></textarea>
 							<input type="hidden" name="bType" value="201"/>
 							<input type="hidden" name="bLevel" value="1"/>
@@ -224,6 +224,7 @@
 		  });			  
 	}
 	$(document).ready(function(){
+		console.log('리스트 ${ list.size() }')
 		summernote1();
 		summernote2();
 	});
@@ -241,8 +242,8 @@
 	});
 
 	$(document).scroll(function(){
-		/* summernote1();
-		summernote2(); */
+		summernote1();
+		summernote2();
 		//더이상 가져올 글이 없으면 그냥 종료한다
 		if(isEnd) return;
 		
@@ -324,7 +325,7 @@
 				+'		<img src="resources/images/menu.png" class="modifyMenu size100per">'
 				+'		<div class="sub boardSub">'
 				+'			<ul>'
-				+'				<li class="pointer" onclick="modifyBoard(${b.bno});">수정하기</li>'
+				+'				<li class="pointer" onclick="modifyBoard(this);">수정하기</li>'
 				+'				<li class="pointer" onclick="deleteBoard(${b.bno});">삭제하기</li>'
 				+'			</ul>'
 				+'		</div>'
@@ -364,14 +365,12 @@
 				+'			<div class="sub emotionSub">이모티콘</div>'
 				+'		</li>'
 				+'		<li class="insertReplyShow" onclick="replyOpen(this, ${ b.bno });"><span>댓글보기</span></li>'
-				+'		<li class="showSub shereBtn" onclick="submenuOpen(this);"><span>공유하기</span>'
-				+'			<div class="sub shereSub">개발중인 기능입니다</div>'
-				+'		</li>'
+				+'		<li class="reportBtn"  onclick="reportBoard(${ b.bno });"><span>신고하기</span></li>'
 				+'	</ul>'
 				+'</div>'
 				+'<div class="insertReply">'
 				+'	<div class="replyArea">'
-						 <c:forEach var="b2" begin="${beginPage}" end="${newPage}" items="${ list }" varStatus="i2">
+						 <c:forEach var="b2" begin="${beginPage}" end="${newPage}" items="${ colist }" varStatus="i2">
 							<c:if test = "${ b.bno eq b2.targetBno}">
 							+'			<div style="height:100px;">'
 							
@@ -402,10 +401,10 @@
 						+'</div>');
 	        	</c:if>
 	        	</c:forEach>
-	        	/* summernote1();
-	        	summernote2(); */
 	        }
 		}, 2000);
+	        	summernote1();
+	        	summernote2();
 	});
 		function replyOpen(btn, bno){
 			$(btn).parent().parent().siblings(".insertReply").toggle();			
@@ -416,7 +415,7 @@
 		$("#photoUpload").click(function(){
 				$("#photo").click();
 		});
-		function modifyBoard(bno){
+		function modifyBoard(btn){
 			$(btn).parents(".boardBtn").find("#myModal").modal();	
 			/* location.href="updateBoardOne.nm?bno="+bno + "&nmno=${nm.nmno}"; */
 		}
