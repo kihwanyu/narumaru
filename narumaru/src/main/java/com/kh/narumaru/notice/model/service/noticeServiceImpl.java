@@ -67,6 +67,13 @@ public class noticeServiceImpl implements noticeService {
 			return nd.showFaqDetailView(bno);
 		}
 
+
+		@Override
+		public void questionInsert(Notice n) {
+			
+			nd.questionInsert(n);
+		}
+
 	
 
 
