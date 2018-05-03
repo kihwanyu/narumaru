@@ -124,4 +124,10 @@ public class AdminServiceImpl implements AdminService {
 		ArrayList chCount = ad.selectChCount();
 		return chCount;
 	}
+
+	@Override
+	public ArrayList<Narumaru> naruView() {
+		ArrayList<Narumaru> naruView = ad.naruView();
+		return naruView;
+	}
 }
