@@ -170,7 +170,7 @@
 		$(function(){
 			<c:if test="${empty loginUser}">
 				alert("세션 종료. 다시 로그인하세요");
-				location.href="";
+				location.href="/narumaru";
 			</c:if>
 			/* 알람 개수 ajax */
 			$.ajax({

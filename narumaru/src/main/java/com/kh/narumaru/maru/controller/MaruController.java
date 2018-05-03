@@ -119,7 +119,7 @@ public class MaruController {
 		try {
 			int result = ms.countMaruMember(nmno);
 			response.getWriter().print(result);
-		} catch (MaruException e) {
+		} catch (MaruException e) { 
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
