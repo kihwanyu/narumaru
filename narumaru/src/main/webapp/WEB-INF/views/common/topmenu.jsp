@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    
 <style>
 	*{
 		margin:0 auto;
@@ -165,9 +166,14 @@
 		</div>		
 
 	</div>
+	
+	<!-- moment.js CDN -->
+	<script type="text/javascript" src="https://momentjs.com/downloads/moment-with-locales.js"></script>
 	<script src="http://code.jquery.com/jquery-1.7.2.min.js" type="text/javascript"></script>
 	<script>
 		$(function(){
+			moment.locale('ko'); 
+			
 			<c:if test="${empty loginUser}">
 				alert("세션 종료. 다시 로그인하세요");
 				location.href="/narumaru";
@@ -210,10 +216,12 @@
 								$innerDiv =  $("<div class='new-innerdiv' onclick='clickNoticeAlarm("+value.ano+","+value.send_bno+");'>");
 							}
 							
+							var beforetime = moment(value.alarm_date, "YYYY-MM-DD h:mm:ss").fromNow();
+							
 							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
 							var $alarmTitle = $("<div class='alarmTitle'>").text(value.b_title);
 							var $alarmComment = $("<div class='alarmComment'>").text(value.b_content);
-							var $alarmDate = $("<div class='alarmDate' align='right'>").text(value.alarm_date);
+							var $alarmDate = $("<div class='alarmDate' align='right'>").text(beforetime);
 							
 							$innerDiv.append($innerDiv);
 							$innerDiv.append($alarmInfo);
@@ -232,11 +240,13 @@
 							} else {
 								$innerDiv =  $("<div class='new-innerdiv' onclick='clickQAAlarm("+value.ano+","+value.send_bno+");'>");
 							}
-						
+							
+							var beforetime = moment(value.alarm_date, "YYYY-MM-DD h:mm:ss").fromNow();
+							
 							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
 							var $alarmTitle = $("<div class='alarmTitle'>").text(value.b_title);
 							var $alarmComment = $("<div class='alarmComment'>").text(value.b_content);
-							var $alarmDate = $("<div class='alarmDate' align='right'>").text(value.alarm_date);
+							var $alarmDate = $("<div class='alarmDate' align='right'>").text(beforetime);
 							
 							$innerDiv.append($innerDiv);
 							$innerDiv.append($alarmInfo);
@@ -255,10 +265,13 @@
 							} else {
 								$innerDiv =  $("<div class='new-innerdiv' onclick='clickNaruMaruFoward("+value.ano+","+value.send_nmno+");'>");
 							}
+							
+							var beforetime = moment(value.alarm_date, "YYYY-MM-DD h:mm:ss").fromNow();
+							
 							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
 							var $alarmTitle = $("<div class='alarmTitle'>").text(value.b_title);
 							var $alarmComment = $("<div class='alarmComment'>").text(value.b_content);
-							var $alarmDate = $("<div class='alarmDate' align='right'>").text(value.alarm_date);
+							var $alarmDate = $("<div class='alarmDate' align='right'>").text(beforetime);
 							
 							$innerDiv.append($innerDiv);
 							$innerDiv.append($alarmInfo);
@@ -277,10 +290,13 @@
 							} else {
 								$innerDiv =  $("<div class='new-innerdiv' onclick='clickNaruMaruFoward("+value.ano+","+value.send_nmno+");'>");
 							}
+							
+							var beforetime = moment(value.alarm_date, "YYYY-MM-DD h:mm:ss").fromNow();
+							
 							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
 							var $alarmTitle = $("<div class='alarmTitle'>").text(value.b_title);
 							var $alarmComment = $("<div class='alarmComment'>").text(value.b_content);
-							var $alarmDate = $("<div class='alarmDate' align='right'>").text(value.alarm_date);
+							var $alarmDate = $("<div class='alarmDate' align='right'>").text(beforetime);
 							
 							$innerDiv.append($innerDiv);
 							$innerDiv.append($alarmInfo);
@@ -299,9 +315,12 @@
 							} else {
 								$innerDiv =  $("<div class='new-innerdiv' onclick='clickMyPageNeighborListFoward("+value.ano+");'>");
 							}
+							
+							var beforetime = moment(value.alarm_date, "YYYY-MM-DD h:mm:ss").fromNow();
+							
 							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
 							var $alarmComment = $("<div class='alarmComment'>").text("환영해주세요!");
-							var $alarmDate = $("<div class='alarmDate' align='right'>").text(value.alarm_date);
+							var $alarmDate = $("<div class='alarmDate' align='right'>").text(beforetime);
 							
 							$innerDiv.append($innerDiv);
 							$innerDiv.append($alarmInfo);
@@ -320,9 +339,12 @@
 							} else {
 								$innerDiv =  $("<div class='new-innerdiv' onclick='clickMyPageNaruRevenueFoward("+value.ano+");'>");
 							}
+							
+							var beforetime = moment(value.alarm_date, "YYYY-MM-DD h:mm:ss").fromNow();
+							
 							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
 							var $alarmComment = $("<div class='alarmComment'>").text("100P를 받으셨습니다.");
-							var $alarmDate = $("<div class='alarmDate' align='right'>").text(value.alarm_date);
+							var $alarmDate = $("<div class='alarmDate' align='right'>").text(beforetime);
 							
 							$innerDiv.append($innerDiv);
 							$innerDiv.append($alarmInfo);
@@ -336,11 +358,13 @@
 						case 300: /* 마루-게시글 댓글 */
 							var infoStr = value.send_nicname+"님이 \"" + value.nm_title + "\" 마루의 " + value.b_title + " 게시글에 댓글을 작성했습니다.";
 							
+							var beforetime = moment(value.alarm_date, "YYYY-MM-DD h:mm:ss").fromNow();
+						
 							var $innerDiv = $("<div class='new-innerdiv'>");
 							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
 							var $alarmTitle = $("<div class='alarmTitle'>").text(value.b_title);
 							var $alarmComment = $("<div class='alarmComment'>").text(value.b_content);
-							var $alarmDate = $("<div class='alarmDate' align='right'>").text(value.alarm_date);
+							var $alarmDate = $("<div class='alarmDate' align='right'>").text(beforetime);
 							
 							$innerDiv.append($innerDiv);
 							$innerDiv.append($alarmInfo);
@@ -360,10 +384,12 @@
 								$innerDiv =  $("<div class='new-innerdiv' onclick='clickNaruMaruFoward("+value.ano+","+value.send_nmno+");'>");
 							}
 							
+							var beforetime = moment(value.alarm_date, "YYYY-MM-DD h:mm:ss").fromNow();
+							
 							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
 							var $alarmTitle = $("<div class='alarmTitle'>").text(value.b_title);
 							var $alarmComment = $("<div class='alarmComment'>").text(value.b_content);
-							var $alarmDate = $("<div class='alarmDate' align='right'>").text(value.alarm_date);
+							var $alarmDate = $("<div class='alarmDate' align='right'>").text(beforetime);
 							
 							$innerDiv.append($innerDiv);
 							$innerDiv.append($alarmInfo);
@@ -382,9 +408,12 @@
 							} else {
 								$innerDiv =  $("<div class='new-innerdiv' onclick='clickMyPageInvitationFoward("+value.ano+");'>");
 							}
+							
+							var beforetime = moment(value.alarm_date, "YYYY-MM-DD h:mm:ss").fromNow();
+							
 							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
 							var $alarmComment = $("<div class='alarmComment'>").text("함께해주세요!");
-							var $alarmDate = $("<div class='alarmDate' align='right'>").text(value.alarm_date);
+							var $alarmDate = $("<div class='alarmDate' align='right'>").text(beforetime);
 							
 							$innerDiv.append($alarmInfo);
 							$innerDiv.append($alarmComment);
@@ -402,9 +431,11 @@
 								$innerDiv =  $("<div class='new-innerdiv' onclick='clickMaruInitiationFoward("+value.ano+","+value.send_nmno+");'>");
 							}
 							
+							var beforetime = moment(value.alarm_date, "YYYY-MM-DD h:mm:ss").fromNow();
+						
 							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
 							var $alarmComment = $("<div class='alarmComment'>").text("환영해주세요!");
-							var $alarmDate = $("<div class='alarmDate' align='right'>").text(value.alarm_date);
+							var $alarmDate = $("<div class='alarmDate' align='right'>").text(beforetime);
 							
 							$innerDiv.append($innerDiv);
 							$innerDiv.append($alarmInfo);
@@ -423,9 +454,11 @@
 								$innerDiv =  $("<div class='new-innerdiv' onclick='clickNaruMaruFoward("+value.ano+","+value.send_nmno+");'>");
 							}
 							
+							var beforetime = moment(value.alarm_date, "YYYY-MM-DD h:mm:ss").fromNow();
+							
 							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
 							var $alarmComment = $("<div class='alarmComment'>").text("마루에 가입되었습니다. 놀러오세요!");
-							var $alarmDate = $("<div class='alarmDate' align='right'>").text(value.alarm_date);
+							var $alarmDate = $("<div class='alarmDate' align='right'>").text(beforetime);
 							
 							$innerDiv.append($innerDiv);
 							$innerDiv.append($alarmInfo);
@@ -444,9 +477,11 @@
 								$innerDiv =  $("<div class='new-innerdiv' onclick='clickNaruMaruFoward("+value.ano+","+value.send_nmno+");'>");
 							}
 							
+							var beforetime = moment(value.alarm_date, "YYYY-MM-DD h:mm:ss").fromNow();
+							
 							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
 							var $alarmComment = $("<div class='alarmComment'>").text("환영해주세요!");
-							var $alarmDate = $("<div class='alarmDate' align='right'>").text(value.alarm_date);
+							var $alarmDate = $("<div class='alarmDate' align='right'>").text(beforetime);
 							
 							$innerDiv.append($innerDiv);
 							$innerDiv.append($alarmInfo);
