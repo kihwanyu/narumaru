@@ -20,6 +20,7 @@
 		<result property="status" column="STATUS"/>
 		<result property="nmno" column="NMNO"/>
 		<result property="cano" column="CANO"/>
+		<result property="caname" column="CANAME"/>
 		<result property="cno" column="CNO"/>
 		<result property="bLevel" column="B_LEVEL"/>
 		<result property="targetBno" column="TARGET_BNO"/>
@@ -41,11 +42,12 @@
 	</resultMap>
 	
 	<select id="selectBoardList" resultMap="boardResultSet" parameterType="_int">
-		SELECT BNO, B_TNO, B_TYPE, B_TITLE, M.PROFILENAME, B_CONTENT, B_HIDDEN, B.MNO, M.NICNAME, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, NMNO, CANO, CNO, B_LEVEL, TARGET_BNO, IS_OPEN, NEED_POINT,
+		SELECT BNO, B_TNO, B_TYPE, B_TITLE, M.PROFILENAME, B_CONTENT, B_HIDDEN, B.MNO, M.NICNAME, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, B.NMNO, B.CANO, C.CANAME , CNO, B_LEVEL, TARGET_BNO, IS_OPEN, NEED_POINT,
     	(SELECT COUNT(*) FROM BOARD WHERE TARGET_BNO = B.BNO) AS COMMENTS
 		FROM BOARD B
 		JOIN MEMBER M ON(B.MNO = M.MNO)
-		WHERE NMNO = #{nmno} AND B.STATUS = 'Y' AND (B_TYPE = 200 OR B_TYPE = 100)
+		JOIN CATEGORY C ON(B.CANO = C.CANO)
+		WHERE B.NMNO = #{nmno} AND B.STATUS = 'Y' AND (B_TYPE = 200 OR B_TYPE = 100)
 		ORDER BY BNO DESC
 	</select>
 	
