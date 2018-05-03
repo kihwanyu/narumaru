@@ -770,6 +770,14 @@ public class MemberController {
 		
 		return mv;
 	}
+	@RequestMapping(value="naruRevenue.me")
+	public ModelAndView naruRevenueForward(ModelAndView mv){
+		
+		mv.setViewName("mypage/myPage_NaruRevenueList");
+		
+		return mv;
+	}
+	
 	@RequestMapping(value="naruNeighborListView.me")
 	public ModelAndView NaruNeighborListForward(ModelAndView mv, HttpSession session, @RequestParam(defaultValue="1") int currentPage){
 		
