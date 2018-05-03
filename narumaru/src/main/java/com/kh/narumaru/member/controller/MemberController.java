@@ -856,6 +856,12 @@ public class MemberController {
 		}
 		return mv;
 	}
+	@RequestMapping(value="myboardView.me")
+	public ModelAndView myBoardForward(ModelAndView mv){
+		mv.setViewName("mypage/myPage_myboard");
+		
+		return mv;
+	}
 	@RequestMapping(value="refundView.me")
 	public ModelAndView RefundForward(ModelAndView mv, @RequestParam(defaultValue="1") int currentPage, HttpSession session){
 		
