@@ -103,6 +103,21 @@ public class noticeDaoImpl implements noticeDao{
 
 
 
+		@Override
+		public void questionInsert(Notice n) {
+			System.out.println("noticeDaoImpl questionInsert n : " + n );
+			
+			sqlSession.insert("Board.questionInsert",n);
+			
+			System.out.println("1번 insert");
+			sqlSession.insert("Board.questionFileInsert", n);
+			
+			
+		}
+
+
+
+
 
 	
 

@@ -34,10 +34,8 @@
 		<result property="noContent" column="B_CONTENT"/>
 		<result property="writerId" column="MNO"/>
 		<result property="createDate" column="CREATE_DATE"/>
-
 		<result property="modifyDate" column="MODIFY_DATE"/>
-		<result property="status" column="STATUS"/>
-
+		<result property="status" column="STATUS"/>		
 	</resultMap>
 	
 	<select id="selectBoardList" resultMap="boardResultSet" parameterType="_int">
@@ -134,6 +132,17 @@
 		DELETE FROM BOARD
 		WHERE BNO = #{nid}
 	</delete>
+	
+	
+	<insert id="questionInsert" parameterType="Notice">
+		INSERT INTO BOARD
+		VALUES(SEQ_BNO.NEXTVAL, NULL, #{noType}, #{noTitle}, #{noContent}, NULL, #{writerId}, SYSDATE,SYSDATE, DEFAULT, 1 ,NULL,NULL,NULL,NULL,NULL,NULL )
+	</insert>
+	
+	<insert id="questionFileInsert" parameterType="Notice">
+		INSERT INTO FILET
+		VALUES(SEQ_AT_NO.NEXTVAL, #{fileName}, ? , SYSDATE, NULL,NULL,NULL, Y ,NULL,NULL,NULL,NULL )
+	</insert>
 </mapper>
 
 
