@@ -191,7 +191,6 @@
 		padding:10px;
 	}
 	.content > div{
-		margin-top:10px;
 		background:white;
 		border:1px solid lightgray;
 	}

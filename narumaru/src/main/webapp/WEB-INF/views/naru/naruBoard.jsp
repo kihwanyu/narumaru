@@ -61,26 +61,30 @@
 					</div>
 				</div>
 				<div class="boardContent">${fn:replace(b.bContent,nr,br)}</div>
-				<!-- 이하 히든 컨텐츠, 구매 여부를 체크함 -->
+				<%-- 이하 히든 컨텐츠, 구매 여부를 체크함 --%>
 				<c:if test="${b.bHidden ne null}">
 					<%-- 볼수 있는지 여부, break문이 불가능해서 forEach가 끝날때까지 false면 구매 안한걸로 간주함 --%>
 					<c:set var="canView" value="false"/>
-					<c:forEach var="h" items="${hpayList}">
-						<%--첫번째when은 구매여부, 두번째when은 작성자일때 --%>
-						<c:choose>
-							<c:when test="${h.bno eq b.bno}">
-								<div class="boardContent">${fn:replace(b.bHidden,nr,br)}</div>
-								<c:set var="canView" value="true"/>
-							</c:when>
-							<c:when test="${b.mno eq loginUser.mid }">
-								<div class="boardContent">${fn:replace(b.bHidden,nr,br)}</div>
-								<c:set var="canView" value="true"/>
-							</c:when>
-						</c:choose>
-					</c:forEach>
-					<c:if test="${canView eq 'false'}">
-						<div class="boardContent">이하는 구매 후 열람이 가능한 컨텐츠입니다.<label class="btn_label">구매 후 열람</label></div>
-					</c:if>
+					<%-- 작성자일경우 --%>
+					<c:choose>
+						<c:when test="${b.mno eq loginUser.mid}">
+							<div class="boardContent" style="background:lightgray; margin:5px;">${fn:replace(b.bHidden,nr,br)}</div>
+							<c:set var="canView" value="true"/>
+						</c:when>
+						<%-- 작성자가 아니면 구매 여부 확인 --%>
+						<c:otherwise>
+							<c:forEach var="h" items="${hpayList}">
+								<c:if test="${h.bno eq b.bno}">
+									<div class="boardContent" style="background:lightgray; margin:5px;">${fn:replace(b.bHidden,nr,br)}</div>
+									<c:set var="canView" value="true"/>
+								</c:if>
+							</c:forEach>
+							<%-- 작성자도 아닌데 구매도 안했으면 --%>
+							<c:if test="${canView eq 'false'}">
+								<div class="boardContent" style="background:lightgray; margin:5px;">이하는 구매 후 열람이 가능한 컨텐츠입니다.<br><label class="btn_label">구매 후 열람 (${b.needPoint}P)</label></div>
+							</c:if>
+						</c:otherwise>
+					</c:choose>
 				</c:if>
 				<div class="boardfoot">
 					<hr>

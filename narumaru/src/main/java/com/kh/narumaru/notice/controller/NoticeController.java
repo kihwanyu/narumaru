@@ -2,25 +2,19 @@ package com.kh.narumaru.notice.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.ProcessBuilder.Redirect;
 import java.util.ArrayList;
-import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.junit.runner.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.narumaru.member.model.vo.Member;
@@ -115,7 +109,7 @@ public class NoticeController {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/noticeDetail.no?bno="+n.getnid();
+		return "redirect:/noticeDetail.no?bno="+n.getNid();
 	}
 	
 	//Notice, FAQ 삭제
@@ -195,7 +189,7 @@ public class NoticeController {
 		//1:1 문의하기
 		@RequestMapping(value ="question.no")
 		public String showquestionView(@RequestParam(name="fileName", required=false) MultipartFile question
-				, HttpServletRequest request, HttpSession session, HttpServletResponse response, Notice n){
+				, HttpServletRequest request, HttpSession session, HttpServletResponse response, Notice n) throws IOException{
 			System.out.println("noticecontroller question");
 			Member loginUser = (Member) request.getSession().getAttribute("loginUser");
 			
@@ -241,7 +235,6 @@ public class NoticeController {
 			} catch (IllegalStateException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
 			
 			
 			
@@ -253,7 +246,7 @@ public class NoticeController {
 				session.setAttribute("loginUser", loginUser);
 				
 				response.getWriter().print("true");
-			} catch (IOException e) {
+			} /*catch (IOException e) {
 				try {
 					response.getWriter().print("false");
 				} catch (IOException e1) {
@@ -261,7 +254,7 @@ public class NoticeController {
 					e1.printStackTrace();
 				}
 				e.printStackTrace();
-			}
+			}*/
 			
 			
 			return "notice/question";
