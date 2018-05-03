@@ -95,7 +95,7 @@ public class MaruController {
 				alarm.get(i).setReceive_mno(masterMno);
 			}
 			
-			as.alarmRequest(alarm, sendUser);
+			as.alarmRequest(alarm);
 			
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().print("회원가입 완료");

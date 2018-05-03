@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.kh.narumaru.member.model.vo.Member;
 import com.kh.narumaru.naru.model.exception.NaruException;
+import com.kh.narumaru.naru.model.service.HiddenService;
 import com.kh.narumaru.naru.model.service.NaruService;
 import com.kh.narumaru.naru.model.vo.Category;
 
@@ -23,6 +24,8 @@ import com.kh.narumaru.naru.model.vo.Category;
 public class NaruController {
 	@Autowired
 	private NaruService ns;
+	@Autowired
+	private HiddenService hs;
 	
 	@RequestMapping("naruMain.na")
 	public String showNaruMainView(){

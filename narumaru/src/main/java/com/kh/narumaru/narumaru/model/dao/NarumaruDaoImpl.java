@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.narumaru.member.model.vo.Member;
-import com.kh.narumaru.naru.model.vo.Neighbor;
+import com.kh.narumaru.common.model.vo.Neighbor;
 import com.kh.narumaru.naru.model.vo.Theme;
 import com.kh.narumaru.narumaru.exception.NarumaruException;
 import com.kh.narumaru.narumaru.model.vo.Board;
@@ -67,8 +67,8 @@ public class NarumaruDaoImpl implements NarumaruDao {
 		
 		int ownerMno = sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno);
 		
-		n.setNeighborMno(ownerMno);
-		n.setMno(loginUser.getMid());
+		n.setMno(ownerMno);
+		n.setUser_mno(loginUser.getMid());
 		
 		int resultNeighbor = sqlSession.selectOne("Naru.selectNeighbor", n);
 		
