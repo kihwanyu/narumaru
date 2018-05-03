@@ -40,7 +40,7 @@ public class NeighborServiceImpl implements NeighborService {
 	public void myPageNeighborInsert(Neighbor n) throws NeighborInsertException {
 		
 		nd.myPageNeighborInsert(sqlSession, n);
-		
+
 	}
 
 	@Override
