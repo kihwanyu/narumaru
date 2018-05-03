@@ -858,7 +858,7 @@ public class MemberController {
 	}
 	@RequestMapping(value="myboardView.me")
 	public ModelAndView myBoardForward(ModelAndView mv){
-		mv.setViewName("mypage/myPage_myboard");
+		mv.setViewName("mypage/myPage_myboard"); 
 		
 		return mv;
 	}
