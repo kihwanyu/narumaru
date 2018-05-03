@@ -212,6 +212,7 @@
 	<script>
 		//내가 최근에 방문한 나루
 		$(function(){
+			var added = 0;
 			//localStorage.clear();
 			
 			var nmno1 = localStorage.getItem("nmno1");
