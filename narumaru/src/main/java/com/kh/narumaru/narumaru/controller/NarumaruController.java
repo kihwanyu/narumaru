@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
+import com.kh.narumaru.common.model.service.AlarmService;
 import com.kh.narumaru.maru.exception.MaruException;
 import com.kh.narumaru.maru.model.service.MaruService;
 import com.kh.narumaru.maru.model.vo.MaruMember;
@@ -25,6 +26,9 @@ import com.kh.narumaru.member.model.exception.selectChanelException;
 import com.kh.narumaru.member.model.service.ChannelService;
 import com.kh.narumaru.member.model.vo.Channel;
 import com.kh.narumaru.member.model.vo.Member;
+import com.kh.narumaru.naru.model.service.HiddenService;
+import com.kh.narumaru.naru.model.service.NaruService;
+import com.kh.narumaru.naru.model.vo.HiddenPayment;
 import com.kh.narumaru.naru.model.vo.Theme;
 import com.kh.narumaru.narumaru.exception.NarumaruException;
 import com.kh.narumaru.narumaru.model.service.NarumaruService;
@@ -41,6 +45,12 @@ public class NarumaruController {
 	private ChannelService cs;
 	@Autowired
 	private MaruService ms;
+	@Autowired
+	private AlarmService as;
+	@Autowired
+	private NaruService ns;
+	@Autowired
+	private HiddenService hs;
 	
 	@RequestMapping("goHome.nm")
 	public String goHome(){
@@ -58,7 +68,6 @@ public class NarumaruController {
 		ArrayList<Board> list = nms.selectBoardList(nmno);
 		ArrayList<Board> colist = nms.selectCommentList(nmno);
 		Narumaru nm = nms.selectNarumaruOne(nmno);
-		Theme theme = nms.selectThemeOne(nmno);
 		if(list.size() == 0){
 			Board newB = new Board();
 			newB.setbWriter("");
@@ -83,13 +92,22 @@ public class NarumaruController {
 			list.add(newB);
 		}		
 		boolean isOwner = nms.checkNarumaruOwner(nmno, loginUser);
-
+		
 		mv.addObject("nm", nm);
 		mv.addObject("list", list);
 		mv.addObject("colist", colist);
 		mv.addObject("isOwner", isOwner);
-		mv.addObject("theme", theme);
+
 		if(nm.getNmCategory() ==2){
+			Theme theme = nms.selectThemeOne(nmno); // 나루의 테마
+			int isNeighbor = nms.checkNeighbor(nmno, loginUser); // 이웃 여부
+			ArrayList<Narumaru> neighborList = ns.selectNeighborList(nmno); // 해당 나루의 이웃 리스트
+			ArrayList<HiddenPayment> hpayList = hs.selectHiddenPaymentList(loginUser.getMid()); // 로그인 유저의 구매리스트
+			mv.addObject("theme", theme);
+			mv.addObject("isNeighbor",isNeighbor);
+			mv.addObject("hpayList",hpayList);
+			mv.addObject("neList",neighborList);
+			
 			mv.setViewName("naru/naruBoard"); 
 		}else{
 			mv.setViewName("maru/maruBoard"); 

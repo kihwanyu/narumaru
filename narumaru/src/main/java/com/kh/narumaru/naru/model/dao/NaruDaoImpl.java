@@ -81,7 +81,7 @@ public class NaruDaoImpl implements NaruDao{
 		nb.setUser_mno(mid);
 		nb.setMno(sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno));
 		
-		sqlSession.insert("Naru.insertNeighbor", nb);
+		sqlSession.insert("Neighbor.myPageNeighborInsert", nb);
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class NaruDaoImpl implements NaruDao{
 		nb.setUser_mno(mid);
 		nb.setMno(sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno));
 		
-		sqlSession.delete("Naru.deleteNeighbor", nb);
+		sqlSession.delete("Neighbor.myPageNeighborDelete", nb);
 	}
 
 }
