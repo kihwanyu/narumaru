@@ -28,7 +28,7 @@
 	</select>
 	
 	<select id="memberList1" resultMap="memberResultSet1">
-		SELECT M.MNO, M.EMAIL, M.PHONE, M.BIRTHDAY, M.NICNAME,(SELECT SUM (P.AMOUNT) FROM PAYMENT P GROUP BY P.MNO HAVING P.MNO = M.MNO) AS TOTAL_AMOUNT FROM MEMBER M
+		SELECT M.MNO, M.EMAIL, M.PHONE, M.BIRTHDAY, M.NICNAME, M.STATUS, (SELECT SUM (P.AMOUNT) FROM PAYMENT P GROUP BY P.MNO HAVING P.MNO = M.MNO) AS TOTAL_AMOUNT FROM MEMBER M
 	</select>
 	
 	<select id="maruView" resultType="hashmap">
@@ -76,5 +76,9 @@
 		JOIN MARU_MEMBER MM ON(M.MNO = MM.MNO)
 		JOIN NARUMARU NM ON(MM.NMNO = NM.NMNO)
 	</select>
+	
+	<update id="changeStatus" parameterType="Member">
+		UPDATE MEMBER SET STATUS = #{status} WHERE MNO = #{mid}
+	</update>
 	
 </mapper>

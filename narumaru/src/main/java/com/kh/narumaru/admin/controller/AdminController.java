@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
-
+import javax.servlet.http.HttpServletResponse;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.narumaru.admin.model.service.AdminService;
 import com.kh.narumaru.admin.model.vo.Admin;
 import com.kh.narumaru.notice.model.vo.Notice;
@@ -106,10 +107,25 @@ public class AdminController {
 		ArrayList<Member> memberView = as.memberView();
 		System.out.println(memberView);
 		
+		
 		mv.addObject("memberView", memberView);
 		mv.setViewName("admin/adMemberView");
 		
 		return mv;
+	}
+	
+	@RequestMapping("statusCh.ad")
+	public void statusCh(Member m, HttpServletResponse response){
+		try {
+			as.statusCh(m);
+			
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			new Gson().toJson("젠장", response.getWriter());
+		} catch (Exception e) {
+			
+		}
+		System.out.println("컨트롤러 멤버" + m);
 	}
 	
 	@RequestMapping("adNaruView.ad")
