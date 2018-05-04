@@ -22,6 +22,9 @@
       <typeAlias alias="Theme" type="com.kh.narumaru.naru.model.vo.Theme"/>
       <typeAlias alias="Neighbor" type="com.kh.narumaru.naru.model.vo.Neighbor"/>
       <typeAlias alias="LogInfo" type="com.kh.narumaru.member.model.vo.LogInfo"/>
+      <typeAlias alias="Neighbor" type="com.kh.narumaru.common.model.vo.Neighbor"/>
+      <typeAlias alias="HiddenPayment" type="com.kh.narumaru.naru.model.vo.HiddenPayment"/>
+      <typeAlias alias="UsePoint" type="com.kh.narumaru.payment.model.vo.UsePoint"/>
    </typeAliases>
    
    <mappers>
@@ -34,6 +37,8 @@
       <mapper resource="mappers/maru-mapper.xml"/>
       <mapper resource="mappers/naru-mapper.xml"/>
       <mapper resource="mappers/alarm-mapper.xml"/>
+      <mapper resource="mappers/neighbor-mapper.xml"/>
+      <mapper resource="mappers/hidden-mapper.xml"/>
    </mappers>
    
 </configuration>

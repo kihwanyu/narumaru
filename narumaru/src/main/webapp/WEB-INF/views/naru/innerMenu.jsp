@@ -43,7 +43,7 @@
 		<div class="floatRight rightArea">
 			<div class="rightMenu chat">
 				<div class="rightTitle">이 나루의 이웃</div>
-				<div class=neighborContent>
+				<div class="neighborContent">
 					<c:if test="${neList.size() == 0}">
 						<label>아직 이웃이 없습니다.</label>
 					</c:if>
@@ -52,9 +52,44 @@
 					</c:forEach>
 				</div>
 			</div>
+			<div class="rightMenu album" style="top:200px;">
+				<div class="rightTitle">카테고리<img src="resources/images/comments_up.png" id="commentToggle" height="20px;" width="20px;" onclick="categoryViews(this);"></div>
+				<div class="categoryContent">
+					<label class="pointer" onclick="location.href='boardListAll.bo?nmno=${nm.nmno}'">전체 보기</label>
+					<br>
+				</div>
+			</div>			
 		</div>
 	</div>
 	<script>
+		$(function(){
+			//카테고리 리스트 불러옴
+			$.ajax({
+				url:"selectCategoryList.na",
+				type:"get",
+				data:{"nmno":${nm.nmno}},
+				success:function(data){
+					for(var i in data){
+						var href = "location.href='boardListCategory.bo?nmno=" + data[i].nmno + "&cano=" + data[i].cano + "'";
+						$(".categoryContent").append("<label class='pointer' onclick=" + href + ">" + data[i].caName + "</label><br>");
+					}
+				},
+				error:function(request,status,error){
+					console.log("카테고리 리스트 ajax 실패")
+				}
+			});
+		})
+	
+		function categoryViews(toggle){
+	   		if(toggle.getAttribute('src') === 'resources/images/comments_down.png'){
+	        	toggle.setAttribute('src', 'resources/images/comments_up.png');
+	        	$(".categoryContent").show();
+	   		} else {
+	        	toggle.setAttribute('src', 'resources/images/comments_down.png');
+	        	$(".categoryContent").hide();
+	   		}
+	    }
+		
 		function toWrite(){
 			location.href="toNaruBoardWrite.na?nmno=" + ${nm.nmno};
 		}

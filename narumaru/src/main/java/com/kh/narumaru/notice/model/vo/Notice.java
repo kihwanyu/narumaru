@@ -11,18 +11,16 @@ public class Notice implements java.io.Serializable{
 	private Date createDate;
 	private Date modifyDate;
 	private String status;
-	
-	
+	private String fileName;
+	private String filePath;
 	
 	public Notice(){
 		super();
 	}
 
 
-	
-	
 	public Notice(int nid, int noType, String noTitle, String noContent, int writerId, Date createDate, Date modifyDate,
-			String status) {
+			String status, String fileName) {
 		super();
 		this.nid = nid;
 		this.noType = noType;
@@ -32,21 +30,18 @@ public class Notice implements java.io.Serializable{
 		this.createDate = createDate;
 		this.modifyDate = modifyDate;
 		this.status = status;
+		this.fileName = fileName;
 	}
 
 
-
-
-	public int getnid() {
+	public int getNid() {
 		return nid;
 	}
 
 
-
-	public void setnid(int nid) {
+	public void setNid(int nid) {
 		this.nid = nid;
 	}
-
 
 
 	public int getNoType() {
@@ -54,11 +49,9 @@ public class Notice implements java.io.Serializable{
 	}
 
 
-
 	public void setNoType(int noType) {
 		this.noType = noType;
 	}
-
 
 
 	public String getNoTitle() {
@@ -66,11 +59,9 @@ public class Notice implements java.io.Serializable{
 	}
 
 
-
 	public void setNoTitle(String noTitle) {
 		this.noTitle = noTitle;
 	}
-
 
 
 	public String getNoContent() {
@@ -78,11 +69,9 @@ public class Notice implements java.io.Serializable{
 	}
 
 
-
 	public void setNoContent(String noContent) {
 		this.noContent = noContent;
 	}
-
 
 
 	public int getWriterId() {
@@ -90,11 +79,9 @@ public class Notice implements java.io.Serializable{
 	}
 
 
-
 	public void setWriterId(int writerId) {
 		this.writerId = writerId;
 	}
-
 
 
 	public Date getCreateDate() {
@@ -102,23 +89,9 @@ public class Notice implements java.io.Serializable{
 	}
 
 
-
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-
-
-
-	public String getStatus() {
-		return status;
-	}
-
-
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
 
 
 	public Date getModifyDate() {
@@ -126,24 +99,41 @@ public class Notice implements java.io.Serializable{
 	}
 
 
-
-
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
 	}
 
 
+	public String getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+
+	public String getFileName() {
+		return fileName;
+	}
+
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 
 
 	@Override
 	public String toString() {
 		return "Notice [nid=" + nid + ", noType=" + noType + ", noTitle=" + noTitle + ", noContent=" + noContent
 				+ ", writerId=" + writerId + ", createDate=" + createDate + ", modifyDate=" + modifyDate + ", status="
-				+ status + "]";
+				+ status + ", fileName=" + fileName + "]";
 	}
 
 
-
+	
+	
 
 	
 	

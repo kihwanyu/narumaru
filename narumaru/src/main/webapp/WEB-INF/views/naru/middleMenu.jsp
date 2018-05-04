@@ -79,7 +79,7 @@
 		margin-top:50px;
 		position:fixed;
 	}
-	.neighborContent{
+	.neighborContent, .categoryContent{
 		padding:10px;
 		border:1px solid lightgray;
 	}
@@ -111,6 +111,9 @@
 	.searchArea{	
 		background:white;	
 		padding:auto;
+	}
+	.board{
+		margin-bottom:20px;
 	}
 	.boardInsert{
 		background:white;
@@ -191,7 +194,6 @@
 		padding:10px;
 	}
 	.content > div{
-		margin-top:10px;
 		background:white;
 		border:1px solid lightgray;
 	}
@@ -217,6 +219,9 @@
   	}
   	#band_top{
 	  	border-bottom:1px solid lightgray;
+  	}
+  	.replyContent{
+  		margin-top:3px;
   	}
 </style>
 </head>

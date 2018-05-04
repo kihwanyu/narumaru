@@ -28,6 +28,12 @@ public class NarumaruServiceImpl implements NarumaruService {
 		
 		return nmd.selectBoardList(nmno);
 	}
+	
+	@Override
+	public ArrayList<Board> selectCategoryBoardList(int nmno, int categoryNo) {
+		
+		return nmd.selectCategoryBoardList(nmno, categoryNo);
+	}
 
 	@Override
 	public Narumaru insertNarumaru(Narumaru nm) throws NarumaruException {
@@ -102,6 +108,12 @@ public class NarumaruServiceImpl implements NarumaruService {
 	}
 
 	@Override
+	public int getBoardWriter(Board b) {
+		return nmd.getBoardWriter(b);
+
+  }
+  
+  @Override
 	public void updateDefault(Narumaru nm) {
 		nmd.updateDefault(nm, sqlSession);
 	}
@@ -110,4 +122,5 @@ public class NarumaruServiceImpl implements NarumaruService {
 	public int checkNeighbor(int nmno, Member loginUser) {
 		return nmd.checkNeighbor(nmno, loginUser);
 	}
+  
 }

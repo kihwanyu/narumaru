@@ -72,6 +72,14 @@ public class AdminController {
 		System.out.println("금일 결제 금액" + payDaySysDate);
 		mv.addObject("payDaySysDate", payDaySysDate);
 		
+		ArrayList channel = as.selectChannel(); 
+		System.out.println("채널 목록" + channel);
+		mv.addObject("channel", channel);
+		
+		ArrayList chCount = as.selectChCount();
+		System.out.println("채널 수 : " + chCount);
+		mv.addObject("chCount", chCount);
+		
 		mv.setViewName("admin/adMain");
 		
 		return mv;
@@ -105,9 +113,15 @@ public class AdminController {
 	}
 	
 	@RequestMapping("adNaruView.ad")
-	public String showAdminNaruView(){
-		   
-		return "admin/adNaruView";
+	public ModelAndView showAdminNaruView(Narumaru naru, ModelAndView mv){
+		ArrayList<Narumaru> na = as.naruView();
+		System.out.println(na);
+		
+		mv.addObject("na", na);
+		mv.setViewName("admin/adNaruView");
+		
+		
+		return mv;
 	}
 	
 	@RequestMapping("adMaruView.ad")

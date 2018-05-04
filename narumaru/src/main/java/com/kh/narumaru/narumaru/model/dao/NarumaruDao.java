@@ -42,7 +42,11 @@ public interface NarumaruDao {
 
 	Theme selectThemeOne(int nmno);
 
+	int getBoardWriter(Board b);
+  
 	void updateDefault(Narumaru nm, SqlSessionTemplate sqlSession);
 
 	int checkNeighbor(int nmno, Member loginUser);
+
+	ArrayList<Board> selectCategoryBoardList(int nmno, int categoryNo);
 } 

@@ -29,10 +29,10 @@ public class AlarmServiceImpl implements AlarmService{
 	}
 
 	@Override
-	public void alarmRequest(ArrayList<Alarm> alarm, ArrayList<Integer> sendUser) throws alarmRequestException {
+	public void alarmRequest(ArrayList<Alarm> alarmList) throws alarmRequestException {
 		/*보내는 수만큼 for문을 돌려준다.*/
-		for(int i = 0; i < sendUser.size(); i++){
-			ad.alarmRequest(sqlSession ,alarm.get(i));
+		for(int i = 0; i < alarmList.size(); i++){
+			ad.alarmRequest(sqlSession ,alarmList.get(i));
 		}
 	}
 
@@ -50,5 +50,5 @@ public class AlarmServiceImpl implements AlarmService{
 		ad.alarmStatusUpdate(sqlSession, ano);
 		
 	}
-	
+
 }

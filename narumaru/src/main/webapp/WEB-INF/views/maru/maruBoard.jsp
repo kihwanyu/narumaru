@@ -13,6 +13,7 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/lang/summernote-ko-KR.js"></script>
 </head>
+
 <body class="maruBody">
 	<jsp:include page="../common/topmenu.jsp"/>
 	<jsp:include page="../common/middleMenu.jsp"/>
@@ -25,7 +26,7 @@
 				<button class="floatRight searchBtn"><img src="${contextPath }/resources/images/find.png" style="width:35px; height:35px;"></button>
 			</div>
 			<br>
-			<div class="boardInsert">
+			<div class="boardInsert" style="z-index:0;">
 				<form action="insertNarumaruBoard.nm" method="post" id="boardInsert">
 					<textarea class="summernote" name="boardContent"></textarea>
 					<input type="hidden" name="bType" value="200"/>
@@ -64,7 +65,7 @@
 						<img src="resources/images/menu.png" class="modifyMenu size100per">
 						<div class="sub boardSub">
 							<ul>
-								<li class="pointer" onclick="modifyBoard(${b.bno});">수정하기</li>
+								<li class="pointer" onclick="modifyBoard(this);">수정하기</li>
 								<li class="pointer" onclick="deleteBoard(${b.bno});">삭제하기</li>
 							</ul>
 						</div>
@@ -105,12 +106,12 @@
 							<div class="sub emotionSub">이모티콘</div>
 						</li>
 						<li class="insertReplyShow" onclick="replyOpen(this, ${ b.bno });"><span>댓글보기</span></li>
-						<li class="showSub shereBtn" onclick="reportBoard(${ b.bno });"><span>신고하기</span></li>
+						<li class="reportBtn" onclick="reportBoard(${ b.bno });"><span>신고하기</span></li>
 					</ul>
 				</div>
 				<div class="insertReply">
 					<div class="replyArea">
-						 <c:forEach var="b2" begin="${beginPage}" end="${newPage}" items="${ list }" varStatus="i2">
+						 <c:forEach var="b2" begin="${beginPage}" end="${newPage}" items="${ colist }" varStatus="i2">
 							<c:if test = "${ b.bno eq b2.targetBno}">
 							<div style="height:100px;">
 								
@@ -127,7 +128,7 @@
 							</c:if>
 						</c:forEach>
 						
-						<form action="insertNarumaruBoard.nm" method="post" id="replyInsert">
+						<form action="insertNarumaruBoard.nm" method="post" id="replyInsert" style="height:170px;">
 							<textarea class="summernote2" name="boardContent"></textarea>
 							<input type="hidden" name="bType" value="201"/>
 							<input type="hidden" name="bLevel" value="1"/>
@@ -155,6 +156,39 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/lang/summernote-ko-KR.js"></script>
 	<script>
+	//내가 최근에 방문한 나루
+		$(function(){
+			//localStorage.clear();
+			
+			var nmno1 = localStorage.getItem("nmno1");
+			var nmno2 = localStorage.getItem("nmno2");
+			var nmno3 = localStorage.getItem("nmno3");
+			var temp = 0;
+			var nmno = ${nm.nmno};
+			//console.log("localStorage start : "+ localStorage.getItem("nmno"));
+			/* 하나라도 null 이존재한다면 */
+			if(nmno1 != null && nmno1 != null && nmno1 != null){
+				/* 세개의 변수 중 nmno와 같은 값을 가지고 있는 변수가 있다면 */
+				if(nmno1 != nmno && nmno2 != nmno && nmno3 != nmno){
+					nmno3 = nmno2;
+					nmno2 = nmno1;
+					nmno1 = nmno;
+				}
+			} else {
+				nmno3 = nmno2;
+				nmno2 = nmno1;
+				nmno1 = nmno;
+			}
+			
+			localStorage.setItem("nmno1", nmno1);
+			localStorage.setItem("nmno2", nmno2);
+			localStorage.setItem("nmno3", nmno3);
+	  		
+			console.log("localStorage end : "+ localStorage.getItem("nmno1"));
+			console.log("localStorage end : "+ localStorage.getItem("nmno2"));
+			console.log("localStorage end : "+ localStorage.getItem("nmno3"));
+		});
+	
 	var submitButton = function (context) {
 		  var ui = $.summernote.ui;
 
@@ -224,6 +258,7 @@
 		  });			  
 	}
 	$(document).ready(function(){
+		console.log('리스트 ${ list.size() }')
 		summernote1();
 		summernote2();
 	});
@@ -292,7 +327,7 @@
 	    				+'<br>'
 	    				+'<div class="boardInsert">'
 	    				+'<form action="insertNarumaruBoard.nm" method="post" id="boardInsert">'
-	    				+'	<textarea id="summernote" name="boardContent"></textarea>'
+	    				+'	<textarea class="summernote" name="boardContent"></textarea>'
 	    				+'	<input type="hidden" name="bType" value="200"/>'
 	    				+'	<input type="hidden" name="bLevel" value="0"/>'
 	    				+'	<input type="hidden" name="boardTitle" value="asd"/>'
@@ -324,7 +359,7 @@
 				+'		<img src="resources/images/menu.png" class="modifyMenu size100per">'
 				+'		<div class="sub boardSub">'
 				+'			<ul>'
-				+'				<li class="pointer" onclick="modifyBoard(${b.bno});">수정하기</li>'
+				+'				<li class="pointer" onclick="modifyBoard(this);">수정하기</li>'
 				+'				<li class="pointer" onclick="deleteBoard(${b.bno});">삭제하기</li>'
 				+'			</ul>'
 				+'		</div>'
@@ -364,14 +399,12 @@
 				+'			<div class="sub emotionSub">이모티콘</div>'
 				+'		</li>'
 				+'		<li class="insertReplyShow" onclick="replyOpen(this, ${ b.bno });"><span>댓글보기</span></li>'
-				+'		<li class="showSub shereBtn" onclick="submenuOpen(this);"><span>공유하기</span>'
-				+'			<div class="sub shereSub">개발중인 기능입니다</div>'
-				+'		</li>'
+				+'		<li class="reportBtn"  onclick="reportBoard(${ b.bno });"><span>신고하기</span></li>'
 				+'	</ul>'
 				+'</div>'
 				+'<div class="insertReply">'
 				+'	<div class="replyArea">'
-						 <c:forEach var="b2" begin="${beginPage}" end="${newPage}" items="${ list }" varStatus="i2">
+						 <c:forEach var="b2" begin="${beginPage}" end="${newPage}" items="${ colist }" varStatus="i2">
 							<c:if test = "${ b.bno eq b2.targetBno}">
 							+'			<div style="height:100px;">'
 							
@@ -402,10 +435,10 @@
 						+'</div>');
 	        	</c:if>
 	        	</c:forEach>
-	        	summernote1();
-	        	summernote2();
 	        }
 		}, 2000);
+	        	summernote1();
+	        	summernote2();
 	});
 		function replyOpen(btn, bno){
 			$(btn).parent().parent().siblings(".insertReply").toggle();			
@@ -416,7 +449,7 @@
 		$("#photoUpload").click(function(){
 				$("#photo").click();
 		});
-		function modifyBoard(bno){
+		function modifyBoard(btn){
 			$(btn).parents(".boardBtn").find("#myModal").modal();	
 			/* location.href="updateBoardOne.nm?bno="+bno + "&nmno=${nm.nmno}"; */
 		}
@@ -429,6 +462,8 @@
 				
 			}
 		}
+		
+		
 	</script>
 </body>
 </html>

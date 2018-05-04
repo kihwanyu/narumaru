@@ -99,50 +99,12 @@
 				<label><img src= "${ contextPath }/resources/images/Pen.png"> 1대1 문의 등록하기</label>
 			</div>
 			
-			<form action="" method="">
-				<ul class = "noticeContent">
-					<li>
-						<div class = "requiredQuestion">
-						<p>* 답변받을 이메일  </p>
-						
-						<input type = "text" > @ <input type ="text" id ="emailTail" >
-						<select class = "mySelfT1">
-							<option>naver.com</option>
-							<option>daum.com</option>
-							<option>nate.com</option>
-							<option>gmail.com</option>
-							<option class = "mySelf1">직접입력</option>
-						</select>
-						</div>
-					</li>
-					
-					<li>
-						<div class = "requiredQuestion QuestionT">
-						<p>	* 휴대폰 번호 : 	</p> 
-						<select class ="phoneHead">
-							<option>010</option>
-							<option>011</option>
-							<option>070</option>
-						</select>
-						
-						- <input type ="text" class= "phoneMiddle"> 
-						- <input type ="text" class= "phoneTail">
-						
-						</div>
-					</li>
-					
-					<li>
-						<div class = "requiredQuestion QuestionT">
-							<p>* 나루마루 로그인 시 ID </p>
-							
-							<input type = "text" class = "loginId">
-						</div>
-					</li>
-					
+			<form action="question.no" method="post">
+				<ul class = "noticeContent">	
 					<li>
 						<div class = "QuestionT">
-							<p> 나루 or 마루 명 :</p>
-							<input type = "text" class ="narumaruName">
+							<p> 문의 명 :</p>
+							<input type = "text" name ="noTitle" class ="narumaruName">
 							
 						</div>
 					</li>
@@ -150,14 +112,14 @@
 					<li>
 						<div class = "QuestionT">
 							<p>문의 내용 </p>
-							<textarea rows="5" cols="103" style="resize:none;"></textarea>
+							<textarea rows="5" cols="103" style="resize:none;" name ="noContent"></textarea>
 						</div>
 					</li>
 					
 					<li>
 						
 						<p>파일첨부 </p> 
-						<input type = "file">
+						<input type = "file" name="fileName">
 					</li>
 					
 					<li>
@@ -184,24 +146,7 @@
 				</div>
 			</form>
 		</div>	
-		<script>
-			$(function(){
-				
-				$(".mySelfT1").change( function(){
-					
-					var emailTail = $(this).val();
-					if(emailTail !== "직접입력"){
-						$("#emailTail").val(emailTail).css({"display":"none"});					
-					}
-					else if (emailTail === "직접입력"){
-						$("#emailTail").val("").css({"display":"inline-block"});
-						
-					}
-				});
-				
-			});
-			
-		</script>
+		
 		
 </body>
 </html>

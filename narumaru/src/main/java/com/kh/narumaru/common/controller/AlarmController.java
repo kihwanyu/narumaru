@@ -75,7 +75,7 @@ public class AlarmController {
 		}
 		
 		try {
-			as.alarmRequest(alarm, sendUser);
+			as.alarmRequest(alarm);
 		} catch (alarmRequestException e) {
 			e.printStackTrace();
 		}
@@ -125,10 +125,8 @@ public class AlarmController {
 			try {
 				new Gson().toJson(aList, response.getWriter());
 			} catch (JsonIOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			

@@ -14,15 +14,34 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
+import com.kh.narumaru.common.model.exception.alarmRequestException;
+import com.kh.narumaru.common.model.service.AlarmService;
+import com.kh.narumaru.common.model.vo.Alarm;
 import com.kh.narumaru.member.model.vo.Member;
 import com.kh.narumaru.naru.model.exception.NaruException;
+import com.kh.narumaru.naru.model.service.HiddenService;
 import com.kh.narumaru.naru.model.service.NaruService;
 import com.kh.narumaru.naru.model.vo.Category;
+import com.kh.narumaru.narumaru.model.service.NarumaruService;
+import com.kh.narumaru.narumaru.model.vo.Board;
+import com.kh.narumaru.payment.model.exception.PaymentListSelectException;
+import com.kh.narumaru.payment.model.service.PaymentService;
+import com.kh.narumaru.payment.model.service.UsePointService;
 
 @Controller
 public class NaruController {
 	@Autowired
 	private NaruService ns;
+	@Autowired
+	private HiddenService hs;
+	@Autowired
+	private NarumaruService nms;
+	@Autowired
+	private UsePointService ups;
+	@Autowired
+	private PaymentService ps;
+	@Autowired
+	private AlarmService as;
 	
 	@RequestMapping("naruMain.na")
 	public String showNaruMainView(){
@@ -112,7 +131,24 @@ public class NaruController {
 	public String insertNeighbor(int nmno, HttpServletRequest request){
 		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
 		System.out.println(loginUser);
-		ns.insertNeighbor(nmno, loginUser.getMid());
+		int mno = ns.insertNeighbor(nmno, loginUser.getMid());
+		
+		try {
+			ArrayList<Alarm> alarmList = new ArrayList<Alarm>();
+			Alarm alarm = new Alarm();
+			
+			alarm.setAtno(202);
+			alarm.setReceive_mno(mno);
+			alarm.setSend_mno(loginUser.getMid());
+			
+			System.out.println("alarm : " + alarm);
+			
+			alarmList.add(alarm);
+			
+			as.alarmRequest(alarmList);
+		} catch (alarmRequestException e) {
+			e.printStackTrace();
+		}
 		
 		return "redirect:/boardListAll.bo?nmno="+nmno;
 	}
@@ -124,6 +160,44 @@ public class NaruController {
 		ns.deleteNeighbor(nmno, loginUser.getMid());
 		
 		return "redirect:/boardListAll.bo?nmno="+nmno;
+	}
+	
+	//비밀글 구매하기
+	@RequestMapping("buyHidden.na")
+	public void buyHidden(int bno, HttpServletRequest request, HttpServletResponse response){
+		String str = "";
+		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+		
+		Board b = nms.selectBoardOne(bno);
+		
+		int result;
+		
+		try {
+			result = ups.insertUsePoint(b, loginUser,ps.selectTotalPoint(loginUser.getMid()));
+			
+			switch(result){
+				case -1:
+					str = "잔고가 부족합니다.";
+					break;
+				default:
+					str = "구매 완료.";
+					break;
+			}
+			
+			try {
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				new Gson().toJson(str, response.getWriter());
+			} catch (JsonIOException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} catch (PaymentListSelectException e) {
+			e.printStackTrace();
+		}
+		
+		
 	}
 	
 }

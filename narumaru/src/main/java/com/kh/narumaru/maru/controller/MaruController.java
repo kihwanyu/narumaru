@@ -14,6 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
+import com.kh.narumaru.common.model.exception.alarmRequestException;
+import com.kh.narumaru.common.model.service.AlarmService;
+import com.kh.narumaru.common.model.vo.Alarm;
 import com.kh.narumaru.maru.exception.MaruException;
 import com.kh.narumaru.maru.model.service.MaruService;
 import com.kh.narumaru.maru.model.vo.MaruMember;
@@ -24,6 +27,8 @@ import com.kh.narumaru.narumaru.model.vo.Narumaru;
 public class MaruController {
 	@Autowired
 	private MaruService ms;
+	@Autowired
+	private AlarmService as;
 	
 	@RequestMapping(value="maruInsertView.ma")
 	public String showMaruInsertView(){
@@ -73,6 +78,25 @@ public class MaruController {
 	public void insertMaruMameber(MaruMember mm, HttpServletResponse response){
 		try {
 			ms.insertMaruMember(mm);
+			int masterMno = ms.getMaruMaster(mm.getNmno());
+			
+			ArrayList<Alarm> alarm = new ArrayList<>();
+			
+			// 보낼 유저의 번호를 구한다.
+			ArrayList<Integer> sendUser = null;
+			sendUser = new ArrayList<Integer>();
+			sendUser.add(mm.getMno());
+			
+			/*Controller에서 Alarm객체에 값을 채운 후 Service로 보내주세요.*/
+			for(int i = 0; i < sendUser.size(); i++){
+				alarm.add(new Alarm());
+				alarm.get(i).setAtno(303);
+				alarm.get(i).setSend_mno(sendUser.get(i));
+				alarm.get(i).setReceive_mno(masterMno);
+			}
+			
+			as.alarmRequest(alarm);
+			
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().print("회원가입 완료");
 		} catch (MaruException | IOException e) {
@@ -83,6 +107,9 @@ public class MaruController {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+		} catch (alarmRequestException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}
@@ -92,7 +119,7 @@ public class MaruController {
 		try {
 			int result = ms.countMaruMember(nmno);
 			response.getWriter().print(result);
-		} catch (MaruException e) {
+		} catch (MaruException e) { 
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
