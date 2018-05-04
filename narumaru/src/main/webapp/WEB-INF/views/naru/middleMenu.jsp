@@ -47,7 +47,9 @@
 		float:left;
 		top:100px;
 		width:240px;
-		position:fixed;	
+		position:fixed;
+		box-shadow:1px 1px 10px #000;
+		padding:10px 0;
 	}
 	.maruProfile{
 		width:200px;
@@ -78,6 +80,7 @@
 		background:white;
 		margin-top:50px;
 		position:fixed;
+		box-shadow:1px 1px 10px #000;
 	}
 	.neighborContent, .categoryContent{
 		padding:10px;
@@ -114,6 +117,7 @@
 	}
 	.board{
 		margin-bottom:20px;
+		box-shadow:1px 1px 10px #000;
 	}
 	.boardInsert{
 		background:white;
@@ -222,6 +226,11 @@
   	}
   	.replyContent{
   		margin-top:3px;
+  	}
+  	#boardCreateDate{
+  		font-size:0.9em; 
+  		color:gray;
+  		border-bottom:1px solid lightgray;
   	}
 </style>
 </head>

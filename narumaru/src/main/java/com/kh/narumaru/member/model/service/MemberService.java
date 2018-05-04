@@ -36,6 +36,9 @@ public interface MemberService {
 
 	void sendUpdatePwd(Member m2);
 
+	Member selectMemberOne(int mno);
+
 	String findNation(String ip);
+
 
 }

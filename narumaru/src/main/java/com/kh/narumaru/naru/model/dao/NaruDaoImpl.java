@@ -102,8 +102,8 @@ public class NaruDaoImpl implements NaruDao{
 	public void deleteNeighbor(int nmno, int mid, SqlSessionTemplate sqlSession) {
 		Neighbor nb = new Neighbor();
 		
-		nb.setUser_mno(mid);
-		nb.setMno(sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno));
+		nb.setUser_mno(sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno));
+		nb.setMno(mid);
 		
 		sqlSession.delete("Neighbor.myPageNeighborDelete", nb);
 	}
