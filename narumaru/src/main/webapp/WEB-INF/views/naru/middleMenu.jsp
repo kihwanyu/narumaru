@@ -112,6 +112,9 @@
 		background:white;	
 		padding:auto;
 	}
+	.board{
+		margin-bottom:20px;
+	}
 	.boardInsert{
 		background:white;
 		width:500px;
@@ -216,6 +219,9 @@
   	}
   	#band_top{
 	  	border-bottom:1px solid lightgray;
+  	}
+  	.replyContent{
+  		margin-top:3px;
   	}
 </style>
 </head>

@@ -75,13 +75,17 @@ public class NaruDaoImpl implements NaruDao{
 	}
 
 	@Override
-	public void insertNeighbor(int nmno, int mid, SqlSessionTemplate sqlSession) {
+	public int insertNeighbor(int nmno, int mid, SqlSessionTemplate sqlSession) {
 		Neighbor nb = new Neighbor();
 		
+		int ownerMno = sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno);
+				
 		nb.setMno(mid);
-		nb.setUser_mno(sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno));
+		nb.setUser_mno(ownerMno);
 		
 		sqlSession.insert("Neighbor.myPageNeighborInsert", nb);
+		
+		return ownerMno;
 	}
 
 	@Override

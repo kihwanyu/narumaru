@@ -19,7 +19,7 @@ public interface NaruDao {
 
 	void updateTheme(int nmno, String themeValue, String boardValue, String fontValue, SqlSessionTemplate sqlSession);
 
-	void insertNeighbor(int nmno, int mid, SqlSessionTemplate sqlSession);
+	int insertNeighbor(int nmno, int mid, SqlSessionTemplate sqlSession);
 
 	ArrayList<Narumaru> selectNeighborList(int nmno, SqlSessionTemplate sqlSession);
 

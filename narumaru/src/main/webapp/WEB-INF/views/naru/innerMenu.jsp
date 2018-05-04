@@ -70,7 +70,7 @@
 				data:{"nmno":${nm.nmno}},
 				success:function(data){
 					for(var i in data){
-						var href = "location.href='boardListAll.bo?nmno=" + data[i].nmno + "'";
+						var href = "location.href='boardListCategory.bo?nmno=" + data[i].nmno + "&cano=" + data[i].cano + "'";
 						$(".categoryContent").append("<label class='pointer' onclick=" + href + ">" + data[i].caName + "</label><br>");
 					}
 				},

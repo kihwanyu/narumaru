@@ -121,6 +121,62 @@ public class NarumaruController {
 		return mv;
 	}
 	
+	@RequestMapping(value = "boardListCategory.bo")
+	public ModelAndView showCategoryBoardList(int nmno, int cano, ModelAndView mv, HttpServletRequest request){
+		System.out.println("조회하는 나루마루번호 " + nmno);
+		
+		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+		
+		System.out.println(loginUser);
+		
+		ArrayList<Board> list = nms.selectCategoryBoardList(nmno, cano);
+		ArrayList<Board> colist = nms.selectCommentList(nmno);
+		Narumaru nm = nms.selectNarumaruOne(nmno);
+		if(list.size() == 0){
+			Board newB = new Board();
+			newB.setbWriter("");
+			newB.setbType(0);
+			newB.setNmno(nmno);
+			newB.setStatus("Y");
+			newB.setNeedPoint(0);
+			newB.setCreateDate("");
+			newB.setbTno(0);
+			newB.setBno(0);
+			newB.setCano(0);
+			newB.setCno(0);
+			newB.setIsOpen("all"); 
+			newB.setComments(0);
+			newB.setbLevel(0);
+			newB.setbContent("아직 카테고리에 글이 없습니다.");				
+			
+			list.add(newB);
+		}		
+		boolean isOwner = nms.checkNarumaruOwner(nmno, loginUser);
+		
+		mv.addObject("nm", nm);
+		mv.addObject("list", list);
+		mv.addObject("colist", colist);
+		mv.addObject("isOwner", isOwner);
+
+		if(nm.getNmCategory() ==2){
+			Theme theme = nms.selectThemeOne(nmno); // 나루의 테마
+			int isNeighbor = nms.checkNeighbor(nmno, loginUser); // 이웃 여부
+			ArrayList<Narumaru> neighborList = ns.selectNeighborList(nmno); // 해당 나루의 이웃 리스트
+			ArrayList<HiddenPayment> hpayList = hs.selectHiddenPaymentList(loginUser.getMid()); // 로그인 유저의 구매리스트
+			mv.addObject("theme", theme);
+			mv.addObject("isNeighbor",isNeighbor);
+			mv.addObject("hpayList",hpayList);
+			mv.addObject("neList",neighborList);
+			
+			mv.setViewName("naru/naruBoard"); 
+		}else{
+			mv.setViewName("maru/maruBoard"); 
+		}
+		
+		
+		return mv;
+	}
+	
 	@RequestMapping(value = "selectNarumaruName.bo")
 	public void selectNarumaruName(HttpServletResponse response, int nmno, String bWriter, String bContent, String createDate){
 		Narumaru nm = nms.selectNarumaruOne(nmno);

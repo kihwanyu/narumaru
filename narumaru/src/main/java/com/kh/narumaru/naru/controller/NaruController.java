@@ -14,6 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
+import com.kh.narumaru.common.model.exception.alarmRequestException;
+import com.kh.narumaru.common.model.service.AlarmService;
+import com.kh.narumaru.common.model.vo.Alarm;
 import com.kh.narumaru.member.model.vo.Member;
 import com.kh.narumaru.naru.model.exception.NaruException;
 import com.kh.narumaru.naru.model.service.HiddenService;
@@ -37,6 +40,8 @@ public class NaruController {
 	private UsePointService ups;
 	@Autowired
 	private PaymentService ps;
+	@Autowired
+	private AlarmService as;
 	
 	@RequestMapping("naruMain.na")
 	public String showNaruMainView(){
@@ -126,7 +131,24 @@ public class NaruController {
 	public String insertNeighbor(int nmno, HttpServletRequest request){
 		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
 		System.out.println(loginUser);
-		ns.insertNeighbor(nmno, loginUser.getMid());
+		int mno = ns.insertNeighbor(nmno, loginUser.getMid());
+		
+		try {
+			ArrayList<Alarm> alarmList = new ArrayList<Alarm>();
+			Alarm alarm = new Alarm();
+			
+			alarm.setAtno(202);
+			alarm.setReceive_mno(mno);
+			alarm.setSend_mno(loginUser.getMid());
+			
+			System.out.println("alarm : " + alarm);
+			
+			alarmList.add(alarm);
+			
+			as.alarmRequest(alarmList);
+		} catch (alarmRequestException e) {
+			e.printStackTrace();
+		}
 		
 		return "redirect:/boardListAll.bo?nmno="+nmno;
 	}

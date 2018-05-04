@@ -40,8 +40,6 @@ public class NeighborController {
 		n.setMno(mno);
 		n.setUser_mno(user_mno);
 		
-		
-		
 		try {
 			nc.myPageNeighborInsert(n);
 			
