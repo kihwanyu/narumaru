@@ -50,6 +50,10 @@
 				type:"GET",
 				success:function(data){
 					$("#sidebar_narumaruTitle1").text(data.nmTitle);
+					
+					var nmno = data.nmno;
+				
+					$("#narumaruforward1").attr('href','boardListAll.bo?nmno='+nmno);
 				}
 			}); 
 		}
@@ -60,6 +64,10 @@
 				type:"GET",
 				success:function(data){
 					$("#sidebar_narumaruTitle2").text(data.nmTitle);
+					
+					var nmno = data.nmno;
+					
+					$("#narumaruforward2").attr('href','boardListAll.bo?nmno='+nmno);
 				}
 			});
 		}
@@ -70,6 +78,10 @@
 				type:"GET",
 				success:function(data){
 					$("#sidebar_narumaruTitle3").text(data.nmTitle);
+					
+					var nmno = data.nmno;
+					
+					$("#narumaruforward3").attr('href','boardListAll.bo?nmno='+nmno);
 				}
 			});
 		}
@@ -83,17 +95,17 @@
 		<div class="menubar-div" align="center">
 			<div>
 				<div class="list-group">
-				  <a href="#" class="list-group-item">
+				  <a id="narumaruforward1" href="#" class="list-group-item">
 				  	<img alt="" src="resources/images/defalt_group.png" width="60%" height="60%"><br>
-				  	<font style="font-weight: bold; font-size: 15px;" id="sidebar_narumaruTitle1">나루/마루 이름</font>
+				  	<font style="font-weight: bold; font-size: 15px;" id="sidebar_narumaruTitle1"></font>
 				  </a>
-				  <a href="#" class="list-group-item">
+				  <a id="narumaruforward2" href="#" class="list-group-item">
 				  	<img alt="" src="resources/images/defalt_group.png" width="60%" height="60%"><br>
-				  	<font style="font-weight: bold; font-size: 15px;" id="sidebar_narumaruTitle2">나루/마루 이름</font>
+				  	<font style="font-weight: bold; font-size: 15px;" id="sidebar_narumaruTitle2"></font>
 				  </a>
-				  <a href="#" class="list-group-item">
+				  <a id="narumaruforward3" href="#" class="list-group-item">
 				  	<img alt="" src="resources/images/defalt_group.png" width="60%" height="60%"><br>
-				  	<font style="font-weight: bold; font-size: 15px;" id="sidebar_narumaruTitle3">나루/마루 이름</font>
+				  	<font style="font-weight: bold; font-size: 15px;" id="sidebar_narumaruTitle3"></font>
 				  </a>
 				</div>
 			</div>
