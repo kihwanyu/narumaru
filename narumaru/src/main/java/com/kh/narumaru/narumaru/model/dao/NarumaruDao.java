@@ -18,7 +18,7 @@ public interface NarumaruDao {
 
 	Narumaru selectNarumaruOne(int nmno);
 
-	boolean checkNarumaruOwner(int nmno, Member loginUser);
+	int checkNarumaruOwner(int nmno, Member loginUser);
 
 	Board insertNarumaruBoard(SqlSessionTemplate sqlSession, Board b) throws NarumaruException;
 

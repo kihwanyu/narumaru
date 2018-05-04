@@ -105,6 +105,10 @@
 	<update id="sendUpdatePwd2">
 		UPDATE MEMBER SET PASSWORD = #{userPwd} WHERE EMAIL LIKE #{email}||'%'
 	</update>
+	
+	<select id="selectMemberOne" resultMap="memberResultSet" parameterType="_int">
+		SELECT * FROM MEMBER WHERE MNO = #{mno}
+	</select>
 </mapper>
 
 

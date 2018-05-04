@@ -62,15 +62,11 @@ public class NarumaruDaoImpl implements NarumaruDao {
 	}
 
 	@Override
-	public boolean checkNarumaruOwner(int nmno, Member loginUser) {
-		
-		boolean isOwner = false;
+	public int checkNarumaruOwner(int nmno, Member loginUser) {
 		
 		int ownerMno = sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno);
 		
-		if(loginUser.getMid() == ownerMno) isOwner = true;
-		
-		return isOwner;
+		return ownerMno;
 	}
 	
 	@Override

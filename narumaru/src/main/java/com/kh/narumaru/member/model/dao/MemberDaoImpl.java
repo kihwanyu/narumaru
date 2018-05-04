@@ -164,6 +164,12 @@ public class MemberDaoImpl implements MemberDao{
 		
 	}
 
+
+	@Override
+	public Member selectMemberOne(int mno) {
+		return (Member)sqlSession.selectOne("Member.selectMemberOne", mno);
+	}
+
 }
 
 

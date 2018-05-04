@@ -18,6 +18,12 @@
 		border-bottom:1px solid lightgray;
 	}
 </style>
+<script type="text/javascript">
+	/* $(function(){
+		$(".boardCreateDate").text("");
+	}); */
+</script>
+
 </head>
 <body id="thisisbody">
 	<jsp:include page="../common/topmenu.jsp"/>
@@ -41,12 +47,9 @@
 			<c:forEach var="b" begin="${beginPage}" end="${newPage}" items="${ list }" varStatus="i">
 			<div class="board">
 				<div class="boardInfo">
-					<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
-					<div style="display:inline-block;"><label>${b.bTitle}</label>
+					<div style="display:inline-block;"><label style="font-size:1.3em;"><b>${b.bTitle}</b></label>
 					<br>
-					<label>${b.createDate}</label>
-					<br>
-					<label>${b.caname }</label>
+					<label id="boardCreateDate">${b.createDate} ${b.caname}</label>
 					</div>
 					<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">
 						<img src="resources/images/menu.png" class="modifyMenu size100per">
@@ -54,7 +57,6 @@
 							<ul>
 								<li onclick="modifyBoard(${b.bno})">수정하기</li>
 								<li onclick="deleteBoard(${b.bno})">삭제하기</li>
-								<li>공유하기</li>
 								<li>신고하기</li>
 							</ul>
 						</div>
@@ -442,23 +444,42 @@
 		        	/* for(var i = 0; i < newPage; i++){ */
 		        		$(".content").append('<div class="board">'
 								+'<div class="boardInfo">'
-								+'<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
-								+'<label>${b.bTitle}</label><br><label>${b.createDate}</label>'
+								+'<div style="display:inline-block;"><label style="font-size:1.3em;"><b>${b.bTitle}</b></label>'
+								+'<br>'
+								+'<label id="boardCreateDate">${b.createDate} ${b.caname}</label>'
+								+'</div>'
 								+'	<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">'
 								+'		<img src="resources/images/menu.png" class="modifyMenu size100per">'
 								+'			<div class="sub boardSub">'
 								+'				<ul>'
 								+'					<li onclick="modifyBoard(${b.bno})">수정하기</li>'
 								+'					<li onclick="deleteBoard(${b.bno})">삭제하기</li>'
-								+'					<li>주소복사</li>'
-								+'					<li>공유하기</li>'
-								+'					<li>북마크</li>'
 								+'					<li>신고하기</li>'
 								+'				</ul>'
 								+'			</div>'
 								+'	</div>'
 								+'</div>'
 								+'<div class="boardContent">${fn:replace(b.bContent, nr, "<br>")}</div>'
+								<c:if test="${b.bHidden ne null}">
+									<c:set var="canView" value="false"/>
+									<c:choose>
+										<c:when test="${b.mno eq loginUser.mid}">
+								+			'<div class="boardContent" style="background:lightgray; margin:5px;">${fn:replace(b.bHidden,nr,br)}</div>'
+											<c:set var="canView" value="true"/>
+										</c:when>
+										<c:otherwise>
+											<c:forEach var="h" items="${hpayList}">
+												<c:if test="${h.bno eq b.bno}">
+								+					'<div class="boardContent" style="background:lightgray; margin:5px;">${fn:replace(b.bHidden,nr,br)}</div>'
+													<c:set var="canView" value="true"/>
+												</c:if>
+											</c:forEach>
+											<c:if test="${canView eq 'false'}">
+								+				'<div class="boardContent" style="background:lightgray; margin:5px;">이하는 구매 후 열람이 가능한 컨텐츠입니다.<br><label class="btn_label" onclick="buyHidden(${b.bno}, ${b.needPoint})">구매 후 열람 (${b.needPoint}P)</label></div>'
+											</c:if>
+										</c:otherwise>
+									</c:choose>
+								</c:if>
 								+'<div class="boardfoot">'
 								+'	<hr>'
 								+'	<ul class="footUl">'
@@ -496,6 +517,9 @@
 		        	
 		        }
 			}, 2000);
+			
+			
+			
 		});
 		
 		function replyOpen(btn){

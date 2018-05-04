@@ -119,6 +119,10 @@ public class MemberServiceImpl implements MemberService{
 		md.sendUpdatePwd(sqlSession, m);
 		
 	}
+	@Override
+	public Member selectMemberOne(int mno) {
+		return md.selectMemberOne(mno);
+	}
 
 }
 

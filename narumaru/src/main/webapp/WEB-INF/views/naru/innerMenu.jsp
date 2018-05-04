@@ -12,7 +12,7 @@
 	<div class="marginAuto innerMenu">
 		<div class="leftArea">
 			<div class="maruProfile">
-				<img src="resources/images/profile_defalt.png" class="size100per">
+				<img src="resources/memberprofile/${owner.profileName}" class="size100per">
 			</div>
 			<br>
 			<div class="maruName" style="cursor:default;">
@@ -27,14 +27,14 @@
 			<div class="maruSetting">
 			<hr>
 			<br>
-			<c:if test="${isOwner}">
+			<c:if test="${isOwner == loginUser.mid}">
 				<label class="btn_label" for="open-pop2" style="margin-bottom:10px;">나루 설정</label>
 				<label class="btn_label" onclick="toWrite()">글 작성</label>			
 			</c:if>
-			<c:if test="${!isOwner && isNeighbor == 0}">
+			<c:if test="${isOwner != loginUser.mid && isNeighbor == 0}">
 				<label class="btn_label" onclick="addNeighbor()" style="margin-bottom:10px;">이웃 추가</label>
 			</c:if>
-			<c:if test="${!isOwner && isNeighbor >= 1}">
+			<c:if test="${isOwner != loginUser.mid && isNeighbor >= 1}">
 				<label class="btn_label" onclick="deleteNeighbor()" style="margin-bottom:10px;">이웃</label>
 			</c:if>
 			</div>

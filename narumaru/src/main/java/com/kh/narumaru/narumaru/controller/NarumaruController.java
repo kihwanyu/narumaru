@@ -26,6 +26,7 @@ import com.kh.narumaru.maru.model.service.MaruService;
 import com.kh.narumaru.maru.model.vo.MaruMember;
 import com.kh.narumaru.member.model.exception.selectChanelException;
 import com.kh.narumaru.member.model.service.ChannelService;
+import com.kh.narumaru.member.model.service.MemberService;
 import com.kh.narumaru.member.model.vo.Channel;
 import com.kh.narumaru.member.model.vo.Member;
 import com.kh.narumaru.naru.model.service.HiddenService;
@@ -36,8 +37,6 @@ import com.kh.narumaru.narumaru.exception.NarumaruException;
 import com.kh.narumaru.narumaru.model.service.NarumaruService;
 import com.kh.narumaru.narumaru.model.vo.Board;
 import com.kh.narumaru.narumaru.model.vo.Narumaru;
-
-import oracle.net.ns.NSProtocol;
 
 @Controller
 @SessionAttributes("nm")
@@ -55,6 +54,8 @@ public class NarumaruController {
 	private NaruService ns;
 	@Autowired
 	private HiddenService hs;
+	@Autowired
+	private MemberService mems;
 	
 	@RequestMapping("goHome.nm")
 	public String goHome(){
@@ -95,12 +96,17 @@ public class NarumaruController {
 			
 			list.add(newB);
 		}		
-		boolean isOwner = nms.checkNarumaruOwner(nmno, loginUser);
+		int isOwner = nms.checkNarumaruOwner(nmno, loginUser);
+		System.out.println("isOwner : " + isOwner);
+		Member owner = mems.selectMemberOne(isOwner);
+		
+		System.out.println("owner : " + owner);
 		
 		mv.addObject("nm", nm);
 		mv.addObject("list", list);
 		mv.addObject("colist", colist);
 		mv.addObject("isOwner", isOwner);
+		mv.addObject("owner",owner);
 
 		if(nm.getNmCategory() ==2){
 			Theme theme = nms.selectThemeOne(nmno); // 나루의 테마
@@ -151,7 +157,7 @@ public class NarumaruController {
 			
 			list.add(newB);
 		}		
-		boolean isOwner = nms.checkNarumaruOwner(nmno, loginUser);
+		int isOwner = nms.checkNarumaruOwner(nmno, loginUser);
 		
 		mv.addObject("nm", nm);
 		mv.addObject("list", list);
@@ -248,7 +254,7 @@ public class NarumaruController {
 		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
 		
 		try {
-			boolean isOwner = nms.checkNarumaruOwner(nmno, loginUser);
+			int isOwner = nms.checkNarumaruOwner(nmno, loginUser);
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			new Gson().toJson(isOwner, response.getWriter());

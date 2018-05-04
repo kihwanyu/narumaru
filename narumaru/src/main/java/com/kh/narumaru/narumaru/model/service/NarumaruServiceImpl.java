@@ -47,7 +47,7 @@ public class NarumaruServiceImpl implements NarumaruService {
 	}
 
 	@Override
-	public boolean checkNarumaruOwner(int nmno, Member loginUser) {
+	public int checkNarumaruOwner(int nmno, Member loginUser) {
 		return nmd.checkNarumaruOwner(nmno, loginUser);
 	}
 
