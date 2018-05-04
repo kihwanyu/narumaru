@@ -28,6 +28,12 @@ public class NarumaruServiceImpl implements NarumaruService {
 		
 		return nmd.selectBoardList(nmno);
 	}
+	
+	@Override
+	public ArrayList<Board> selectCategoryBoardList(int nmno, int categoryNo) {
+		
+		return nmd.selectCategoryBoardList(nmno, categoryNo);
+	}
 
 	@Override
 	public Narumaru insertNarumaru(Narumaru nm) throws NarumaruException {

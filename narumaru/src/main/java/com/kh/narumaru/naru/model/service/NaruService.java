@@ -19,7 +19,7 @@ public interface NaruService {
 
 	void updateTheme(int nmno, String themeValue, String boardValue, String fontValue);
 
-	void insertNeighbor(int nmno, int mid);
+	int insertNeighbor(int nmno, int mid);
 
 	ArrayList<Narumaru> selectNeighborList(int nmno);
 

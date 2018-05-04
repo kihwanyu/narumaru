@@ -109,8 +109,8 @@
 					<c:forEach var="j" items="${colist}">
 						<c:if test="${j.targetBno eq b.bno}">
 							<div class="replyArea">
-								<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
-								<label>${j.bWriter}</label><br><label>${j.createDate}</label>
+								<div class="writerPhoto" style="width:40px; height:40px;"><img src="resources/images/profile_defalt.png" class="size100per"></div>
+								<label style="font-size:0.9em;">${j.bWriter}</label><br><label style="font-size:0.9em;">${j.createDate}</label>
 								<div class="replyContent" style="clear:both;">${j.bContent}</div>
 							</div>
 						</c:if>
@@ -482,8 +482,8 @@
 								<c:forEach var="j" items="${colist}">
 									<c:if test="${j.targetBno eq b.bno}">
 								+	'<div class="replyArea">'
-								+		'<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
-								+		'<label>${j.bWriter}</label><br><label>${j.createDate}</label>'
+								+		'<div class="writerPhoto" style="width:40px; height:40px;"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
+								+		'<label style="font-size:0.9em;">${j.bWriter}</label><br><label style="font-size:0.9em;">${j.createDate}</label>'
 								+		'<div class="replyContent" style="clear:both;">${j.bContent}</div>'
 								+	'</div>'
 									</c:if>

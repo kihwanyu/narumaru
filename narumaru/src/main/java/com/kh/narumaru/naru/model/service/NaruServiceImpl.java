@@ -42,8 +42,8 @@ public class NaruServiceImpl implements NaruService{
 	}
 
 	@Override
-	public void insertNeighbor(int nmno, int mid) {
-		nd.insertNeighbor(nmno, mid, sqlSession);
+	public int insertNeighbor(int nmno, int mid) {
+		return nd.insertNeighbor(nmno, mid, sqlSession);
 	}
 
 	@Override

@@ -25,6 +25,18 @@ public class NarumaruDaoImpl implements NarumaruDao {
 		
 		return list;
 	}
+	
+	@Override
+	public ArrayList<Board> selectCategoryBoardList(int nmno, int categoryNo) {
+		
+		Board b = new Board();
+		b.setNmno(nmno);
+		b.setCano(categoryNo);
+		
+		ArrayList<Board> list = (ArrayList)sqlSession.selectList("Board.selectCategoryBoardList", b);
+		
+		return list;
+	}
 
 	@Override
 	public Narumaru insertNarumaru(SqlSessionTemplate sqlSession, Narumaru nm) throws NarumaruException {
