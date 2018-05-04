@@ -4,6 +4,13 @@
     
 <style>
 	*{
+      font-family: 'Nanum Gothic', sans-serif;
+      font-weight: bold;
+    }
+	::-webkit-scrollbar {
+		display:none;
+	}
+	*{
 		margin:0 auto;
 		list-style:none;
 		text-decoration:none;
@@ -42,7 +49,7 @@
 		width:25px;
 		height:25px;
 		margin-top:3px;
-		background-image:url(${contextPath }/resources/images/talk.png);
+		
 		background-repeat:no-repeat;
 		float:left;
 		background-size:100%;
@@ -51,10 +58,11 @@
 	}
 	#profile{
 		margin-left:20px;
-		width:25px;
-		height:25px;
+		width:30px;
+		height:30px;
 		margin-top:3px;
-		background-color:#000;
+		background-image:url(${contextPath }/resources/memberprofile/${loginUser.profileName});
+		background-size:cover;
 		background-repeat:no-repeat;
 		float:left;
 		border-radius:20px;
@@ -69,7 +77,8 @@
 		border:1px solid transparent;
 	}
 	.profile-dropdown {
-		top:51px;
+		top:48px;
+		width:200px;
 	    display: none;
 	    position: absolute;
 	    background-color: white;
@@ -78,8 +87,8 @@
 	    margin-left:0px;
 	}
 	.alram-dropdown {
-		top:20px;
-		left:-200px;
+		top:10px;
+		left:0px;
 		width:300px;
 		overflow-y: scroll; 
 		height:400px;
@@ -123,44 +132,38 @@
 	<div id="wrap">
 		<div id="band_top">
 			<div id="binbt">
-				<img src="${contextPath }/resources/images/logo.png" style="width:70px;height:26px;float:left; cursor:pointer;" id="logo">
-				<div style="float:left;width:290px;height:26px;border:1px solid #8e8e8e;background-color:rgba(0,0,0,.03);border-radius:15px;margin-left:20px;">
-					<input style="border:none;width:240px;margin-left:20px;height:24px;margin-top:1px;background:none;" type="text" id="input_search_view83" class="_gnbInputSearch" role="search" title="밴드, 게시글 검색하기" placeholder="밴드, 게시글을 검색해 보세요" autocomplete="off">
-					<img src="${contextPath }/resources/images/find.png" style="float:Right;width:15px;height:15px;margin-top:5px;margin-right:7px;cursor:pointer;">
+				<img src="${contextPath }/resources/images/logo.png" style="width:85px;height:36px;float:left; cursor:pointer;" id="logo">
+				<div style="float:left;width:290px;height:34px;border:1px solid #8e8e8e;background-color:rgba(0,0,0,.03);border-radius:15px;margin-left:20px;">
+					<input style="border:none;width:240px;margin-left:20px;height:30px;margin-top:1px;background:none; outline: none;" type="text" id="input_search_view83" class="_gnbInputSearch" role="search" title="밴드, 게시글 검색하기" placeholder="밴드, 게시글을 검색해 보세요" autocomplete="off">
+					<img src="${contextPath }/resources/images/find.png" style="float:Right;width:15px;height:15px;margin-top:7px;margin-right:7px;cursor:pointer;">
 				</div>
 				<div style="float:left;width:50px;height:26px;margin-left:10px;">
-					<a href="maruChannelView.ma">채널</a>
+					<button type="button" class="btn btn-info" onclick="location.href='maruChannelView.ma'">채널</button>
 				</div>
-				<div style="float:left;margin-left:150px;padding:5px 12px 5px 12px;cursor:pointer;width:100px;" class="top_news">
+				<div style="float:left;margin-left:150px;padding:5px 12px 5px 12px;cursor:pointer;width:80px; visibility: hidden;" class="top_news">
 					<p style="color:#333;font-size:14px;text-align:center;" >새글 피드</p>
 				</div>
-			
-				<div style="padding:5px 12px 5px 12px;cursor:pointer;width:100px;float:left;" class="top_news">
-					<p style="color:#333;font-size:14px;text-align:center;">밴드 찾기</p>
-				</div>
 				<div id="alram" onclick="clickAlram(this)">
-					<div style="width:18px;height:18px;border-radius:20px;color:#ffffff;background-color:#ff2200;color:10px;font-size:12px;position:relative;right:-10px;top:-5px;text-align:center;">
+					<div id="alarmCountDiv" style="width:18px;height:18px;border-radius:20px;color:#ffffff;background-color:#ff2200;color:10px;font-size:12px;position:relative;right:-7px;top:-3px;text-align:center;">
 						<p style="text-align:center;" id="alarmCount"></p>
 					</div>
 					
 					<div id="aArea" class="alram-dropdown" style="display:none; z-index:5;">
 		            </div>
 				</div>
-				
-				<div id="talk">
-					
-				</div>
 				<div id="profile"  onclick="clickProfile(this)">
-					<div id="pArea" class="profile-dropdown" style="display:none;">
-		                <ul>
-		                    <li><a href="myInfoView.me">마이 페이지 </a></li>
-		                    <li><a href="#">초대코드 입력</a></li>
-		                    <li><a href="#">공지사항</a></li>
-		                    <li><a href="#">이메일 알림 설정</a></li>
-		                    <li><a href="#">설정</a></li>
-		                    <li><a href="#" class="_btnLogout">로그아웃</a></li>
-		               	</ul>
+					<div id="pArea" class="profile-dropdown" style="display:none; -ms-overflow-style: none;">
+		                <div class="list-group">
+						  <a href="myInfoView.me" class="list-group-item">마이 페이지</a>
+						  <a href="noticeSelectList.no" class="list-group-item">공지사항</a>
+						  <a href="question.no" class="list-group-item">1:1 문의</a>
+						  <a href="FAQ.no" class="list-group-item">FAQ</a>
+						  <a href="logout.me" class="list-group-item">로그아웃</a>
+						</div>
 	               </div>
+				</div>
+				<div align="left" style="margin-top: 7px;">
+					&nbsp;&nbsp;&nbsp;${loginUser.nickName }님 환영합니다.
 				</div>
 			</div>
 		</div>		
@@ -186,8 +189,13 @@
 					console.log("서버 전송 성공!");
 					console.log(data);
 					
-					$("#alarmCount").text(data);
 					
+					if(data != 0){
+						$("#alarmCount").text(data);
+					} else {
+						$("#alarmCountDiv").css("visibility","hidden");
+					}
+										
 				},
 				error:function(data){
 					console.log("서버 전송 실패..");
