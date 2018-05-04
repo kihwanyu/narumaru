@@ -115,7 +115,6 @@
 		<div id="container" style="margin-top: 50px;">
 		<c:set var="pageValue" value="pointPaymentList" scope="request" />
 		<jsp:include page="../common/myPage_LeftSideBar.jsp"/>	
-			
 			<div id="contents">
 				<div style="margin-top: 5px; margin-bottom: 10px; color: black;" align="right">
 				</div>
@@ -222,11 +221,6 @@
 								<li><a href="pointPaymentView.me?currentPage=${maxPage }">>></a></li>
 								</ul>
 							</div>
-								
-							</div>
-							<div align="right">
-								<input type="button" id="payment-view-btn" value="결제하기" class="btn btn-default"> 
-							</div>
 				        </div>
 				         <!-- #tab1 -->
 				        <div id="tab2" class="tab_content" style="color: black;">
@@ -299,7 +293,6 @@
 				    </div>
 				</div>
 			</div>
-		</div>
 				
 		<jsp:include page="../common/myPage_RightSideBar.jsp"/>
 		
