@@ -121,6 +121,13 @@ public class MemberServiceImpl implements MemberService{
 		
 	}
 
+	
+	@Override
+	public String findNation(String ip) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
 
 

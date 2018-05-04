@@ -107,6 +107,16 @@ public class MemberController {
 		return "member/findMember";
 	}
 	
+	@RequestMapping(value="logout.me", method=RequestMethod.GET)
+	public String logout(/*HttpSession session*/SessionStatus status){
+		
+		//session.invalidate();
+		status.setComplete();
+		
+		return "main/main";
+	}
+	
+	
 	@RequestMapping(value="findEmail.me")
 	public ModelAndView findEmail(ModelAndView mv,HttpServletRequest request, HttpServletResponse response){
 		
@@ -170,6 +180,7 @@ public class MemberController {
 			m2.setEmail(email);
 			m2.setUserPwd(newPwd2);
 			
+			m2.setUserPwd(passwordEncoder.encode(newPwd2));
 			ms.sendUpdatePwd(m2);
 			
 			SimpleMailMessage message = new SimpleMailMessage();
@@ -177,7 +188,7 @@ public class MemberController {
 			message.setFrom("wlgus12312@gmail.com");
 			message.setTo(email);
 			message.setSubject("나루마루 비밀번호 찾기안내");
-			message.setText("보이스피싱입니다. 비밀번호가 " + newPwd2 + " 로 변경되었습니다.");
+			message.setText("나루마루입니다. 비밀번호가 " + newPwd2 + " 로 변경되었습니다.");
 			
 			mailSender.send(message);
 			
@@ -250,8 +261,6 @@ public class MemberController {
 			System.out.println("loginUser : " + loginUser);
 			
 			//로그인포 객체 생성
-			
-			
 			
 			mv.addObject("loginUser", loginUser);
 			mv.setViewName("main/main");

@@ -160,6 +160,7 @@ public class MemberDaoImpl implements MemberDao{
 		
 		String id = m.getEmail().substring(0, m.getEmail().lastIndexOf('@'));
 		m.setEmail(id);
+		
 		int result = sqlSession.update("Member.sendUpdatePwd2", m);
 		
 	}
