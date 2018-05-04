@@ -29,6 +29,7 @@ public interface AdminDao {
 	ArrayList selectChannel();//채널조회
 	ArrayList selectChCount();//채널수 조회
 	ArrayList<Narumaru> naruView();//나루 조회
+	void statusCh(Member m) throws Exception;//회원상태 수정
 	
 	
 	
