@@ -45,9 +45,10 @@
 	<resultMap type="UsePoint" id="usingHistoryResultSet">
 		<id property="pno" column="PNO"></id>
 		<result property="pContent" column="PCONTENT"/>
-		<result property="useDay" column="PSTATUS"/>
+		<result property="date" column="DATE"/>
 		<result property="mno" column="MNO"/>
 		<result property="amount" column="AMOUNT"/>
+		<result property="bno" column="BNO"/>
 	</resultMap>
 	
 	<insert id="paymentInsert">
@@ -106,6 +107,10 @@
 	</select>
 
 	<insert id="insertUsePoint" parameterType="UsePoint">
-		INSERT INTO USINGHISTORY VALUES(SEQ_PNO.NEXTVAL, #{pContent}, SYSDATE, #{mno}, #{amount})
+		INSERT INTO USINGHISTORY VALUES(SEQ_PNO.NEXTVAL, #{pContent}, SYSDATE, #{mno}, #{amount}, #{bno})
 	</insert>	
+	
+	<select id="selectUsePoint" resultMap="usingHistoryResultSet" parameterType="_int">
+		SELECT * FROM USINGHISTORY WHERE MNO = #{mno}
+	</select>
 </mapper>
