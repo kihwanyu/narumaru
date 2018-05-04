@@ -45,7 +45,7 @@
 	<resultMap type="UsePoint" id="usingHistoryResultSet">
 		<id property="pno" column="PNO"></id>
 		<result property="pContent" column="PCONTENT"/>
-		<result property="pdate" column="PDATE"/>
+		<result property="pDate" column="PDATE"/>
 		<result property="mno" column="MNO"/>
 		<result property="amount" column="AMOUNT"/>
 		<result property="bno" column="BNO"/>
