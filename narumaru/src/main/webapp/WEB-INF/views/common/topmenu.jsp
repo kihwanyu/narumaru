@@ -135,7 +135,7 @@
 				<img src="${contextPath }/resources/images/logo.png" style="width:85px;height:36px;float:left; cursor:pointer;" id="logo">
 				<div style="float:left;width:290px;height:34px;border:1px solid #8e8e8e;background-color:rgba(0,0,0,.03);border-radius:15px;margin-left:20px;">
 					<input style="border:none;width:240px;margin-left:20px;height:30px;margin-top:1px;background:none; outline: none;" type="text" id="input_search_view83" class="_gnbInputSearch" role="search" title="밴드, 게시글 검색하기" placeholder="밴드, 게시글을 검색해 보세요" autocomplete="off">
-					<img src="${contextPath }/resources/images/find.png" style="float:Right;width:15px;height:15px;margin-top:7px;margin-right:7px;cursor:pointer;">
+					<img src="${contextPath }/resources/images/find.png" style="float:Right;width:15px;height:15px;margin-top:9px;margin-right:7px;cursor:pointer;">
 				</div>
 				<div style="float:left;width:50px;height:26px;margin-left:10px;">
 					<button type="button" class="btn btn-info" onclick="location.href='maruChannelView.ma'">채널</button>
@@ -144,7 +144,7 @@
 					<p style="color:#333;font-size:14px;text-align:center;" >새글 피드</p>
 				</div>
 				<div id="alram" onclick="clickAlram(this)">
-					<div id="alarmCountDiv" style="width:18px;height:18px;border-radius:20px;color:#ffffff;background-color:#ff2200;color:10px;font-size:12px;position:relative;right:-7px;top:-3px;text-align:center;">
+					<div id="alarmCountDiv" style="width:18px;height:18px;border-radius:20px;color:#ffffff;background-color:#ff2200;color:10px;font-size:12px;position:relative;right:-7px;top:5px;text-align:center; visibility: hidden;">
 						<p style="text-align:center;" id="alarmCount"></p>
 					</div>
 					
@@ -191,10 +191,9 @@
 					
 					
 					if(data != 0){
+						$("#alarmCountDiv").css("visibility","visible");
 						$("#alarmCount").text(data);
-					} else {
-						$("#alarmCountDiv").css("visibility","hidden");
-					}
+					} 
 										
 				},
 				error:function(data){
@@ -549,6 +548,8 @@
 					console.log("서버 전송 실패..");
 				},
 			});
+			
+			location.reload();
 		}
 		/* 나루 이동 클릭 이벤트 */
 		function clickNaruMaruFoward(ano, nmno){
