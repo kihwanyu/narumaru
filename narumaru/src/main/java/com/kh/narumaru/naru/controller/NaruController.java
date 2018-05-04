@@ -33,8 +33,6 @@ public class NaruController {
 	@Autowired
 	private NaruService ns;
 	@Autowired
-	private HiddenService hs;
-	@Autowired
 	private NarumaruService nms;
 	@Autowired
 	private UsePointService ups;
