@@ -20,6 +20,8 @@
       <typeAlias alias="Category" type="com.kh.narumaru.naru.model.vo.Category"/>
       <typeAlias alias="Alarm" type="com.kh.narumaru.common.model.vo.Alarm"/>
       <typeAlias alias="Theme" type="com.kh.narumaru.naru.model.vo.Theme"/>
+      <typeAlias alias="Neighbor" type="com.kh.narumaru.naru.model.vo.Neighbor"/>
+      <typeAlias alias="LogInfo" type="com.kh.narumaru.member.model.vo.LogInfo"/>
       <typeAlias alias="Neighbor" type="com.kh.narumaru.common.model.vo.Neighbor"/>
       <typeAlias alias="HiddenPayment" type="com.kh.narumaru.naru.model.vo.HiddenPayment"/>
       <typeAlias alias="UsePoint" type="com.kh.narumaru.payment.model.vo.UsePoint"/>

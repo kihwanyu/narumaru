@@ -45,6 +45,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.narumaru.member.model.service.ChannelService;
 import com.kh.narumaru.member.model.service.MemberService;
 import com.kh.narumaru.member.model.vo.Channel;
+import com.kh.narumaru.member.model.vo.LogInfo;
 import com.kh.narumaru.member.model.vo.Member;
 import com.kh.narumaru.member.oauth.bo.NaverLoginBO;
 import com.kh.narumaru.payment.model.exception.BankSelectAllException;
@@ -80,7 +81,6 @@ import com.kh.narumaru.narumaru.model.vo.Narumaru;
 import com.kh.narumaru.payment.model.exception.PaymentListSelectException;
 import com.kh.narumaru.payment.model.service.PaymentService;
 import com.kh.narumaru.payment.model.vo.Payment;
-
 
 @Controller
 @SessionAttributes("loginUser")
@@ -201,44 +201,73 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="login.me", method=RequestMethod.POST)
-	public ModelAndView showMainView(Member m, ModelAndView mv, SessionStatus status ){
+	public ModelAndView showMainView(LogInfo li, Member m, ModelAndView mv, SessionStatus status, HttpServletRequest request, HttpServletResponse response){
 		
-	
 		System.out.println("controller Member : " + m);
 		
 		//System.out.println("암호 일치 여부 확인 : " + passwordEncoder.matches("pass01", "$2a$10$DEDHUZOux.CEoctwh7R3ZexGZEUaCn0y8MZO.zSHoxH7zRaQhHSUu"));
-
 		/*MemberService ms = new MemberServiceImpl();*/
-		
-	/*	HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
-        
+		/*request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
         String userIp = request.getHeader("X-FORWARDED-FOR");
+		System.out.println("접속한 IP : " + userIp);*/
 		
-		System.out.println(userIp);
-		*/
+		if(m.getEmail().equals("")){
+			String nameError = "아이디 / 비밀번호를 입력하세요!!";
+			mv.addObject("message", nameError);
+			mv.setViewName("common/errorPage");
+			
+			return mv;
+			
+		}
+		
+		//아이피 받아오기
+		String ip = request.getHeader("X-Forwarded-For");
+		 
+        System.out.println(">>>> X-FORWARDED-FOR : " + ip);
+ 
+        if (ip == null) {
+            ip = request.getHeader("Proxy-Client-IP");
+            //System.out.println(">>>> Proxy-Client-IP : " + ip);
+        }
+        if (ip == null) {
+            ip = request.getHeader("WL-Proxy-Client-IP"); // 웹로직
+            //System.out.println(">>>> WL-Proxy-Client-IP : " + ip);
+        }
+        if (ip == null) {
+            ip = request.getHeader("HTTP_CLIENT_IP");
+            //System.out.println(">>>> HTTP_CLIENT_IP : " + ip);
+        }
+        if (ip == null) {
+            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+            //System.out.println(">>>> HTTP_X_FORWARDED_FOR : " + ip);
+        }
+        if (ip == null) {
+            ip = request.getRemoteAddr();
+        }
+        
+        System.out.println(">>>> Result : IP Address : "+ip);
+		
 		try {
 			Member loginUser = ms.loginMember(m);
-			
 			//session.setAttribute("loginUser", loginUser);
-			
 			/*return "main/main";*/
 			System.out.println("loginUser : " + loginUser);
+			
+			//로그인포 객체 생성
+			
 			
 			
 			mv.addObject("loginUser", loginUser);
 			mv.setViewName("main/main");
 			
 		} catch (LoginException e) {
-			
 			//model.addAttribute("message", e.getMessage());
 			//return "common/errorPage";
 			
 			mv.addObject("message", e.getMessage());
 			mv.setViewName("common/errorPage");
 		}
-		
 		return mv;
-		
 	}
 	
 	@RequestMapping(value="insertMember.me", method=RequestMethod.POST)

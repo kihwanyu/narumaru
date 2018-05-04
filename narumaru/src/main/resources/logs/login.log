@@ -2,3 +2,16 @@
 [17:55:18][INFO ](LoginLog.java:28) - Mon Apr 30 17:55:18 KST 2018 : $wlgus12312@naver.com $님이 접속했습니다.
 [18:07:33][INFO ](LoginLog.java:28) - Mon Apr 30 18:07:33 KST 2018 : $wlgus12312@naver.com $님이 접속했습니다.
 [18:07:39][INFO ](LoginLog.java:28) - Mon Apr 30 18:07:39 KST 2018 : $wlgus12312@naver.com $님이 접속했습니다.
+[19:37:01][INFO ](LoginLog.java:29) - Wed May 02 19:37:01 KST 2018 : $user01@kh.co.kr$님이 접속했습니다.
+
+
+[19:41:51][INFO ](LoginLog.java:29) - Wed May 02 19:41:51 KST 2018 : $user01@kh.co.kr$님이 접속했습니다.
+[19:43:42][INFO ](LoginLog.java:29) - Wed May 02 19:43:42 KST 2018 : $user01@kh.co.kr$님이 접속했습니다.
+[19:43:53][INFO ](LoginLog.java:29) - Wed May 02 19:43:53 KST 2018 : $user01@kh.co.kr$님이 접속했습니다.
+[19:45:19][INFO ](LoginLog.java:29) - Wed May 02 19:45:19 KST 2018 : $user01@kh.co.kr$님이 접속했습니다.
+[20:00:58][INFO ](LoginLog.java:29) - Wed May 02 20:00:58 KST 2018 : $user01@kh.co.kr$님이 접속했습니다.
+[20:03:51][INFO ](LoginLog.java:29) - Wed May 02 20:03:51 KST 2018 : $user01@kh.co.kr$님이 접속했습니다.
+[20:31:45][WARN ](DispatcherServlet.java:1205) - No mapping found for HTTP request with URI [/narumaru/images/error.png] in DispatcherServlet with name 'appServlet'
+[20:31:45][WARN ](DispatcherServlet.java:1205) - No mapping found for HTTP request with URI [/narumaru/images/error.png] in DispatcherServlet with name 'appServlet'
+[21:14:13][INFO ](LoginLog.java:29) - Wed May 02 21:14:13 KST 2018 : $user01@kh.co.kr$님이 접속했습니다.
+[21:16:09][INFO ](LoginLog.java:29) - Wed May 02 21:16:09 KST 2018 : $user01@kh.co.kr$님이 접속했습니다.
