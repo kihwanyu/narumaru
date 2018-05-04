@@ -26,6 +26,7 @@ public interface AdminService {
 	ArrayList selectChannel();//채널조회
 	ArrayList selectChCount();//채널 수 조회
 	ArrayList<Narumaru> naruView();//나루목록조회
+	void statusCh(Member m) throws Exception;//회원상태 변경
 
   
 }

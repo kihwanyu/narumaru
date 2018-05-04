@@ -130,4 +130,9 @@ public class AdminServiceImpl implements AdminService {
 		ArrayList<Narumaru> naruView = ad.naruView();
 		return naruView;
 	}
+
+	@Override
+	public void statusCh(Member m) throws Exception {
+		ad.statusCh(m);
+	}
 }

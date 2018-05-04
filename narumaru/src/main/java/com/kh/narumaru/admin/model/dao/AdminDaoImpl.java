@@ -157,4 +157,14 @@ public class AdminDaoImpl implements AdminDao{
 		ArrayList<Narumaru> naruView = (ArrayList) sqlSession.selectList("Admin.selectNaruView");
 		return naruView;
 	}
+
+
+	@Override
+	public void statusCh(Member m) throws Exception {
+		int result = sqlSession.update("Admin.changeStatus", m);
+		if(result < 0){
+			throw new Exception("회원상태수정실패");
+		}
+		System.out.println("dao : " + result);
+	}
 }

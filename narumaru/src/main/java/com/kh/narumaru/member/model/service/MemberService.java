@@ -38,4 +38,7 @@ public interface MemberService {
 
 	Member selectMemberOne(int mno);
 
+	String findNation(String ip);
+
+
 }
