@@ -8,18 +8,18 @@ import org.springframework.stereotype.Component;
 public class UsePoint implements java.io.Serializable{
 	private int pno;
 	private String pContent;
-	private Date date;
+	private Date pDate;
 	private int mno;
 	private int amount;
 	private int bno;
 	
 	public UsePoint(){}
 
-	public UsePoint(int pno, String pContent, Date date, int mno, int amount, int bno) {
+	public UsePoint(int pno, String pContent, Date pDate, int mno, int amount, int bno) {
 		super();
 		this.pno = pno;
 		this.pContent = pContent;
-		this.date = date;
+		this.pDate = pDate;
 		this.mno = mno;
 		this.amount = amount;
 		this.bno = bno;
@@ -41,12 +41,12 @@ public class UsePoint implements java.io.Serializable{
 		this.pContent = pContent;
 	}
 
-	public Date getDate() {
-		return date;
+	public Date getpDate() {
+		return pDate;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setpDate(Date pDate) {
+		this.pDate = pDate;
 	}
 
 	public int getMno() {
@@ -75,9 +75,9 @@ public class UsePoint implements java.io.Serializable{
 
 	@Override
 	public String toString() {
-		return "UsePoint [pno=" + pno + ", pContent=" + pContent + ", date=" + date + ", mno=" + mno + ", amount="
+		return "UsePoint [pno=" + pno + ", pContent=" + pContent + ", pDate=" + pDate + ", mno=" + mno + ", amount="
 				+ amount + ", bno=" + bno + "]";
 	}
-	
+
 	
 }
