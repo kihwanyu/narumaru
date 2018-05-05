@@ -47,8 +47,12 @@
 		<result property="pContent" column="PCONTENT"/>
 		<result property="pDate" column="PDATE"/>
 		<result property="mno" column="MNO"/>
+		<result property="saller_no" column="SELLER_NO"/>
+		<result property="saller_name" column="SELLER_NAME"/>
 		<result property="amount" column="AMOUNT"/>
 		<result property="bno" column="BNO"/>
+		<result property="nmno" column="NMNO"/>
+		<result property="nm_title" column="NM_TITLE"/>
 	</resultMap>
 	
 	<insert id="paymentInsert">
@@ -112,5 +116,38 @@
 	
 	<select id="selectUsePoint" resultMap="usingHistoryResultSet" parameterType="_int">
 		SELECT * FROM USINGHISTORY WHERE MNO = #{mno}
+	</select>
+	
+	<select id="getUsingHistoryListCount" resultType="_int" parameterType="_int">
+		SELECT COUNT(*) FROM USINGHISTORY WHERE MNO = #{mno}
+	</select>
+	
+	<select id="selectUseHistoryList" resultMap="usingHistoryResultSet" parameterType="_int">
+		SELECT U.PNO
+		,U.PCONTENT
+		,TO_CHAR(U.PDATE, 'yyyy-mm-dd PM hh:mi:ss') AS PDATE
+		,B.NEED_POINT AS AMOUNT
+		,U.BNO
+		,M.MNO AS SELLER_NO
+		,M.NICNAME AS SELLER_NAME
+		,MM.NMNO
+		,NM.NM_TITLE
+		FROM USINGHISTORY U
+		JOIN BOARD B ON(U.BNO=B.BNO)
+		JOIN MEMBER M ON(B.MNO=M.MNO)
+		JOIN MARU_MEMBER MM ON(M.MNO=MM.MNO)
+		JOIN NARUMARU NM ON(MM.NMNO=NM.NMNO)
+		WHERE NM.NM_CATEGORY=2 AND U.MNO=#{mno}
+		ORDER BY U.PNO DESC
+	</select>
+	
+	<select id="getUserPointTotal" resultType="_int" parameterType="_int">
+		SELECT SUM(B.NEED_POINT) AS AMOUNT
+		FROM USINGHISTORY U
+		JOIN BOARD B ON(U.BNO=B.BNO)
+		JOIN MEMBER M ON(B.MNO=M.MNO)
+		JOIN MARU_MEMBER MM ON(M.MNO=MM.MNO)
+		JOIN NARUMARU NM ON(MM.NMNO=NM.NMNO)
+		WHERE NM.NM_CATEGORY=2 AND U.MNO=#{mno}
 	</select>
 </mapper>
