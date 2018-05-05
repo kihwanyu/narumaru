@@ -47,6 +47,10 @@
 	<select id="checkNarumaruOwner" resultType="_int" parameterType="_int">
 		SELECT MNO FROM MARU_MEMBER WHERE NMNO = #{nmno} AND CON_LEVEL = 0
 	</select>
+	
+	<select id="checkNaruByMno" resultType="_int" parameterType="_int">
+		SELECT NMNO FROM MARU_MEMBER WHERE MNO = #{mno} AND CON_LEVEL = 0
+	</select>
 
 	<insert id="insertNarumaru" useGeneratedKeys="true" keyProperty="nmno">
 		<selectKey keyProperty="nmno" resultType="int" order="BEFORE">

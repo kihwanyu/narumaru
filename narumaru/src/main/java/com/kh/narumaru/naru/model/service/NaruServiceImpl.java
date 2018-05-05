@@ -56,4 +56,9 @@ public class NaruServiceImpl implements NaruService{
 		nd.deleteNeighbor(nmno, mid, sqlSession);
 	}
 
+	@Override
+	public int checkNaruByMno(int mno) {
+		return nd.checkNaruByMno(mno, sqlSession);
+	}
+
 }

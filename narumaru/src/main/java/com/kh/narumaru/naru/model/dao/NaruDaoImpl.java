@@ -108,4 +108,12 @@ public class NaruDaoImpl implements NaruDao{
 		sqlSession.delete("Neighbor.myPageNeighborDelete", nb);
 	}
 
+	//mno로 그사람의 나루를 가져온다
+	@Override
+	public int checkNaruByMno(int mno, SqlSessionTemplate sqlSession) {
+		int nmno = sqlSession.selectOne("Narumaru.checkNaruByMno", mno);
+		
+		return nmno;
+	}
+
 }

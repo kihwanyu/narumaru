@@ -194,8 +194,21 @@ public class NaruController {
 		} catch (PaymentListSelectException e) {
 			e.printStackTrace();
 		}
-		
-		
 	}
 	
+	//내 나루 찾기
+	@RequestMapping("selectMyNaru.na")
+	public void selectMyNaru(int mno, HttpServletResponse response){
+		int nmno = ns.checkNaruByMno(mno);
+		
+		try {
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			new Gson().toJson(nmno, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
