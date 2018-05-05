@@ -9,11 +9,13 @@ import org.springframework.stereotype.Service;
 
 import com.kh.narumaru.common.model.vo.PageInfo;
 import com.kh.narumaru.payment.model.dao.PaymentDao;
+import com.kh.narumaru.payment.model.dao.UsePointDao;
 import com.kh.narumaru.payment.model.exception.PaymentInsertException;
 import com.kh.narumaru.payment.model.exception.PaymentListSelectException;
 import com.kh.narumaru.payment.model.exception.WithdrawListSelectException;
 import com.kh.narumaru.payment.model.exception.refundInsertException;
 import com.kh.narumaru.payment.model.vo.Payment;
+import com.kh.narumaru.payment.model.vo.UsePoint;
 import com.kh.narumaru.payment.model.vo.Withdraw;
 
 @Service
@@ -21,7 +23,8 @@ public class PaymentServiceImpl implements PaymentService {
 	
 	@Autowired
 	private PaymentDao pd;
-	
+	@Autowired
+	private UsePointDao up;
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
@@ -85,6 +88,30 @@ public class PaymentServiceImpl implements PaymentService {
 	@Override
 	public void deleteWithdraw(int wno) throws WithdrawListSelectException {
 		pd.deleteWithdraw(sqlSession, wno);
+	}
+
+	@Override
+	public int getUsingHistoryListCount(int mno) {
+		
+		int count = up.getUsingHistoryListCount(sqlSession, mno);
+		
+		return count;
+	}
+
+	@Override
+	public ArrayList<UsePoint> selectUsingHistoryList(PageInfo pi) {
+		
+		ArrayList<UsePoint> uList = up.selectUseHistoryList(sqlSession, pi);
+		
+		return uList;
+	}
+
+	@Override
+	public int getUserPointTotal(int mno) {
+		
+		int result = up.getUserPointTotal(sqlSession, mno);
+		
+		return result;
 	}
 
 }

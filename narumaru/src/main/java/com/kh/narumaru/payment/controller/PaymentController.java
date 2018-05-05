@@ -1,6 +1,7 @@
 package com.kh.narumaru.payment.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,19 +18,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.kh.narumaru.common.model.vo.PageInfo;
 import com.kh.narumaru.member.model.vo.Member;
 import com.kh.narumaru.payment.model.exception.PaymentInsertException;
+import com.kh.narumaru.payment.model.exception.PaymentListSelectException;
 import com.kh.narumaru.payment.model.exception.WithdrawListSelectException;
 import com.kh.narumaru.payment.model.exception.refundInsertException;
 import com.kh.narumaru.payment.model.service.PaymentService;
 import com.kh.narumaru.payment.model.vo.Payment;
+import com.kh.narumaru.payment.model.vo.UsePoint;
+import com.kh.narumaru.payment.model.vo.UserPointObject;
 import com.kh.narumaru.payment.model.vo.Withdraw;
 
 @Controller
 public class PaymentController {
 	@Autowired
 	private PaymentService ps;
-	
 	@RequestMapping(value="paymentInsert.pa")
 	/*포인트 결제*/
 	public ModelAndView PaymentInsert(ModelAndView mv, Payment p, HttpSession session){
@@ -127,6 +133,56 @@ public class PaymentController {
 		}
 		
 	}
+	@RequestMapping(value="usinghistoryView.pa")
+	public void usinghistoryView(@RequestParam(defaultValue="1") int currentPage, HttpServletResponse response, HttpSession session){
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		int mno = m.getMid();
+		
+		//페이징처리
+		int limit;
+		int maxPage;
+		int startPage;
+		int endPage;
+		
+		/*limit = 10;*/
+		limit = 5;
+		
+		int listCount = 0;
+		
+			
+		listCount = ps.getUsingHistoryListCount(mno);
+		
+		maxPage = (int)((double)listCount / limit + 0.9);
+		startPage = ((int)((double)currentPage / limit + 0.9) - 1)*limit + 1;
+		endPage = startPage + limit -1;
+		if(maxPage<endPage){
+			endPage = maxPage;
+		}
+		
+		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage, mno);
+		
+		ArrayList<UsePoint> uList = ps.selectUsingHistoryList(pi);
+		
+		int userPointTotal = ps.getUserPointTotal(mno);
+		
+		UserPointObject upObj = new UserPointObject(uList, pi, userPointTotal);
+		
+		System.out.println("upObj : " + upObj);
+		
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		
+		try {
+			new Gson().toJson(upObj, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/* 계좌 인증 - 미완성 */
 	/*@RequestMapping(value="accountCertified.pa")
 	public ModelAndView accountCertified(ModelAndView mv){
