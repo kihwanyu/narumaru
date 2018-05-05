@@ -93,7 +93,7 @@
 		
 	<div class="band_middle">
 		<div class="binb">
-			<div class="myNaruMaruAttr">내 나무&마루 (<span id="maruCount"></span>)</div>
+			<div class="myNaruMaruAttr">내가 가입한 마루 (<span id="maruCount"></span>)</div>
 			<ul id="middle_box">
 			</ul>
 			<div class="narumaruselect-div" style="background:white; margin-top:20px; height:265px; width:900px; overflow: auto; padding-left: 40px; padding-bottom: 20px;" id="maruList" align="center">

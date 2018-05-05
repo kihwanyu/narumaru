@@ -12,6 +12,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="resources/css/naruInsertBoard.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${contextPath}/resources/js/jscolor.js"></script>
 <style>
 	.replyArea{
@@ -83,7 +85,7 @@
 							</c:forEach>
 							<%-- 작성자도 아닌데 구매도 안했으면 --%>
 							<c:if test="${canView eq 'false'}">
-								<div class="boardContent" style="background:lightgray; margin:5px;">이하는 구매 후 열람이 가능한 컨텐츠입니다.<br><label class="btn_label" onclick="buyHidden(${b.bno}, ${b.needPoint})">구매 후 열람 (${b.needPoint}P)</label></div>
+								<div class="boardContent" style="background:lightgray; margin:5px;">이하는 구매 후 열람이 가능한 컨텐츠입니다.<br><label class="btn btn-info" onclick="buyHidden(${b.bno}, ${b.needPoint})">구매 후 열람 (${b.needPoint}P)</label></div>
 							</c:if>
 						</c:otherwise>
 					</c:choose>
@@ -136,13 +138,13 @@
 			<div class="modal_inner" id="modal_default">
 				<input type="hidden" name="nmno" value="${nm.nmno}">
 				<div class="row">
-					<label class="btn_label modify-basic"><b>기본</b></label>
-					<label class="btn_label modify-theme">테마</label>
-					<label class="btn_label modify-category">카테고리</label>
-					<!-- <label class="btn_label modify-neighbor">이웃</label> -->
+					<label class="btn btn-info modify-basic"><b>기본</b></label>
+					<label class="btn btn-info modify-theme">테마</label>
+					<label class="btn btn-info modify-category">카테고리</label>
+					<!-- <label class="btn btn-info modify-neighbor">이웃</label> -->
 					<label class="modal_close" for="open-pop2"></label>
 				</div>
-				<label class="btn_label" id="updateThemeBtn" onclick="defaultModifyBtn()" style="margin-bottom:15px;">수정완료</label>
+				<label class="btn btn-info" id="updateThemeBtn" onclick="defaultModifyBtn()" style="margin-bottom:15px;">수정완료</label>
 				<div class="row">
 					<label class="modal-leftlabel">나루 대표사진</label>
 					<input type="file" style="width:70%; float:right;" name="">
@@ -162,13 +164,13 @@
 	 		<input type="hidden" name="nmno" value="${nm.nmno}">
 			<div class="modal_inner" id="modal_theme" style="display:none;">
 				<div class="row">
-					<label class="btn_label modify-basic">기본</label>
-					<label class="btn_label modify-theme"><b>테마</b></label>
-					<label class="btn_label modify-category">카테고리</label>
-					<!-- <label class="btn_label modify-neighbor">이웃</label> -->
+					<label class="btn btn-info modify-basic">기본</label>
+					<label class="btn btn-info modify-theme"><b>테마</b></label>
+					<label class="btn btn-info modify-category">카테고리</label>
+					<!-- <label class="btn btn-info modify-neighbor">이웃</label> -->
 					<label class="modal_close" for="open-pop2"></label>
 				</div>
-				<label class="btn_label" id="updateThemeBtn" onclick="themeModifyBtn()" style="margin-bottom:15px;">수정완료</label>
+				<label class="btn btn-info" id="updateThemeBtn" onclick="themeModifyBtn()" style="margin-bottom:15px;">수정완료</label>
 				<div class="row">
 					<label class="modal-leftlabel">테마 색상</label>
 					<input name="themeValue" class="jscolor {valueElement:'chosen-value', onFineChange:'setTextColor(this)'}" style="width:79.1%; float:right; height:25px;" id="chosen-value" value="${theme.color}}">
@@ -192,23 +194,23 @@
 		 	 <!-- 카테고리 -->
 		 	 <div class="modal_inner" id="modal_category" style="display:none;">
 				<div class="row">
-					<label class="btn_label modify-basic">기본</label>
-					<label class="btn_label modify-theme">테마</label>
-					<label class="btn_label modify-category">카테고리</label>
-					<!-- <label class="btn_label modify-neighbor">이웃</label> -->
+					<label class="btn btn-info modify-basic">기본</label>
+					<label class="btn btn-info modify-theme">테마</label>
+					<label class="btn btn-info modify-category">카테고리</label>
+					<!-- <label class="btn btn-info modify-neighbor">이웃</label> -->
 					<label class="modal_close" for="open-pop2"></label>
 				</div>
-				<label class="btn_label" id="addCateBtn" style="margin-bottom:15px;">카테고리 추가</label>
-				<label class="btn_label" id="updateCateBtn" style="margin-bottom:15px;">수정완료</label>
+				<label class="btn btn-info" id="addCateBtn" style="margin-bottom:15px;">카테고리 추가</label>
+				<label class="btn btn-info" id="updateCateBtn" style="margin-bottom:15px;">수정완료</label>
 			 </div>
 		 </form>
 		 <!-- 이웃목록 -->
 		 <%-- <div class="modal_inner" id="modal_neighbor" style="display:none;">
 			<div class="row">
-				<label class="btn_label modify-basic">기본</label>
-				<label class="btn_label modify-theme">테마</label>
-				<label class="btn_label modify-category">카테고리</label>
-				<label class="btn_label modify-neighbor">이웃</label>
+				<label class="btn btn-info modify-basic">기본</label>
+				<label class="btn btn-info modify-theme">테마</label>
+				<label class="btn btn-info modify-category">카테고리</label>
+				<label class="btn btn-info modify-neighbor">이웃</label>
 				<label class="modal_close" for="open-pop2"></label>
 			</div>
 			<c:forEach var="i" begin="1" end="4">
@@ -475,7 +477,7 @@
 												</c:if>
 											</c:forEach>
 											<c:if test="${canView eq 'false'}">
-								+				'<div class="boardContent" style="background:lightgray; margin:5px;">이하는 구매 후 열람이 가능한 컨텐츠입니다.<br><label class="btn_label" onclick="buyHidden(${b.bno}, ${b.needPoint})">구매 후 열람 (${b.needPoint}P)</label></div>'
+								+				'<div class="boardContent" style="background:lightgray; margin:5px;">이하는 구매 후 열람이 가능한 컨텐츠입니다.<br><label class="btn btn-info" onclick="buyHidden(${b.bno}, ${b.needPoint})">구매 후 열람 (${b.needPoint}P)</label></div>'
 											</c:if>
 										</c:otherwise>
 									</c:choose>

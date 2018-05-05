@@ -140,6 +140,9 @@
 				<div style="float:left;width:50px;height:26px;margin-left:10px;">
 					<button type="button" class="btn btn-info" onclick="location.href='maruChannelView.ma'">채널</button>
 				</div>
+				<div style="float:left;width:50px;height:26px;margin-left:10px;">
+					<button type="button" class="btn btn-info" onclick="goMyNaru();">내 나루</button>
+				</div>
 				<div style="float:left;margin-left:150px;padding:5px 12px 5px 12px;cursor:pointer;width:80px; visibility: hidden;" class="top_news">
 					<p style="color:#333;font-size:14px;text-align:center;" >새글 피드</p>
 				</div>
@@ -516,6 +519,20 @@
 		    }else{
 		        con.style.display = 'none';
 		    }
+		}
+		//내 나루로 이동
+		function goMyNaru(){
+			$.ajax({
+				url:"selectMyNaru.na",
+				type:"get",
+				data:{"mno":${loginUser.mid}},
+				success:function(data){
+					location.href = "boardListAll.bo?nmno="+data;
+				},
+				error:function(data){
+					console.log("내 나루로 이동 실패");
+				}
+			});
 		}
 		
 		/* 공지사항 알람 클릭 이벤트 */

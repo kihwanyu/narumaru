@@ -25,4 +25,6 @@ public interface NaruDao {
 
 	void deleteNeighbor(int nmno, int mid, SqlSessionTemplate sqlSession);
 
+	int checkNaruByMno(int mno, SqlSessionTemplate sqlSession);
+
 }

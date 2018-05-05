@@ -25,4 +25,6 @@ public interface NaruService {
 
 	void deleteNeighbor(int nmno, int mid);
 
+	int checkNaruByMno(int mno);
+
 }
