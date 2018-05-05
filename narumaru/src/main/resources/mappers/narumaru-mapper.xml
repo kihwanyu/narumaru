@@ -49,7 +49,9 @@
 	</select>
 	
 	<select id="checkNaruByMno" resultType="_int" parameterType="_int">
-		SELECT NMNO FROM MARU_MEMBER WHERE MNO = #{mno} AND CON_LEVEL = 0
+		SELECT NM.NMNO FROM NARUMARU NM
+		JOIN (SELECT NMNO FROM MARU_MEMBER WHERE MNO = #{mno} AND CON_LEVEL = 0) M ON (M.NMNO = NM.NMNO)
+		WHERE NM.NM_CATEGORY = 2
 	</select>
 
 	<insert id="insertNarumaru" useGeneratedKeys="true" keyProperty="nmno">
