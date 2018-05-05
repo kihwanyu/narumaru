@@ -187,7 +187,7 @@
 	}
 	.footUl li{
 		float:left;
-		margin-left:50px;
+		margin-left:20px;
 		cursor:pointer;
 	}
 	.insertReply{
