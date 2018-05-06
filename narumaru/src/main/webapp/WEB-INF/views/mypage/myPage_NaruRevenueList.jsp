@@ -281,16 +281,6 @@
 				</div>
 			</div>
 		</div>
-		<script type="text/javascript">
-		function neighborInsert(mno){
-			var currentPage = ${currentPage };
-			location.href = "myPageNeighborInsert.nc?mno="+mno+"&currentPage="+currentPage;
-		}
-		function neighborDelete(mno){
-			var currentPage = ${currentPage };
-			location.href = "myPageNeighborDelete.nc?mno="+mno+"&currentPage="+currentPage;
-		}
-		</script>
 		<jsp:include page="../common/myPage_RightSideBar.jsp"/>
 	</body>
 </html>
