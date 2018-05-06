@@ -12,6 +12,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.StringTokenizer;
 
@@ -54,6 +55,8 @@ import com.kh.narumaru.payment.model.service.BankSevice;
 import com.kh.narumaru.payment.model.service.PaymentService;
 import com.kh.narumaru.payment.model.vo.Bank;
 import com.kh.narumaru.payment.model.vo.Payment;
+import com.kh.narumaru.payment.model.vo.Stats;
+import com.kh.narumaru.payment.model.vo.UsePoint;
 import com.kh.narumaru.payment.model.vo.Withdraw;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.kh.narumaru.common.model.service.NeighborService;
@@ -809,11 +812,76 @@ public class MemberController {
 		return mv;
 	}
 	@RequestMapping(value="naruRevenue.me")
-	public ModelAndView naruRevenueForward(ModelAndView mv){
+	public ModelAndView naruRevenueForward(ModelAndView mv, HttpSession session
+											, @RequestParam(defaultValue="1") int currentPage
+											, @RequestParam(defaultValue="2018") int year){
 		
+		Member loginUser = (Member) session.getAttribute("loginUser");
+		
+		int mno = loginUser.getMid();	
+		
+		//페이징처리
+		int limit;
+		int maxPage;
+		int startPage;
+		int endPage;
+		
+		/*limit = 10;*/
+		limit = 5;
+		
+		int listCount = 0;
+		
+		listCount = ps.getRevenueListCount(mno);
+		
+		System.out.println("listCount : " + listCount);
+		
+		maxPage = (int)((double)listCount / limit + 0.9);
+		startPage = ((int)((double)currentPage / limit + 0.9) - 1)*limit + 1;
+		endPage = startPage + limit -1;
+		if(maxPage<endPage){
+			endPage = maxPage;
+		}
+		
+		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage, mno);
+		
+		ArrayList<UsePoint> uList = ps.selectRevenueList(pi);
+		
+		ArrayList<String> beingYearList = ps.getBeingYearList(mno);
+		
+		Stats s = new Stats();
+		
+		s.setMno(mno);
+		s.setYear(year);
+		
+		ArrayList<Stats> sList = ps.selectYearMonthRevenueStats(s);
+		
+		int count = 0;
+		
+		String[] statsArr = new String[12];
+		
+		for(int i = 0; i < statsArr.length; i++){
+			System.out.println("i : " + i);
+			System.out.println("count : " + count);
+			if(count < sList.size()&&i==Integer.valueOf(sList.get(count).getMonth())-1){
+				statsArr[i] = String.valueOf(sList.get(count).getAmount());
+				count++;
+			}else {
+				statsArr[i] = "0";
+			}
+		}
+		
+		int revenuePoint = ps.getRevenueTotalPoint(mno);
+		
+		mv.addObject("uList", uList);
+		mv.addObject("pi", pi);
+		mv.addObject("statsArr",statsArr);
+		mv.addObject("year",year);
+		mv.addObject("revenuePoint",revenuePoint);
+		mv.addObject("beingYearList", beingYearList);
 		mv.setViewName("mypage/myPage_NaruRevenueList");
 		
 		return mv;
+		
 	}
 	
 	@RequestMapping(value="naruNeighborListView.me")

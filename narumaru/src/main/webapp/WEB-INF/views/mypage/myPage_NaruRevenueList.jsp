@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -25,30 +26,32 @@
 		<jsp:include page="../common/myPage_LeftSideBar.jsp"/>	
 			<div id="contents" style="background: white; color: black;">
 				<div style="font-size: 15px; margin-bottom: 15px;">
-					나루 수익 내역
+					나루 수익 내역 
 				</div>		
 				<table class="table">
 					<thead>
 						<tr>
-							<th width="40%">결제일</th>
-							<th width="20%">결제명</th>
-							<th width="20%">결제수단</th>
-							<th width="20%">결제금액</th>
+							<th width="40%">수익일</th>
+							<th width="20%">구매자</th>
+							<th width="20%">수익내용</th>
+							<th width="20%">수익 포인트</th>
 						</tr>
 					</thead>
 					<tbody>
+						<c:forEach items="${uList }" var="userPoint">
 						<tr>
-							<td></td>
-							<td>P</td><%-- <fmt:formatNumber value="${pList.point }" type="number"/>  --%>
-							<td>${pList.payMethod }</td>
-							<td>원</td><%-- <fmt:formatNumber value="${pList.amount }" type="number"/> --%>
+							<td>${userPoint.pDate }</td>
+							<td>${userPoint.buyer_name }</td>
+							<td>${userPoint.pContent }</td>
+							<td><fmt:formatNumber value="${userPoint.amount }" type="number"/> P</td>
 						</tr>
+						</c:forEach>
 					</tbody>
 					<tfoot>
 						<tr>
 							<td colspan="2"></td>
-							<td>보유 포인트 : </td>
-							<td><fmt:formatNumber value="${totalPoint }" type="number"/> P</td>
+							<td>수익 포인트 : </td>
+							<td><fmt:formatNumber value="${revenuePoint }" type="number"/> P </td>
 						</tr>
 					</tfoot>
 				</table>
@@ -75,7 +78,7 @@
 				<fmt:parseNumber var="forwardNextpage" integerOnly="true" value="${forwardNextpage }"/>  
 				<div class="pagingArea" align="center">
 					<ul class="pagination">
-					<li><a href="naruNeighborListView.me?currentPage=1"><<</a></li>
+					<li><a href="naruRevenue.me?currentPage=1&year=${year}"><<</a></li>
 					<c:choose>
 						<c:when test="${currentPage <= 1 }">
 							<li class="active"><a href="#"><</a></li>
@@ -83,10 +86,10 @@
 						<c:otherwise>
 							<c:choose>
 								<c:when test="${backNextpage < 1 }">
-									<li><a href="naruNeighborListView.me?currentPage=1"><</a></li>
+									<li><a href="naruRevenue.me?currentPage=1&year=${year}"><</a></li>
 								</c:when>
 								<c:otherwise>
-									<li><a href="naruNeighborListView.me?currentPage=${backNextpage }"><</a></li>
+									<li><a href="naruRevenue.me?currentPage=${backNextpage }&year=${year}"><</a></li>
 								</c:otherwise>
 							</c:choose>
 						</c:otherwise>
@@ -97,7 +100,7 @@
 								<li class="active"><a href="#">${p }</a></li>
 							</c:when>
 							<c:otherwise>
-								<li><a href="naruNeighborListView.me?currentPage=${p }">${p }</a></li>
+								<li><a href="naruRevenue.me?currentPage=${p }&year=${year}">${p }</a></li>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
@@ -108,25 +111,46 @@
 						<c:otherwise>
 							<c:choose>
 								<c:when test="${forwardNextpage > maxPage }">
-									<li><a href="naruNeighborListView.me?currentPage=${maxPage }">></a></li>
+									<li><a href="naruRevenue.me?currentPage=${maxPage }&year=${year}">></a></li>
 								</c:when>
 								<c:otherwise>
-									<li><a href="naruNeighborListView.me?currentPage=${forwardNextpage }">></a></li>
+									<li><a href="naruRevenue.me?currentPage=${forwardNextpage }&year=${year}">></a></li>
 								</c:otherwise>
 							</c:choose>
 						</c:otherwise>
 					</c:choose>
-					<li><a href="naruNeighborListView.me?currentPage=${maxPage }">>></a></li>
+					<li><a href="naruRevenue.me?currentPage=${maxPage }&year=${year}">>></a></li>
 					</ul>
 				</div>
 				<div>
+					<div align="right" style="margin: 10px;">
+						<select id="selectedYear">
+							<c:forEach items="${beingYearList }" var="beingYear">
+								<c:choose>
+									<c:when test="${year eq beingYear }">
+										<option value="${beingYear }" selected="selected">${beingYear }</option>
+									</c:when>
+									<c:otherwise>
+										<option value="${beingYear }">${beingYear }</option>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</select>
+					</div>
 				<script type="text/javascript" src="chart.bundle.js"></script>
 				<div id="container" style="border: solid 1px black; width: 100%; 
 				height: 300px; margin-bottom: 10px;">
-				        <canvas id="canvas" style="margin-left: 5px;"></canvas>
-				    </div>
+				
+				<canvas id="canvas" style="margin-left: 5px;"></canvas>
+				</div>
 				
 				    <script type="text/javascript">
+				    	$("#selectedYear").change(function(){
+				    		var year = $("#selectedYear").val();
+				    		var currentPage = ${currentPage };
+				    		
+				    		location.href = "naruRevenue.me?currentPage="+currentPage+"&year="+year;
+				    	});
 				        var ChartHelper = {
 				            chartColors: {
 				                red: 'rgb(255, 99, 132)'
@@ -140,37 +164,52 @@
 				        };
 				
 				        var color = Chart.helpers.color;
-				
-				        var data1 = null;
-				        var data2 = null;
+						
+				        var data1 = new Array();
+				       
+						
+						data1[0] = ${statsArr[0] };
+						data1[1] = ${statsArr[1] };
+						data1[2] = ${statsArr[2] };
+						data1[3] = ${statsArr[3] };
+						data1[4] = ${statsArr[4] };
+						data1[5] = ${statsArr[5] };
+						data1[6] = ${statsArr[6] };
+						data1[7] = ${statsArr[7] };
+						data1[8] = ${statsArr[8] };
+						data1[9] = ${statsArr[9] };
+						data1[10] = ${statsArr[10] };
+						data1[11] = ${statsArr[11] };
+						
+				        //var data2 = null;
 				        var barChartData = null;
 				
 				        // todo: data setting
-				        data1 = ['10', '20', '30', '40', '50', '60', '70', '80'
-						, '90', '100', '110', '120'];
-				        data2 = ['120', '110', '100', '90', '80', '70', '60', '50'
+				        /* data1 = ['10', '20', '30', '40', '50', '60', '70', '80'
+						, '90', '100', '110', '1000']; */
+				       /*  data2 = ['120', '110', '100', '90', '80', '70', '60', '50'
 						, '40', '30', '20', '10'];
-				
+				 */
 				        barChartData = {
 				            labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월'
 							, '9월', '10월', '11월', '12월']
 				            , datasets: [
 				                {
-				                    label: 'DataSet1'
+				                    label: '포인트(P)'
 				                    , backgroundColor: 
 				color(ChartHelper.chartColors.blue).alpha(0.5).rgbString()
 				                    , borderColor: ChartHelper.chartColors.blue
 				                    , borderWidth: 1
-				                    , data: data2
+				                    , data: data1
 				                }
-				                , {
+				                /* , {
 				                    label: 'DataSet2'
 				                    , backgroundColor: 
 				color(ChartHelper.chartColors.red).alpha(0.5).rgbString()
 				                    , borderColor: ChartHelper.chartColors.red
 				                    , borderWidth: 1
-				                    , data: data1
-				                }
+				                    , data: data2
+				                } */
 				            ]
 				        };
 				
@@ -192,7 +231,7 @@
 				                }
 				                , title: {
 				                    display: true
-				                    , text: 'Chart Title'
+				                    , text: '월별 총 수익 포인트량'
 				                }
 				// Bar 하나에 데이터 모두 보여줄 경우 사용
 				// 주석 처리 할 경우 이 예제에서는 data1, data2 각각 bar가 2개씩 나옵니다.

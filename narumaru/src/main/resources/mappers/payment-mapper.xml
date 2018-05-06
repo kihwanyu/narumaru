@@ -49,12 +49,18 @@
 		<result property="mno" column="MNO"/>
 		<result property="saller_no" column="SELLER_NO"/>
 		<result property="saller_name" column="SELLER_NAME"/>
+		<result property="buyer_no" column="BUYER_NO"/>
+		<result property="buyer_name" column="BUYER_NAME"/>
 		<result property="amount" column="AMOUNT"/>
 		<result property="bno" column="BNO"/>
 		<result property="nmno" column="NMNO"/>
 		<result property="nm_title" column="NM_TITLE"/>
 	</resultMap>
 	
+	<resultMap type="Stats" id="statsResultSet">
+		<result property="month" column="MONTH"/>
+		<result property="amount" column="AMOUNT"/>
+	</resultMap>
 	<insert id="paymentInsert">
 		INSERT INTO PAYMENT VALUES(SEQ_PAY_NO.NEXTVAL, #{mno}, #{impUid}
 									, #{amount}, #{payPg}, #{payMethod}
@@ -149,5 +155,77 @@
 		JOIN MARU_MEMBER MM ON(M.MNO=MM.MNO)
 		JOIN NARUMARU NM ON(MM.NMNO=NM.NMNO)
 		WHERE NM.NM_CATEGORY=2 AND U.MNO=#{mno}
+	</select>
+	
+	<select id="selectRevenueList" resultMap="usingHistoryResultSet" parameterType="_int">
+	SELECT U.PNO
+	,U.PCONTENT
+	,TO_CHAR(U.PDATE, 'yyyy-mm-dd PM hh:mi:ss') AS PDATE
+	,B.NEED_POINT AS AMOUNT
+	,U.BNO
+	,M1.MNO AS BUYER_NO
+	,M1.NICNAME AS BUYER_NAME
+	FROM USINGHISTORY U
+    JOIN MEMBER M1 ON(U.MNO=M1.MNO)
+	JOIN BOARD B ON(U.BNO=B.BNO)
+	JOIN MEMBER M2 ON(B.MNO=M2.MNO)
+	JOIN MARU_MEMBER MM ON(M2.MNO=MM.MNO)
+	JOIN NARUMARU NM ON(MM.NMNO=NM.NMNO)
+	WHERE NM.NM_CATEGORY=2 AND B.MNO=#{mno}
+	ORDER BY U.PNO DESC
+	</select>
+	
+	<select id="getRevenueListCount" resultType="_int" parameterType="_int">
+		SELECT COUNT(*) 
+        FROM USINGHISTORY U
+        JOIN BOARD B ON(U.BNO=B.BNO)
+        WHERE B.MNO = #{mno}
+	</select>
+	
+	<select id="getBeingYear" resultType="String" parameterType="_int">
+		SELECT YEAR
+		FROM (
+		SELECT U.PNO
+		,TO_CHAR(U.PDATE, 'yyyy') AS YEAR
+		FROM USINGHISTORY U
+		JOIN MEMBER M1 ON(U.MNO=M1.MNO)
+		JOIN BOARD B ON(U.BNO=B.BNO)
+		JOIN MEMBER M2 ON(B.MNO=M2.MNO)
+		JOIN MARU_MEMBER MM ON(M2.MNO=MM.MNO)
+		JOIN NARUMARU NM ON(MM.NMNO=NM.NMNO)
+		WHERE NM.NM_CATEGORY=2 AND B.MNO=#{mno})
+		GROUP BY YEAR
+		ORDER BY YEAR DESC
+	</select>
+	
+	<select id="selectYearMonthRevenueStats" resultMap="statsResultSet">
+	SELECT TO_NUMBER(MONTH) AS MONTH, SUM(AMOUNT) AS AMOUNT
+	FROM(
+	SELECT TO_CHAR(PDATE, 'MM') AS MONTH 
+	,AMOUNT
+	FROM(
+	SELECT U.PDATE
+	,TO_CHAR(U.PDATE, 'yyyy') AS YEAR
+	,B.NEED_POINT AS AMOUNT
+	FROM USINGHISTORY U
+	JOIN BOARD B ON(U.BNO=B.BNO)
+	JOIN MEMBER M ON(B.MNO=M.MNO)
+	JOIN MARU_MEMBER MM ON(M.MNO=MM.MNO)
+	JOIN NARUMARU NM ON(MM.NMNO=NM.NMNO)
+	WHERE NM.NM_CATEGORY=2 AND B.MNO=#{mno})
+	WHERE YEAR LIKE #{year})
+	GROUP BY MONTH
+	ORDER BY MONTH ASC
+	</select>
+	
+	<select id="getRevenueTotal" resultType="_int" parameterType="_int">
+		SELECT
+		SUM(B.NEED_POINT) AS AMOUNT
+		FROM USINGHISTORY U
+		JOIN BOARD B ON(U.BNO=B.BNO)
+		JOIN MEMBER M ON(B.MNO=M.MNO)
+		JOIN MARU_MEMBER MM ON(M.MNO=MM.MNO)
+		JOIN NARUMARU NM ON(MM.NMNO=NM.NMNO)
+		WHERE NM.NM_CATEGORY=2 AND B.MNO=#{mno}
 	</select>
 </mapper>

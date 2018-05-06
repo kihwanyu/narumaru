@@ -1,6 +1,7 @@
 package com.kh.narumaru.payment.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -15,6 +16,7 @@ import com.kh.narumaru.payment.model.exception.PaymentListSelectException;
 import com.kh.narumaru.payment.model.exception.WithdrawListSelectException;
 import com.kh.narumaru.payment.model.exception.refundInsertException;
 import com.kh.narumaru.payment.model.vo.Payment;
+import com.kh.narumaru.payment.model.vo.Stats;
 import com.kh.narumaru.payment.model.vo.UsePoint;
 import com.kh.narumaru.payment.model.vo.Withdraw;
 
@@ -110,6 +112,46 @@ public class PaymentServiceImpl implements PaymentService {
 	public int getUserPointTotal(int mno) {
 		
 		int result = up.getUserPointTotal(sqlSession, mno);
+		
+		return result;
+	}
+
+	@Override
+	public int getRevenueListCount(int mno) {
+
+		int count = up.getRevenueListCount(sqlSession, mno);
+		
+		return count;
+	}
+
+	@Override
+	public ArrayList<UsePoint> selectRevenueList(PageInfo pi) {
+
+		ArrayList<UsePoint> uList = up.selectRevenueList(sqlSession, pi);
+		
+		return uList;
+	}
+
+	@Override
+	public ArrayList<String> getBeingYearList(int mno) {
+		
+		ArrayList<String> list = up.getBeingYearList(sqlSession,mno);
+		
+		return list;
+	}
+
+	@Override
+	public ArrayList<Stats> selectYearMonthRevenueStats(Stats s) {
+		
+		ArrayList<Stats> list = up.selectYearMonthRevenueStats(sqlSession, s);
+		
+		return list;
+	}
+
+	@Override
+	public int getRevenueTotalPoint(int mno) {
+		
+		int result = up.getRevenueTotalPoint(sqlSession, mno);
 		
 		return result;
 	}

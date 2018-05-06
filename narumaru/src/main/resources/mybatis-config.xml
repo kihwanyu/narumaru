@@ -24,6 +24,7 @@
       <typeAlias alias="Neighbor" type="com.kh.narumaru.common.model.vo.Neighbor"/>
       <typeAlias alias="HiddenPayment" type="com.kh.narumaru.naru.model.vo.HiddenPayment"/>
       <typeAlias alias="UsePoint" type="com.kh.narumaru.payment.model.vo.UsePoint"/>
+      <typeAlias alias="Stats" type="com.kh.narumaru.payment.model.vo.Stats"/>
    </typeAliases>
    
    <mappers>
