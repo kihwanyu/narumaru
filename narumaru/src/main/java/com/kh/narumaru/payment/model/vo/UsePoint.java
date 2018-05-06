@@ -13,6 +13,8 @@ public class UsePoint implements java.io.Serializable{
 	private int amount;
 	private int saller_no;
 	private String saller_name;
+	private int buyer_no;
+	private String buyer_name;
 	private int nmno;
 	private String nm_title;
 	private int bno;
@@ -20,7 +22,7 @@ public class UsePoint implements java.io.Serializable{
 		super();
 	}
 	public UsePoint(int pno, String pContent, String pDate, int mno, int amount, int saller_no, String saller_name,
-			int nmno, String nm_title, int bno) {
+			int buyer_no, String buyer_name, int nmno, String nm_title, int bno) {
 		super();
 		this.pno = pno;
 		this.pContent = pContent;
@@ -29,6 +31,8 @@ public class UsePoint implements java.io.Serializable{
 		this.amount = amount;
 		this.saller_no = saller_no;
 		this.saller_name = saller_name;
+		this.buyer_no = buyer_no;
+		this.buyer_name = buyer_name;
 		this.nmno = nmno;
 		this.nm_title = nm_title;
 		this.bno = bno;
@@ -75,6 +79,18 @@ public class UsePoint implements java.io.Serializable{
 	public void setSaller_name(String saller_name) {
 		this.saller_name = saller_name;
 	}
+	public int getBuyer_no() {
+		return buyer_no;
+	}
+	public void setBuyer_no(int buyer_no) {
+		this.buyer_no = buyer_no;
+	}
+	public String getBuyer_name() {
+		return buyer_name;
+	}
+	public void setBuyer_name(String buyer_name) {
+		this.buyer_name = buyer_name;
+	}
 	public int getNmno() {
 		return nmno;
 	}
@@ -96,8 +112,8 @@ public class UsePoint implements java.io.Serializable{
 	@Override
 	public String toString() {
 		return "UsePoint [pno=" + pno + ", pContent=" + pContent + ", pDate=" + pDate + ", mno=" + mno + ", amount="
-				+ amount + ", saller_no=" + saller_no + ", saller_name=" + saller_name + ", nmno=" + nmno
-				+ ", nm_title=" + nm_title + ", bno=" + bno + "]";
+				+ amount + ", saller_no=" + saller_no + ", saller_name=" + saller_name + ", buyer_no=" + buyer_no
+				+ ", buyer_name=" + buyer_name + ", nmno=" + nmno + ", nm_title=" + nm_title + ", bno=" + bno + "]";
 	}
 	
 }

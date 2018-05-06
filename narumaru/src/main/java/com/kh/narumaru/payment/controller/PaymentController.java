@@ -134,7 +134,8 @@ public class PaymentController {
 		
 	}
 	@RequestMapping(value="usinghistoryView.pa")
-	public void usinghistoryView(@RequestParam(defaultValue="1") int currentPage, HttpServletResponse response, HttpSession session){
+	public void usinghistoryView(@RequestParam(defaultValue="1") int currentPage
+								, HttpServletResponse response, HttpSession session){
 		
 		Member m = (Member)session.getAttribute("loginUser");
 		
