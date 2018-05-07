@@ -192,8 +192,11 @@
 	</div>
 	<div class="band_middle" style="margin-top: 0px;">
 		<div class="binb">
-			<div class="myNaruMaruAttr">미정</div>
-			
+			<div class="myNaruMaruAttr">내 이웃 나루</div>
+			<ul id="middle_box">
+			</ul>
+			<div class="narumaruselect-div" style="background:white; margin-top:20px; height:265px; width:900px; overflow: auto; padding-left: 40px; padding-bottom: 20px;" id="neighborList" align="center">
+			</div>
 		</div>
 	</div>
 	<jsp:include page="../common/footer.jsp"/>
@@ -227,6 +230,32 @@
 		});
 		$("#narumaru-create-div").click(function(){
 			location.href="maruInsertView.ma";
+		});
+		
+		//이웃목록 불러오기
+		$.ajax({
+			url:"selectNeighborListAjax.nc",
+			type:"get",
+			data:{"mno":mno},
+			success:function(data){
+				console.log(data);
+				$("#maruCount").html(data.length);
+				for(var i = 0; i < data.length; i++){
+					console.log(data[i]);
+					$("#neighborList").append(
+						'<div class="narumaruselect-div" style="cursor:pointer; width:180px;height:180px;background:#ffffff;float:left;margin-top:20px;margin-right:30px;" class="pointer" onclick="selectMaru('+data[i].nmno+');">'+
+						'<div align="center" style="width: 130px; height: 130px; padding: 10px;">'+
+						'<img src="${contextPath }/resources/images/defalt_group.png" style="width:100%;height:100%;">'+
+						'</div>'+
+						'<p style="text-align:center; padding: 5px; font-size: 15px;">'+data[i].nmTitle+'</p>'+
+						'</div>'
+					);
+				}
+				
+			},
+			error:function(data){
+				console.log("실패");
+			}			
 		});
 	});
 	

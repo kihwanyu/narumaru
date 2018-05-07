@@ -12,6 +12,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="resources/css/naruInsertBoard.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${contextPath}/resources/js/jscolor.js"></script>
@@ -109,7 +110,7 @@
 					<input type="text" name="insertReply" id="insertReply"
 						style="background: none; width: 400px; height: 40px; background:white;">
 					<button class="floatRight insertReplyBtn" onclick="addReply(this, ${b.bno})">
-						<img src="${contextPath }/resources/images/find.png"
+						<img src="${contextPath }/resources/images/Pen.png"
 							style="width: 35px; height: 35px;">
 					</button>
 					<c:forEach var="j" items="${colist}">
@@ -503,7 +504,7 @@
 								+'	<input type="text" name="insertReply"'
 								+'		style="background: none; width: 400px; height: 40px; background:white;">'
 								+'	<button class="floatRight insertReplyBtn" onclick="addReply(this, ${b.bno})">'
-								+'		<img src="${contextPath }/resources/images/find.png"'
+								+'		<img src="${contextPath }/resources/images/Pen.png"'
 								+'			style="width: 35px; height: 35px;">'
 								+'	</button>'
 								<c:forEach var="j" items="${colist}">
