@@ -15,5 +15,7 @@
 		<result property="nmno" column="NMNO"/>
 	</resultMap>
 	
-	
+	<insert id="insertDeclaration">
+		INSERT INTO DECLARATION VALUES(SEQ_POLNO.NEXTVAL, NULL, #{mno}, #{bno}, #{polIu}, SYSDATE, #{nmno})
+	</insert>
 </mapper>

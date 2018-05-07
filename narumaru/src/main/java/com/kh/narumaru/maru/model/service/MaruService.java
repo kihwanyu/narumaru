@@ -26,9 +26,15 @@ public interface MaruService {
 
 	int getMaruMaster(int nmno);
 
+
 	int getInvitedMaruCount(int mno);
 
 	ArrayList<InvateMember> selectInvitedMaruCount(PageInfo pi);
 
 	void invateReject(int ino) throws invateRejectException;
+
+	MaruMember insertInvatemember(int nmno, String email) throws MaruException;
+
+	ArrayList selectInvateMemberList(int nmno)  throws MaruException;
+
 }

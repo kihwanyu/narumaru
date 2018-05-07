@@ -271,6 +271,9 @@ public class MemberController {
 			//로그인포 객체 생성
 			
 			mv.addObject("loginUser", loginUser);
+			if(loginUser.getMid() <= 6){
+				mv.setViewName("redirect:/adMain.ad");
+			}
 			mv.setViewName("main/main");
 			
 		} catch (LoginException e) {

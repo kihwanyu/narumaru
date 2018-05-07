@@ -91,6 +91,7 @@ public class MaruDaoImpl implements MaruDao{
 	}
 
 	@Override
+
 	public int getInvitedMaruCount(SqlSessionTemplate sqlSession, int mno) {
 		
 		int count = 0;
@@ -124,6 +125,24 @@ public class MaruDaoImpl implements MaruDao{
 			throw new invateRejectException("초대 거절 실패");
 		}
 				
+
+	public MaruMember insertInvatemember(int nmno, String email) throws MaruException {
+		MaruMember mm = new MaruMember();
+		mm.setMno(sqlSession.selectOne("Maru.selectOneMember", email));
+		mm.setNmno(nmno);
+		
+		int result = sqlSession.insert("Maru.insertInvatemember", mm);
+		if(result <0){
+			throw new MaruException("회원 초대 실패");
+		}
+		return mm;
+	}
+
+	@Override
+	public ArrayList selectInvateMemberList(int nmno) {
+		ArrayList invateMemberList = (ArrayList) sqlSession.selectList("Maru.selectInvatemember", nmno);
+		return invateMemberList;
+
 	}
 
 }

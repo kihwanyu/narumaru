@@ -38,7 +38,7 @@
 		</div>
 		
 		<div class="floatRight rightArea">
-			<div class="rightMenu chat">
+			<!-- <div class="rightMenu chat">
 				<div class="rightTitle">
 					채팅
 					<div class="pointer floatRight newChat">새 채팅<div class="sub chatSub"><ul><li>비공개 채팅</li><li>공개 채팅</li></ul></div></div>
@@ -47,9 +47,9 @@
 					<div class="chatPhoto"></div>
 					<label>채팅방 이름</label>
 				</div>
-			</div>
+			</div> -->
 			
-			<div class="rightMenu album" style="top:200px;">
+			<div class="rightMenu album" style="top:50px;">
 				<div class="rightTitle">
 					앨범
 					<div class="floatRight pointer moreAlbum"><a href="showMaruAlbum.ma">더보기</a></div>

@@ -29,9 +29,15 @@ public interface MaruDao {
 
 	int getMaruMaster(int nmno);
 
+
 	int getInvitedMaruCount(SqlSessionTemplate sqlSession, int mno);
 
 	ArrayList<InvateMember> selectInvitedMaruCount(SqlSessionTemplate sqlSession, PageInfo pi);
 
 	void invateReject(SqlSessionTemplate sqlSession, int ino) throws invateRejectException; 
+
+	MaruMember insertInvatemember(int nmno, String email) throws MaruException;
+
+	ArrayList selectInvateMemberList(int nmno); 
+
 }

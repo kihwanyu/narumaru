@@ -12,6 +12,8 @@
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet"/>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/lang/summernote-ko-KR.js"></script>
+<!-- moment.js CDN -->
+   <script type="text/javascript" src="https://momentjs.com/downloads/moment-with-locales.js"></script>
 </head>
 
 <body class="maruBody">
@@ -22,7 +24,7 @@
 		<div class="dumi"></div>
 		<div class="marginAuto content">
 			<div class="searchArea">
-				<input type="text" name="search" style="background:none; width:440px; height:40px;">
+				<input type="text" name="search" id="search" style="background:none; width:440px; height:40px;">
 				<button class="floatRight searchBtn"><img src="${contextPath }/resources/images/find.png" style="width:35px; height:35px;"></button>
 			</div>
 			<br>
@@ -60,7 +62,7 @@
 						<c:if test="${!empty b.profileName }">
 							<img style="width:100%; height:100%;" src="resources/memberprofile/${b.profileName }" id="profileImg">
 						</c:if></div>
-					<div style="display:inline-block;"><label>${b.bWriter}</label><br><label>${b.createDate}</label></div>
+					<div style="display:inline-block;"><label>${b.bWriter}</label><br><label class="writeDate">${b.createDate }</label></div>
 					<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">
 						<img src="resources/images/menu.png" class="modifyMenu size100per">
 						<div class="sub boardSub">
@@ -321,7 +323,7 @@
 	        	$(".content").html(""); 
 	        	
 	        	$(".content").append('<div class="searchArea">'
-	    				+'<input type="text" name="search" style="background:none; width:440px; height:40px;">'
+	    				+'<input type="text" name="search" id="search" style="background:none; width:440px; height:40px;">'
 	    				+'<button class="floatRight searchBtn"><img src="${contextPath }/resources/images/find.png" style="width:35px; height:35px;"></button>'
 	    				+'</div>'
 	    				+'<br>'
@@ -449,7 +451,7 @@
 		$("#photoUpload").click(function(){
 				$("#photo").click();
 		});
-		function modifyBoard(btn){
+		function modifyBoard(btn){  
 			$(btn).parents(".boardBtn").find("#myModal").modal();	
 			/* location.href="updateBoardOne.nm?bno="+bno + "&nmno=${nm.nmno}"; */
 		}
@@ -462,8 +464,20 @@
 				
 			}
 		}
-		
-		
+		$(".searchBtn").click(function(){
+			var search = $("#search").val();
+			location.href="searchBoard.nm?nmno=${ nm.nmno}&bContent="+search;
+		});
+	
+		$(function(){
+			var writDateArr = $(".writeDate");
+			for(var i = 0; writDateArr.length > i; i++){
+				var date = writDateArr[i].innerHTML;
+				var beforetime = moment(date, "YYYY-MM-DD h:mm:ss").fromNow();
+				writDateArr[i].innerHTML = beforetime;
+			}
+		});
+
 	</script>
 </body>
 </html>

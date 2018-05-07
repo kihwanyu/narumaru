@@ -12,6 +12,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="resources/css/naruInsertBoard.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${contextPath}/resources/js/jscolor.js"></script>
@@ -57,9 +58,13 @@
 						<img src="resources/images/menu.png" class="modifyMenu size100per">
 						<div class="sub boardSub">
 							<ul>
+								<c:if test="${b.mno eq loginUser.mid}"> <%-- 작성자만 수정버튼 --%>
 								<li onclick="modifyBoard(${b.bno})">수정하기</li>
 								<li onclick="deleteBoard(${b.bno})">삭제하기</li>
-								<li>신고하기</li>
+								</c:if>
+								<c:if test="${b.mno ne loginUser.mid}">
+								<li onclick="reportBoard(${b.bno})">신고하기</li>
+								</c:if>
 							</ul>
 						</div>
 					</div>
@@ -93,13 +98,13 @@
 				<div class="boardfoot">
 					<hr>
 					<ul class="footUl">
-						<li class="showSub emotionBtn" onclick="submenuOpen(this);"><span>이모티콘</span>
+						<!-- <li class="showSub emotionBtn" onclick="submenuOpen(this);"><span>이모티콘</span>
 							<div class="sub emotionSub">이모티콘</div>
-						</li>
+						</li> -->
 						<li class="insertReplyShow" onclick="replyOpen(this);"><span>댓글보기(${b.comments})</span></li>
-						<li class="showSub shereBtn" onclick="submenuOpen(this);"><span>공유하기</span>
+						<!-- <li class="showSub shereBtn" onclick="submenuOpen(this);"><span>공유하기</span>
 							<div class="sub shereSub">개발중인 기능입니다</div>
-						</li>
+						</li> -->
 					</ul>
 				</div>
 				<div class="insertReply">
@@ -107,13 +112,13 @@
 					<input type="text" name="insertReply" id="insertReply"
 						style="background: none; width: 400px; height: 40px; background:white;">
 					<button class="floatRight insertReplyBtn" onclick="addReply(this, ${b.bno})">
-						<img src="${contextPath }/resources/images/find.png"
+						<img src="${contextPath }/resources/images/Pen.png"
 							style="width: 35px; height: 35px;">
 					</button>
 					<c:forEach var="j" items="${colist}">
 						<c:if test="${j.targetBno eq b.bno}">
 							<div class="replyArea">
-								<div class="writerPhoto" style="width:40px; height:40px;"><img src="resources/images/profile_defalt.png" class="size100per"></div>
+								<div class="writerPhoto" style="width:40px; height:40px;"><img src="resources/memberprofile/${b.profileName}" class="size100per"></div>
 								<label style="font-size:0.9em;">${j.bWriter}</label><br><label style="font-size:0.9em;">${j.createDate}</label>
 								<div class="replyContent" style="clear:both;">${j.bContent}</div>
 							</div>
@@ -145,10 +150,10 @@
 					<label class="modal_close" for="open-pop2"></label>
 				</div>
 				<label class="btn btn-info" id="updateThemeBtn" onclick="defaultModifyBtn()" style="margin-bottom:15px;">수정완료</label>
-				<div class="row">
+<!-- 				<div class="row">
 					<label class="modal-leftlabel">나루 대표사진</label>
 					<input type="file" style="width:70%; float:right;" name="">
-				</div>
+				</div> -->
 				<div class="row">
 					<label class="modal-leftlabel">나루 제목</label>
 					<input type="text" style="width:79.1%; float:right; height:25px;" name="nmTitle" value="${nm.nmTitle}">
@@ -454,9 +459,13 @@
 								+'		<img src="resources/images/menu.png" class="modifyMenu size100per">'
 								+'			<div class="sub boardSub">'
 								+'				<ul>'
+													<c:if test="${b.mno eq loginUser.mid}">
 								+'					<li onclick="modifyBoard(${b.bno})">수정하기</li>'
 								+'					<li onclick="deleteBoard(${b.bno})">삭제하기</li>'
-								+'					<li>신고하기</li>'
+													</c:if>
+													<c:if test="${b.mno ne loginUser.mid}">
+								+'					<li onclick="reportBoard(${b.bno})">신고하기</li>'
+													</c:if>
 								+'				</ul>'
 								+'			</div>'
 								+'	</div>'
@@ -485,12 +494,12 @@
 								+'<div class="boardfoot">'
 								+'	<hr>'
 								+'	<ul class="footUl">'
-								+'		<li class="showSub emotionBtn" onclick="submenuOpen(this);"><span>이모티콘</span>'
+/* 								+'		<li class="showSub emotionBtn" onclick="submenuOpen(this);"><span>이모티콘</span>'
 								+'			<div class="sub emotionSub">이모티콘</div>'
-								+'		</li>'
+								+'		</li>' */
 								+'			<li class="insertReplyShow" onclick="replyOpen(this);"><span>댓글보기(${b.comments})</span></li>'
-								+'		<li class="showSub shereBtn" onclick="submenuOpen(this);"><span>공유하기</span>'
-								+'			<div class="sub shereSub">개발중인 기능입니다</div>'
+/* 								+'		<li class="showSub shereBtn" onclick="submenuOpen(this);"><span>공유하기</span>'
+								+'			<div class="sub shereSub">개발중인 기능입니다</div>' */
 								+'		</li>'
 								+'	</ul>'
 								+'</div>'
@@ -499,13 +508,13 @@
 								+'	<input type="text" name="insertReply"'
 								+'		style="background: none; width: 400px; height: 40px; background:white;">'
 								+'	<button class="floatRight insertReplyBtn" onclick="addReply(this, ${b.bno})">'
-								+'		<img src="${contextPath }/resources/images/find.png"'
+								+'		<img src="${contextPath }/resources/images/Pen.png"'
 								+'			style="width: 35px; height: 35px;">'
 								+'	</button>'
 								<c:forEach var="j" items="${colist}">
 									<c:if test="${j.targetBno eq b.bno}">
 								+	'<div class="replyArea">'
-								+		'<div class="writerPhoto" style="width:40px; height:40px;"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
+								+		'<div class="writerPhoto" style="width:40px; height:40px;"><img src="resources/memberprofile/${b.profileName}" class="size100per"></div>'
 								+		'<label style="font-size:0.9em;">${j.bWriter}</label><br><label style="font-size:0.9em;">${j.createDate}</label>'
 								+		'<div class="replyContent" style="clear:both;">${j.bContent}</div>'
 								+	'</div>'
@@ -514,6 +523,9 @@
 								+'	</div>'
 								+'</div>'
 								)
+								
+								//글배경색
+								$(".board").css({"background":"${theme.board}"});
 		        	/* } */
 		        	</c:forEach>
 		        	
@@ -541,6 +553,13 @@
 			}
 		}
 		
+		function reportBoard(bno){
+			if(confirm("이 글을 신고하시겠습니까?")){
+				var reason = prompt("신고 사유를 작성해주세요.") ;
+				location.href="reportBoardOne.nm?bno="+ bno + "&nmno=${nm.nmno}&type=1&reason=" + reason;
+			}
+		}
+		
 		function addReply(btn, bno){
 			var replyArea = $(btn).parent();
 			var comment = $(btn).parent().find("#insertReply").val();
@@ -549,12 +568,12 @@
 			
 			var d = new Date();
 			var strDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
-			
+
 			$(replyArea).append('<div class="replyArea">'
-					+ '<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
-					+ '<label>${loginUser.nickName}</label><br><label>' + strDate + '</label>'
-					+ '<div class="replyContent" style="clear:both;">'+ comment +' </div>'
-					+ '</div>');
+					+	'<div class="writerPhoto" style="width:40px; height:40px;"><img src="resources/memberprofile/${owner.profileName}" class="size100per"></div>'
+					+	'<label style="font-size:0.9em;">${loginUser.nickName}</label><br><label style="font-size:0.9em;">' + strDate + '</label>'
+					+	'<div class="replyContent" style="clear:both;">'+ comment +'</div>'
+					+'</div>');
 			
 			$.ajax({
 				url:'insertComment.nm',
