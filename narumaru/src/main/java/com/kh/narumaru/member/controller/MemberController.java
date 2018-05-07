@@ -80,6 +80,7 @@ import com.kh.narumaru.member.model.vo.Channel;
 import com.kh.narumaru.member.model.vo.MChannel;
 import com.kh.narumaru.member.model.vo.Member;
 import com.kh.narumaru.narumaru.model.service.NarumaruService;
+import com.kh.narumaru.narumaru.model.vo.InvateMember;
 import com.kh.narumaru.narumaru.model.vo.Narumaru;
 import com.kh.narumaru.payment.model.exception.PaymentListSelectException;
 import com.kh.narumaru.payment.model.service.PaymentService;
@@ -801,8 +802,43 @@ public class MemberController {
 		return mv;
 	}
 	@RequestMapping(value="invitedMaruView.me")
-	public ModelAndView invitedMaruForward(ModelAndView mv){
+	public ModelAndView invitedMaruForward(ModelAndView mv, HttpSession session
+											, @RequestParam(defaultValue="1") int currentPage){
 		
+		Member loginUser = (Member) session.getAttribute("loginUser");
+		
+		int mno = loginUser.getMid();	
+		
+		//페이징처리
+		int limit;
+		int maxPage;
+		int startPage;
+		int endPage;
+		
+		/*limit = 10;*/
+		limit = 5;
+		
+		int listCount = 0;
+		
+		listCount = mas.getInvitedMaruCount(mno);
+		
+		System.out.println("listCount : " + listCount);
+		
+		maxPage = (int)((double)listCount / limit + 0.9);
+		startPage = ((int)((double)currentPage / limit + 0.9) - 1)*limit + 1;
+		endPage = startPage + limit -1;
+		if(maxPage<endPage){
+			endPage = maxPage;
+		}
+		
+		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage, mno);
+		
+		ArrayList<InvateMember> InvateMemberList = mas.selectInvitedMaruCount(pi);
+		
+		System.out.println("InvateMemberList : " + InvateMemberList);
+		
+		mv.addObject("InvateMemberList", InvateMemberList);
+		mv.addObject("pi", pi);
 		mv.setViewName("mypage/myPage_invitedMaru");
 		
 		return mv;

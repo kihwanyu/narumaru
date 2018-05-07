@@ -2,9 +2,14 @@ package com.kh.narumaru.maru.model.dao;
 
 import java.util.ArrayList;
 
+import org.mybatis.spring.SqlSessionTemplate;
+
+import com.kh.narumaru.common.model.vo.PageInfo;
 import com.kh.narumaru.maru.exception.MaruException;
+import com.kh.narumaru.maru.exception.invateRejectException;
 import com.kh.narumaru.maru.model.vo.MaruMember;
 import com.kh.narumaru.member.model.vo.Member;
+import com.kh.narumaru.narumaru.model.vo.InvateMember;
 import com.kh.narumaru.narumaru.model.vo.Narumaru;
 
 public interface MaruDao {
@@ -24,7 +29,15 @@ public interface MaruDao {
 
 	int getMaruMaster(int nmno);
 
+
+	int getInvitedMaruCount(SqlSessionTemplate sqlSession, int mno);
+
+	ArrayList<InvateMember> selectInvitedMaruCount(SqlSessionTemplate sqlSession, PageInfo pi);
+
+	void invateReject(SqlSessionTemplate sqlSession, int ino) throws invateRejectException; 
+
 	MaruMember insertInvatemember(int nmno, String email) throws MaruException;
 
 	ArrayList selectInvateMemberList(int nmno); 
+
 }

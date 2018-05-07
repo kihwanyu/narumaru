@@ -14,7 +14,15 @@
 		<result property="status" column="STATUS"/>
 		<result property="nmno" column="NMNO"/>
 	</resultMap>
-
+	
+	<resultMap type="InvateMember" id="InvateMemberResultSet">
+		<id property="ino" column="INO"/>
+		<result property="nmno" column="NMNO"/>
+		<result property="nm_title" column="NM_TITLE"/>
+		<result property="maru_manager" column="MARU_MANAGER"/>
+		<result property="status" column="STATUS"/>
+	</resultMap>
+	
 	<insert id="insertMaruMember">
 		INSERT INTO MARU_MEMBER VALUES(SEQ_CONNO.NEXTVAL, #{mno}, #{conLevel}, SYSDATE, NULL, 'Y', #{nmno})
 	</insert> 
@@ -39,6 +47,31 @@
 		SELECT MNO FROM MARU_MEMBER WHERE CON_LEVEL=0 AND NMNO=#{nmno}
 	</select>
 	
+	<select id="selectInvitedMaruList" resultMap="InvateMemberResultSet" parameterType="_int">
+		SELECT IM.INO
+		, NM.NM_TITLE
+		, IM.NMNO
+		, (SELECT NICNAME FROM MARU_MEMBER MM
+		JOIN MEMBER M ON(MM.MNO=M.MNO)
+		WHERE MM.NMNO=NM.NMNO AND MM.CON_LEVEL=0
+		) AS MARU_MANAGER 
+		FROM INVATE_MEMBER IM
+		JOIN NARUMARU NM ON(IM.NMNO=NM.NMNO)
+		WHERE NM.NM_CATEGORY = 1 AND IM.MNO = #{mno}
+		ORDER BY IM.STATUS ASC, IM.INO DESC
+	</select>
+	
+	<select id="getInvitedMaruCount" resultType="_int" parameterType="_int">
+		SELECT COUNT(*)
+		FROM INVATE_MEMBER IM
+		JOIN NARUMARU NM ON(IM.NMNO=NM.NMNO)
+		WHERE NM.NM_CATEGORY = 1 AND IM.MNO = #{mno}
+	</select>
+	
+	<delete id="invateReject" parameterType="_int">
+		DELETE FROM INVATE_MEMBER WHERE INO=#{ino}
+	</delete>
+
 	<insert id="insertInvatemember">
 		INSERT INTO INVATE_MEMBER VALUES(SEQ_INO.NEXTVAL, #{nmno}, #{mno}, DEFAULT)
 	</insert>

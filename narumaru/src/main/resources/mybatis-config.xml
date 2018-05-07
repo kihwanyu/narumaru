@@ -25,6 +25,7 @@
       <typeAlias alias="HiddenPayment" type="com.kh.narumaru.naru.model.vo.HiddenPayment"/>
       <typeAlias alias="UsePoint" type="com.kh.narumaru.payment.model.vo.UsePoint"/>
       <typeAlias alias="Stats" type="com.kh.narumaru.payment.model.vo.Stats"/>
+      <typeAlias alias="InvateMember" type="com.kh.narumaru.narumaru.model.vo.InvateMember"/>
    </typeAliases>
    
    <mappers>

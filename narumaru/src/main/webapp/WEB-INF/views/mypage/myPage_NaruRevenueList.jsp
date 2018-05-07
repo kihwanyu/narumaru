@@ -137,7 +137,6 @@
 							</c:forEach>
 						</select>
 					</div>
-				<script type="text/javascript" src="chart.bundle.js"></script>
 				<div id="container" style="border: solid 1px black; width: 100%; 
 				height: 300px; margin-bottom: 10px;">
 				
