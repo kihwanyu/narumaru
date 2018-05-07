@@ -53,4 +53,6 @@ public interface NarumaruDao {
 
 	ArrayList<Board> selectCategoryBoardList(int nmno, int categoryNo);
 
+	ArrayList<Board> selectChannelBoardList(int cno, SqlSessionTemplate sqlSession);
+
 } 

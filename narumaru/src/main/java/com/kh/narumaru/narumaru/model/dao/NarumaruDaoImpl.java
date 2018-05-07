@@ -201,10 +201,17 @@ public class NarumaruDaoImpl implements NarumaruDao {
 		int result = sqlSession.update("Narumaru.updateDefault",nm);
 	}
 
-@Override
-public ArrayList<Board> searchBoard(Board b) {
-	ArrayList<Board> list = (ArrayList)sqlSession.selectList("Board.searchBoard", b);
-	return list;
-}
+	@Override
+	public ArrayList<Board> searchBoard(Board b) {
+		ArrayList<Board> list = (ArrayList)sqlSession.selectList("Board.searchBoard", b);
+		return list;
+	}
+	
+	@Override
+	public ArrayList<Board> selectChannelBoardList(int cno, SqlSessionTemplate sqlSession) {
+		ArrayList<Board> list = (ArrayList)sqlSession.selectList("Board.selectChannelBoardList", cno);
+		
+		return list;
+	}
 
 }

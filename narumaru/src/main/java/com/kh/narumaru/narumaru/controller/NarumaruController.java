@@ -612,4 +612,27 @@ public class NarumaruController {
 		}
 	}
 	
+	@RequestMapping("selectChannelBoardList.nm")
+	public void selectChannelBoardList(int cno, HttpServletRequest request, HttpServletResponse response){
+		ArrayList<Board> list = nms.selectChannelBoardList(cno);
+
+		try {
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			new Gson().toJson(list, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("searchNarumaruBoard.nm")
+	public String searchNarumaruBoard(String searchCondition){
+		System.out.println(searchCondition);
+		
+		return "maru/maruSearchResult";
+	}
 }

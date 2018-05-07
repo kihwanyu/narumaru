@@ -128,5 +128,10 @@ public class NarumaruServiceImpl implements NarumaruService {
 		
 		return nmd.searchBoard(b);
 	}
+
+	@Override
+	public ArrayList<Board> selectChannelBoardList(int cno) {
+		return nmd.selectChannelBoardList(cno, sqlSession);
+	}
   
 }
