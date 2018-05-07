@@ -63,4 +63,16 @@ public class MaruServiceImpl implements MaruService{
 		return md.getMaruMaster(nmno);
 	}
 
+	@Override
+	public MaruMember insertInvatemember(int nmno, String email) throws MaruException {
+		MaruMember mm = md.insertInvatemember(nmno, email);
+		return mm;
+	}
+
+	@Override
+	public ArrayList selectInvateMemberList(int nmno) throws MaruException {
+		
+		return md.selectInvateMemberList(nmno);
+	}
+
 }

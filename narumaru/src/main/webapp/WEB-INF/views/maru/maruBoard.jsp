@@ -22,7 +22,7 @@
 		<div class="dumi"></div>
 		<div class="marginAuto content">
 			<div class="searchArea">
-				<input type="text" name="search" style="background:none; width:440px; height:40px;">
+				<input type="text" name="search" id="search" style="background:none; width:440px; height:40px;">
 				<button class="floatRight searchBtn"><img src="${contextPath }/resources/images/find.png" style="width:35px; height:35px;"></button>
 			</div>
 			<br>
@@ -321,7 +321,7 @@
 	        	$(".content").html(""); 
 	        	
 	        	$(".content").append('<div class="searchArea">'
-	    				+'<input type="text" name="search" style="background:none; width:440px; height:40px;">'
+	    				+'<input type="text" name="search" id="search" style="background:none; width:440px; height:40px;">'
 	    				+'<button class="floatRight searchBtn"><img src="${contextPath }/resources/images/find.png" style="width:35px; height:35px;"></button>'
 	    				+'</div>'
 	    				+'<br>'
@@ -462,6 +462,11 @@
 				
 			}
 		}
+		$("#searchBtn").click(function(){
+			var search = $("#search").val();
+			console.log(search);
+		});
+	
 		
 		
 	</script>

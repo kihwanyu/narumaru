@@ -22,4 +22,8 @@ public interface MaruService {
 	Narumaru selectOneMaru(int nmno) throws MaruException;
 
 	int getMaruMaster(int nmno);
+
+	MaruMember insertInvatemember(int nmno, String email) throws MaruException;
+
+	ArrayList selectInvateMemberList(int nmno)  throws MaruException;
 }

@@ -17,16 +17,62 @@
 		<div class="marginAuto content">
 			<div class="invateContent">
 				<div class="invateTitle">멤버 초대</div>
+				<input type="text" id="invateMember" name="invateMember" placeholder="회원 아이디 입력" style="width:80%; display:inline-block; height:30px;"/>
+				<div id="invateMemberBtn" style="display:inline-block; height:35px; float:right; width:18%; text-align:center; background:black; cursor:pointer; color:white; border:1px lightgray solid;">초대하기</div>
 				<hr>
 				<div class="invateBody">
-					초대
+					<table border="1" style="width:100%;" id="invateMemberList">
+						<tr>
+							<th>초대중인 멤버</th>
+							<th>초대 승인</th>
+						</tr>
+					</table>
 				</div>
-				<hr>
-				<div class="invateLink">
-					사용중인 링크
-				</div>				
+				<hr>			
 			</div>
 		</div>
 	</div>
+	<script>
+		$("#invateMemberBtn").click(function(){
+			var nmno = ${ nm.nmno };
+			$.ajax({
+				url:"checkNarumaruOwner.nm",
+				type:"get",
+				data:{"nmno":nmno},
+				success:function(data){
+					if(data){
+						location.href="insertInvatemember.ma?email="+$("#invateMember").val() + "&nmno=${nm.nmno}";
+					}else{
+						alert("초대는 마루장만 가능합니다.");
+					}
+				},
+				error:function(data){
+					console.log("실패");
+				}			
+			});
+			
+		});
+		
+		$(function(){
+			var nmno = ${ nm.nmno };
+			$.ajax({
+				url:"selectInvateMemberList.ma",
+				type:"get",
+				data:{"nmno":nmno},
+				success:function(data){
+					var isAgree = '승낙안함'
+					for(var i = 0; data.length > 0; i++){
+						if(data[i].status == 'Y'){
+							isAgree='승낙'
+						}
+						$("#invateMemberList").append("<tr><td>"+data[i].EMAIL+"</td><td>"+isAgree+"</td></tr>")		
+					}							
+				},
+				error:function(data){
+					console.log("실패");
+				}			
+			});
+		});
+	</script>
 </body>
 </html>

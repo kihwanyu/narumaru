@@ -146,7 +146,12 @@
 			<button onclick="insertDetail();">완료</button>
 			<script>
 				function insertDetail(){
-					location.href="${contextPath}/insertNarumaru.nm?nmCategory=1&nmTitle="+$("#maru-name").val() + "&isOpen=" + $(":checked").val() +"&nmIntro=${loginUser.nickName}님의 마루입니다&cno="+$("#maru-channel").val();					
+					if($("#maru-channel").value == null || $("#maru-name").value == null){
+						alert("모든 항목을 입력해주세요");
+					}else{
+						location.href="${contextPath}/insertNarumaru.nm?nmCategory=1&nmTitle="+$("#maru-name").val() + "&isOpen=" + $(":checked").val() +"&nmIntro=${loginUser.nickName}님의 마루입니다&cno="+$("#maru-channel").val();					
+					
+					}
 				}
 				
 				function selectChannel(chanellNo){

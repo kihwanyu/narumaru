@@ -86,4 +86,23 @@ public class MaruDaoImpl implements MaruDao{
 		return masterMno;
 	}
 
+	@Override
+	public MaruMember insertInvatemember(int nmno, String email) throws MaruException {
+		MaruMember mm = new MaruMember();
+		mm.setMno(sqlSession.selectOne("Maru.selectOneMember", email));
+		mm.setNmno(nmno);
+		
+		int result = sqlSession.insert("Maru.insertInvatemember", mm);
+		if(result <0){
+			throw new MaruException("회원 초대 실패");
+		}
+		return mm;
+	}
+
+	@Override
+	public ArrayList selectInvateMemberList(int nmno) {
+		ArrayList invateMemberList = (ArrayList) sqlSession.selectList("Maru.selectInvatemember", nmno);
+		return invateMemberList;
+	}
+
 }
