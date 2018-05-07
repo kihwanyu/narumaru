@@ -21,6 +21,7 @@ import com.google.gson.JsonIOException;
 import com.kh.narumaru.common.model.exception.alarmRequestException;
 import com.kh.narumaru.common.model.service.AlarmService;
 import com.kh.narumaru.common.model.vo.Alarm;
+import com.kh.narumaru.declaration.model.service.DeclarationService;
 import com.kh.narumaru.maru.exception.MaruException;
 import com.kh.narumaru.maru.model.service.MaruService;
 import com.kh.narumaru.maru.model.vo.MaruMember;
@@ -30,13 +31,11 @@ import com.kh.narumaru.member.model.service.MemberService;
 import com.kh.narumaru.member.model.vo.Channel;
 import com.kh.narumaru.member.model.vo.Member;
 import com.kh.narumaru.naru.model.service.NaruService;
-import com.kh.narumaru.naru.model.vo.HiddenPayment;
 import com.kh.narumaru.naru.model.vo.Theme;
 import com.kh.narumaru.narumaru.exception.NarumaruException;
 import com.kh.narumaru.narumaru.model.service.NarumaruService;
 import com.kh.narumaru.narumaru.model.vo.Board;
 import com.kh.narumaru.narumaru.model.vo.Narumaru;
-import com.kh.narumaru.payment.model.service.PaymentService;
 import com.kh.narumaru.payment.model.service.UsePointService;
 import com.kh.narumaru.payment.model.vo.UsePoint;
 
@@ -58,6 +57,8 @@ public class NarumaruController {
 	private MemberService mems;
 	@Autowired
 	private UsePointService us;
+	@Autowired
+	private DeclarationService ds;
 	
 	@RequestMapping("goHome.nm")
 	public String goHome(){
@@ -502,6 +503,17 @@ public class NarumaruController {
 	@RequestMapping("deleteBoardOne.nm")
 	public String deleteBoardOne(int bno, int nmno, int type) throws NarumaruException{
 		nms.deleteBoardOne(bno);
+		
+		if(type == 1) return "redirect:/boardListAll.bo?nmno="+nmno;
+		else return "redirect:myboardView.me";
+	}
+	
+	@RequestMapping("reportBoardOne.nm")
+	public String reportBoardOne(int bno, int nmno, int type, String reason, HttpServletRequest request) throws NarumaruException{
+		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+		int mno = loginUser.getMid();
+		
+		ds.reportBoardOne(mno, bno, reason, nmno);
 		
 		if(type == 1) return "redirect:/boardListAll.bo?nmno="+nmno;
 		else return "redirect:myboardView.me";
