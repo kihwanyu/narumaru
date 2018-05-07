@@ -104,6 +104,39 @@ public class NarumaruController {
 		return mv;
 	}
 	
+	@RequestMapping(value = "searchBoard.nm")
+	public ModelAndView searchBoard(String search, Board b, ModelAndView mv, HttpServletRequest request){
+		System.out.println("조회하는 나루마루번호 " + b.getNmno());
+		
+		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+		
+		System.out.println(loginUser);
+		b.setbLevel(0);
+		ArrayList<Board> list = nms.searchBoard(b);
+		b.setbLevel(1);
+		ArrayList<Board> colist = nms.searchBoard(b);
+		Narumaru nm = nms.selectNarumaruOne(b.getNmno());
+		Theme theme = nms.selectThemeOne(b.getNmno());
+		
+		boolean isOwner = nms.checkNarumaruOwner(b.getNmno(), loginUser);
+
+		mv.addObject("nm", nm);
+		mv.addObject("list", list);
+		mv.addObject("colist", colist);
+		mv.addObject("isOwner", isOwner);
+		mv.addObject("theme", theme);
+		if(nm.getNmCategory() ==2){
+			mv.setViewName("naru/naruBoard"); 
+		}else{
+			mv.setViewName("maru/maruBoard"); 
+		}
+		
+		
+		return mv;
+	}
+	
+	
+	
 	@RequestMapping(value = "selectNarumaruName.bo")
 	public void selectNarumaruName(HttpServletResponse response, int nmno, String bWriter, String bContent, String createDate){
 		Narumaru nm = nms.selectNarumaruOne(nmno);

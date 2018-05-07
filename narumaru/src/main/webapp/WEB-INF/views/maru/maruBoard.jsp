@@ -428,9 +428,9 @@
 				
 			}
 		}
-		$("#searchBtn").click(function(){
+		$(".searchBtn").click(function(){
 			var search = $("#search").val();
-			console.log(search);
+			location.href="searchBoard.nm?nmno=${ nm.nmno}&bContent="+search;
 		});
 	
 		

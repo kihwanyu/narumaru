@@ -116,5 +116,11 @@ public class NarumaruServiceImpl implements NarumaruService {
 	public int checkNeighbor(int nmno, Member loginUser) {
 		return nmd.checkNeighbor(nmno, loginUser);
 	}
+
+	@Override
+	public ArrayList<Board> searchBoard(Board b) {
+		
+		return nmd.searchBoard(b);
+	}
   
 }

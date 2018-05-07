@@ -47,4 +47,6 @@ public interface NarumaruDao {
 	void updateDefault(Narumaru nm, SqlSessionTemplate sqlSession);
 
 	int checkNeighbor(int nmno, Member loginUser);
+
+	ArrayList<Board> searchBoard(Board b);
 } 
