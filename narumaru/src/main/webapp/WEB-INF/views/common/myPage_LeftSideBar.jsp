@@ -63,7 +63,7 @@
 					<img src="resources/images/right_arrow.png" height="20px">
 				</div>
 			</li>
-			<c:choose>
+			<%-- <c:choose>
 				<c:when test="${pageValue == 'resisteredMaru'}">
 					<li ${selected_li }>
 				</c:when>
@@ -77,7 +77,7 @@
 				<div align="right">
 					<img src="resources/images/right_arrow.png" height="20px">
 				</div>
-			</li>
+			</li> --%>
 			<c:choose>
 				<c:when test="${pageValue == 'invitedMaru'}">
 					<li ${selected_li }>
@@ -85,7 +85,7 @@
 				<c:otherwise>
 					<li>
 				</c:otherwise>
-			</c:choose>
+			</c:choose> 
 				<div class="left-sidebar-li" id="invitedMaru-div">
 					초대 받은 마루
 				</div>

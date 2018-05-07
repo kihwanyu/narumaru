@@ -27,42 +27,20 @@
 					초대받은 마루
 				</div>		
 				<ul class="list-group">
-					<li class="list-group-item">
-						<div style="height: 40px; width: 40px; float: left; margin-right: 20px;">
-							<img alt="profile_maru" src="resources/images/defalt_group.png" height="100%" width="100%">
-						</div>
-						<div style="float: right;">
-							<input type="button" value="수락" class="btn btn-default">
-							<input type="button" value="거절" class="btn btn-default">
-						</div>
-						<div style="padding-top: 10px; padding-bottom: 10px;">
-							마루 이름
-						</div>
-					</li>
-					<li class="list-group-item">
-						<div style="height: 40px; width: 40px; float: left; margin-right: 20px;">
-							<img alt="profile_maru" src="resources/images/defalt_group.png" height="100%" width="100%">
-						</div>
-						<div style="float: right;">
-							<input type="button" value="수락" class="btn btn-default">
-							<input type="button" value="거절" class="btn btn-default">
-						</div>
-						<div style="padding-top: 10px; padding-bottom: 10px;">
-							마루 이름
-						</div>
-					</li>
-					<li class="list-group-item">
-						<div style="height: 40px; width: 40px; float: left; margin-right: 20px;">
-							<img alt="profile_maru" src="resources/images/defalt_group.png" height="100%" width="100%">
-						</div>
-						<div style="float: right;">
-							<input type="button" value="수락" class="btn btn-default">
-							<input type="button" value="거절" class="btn btn-default">
-						</div>
-						<div style="padding-top: 10px; padding-bottom: 10px;">
-							마루 이름
-						</div>
-					</li>
+					<c:forEach items="${InvateMemberList }" var="InvateMember">
+						<li class="list-group-item">
+							<div style="height: 40px; width: 40px; float: left; margin-right: 20px;">
+								<img alt="profile_maru" src="resources/images/defalt_group.png" height="100%" width="100%">
+							</div>
+							<div style="float: right;">
+								<input type="button" value="수락" class="btn btn-default" onclick="invateAccept(${ino}, ${nmno});">
+								<input type="button" value="거절" class="btn btn-default" onclick="invateReject(${ino});">
+							</div>
+							<div style="padding-top: 10px; padding-bottom: 10px;">
+								${InvateMember.nm_title } 초대자  : ${InvateMember.maru_manager }
+							</div>
+						</li>
+					</c:forEach>
 				</ul>
 				<div align="center" style="color: gray;">
 					<ul class="pagination">
@@ -81,6 +59,13 @@
 		</div>
 		
 		<jsp:include page="../common/myPage_RightSideBar.jsp"/>
-		<!--  -->
+		<script type="text/javascript">
+			function invateAccept(ino, nmno){
+				location.href ="invateAccept.ma?ino"+ino+"&nmno"+nmno;
+			}
+			function invateReject(ino){
+				location.href ="invateReject.ma?ino"+ino;
+			}
+		</script>
 	</body>
 </html>

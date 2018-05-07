@@ -18,6 +18,7 @@ import com.kh.narumaru.common.model.exception.alarmRequestException;
 import com.kh.narumaru.common.model.service.AlarmService;
 import com.kh.narumaru.common.model.vo.Alarm;
 import com.kh.narumaru.maru.exception.MaruException;
+import com.kh.narumaru.maru.exception.invateRejectException;
 import com.kh.narumaru.maru.model.service.MaruService;
 import com.kh.narumaru.maru.model.vo.MaruMember;
 import com.kh.narumaru.narumaru.model.vo.Narumaru;
@@ -183,5 +184,36 @@ public class MaruController {
 		
 	}
 	
+	@RequestMapping("invateReject.ma")
+	public ModelAndView invateReject(HttpServletResponse response, ModelAndView mv, int ino){
+		
+		try {
+			ms.invateReject(ino);
+			
+			mv.setViewName("redirect:/invitedMaruView.me");
+		} catch (invateRejectException e) {
+			mv.addObject("message", e.getMessage());
+			mv.setViewName("common/erroPage");
+		}
+		
+		return mv;
+		
+	}
+	
+	@RequestMapping("invateAccept.ma")
+	public ModelAndView invateAccept(HttpServletResponse response, ModelAndView mv, int ino, int nmno){
+		
+		try {
+			//ms.invateAccept(ino);
+			
+			mv.setViewName("redirect:/invitedMaruView.me");
+		} catch (invateRejectException e) {
+			mv.addObject("message", e.getMessage());
+			mv.setViewName("common/erroPage");
+		}
+		
+		return mv;
+		
+	}
 	
 }
