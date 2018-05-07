@@ -66,7 +66,7 @@ public class NeighborController {
 			ArrayList<Alarm> alarmList = new ArrayList<Alarm>();
 			Alarm alarm = new Alarm();
 			
-			alarm.setAtno(202);
+			alarm.setAtno(203);
 			alarm.setReceive_mno(mno);
 			alarm.setSend_mno(user_mno);
 			

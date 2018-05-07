@@ -38,6 +38,10 @@ public interface MaruDao {
 
 	MaruMember insertInvatemember(int nmno, String email) throws MaruException;
 
-	ArrayList selectInvateMemberList(int nmno); 
+	ArrayList selectInvateMemberList(int nmno);
+
+	void invateAccept(SqlSessionTemplate sqlSession, MaruMember m) throws invateRejectException;
+
+	ArrayList<Integer> selectMaruMemberMno(SqlSessionTemplate sqlSession, MaruMember m); 
 
 }

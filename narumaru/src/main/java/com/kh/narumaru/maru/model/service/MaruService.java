@@ -37,4 +37,8 @@ public interface MaruService {
 
 	ArrayList selectInvateMemberList(int nmno)  throws MaruException;
 
+	void invateAccept(int ino, MaruMember m) throws invateRejectException;
+
+	ArrayList<Integer> selectMaruMemberMno(MaruMember m);
+
 }

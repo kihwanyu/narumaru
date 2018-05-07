@@ -71,7 +71,7 @@
 	<delete id="invateReject" parameterType="_int">
 		DELETE FROM INVATE_MEMBER WHERE INO=#{ino}
 	</delete>
-
+		
 	<insert id="insertInvatemember">
 		INSERT INTO INVATE_MEMBER VALUES(SEQ_INO.NEXTVAL, #{nmno}, #{mno}, DEFAULT)
 	</insert>
@@ -82,6 +82,12 @@
 	
 	<select id="selectOneMember" parameterType="java.lang.String" resultType="_int">
 		SELECT MNO FROM MEMBER WHERE EMAIL = #{email}	
+	</select>
+	
+	<select id="selectMaruMemberMno" resultType="_int">
+		SELECT MNO 
+		FROM MARU_MEMBER
+		WHERE MNO!=#{mno} AND NMNO=#{nmno}
 	</select>
 </mapper>
 

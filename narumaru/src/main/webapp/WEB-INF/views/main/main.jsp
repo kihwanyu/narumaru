@@ -25,7 +25,6 @@
 		.band_bottom{
 			width:100%;
 			height:420px;
-			background: #8C8E8D;
 		}
 		.binb{
 			width:1000px;

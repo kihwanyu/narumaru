@@ -339,6 +339,30 @@
 							$aArea.append("</div>");
 							break;					
 						break;
+						case 203: /* 나루-이웃 수락 */
+							var infoStr = value.send_nicname+"님이  이웃을 수락했습니다.";
+							
+							if(value.status == 1){
+								$innerDiv =  $("<div class='new-innerdiv alarmBackground' onclick='clickMyPageNeighborListFoward("+value.ano+");'>");
+							} else {
+								$innerDiv =  $("<div class='new-innerdiv' onclick='clickMyPageNeighborListFoward("+value.ano+");'>");
+							}
+							
+							var beforetime = moment(value.alarm_date, "YYYY-MM-DD h:mm:ss").fromNow();
+							
+							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
+							var $alarmComment = $("<div class='alarmComment'>").text("환영해주세요!");
+							var $alarmDate = $("<div class='alarmDate' align='right'>").text(beforetime);
+							
+							$innerDiv.append($innerDiv);
+							$innerDiv.append($alarmInfo);
+							$innerDiv.append($alarmComment);
+							$innerDiv.append($alarmDate);
+							
+							$aArea.append($innerDiv);
+							$aArea.append("</div>");
+							break;					
+						break;
 						case 204: /* 나루-결제선 구매 - 구현해야됨. */
 							var infoStr = value.send_nicname+"님이  " + value.b_title + " 게시글의 결제선을 이용하셨습니다.";
 							
