@@ -417,7 +417,7 @@
 		$("#photoUpload").click(function(){
 				$("#photo").click();
 		});
-		function modifyBoard(btn){ 
+		function modifyBoard(btn){  
 			$(btn).parents(".boardBtn").find("#myModal").modal();	
 			/* location.href="updateBoardOne.nm?bno="+bno + "&nmno=${nm.nmno}"; */
 		}

@@ -135,7 +135,7 @@
 
 	<delete id ="deleteNotice" parameterType="_int" >
 		DELETE FROM BOARD
-		WHERE BNO = #{nid} 
+		WHERE BNO = #{nid}  
 	</delete>
 	
 	<select id="searchBoard" resultMap="boardResultSet">
