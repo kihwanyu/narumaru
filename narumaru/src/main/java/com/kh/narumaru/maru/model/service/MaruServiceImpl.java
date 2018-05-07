@@ -100,4 +100,17 @@ public class MaruServiceImpl implements MaruService{
 
 	}
 
+	@Override
+	public void invateAccept(int ino, MaruMember m) throws invateRejectException {
+		md.invateReject(sqlSession, ino);
+		
+		md.invateAccept(sqlSession, m);
+	}
+
+	@Override
+	public ArrayList<Integer> selectMaruMemberMno(MaruMember m) {
+		
+		return md.selectMaruMemberMno(sqlSession, m);
+	}
+
 }

@@ -5,10 +5,12 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,6 +23,7 @@ import com.kh.narumaru.maru.exception.MaruException;
 import com.kh.narumaru.maru.exception.invateRejectException;
 import com.kh.narumaru.maru.model.service.MaruService;
 import com.kh.narumaru.maru.model.vo.MaruMember;
+import com.kh.narumaru.member.model.vo.Member;
 import com.kh.narumaru.narumaru.model.vo.Narumaru;
 
 @Controller
@@ -187,7 +190,7 @@ public class MaruController {
 	
 
 	@RequestMapping("invateReject.ma")
-	public ModelAndView invateReject(HttpServletResponse response, ModelAndView mv, int ino){
+	public ModelAndView invateReject(HttpServletResponse response, ModelAndView mv, @RequestParam(name="ino") int ino){
 		
 		try {
 			ms.invateReject(ino);
@@ -203,17 +206,48 @@ public class MaruController {
 	}
 	
 	@RequestMapping("invateAccept.ma")
-	public ModelAndView invateAccept(HttpServletResponse response, ModelAndView mv, int ino, int nmno){
+	public ModelAndView invateAccept(HttpServletResponse response, ModelAndView mv, HttpSession session
+									, @RequestParam(name="ino") int ino, @RequestParam(name="nmno") int nmno){
 		
-		/*try {
-			//ms.invateAccept(ino);
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		int mno = loginUser.getMid();
+		
+		MaruMember m = new MaruMember();
+		
+		m.setMno(mno);
+		m.setConLevel(1);
+		m.setNmno(nmno);
+		
+		ArrayList<Alarm> alarmList = new ArrayList<>();
+		
+		ArrayList<Integer> sendUser = ms.selectMaruMemberMno(m);
+		
+		System.out.println("sendUser : " + sendUser);
+		
+		for(int i = 0; i < sendUser.size(); i++){
+			Alarm alarm = new Alarm();
+			
+			alarm.setSend_mno(mno);
+			alarm.setAtno(305);
+			alarm.setReceive_mno(sendUser.get(i));
+			alarm.setSend_nmno(nmno);
+			
+			alarmList.add(alarm);
+			
+		}
+		
+		try {
+			ms.invateAccept(ino, m);
+			
+			as.alarmRequest(alarmList);
 			
 			mv.setViewName("redirect:/invitedMaruView.me");
-		} catch (invateRejectException e) {
+		} catch (invateRejectException | alarmRequestException e) {
 			mv.addObject("message", e.getMessage());
 			mv.setViewName("common/erroPage");
 		}
-		*/
+		
 		return mv;
 	}
 

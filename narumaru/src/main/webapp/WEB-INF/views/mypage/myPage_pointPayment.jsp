@@ -221,6 +221,9 @@
 								<li><a href="pointPaymentView.me?currentPage=${maxPage }">>></a></li>
 								</ul>
 							</div>
+							<div style="margin: 20px;">
+								<input type="button" id="payment-view-btn" class="btn btn-default" value="결제하기">
+							</div>
 				        </div>
 				         <!-- #tab1 -->
 				        <div id="tab2" class="tab_content" style="color: black;">

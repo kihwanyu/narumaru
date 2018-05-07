@@ -145,4 +145,21 @@ public class MaruDaoImpl implements MaruDao{
 
 	}
 
+	@Override
+	public void invateAccept(SqlSessionTemplate sqlSession, MaruMember m) throws invateRejectException {
+		int result = sqlSession.insert("Maru.insertMaruMember", m);
+		
+		if(result <= 0){
+			throw new invateRejectException("마루 가입 실패!");
+		}
+	}
+
+	@Override
+	public ArrayList<Integer> selectMaruMemberMno(SqlSessionTemplate sqlSession, MaruMember m) {
+		
+		ArrayList<Integer> result = (ArrayList) sqlSession.selectList("Maru.selectMaruMemberMno", m);
+		
+		return result;
+	}
+
 }
