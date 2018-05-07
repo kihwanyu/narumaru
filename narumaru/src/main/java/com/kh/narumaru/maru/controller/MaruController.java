@@ -77,6 +77,7 @@ public class MaruController {
 	@RequestMapping("insertMaruMember.ma")
 	public void insertMaruMameber(MaruMember mm, HttpServletResponse response){
 		try {
+			mm.setConLevel(1);
 			ms.insertMaruMember(mm);
 			int masterMno = ms.getMaruMaster(mm.getNmno());
 			
@@ -183,5 +184,61 @@ public class MaruController {
 		
 	}
 	
+	@RequestMapping("insertInvatemember.ma")
+	public ModelAndView insertInvatemember(ModelAndView mv, int nmno, String email){
+		
+		try {
+			MaruMember mm = ms.insertInvatemember(nmno, email);
+			
+			int masterMno = ms.getMaruMaster(nmno);
+			ArrayList<Alarm> alarm = new ArrayList<>();
+			
+			// 보낼 유저의 번호를 구한다.
+			ArrayList<Integer> sendUser = null;
+			sendUser = new ArrayList<Integer>();
+			sendUser.add(masterMno);
+			
+			/*Controller에서 Alarm객체에 값을 채운 후 Service로 보내주세요.*/
+			for(int i = 0; i < sendUser.size(); i++){
+				alarm.add(new Alarm());
+				alarm.get(i).setAtno(302);
+				alarm.get(i).setSend_mno(sendUser.get(i));
+				alarm.get(i).setReceive_mno(mm.getMno());
+			}
+			
+			as.alarmRequest(alarm);
+			
+			mv.setViewName("maru/maruMemberInsert");	
+		} catch (MaruException e) {
+			mv.addObject("message", e.getMessage());
+			mv.setViewName("common/errorPage");	
+		} catch (alarmRequestException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return mv;
+	}
 	
+	@RequestMapping("selectInvateMemberList.ma")
+	public void selectInvateMemberList(int nmno, HttpServletResponse response){
+		ArrayList invateMemberList;
+		try {
+			invateMemberList = ms.selectInvateMemberList(nmno);
+			System.out.println("invateMemberList : " + invateMemberList);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			new Gson().toJson(invateMemberList, response.getWriter());
+		} catch (MaruException e) {
+			// TODO Auto-generated catch block 
+			e.printStackTrace();
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 }

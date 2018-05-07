@@ -22,5 +22,9 @@ public interface MaruDao {
 
 	Narumaru selectOneMaru(int nmno) throws MaruException;
 
-	int getMaruMaster(int nmno); 
+	int getMaruMaster(int nmno);
+
+	MaruMember insertInvatemember(int nmno, String email) throws MaruException;
+
+	ArrayList selectInvateMemberList(int nmno); 
 }
