@@ -54,18 +54,20 @@
 					<br>
 					<label id="boardCreateDate">${b.createDate} ${b.caname}</label>
 					</div>
-					<c:if test="${b.mno eq loginUser.mid}"> <%-- 작성자만 수정버튼 --%>
 					<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">
 						<img src="resources/images/menu.png" class="modifyMenu size100per">
 						<div class="sub boardSub">
 							<ul>
+								<c:if test="${b.mno eq loginUser.mid}"> <%-- 작성자만 수정버튼 --%>
 								<li onclick="modifyBoard(${b.bno})">수정하기</li>
 								<li onclick="deleteBoard(${b.bno})">삭제하기</li>
-								<li>신고하기</li>
+								</c:if>
+								<c:if test="${b.mno ne loginUser.mid}">
+								<li onclick="reportBoard(${b.bno})">신고하기</li>
+								</c:if>
 							</ul>
 						</div>
 					</div>
-					</c:if>
 				</div>
 				<div class="boardContent">${fn:replace(b.bContent,nr,br)}</div>
 				<%-- 이하 히든 컨텐츠, 구매 여부를 체크함 --%>
@@ -453,19 +455,21 @@
 								+'<br>'
 								+'<label id="boardCreateDate">${b.createDate} ${b.caname}</label>'
 								+'</div>'
-								<c:if test="${b.mno eq loginUser.mid}">
 								+'	<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">'
 								+'		<img src="resources/images/menu.png" class="modifyMenu size100per">'
 								+'			<div class="sub boardSub">'
 								+'				<ul>'
+													<c:if test="${b.mno eq loginUser.mid}">
 								+'					<li onclick="modifyBoard(${b.bno})">수정하기</li>'
 								+'					<li onclick="deleteBoard(${b.bno})">삭제하기</li>'
-								+'					<li>신고하기</li>'
+													</c:if>
+													<c:if test="${b.mno ne loginUser.mid}">
+								+'					<li onclick="reportBoard(${b.bno})">신고하기</li>'
+													</c:if>
 								+'				</ul>'
 								+'			</div>'
 								+'	</div>'
 								+'</div>'
-								</c:if>
 								+'<div class="boardContent">${fn:replace(b.bContent, nr, "<br>")}</div>'
 								<c:if test="${b.bHidden ne null}">
 									<c:set var="canView" value="false"/>
@@ -546,6 +550,13 @@
 		function deleteBoard(bno){
 			if(confirm("정말로 삭제하시겠습니까?")){
 				location.href="deleteBoardOne.nm?bno="+ bno + "&nmno=${nm.nmno}&type=1";
+			}
+		}
+		
+		function reportBoard(bno){
+			if(confirm("이 글을 신고하시겠습니까?")){
+				var reason = prompt("신고 사유를 작성해주세요.") ;
+				location.href="reportBoardOne.nm?bno="+ bno + "&nmno=${nm.nmno}&type=1&reason=" + reason;
 			}
 		}
 		
