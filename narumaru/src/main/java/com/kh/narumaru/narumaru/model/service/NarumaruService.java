@@ -47,5 +47,9 @@ public interface NarumaruService {
 
 	int checkNeighbor(int nmno, Member loginUser);
 
+
+	ArrayList<Board> searchBoard(Board b); 
+
 	ArrayList<Board> selectCategoryBoardList(int nmno, int categoryNo);
+
 }
