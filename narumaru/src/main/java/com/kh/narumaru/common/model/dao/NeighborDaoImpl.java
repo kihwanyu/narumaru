@@ -57,4 +57,12 @@ public class NeighborDaoImpl implements NeighborDao {
 		
 	}
 
+	@Override
+	public ArrayList<Neighbor> selectNeighborListAjax(int mno, SqlSessionTemplate sqlSession) {
+		
+		ArrayList<Neighbor> list = (ArrayList)sqlSession.selectList("Narumaru.selectNeighborList",mno);
+		
+		return list;
+	}
+
 }

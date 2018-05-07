@@ -49,4 +49,9 @@ public class NeighborServiceImpl implements NeighborService {
 		nd.myPageNeighborDelete(sqlSession, n);
 	}
 
+	@Override
+	public ArrayList<Neighbor> selectNeighborListAjax(int mno) {
+		return nd.selectNeighborListAjax(mno, sqlSession);
+	}
+
 }
