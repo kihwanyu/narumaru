@@ -42,8 +42,8 @@ public class NaruServiceImpl implements NaruService{
 	}
 
 	@Override
-	public void insertNeighbor(int nmno, int mid) {
-		nd.insertNeighbor(nmno, mid, sqlSession);
+	public int insertNeighbor(int nmno, int mid) {
+		return nd.insertNeighbor(nmno, mid, sqlSession);
 	}
 
 	@Override
@@ -54,6 +54,11 @@ public class NaruServiceImpl implements NaruService{
 	@Override
 	public void deleteNeighbor(int nmno, int mid) {
 		nd.deleteNeighbor(nmno, mid, sqlSession);
+	}
+
+	@Override
+	public int checkNaruByMno(int mno) {
+		return nd.checkNaruByMno(mno, sqlSession);
 	}
 
 }

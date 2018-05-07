@@ -15,5 +15,9 @@
 	<select id="selectHiddenPaymentList" resultMap="hiddenPaymentResultSet" parameterType="_int">
 		SELECT * FROM HIDDEN_PAYMENT WHERE MNO = #{mno}
 	</select>
+	
+	<insert id="insertHiddenPayment" parameterType="HiddenPayment">
+		INSERT INTO HIDDEN_PAYMENT VALUES(SEQ_PAYNO.NEXTVAL, #{mno}, #{bno}, SYSDATE)
+	</insert>
 
 </mapper>

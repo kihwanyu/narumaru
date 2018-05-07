@@ -1,8 +1,9 @@
 package com.kh.narumaru.common.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 import com.kh.narumaru.common.model.exception.NeighborDeleteException;
 import com.kh.narumaru.common.model.exception.NeighborInsertException;
 import com.kh.narumaru.common.model.exception.alarmRequestException;
@@ -28,6 +31,23 @@ public class NeighborController {
 	@Autowired
 	private AlarmService as;
 	
+	@RequestMapping(value="selectNeighborListAjax.nc")
+	public void selectNeighborListAjax(int mno, HttpServletResponse response){
+		ArrayList<Neighbor> list = nc.selectNeighborListAjax(mno);
+		
+		try {
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			new Gson().toJson(list, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	@RequestMapping(value="myPageNeighborInsert.nc")
 	public ModelAndView myPageNeighborInsert(ModelAndView mv, HttpSession session, @RequestParam int mno, @RequestParam int currentPage){
 		
@@ -39,8 +59,6 @@ public class NeighborController {
 		
 		n.setMno(mno);
 		n.setUser_mno(user_mno);
-		
-		
 		
 		try {
 			nc.myPageNeighborInsert(n);

@@ -37,6 +37,7 @@ public class MemberServiceImpl implements MemberService{
 
 		return md.loginCheck(m);
 	}
+	
 	@Override
 	public void insertMember(Member m) {
 		
@@ -118,6 +119,17 @@ public class MemberServiceImpl implements MemberService{
 		
 		md.sendUpdatePwd(sqlSession, m);
 		
+	}
+	@Override
+	public Member selectMemberOne(int mno) {
+		return md.selectMemberOne(mno);
+	}
+
+	
+	@Override
+	public String findNation(String ip) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

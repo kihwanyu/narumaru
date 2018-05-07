@@ -19,6 +19,8 @@ public interface noticeDao {
 
 	Notice showFaqDetailView(int bno);
 
-	void deleteNotice(int bno) throws NoticeDeleteException; 
+	void deleteNotice(int bno) throws NoticeDeleteException;
+
+	void questionInsert(Notice n); 
 
 }

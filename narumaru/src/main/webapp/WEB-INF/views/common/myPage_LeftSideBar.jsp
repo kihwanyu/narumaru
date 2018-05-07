@@ -109,6 +109,22 @@
 				</div>
 			</li>
 			<c:choose>
+				<c:when test="${pageValue == 'NaruRevenueList'}">
+					<li ${selected_li }>
+				</c:when>
+				<c:otherwise>
+					<li>
+				</c:otherwise>
+			</c:choose>
+				<div class="left-sidebar-li" id="naruRevenue-div">
+					나루 수익 내역
+					<!-- 나루 수익 -->
+				</div>
+				<div align="right">
+					<img src="resources/images/right_arrow.png" height="20px">
+				</div>
+			</li>
+			<c:choose>
 				<c:when test="${pageValue == 'pointPaymentList'}">
 					<li ${selected_li }>
 				</c:when>
@@ -162,6 +178,9 @@
 		});
 		$("#naruNeighborList-div").click(function(){
 			location.replace('naruNeighborListView.me');
+		});
+		$("#naruRevenue-div").click(function(){
+			location.replace('naruRevenue.me');
 		});
 		$("#pointPayment-div").click(function(){
 			location.replace('pointPaymentView.me');

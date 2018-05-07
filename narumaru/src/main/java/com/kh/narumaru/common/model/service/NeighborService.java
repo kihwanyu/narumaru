@@ -17,4 +17,6 @@ public interface NeighborService {
 
 	void myPageNeighborDelete(Neighbor n) throws NeighborDeleteException;
 
+	ArrayList<Neighbor> selectNeighborListAjax(int mno);
+
 }

@@ -12,6 +12,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.StringTokenizer;
 
@@ -45,6 +46,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.narumaru.member.model.service.ChannelService;
 import com.kh.narumaru.member.model.service.MemberService;
 import com.kh.narumaru.member.model.vo.Channel;
+import com.kh.narumaru.member.model.vo.LogInfo;
 import com.kh.narumaru.member.model.vo.Member;
 import com.kh.narumaru.member.oauth.bo.NaverLoginBO;
 import com.kh.narumaru.payment.model.exception.BankSelectAllException;
@@ -53,6 +55,8 @@ import com.kh.narumaru.payment.model.service.BankSevice;
 import com.kh.narumaru.payment.model.service.PaymentService;
 import com.kh.narumaru.payment.model.vo.Bank;
 import com.kh.narumaru.payment.model.vo.Payment;
+import com.kh.narumaru.payment.model.vo.Stats;
+import com.kh.narumaru.payment.model.vo.UsePoint;
 import com.kh.narumaru.payment.model.vo.Withdraw;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.kh.narumaru.common.model.service.NeighborService;
@@ -80,7 +84,6 @@ import com.kh.narumaru.narumaru.model.vo.Narumaru;
 import com.kh.narumaru.payment.model.exception.PaymentListSelectException;
 import com.kh.narumaru.payment.model.service.PaymentService;
 import com.kh.narumaru.payment.model.vo.Payment;
-
 
 @Controller
 @SessionAttributes("loginUser")
@@ -110,6 +113,16 @@ public class MemberController {
 		
 		return "member/findMember";
 	}
+	
+	@RequestMapping(value="logout.me", method=RequestMethod.GET)
+	public String logout(/*HttpSession session*/SessionStatus status){
+		
+		//session.invalidate();
+		status.setComplete();
+		
+		return "main/main";
+	}
+	
 	
 	@RequestMapping(value="findEmail.me")
 	public ModelAndView findEmail(ModelAndView mv,HttpServletRequest request, HttpServletResponse response){
@@ -174,6 +187,7 @@ public class MemberController {
 			m2.setEmail(email);
 			m2.setUserPwd(newPwd2);
 			
+			m2.setUserPwd(passwordEncoder.encode(newPwd2));
 			ms.sendUpdatePwd(m2);
 			
 			SimpleMailMessage message = new SimpleMailMessage();
@@ -181,7 +195,7 @@ public class MemberController {
 			message.setFrom("wlgus12312@gmail.com");
 			message.setTo(email);
 			message.setSubject("나루마루 비밀번호 찾기안내");
-			message.setText("보이스피싱입니다. 비밀번호가 " + newPwd2 + " 로 변경되었습니다.");
+			message.setText("나루마루입니다. 비밀번호가 " + newPwd2 + " 로 변경되었습니다.");
 			
 			mailSender.send(message);
 			
@@ -201,44 +215,71 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="login.me", method=RequestMethod.POST)
-	public ModelAndView showMainView(Member m, ModelAndView mv, SessionStatus status ){
+	public ModelAndView showMainView(LogInfo li, Member m, ModelAndView mv, SessionStatus status, HttpServletRequest request, HttpServletResponse response){
 		
-	
 		System.out.println("controller Member : " + m);
 		
 		//System.out.println("암호 일치 여부 확인 : " + passwordEncoder.matches("pass01", "$2a$10$DEDHUZOux.CEoctwh7R3ZexGZEUaCn0y8MZO.zSHoxH7zRaQhHSUu"));
-
 		/*MemberService ms = new MemberServiceImpl();*/
-		
-	/*	HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
-        
+		/*request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
         String userIp = request.getHeader("X-FORWARDED-FOR");
+		System.out.println("접속한 IP : " + userIp);*/
 		
-		System.out.println(userIp);
-		*/
+		if(m.getEmail().equals("")){
+			String nameError = "아이디 / 비밀번호를 입력하세요!!";
+			mv.addObject("message", nameError);
+			mv.setViewName("common/errorPage");
+			
+			return mv;
+			
+		}
+		
+		//아이피 받아오기
+		String ip = request.getHeader("X-Forwarded-For");
+		 
+        System.out.println(">>>> X-FORWARDED-FOR : " + ip);
+ 
+        if (ip == null) {
+            ip = request.getHeader("Proxy-Client-IP");
+            //System.out.println(">>>> Proxy-Client-IP : " + ip);
+        }
+        if (ip == null) {
+            ip = request.getHeader("WL-Proxy-Client-IP"); // 웹로직
+            //System.out.println(">>>> WL-Proxy-Client-IP : " + ip);
+        }
+        if (ip == null) {
+            ip = request.getHeader("HTTP_CLIENT_IP");
+            //System.out.println(">>>> HTTP_CLIENT_IP : " + ip);
+        }
+        if (ip == null) {
+            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+            //System.out.println(">>>> HTTP_X_FORWARDED_FOR : " + ip);
+        }
+        if (ip == null) {
+            ip = request.getRemoteAddr();
+        }
+        
+        System.out.println(">>>> Result : IP Address : "+ip);
+		
 		try {
 			Member loginUser = ms.loginMember(m);
-			
 			//session.setAttribute("loginUser", loginUser);
-			
 			/*return "main/main";*/
 			System.out.println("loginUser : " + loginUser);
 			
+			//로그인포 객체 생성
 			
 			mv.addObject("loginUser", loginUser);
 			mv.setViewName("main/main");
 			
 		} catch (LoginException e) {
-			
 			//model.addAttribute("message", e.getMessage());
 			//return "common/errorPage";
 			
 			mv.addObject("message", e.getMessage());
 			mv.setViewName("common/errorPage");
 		}
-		
 		return mv;
-		
 	}
 	
 	@RequestMapping(value="insertMember.me", method=RequestMethod.POST)
@@ -770,6 +811,79 @@ public class MemberController {
 		
 		return mv;
 	}
+	@RequestMapping(value="naruRevenue.me")
+	public ModelAndView naruRevenueForward(ModelAndView mv, HttpSession session
+											, @RequestParam(defaultValue="1") int currentPage
+											, @RequestParam(defaultValue="2018") int year){
+		
+		Member loginUser = (Member) session.getAttribute("loginUser");
+		
+		int mno = loginUser.getMid();	
+		
+		//페이징처리
+		int limit;
+		int maxPage;
+		int startPage;
+		int endPage;
+		
+		/*limit = 10;*/
+		limit = 5;
+		
+		int listCount = 0;
+		
+		listCount = ps.getRevenueListCount(mno);
+		
+		System.out.println("listCount : " + listCount);
+		
+		maxPage = (int)((double)listCount / limit + 0.9);
+		startPage = ((int)((double)currentPage / limit + 0.9) - 1)*limit + 1;
+		endPage = startPage + limit -1;
+		if(maxPage<endPage){
+			endPage = maxPage;
+		}
+		
+		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage, mno);
+		
+		ArrayList<UsePoint> uList = ps.selectRevenueList(pi);
+		
+		ArrayList<String> beingYearList = ps.getBeingYearList(mno);
+		
+		Stats s = new Stats();
+		
+		s.setMno(mno);
+		s.setYear(year);
+		
+		ArrayList<Stats> sList = ps.selectYearMonthRevenueStats(s);
+		
+		int count = 0;
+		
+		String[] statsArr = new String[12];
+		
+		for(int i = 0; i < statsArr.length; i++){
+			System.out.println("i : " + i);
+			System.out.println("count : " + count);
+			if(count < sList.size()&&i==Integer.valueOf(sList.get(count).getMonth())-1){
+				statsArr[i] = String.valueOf(sList.get(count).getAmount());
+				count++;
+			}else {
+				statsArr[i] = "0";
+			}
+		}
+		
+		int revenuePoint = ps.getRevenueTotalPoint(mno);
+		
+		mv.addObject("uList", uList);
+		mv.addObject("pi", pi);
+		mv.addObject("statsArr",statsArr);
+		mv.addObject("year",year);
+		mv.addObject("revenuePoint",revenuePoint);
+		mv.addObject("beingYearList", beingYearList);
+		mv.setViewName("mypage/myPage_NaruRevenueList");
+		
+		return mv;
+		
+	}
+	
 	@RequestMapping(value="naruNeighborListView.me")
 	public ModelAndView NaruNeighborListForward(ModelAndView mv, HttpSession session, @RequestParam(defaultValue="1") int currentPage){
 		
@@ -854,6 +968,12 @@ public class MemberController {
 			mv.addObject("message", e.getMessage());
 			mv.setViewName("common/errorPage");
 		}
+		return mv;
+	}
+	@RequestMapping(value="myboardView.me")
+	public ModelAndView myBoardForward(ModelAndView mv){
+		mv.setViewName("mypage/myPage_myboard"); 
+		
 		return mv;
 	}
 	@RequestMapping(value="refundView.me")

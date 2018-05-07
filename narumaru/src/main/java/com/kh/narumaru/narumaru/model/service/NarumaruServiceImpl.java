@@ -28,6 +28,12 @@ public class NarumaruServiceImpl implements NarumaruService {
 		
 		return nmd.selectBoardList(nmno);
 	}
+	
+	@Override
+	public ArrayList<Board> selectCategoryBoardList(int nmno, int categoryNo) {
+		
+		return nmd.selectCategoryBoardList(nmno, categoryNo);
+	}
 
 	@Override
 	public Narumaru insertNarumaru(Narumaru nm) throws NarumaruException {
@@ -41,7 +47,7 @@ public class NarumaruServiceImpl implements NarumaruService {
 	}
 
 	@Override
-	public boolean checkNarumaruOwner(int nmno, Member loginUser) {
+	public int checkNarumaruOwner(int nmno, Member loginUser) {
 		return nmd.checkNarumaruOwner(nmno, loginUser);
 	}
 

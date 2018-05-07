@@ -72,6 +72,7 @@
                           <th>생일</th>
                           <th>휴대폰 번호</th>
                           <th>결제금액</th>
+                          <th>회원상태</th>
                         </tr>
                       </thead>
 						
@@ -84,6 +85,7 @@
                         		<td>${memberView.birthDay}</td>
                         		<td>${memberView.phone}</td>
                         		<td>${memberView.total_amount}</td>
+                        		<td><input type="button" value="${memberView.status}" onclick="memberStatus(this, ${memberView.mid});"></td>
                         	</tr>
                         </c:forEach>
                       </tbody>
@@ -139,7 +141,7 @@
 						  </td>
                           <td>Tiger Nixon</td>
                           <td>System Architect</td>
-                          <td>Edinburgh</td>
+                          <td>Edinburgh</td>da
                           <td>2011/04/25</td>
                           <td>$320,800</td>
                           <td>10</td>
@@ -163,7 +165,30 @@
     <!-- /footer content -->
 	
 	<script type="text/javascript">
-		
+		function memberStatus(btn, mid){
+			console.log(btn.value);
+			var status = btn.value;
+			if(btn.value == "Y"){
+				status = 'N';
+			}else{
+				status = 'Y';
+			}
+			console.log(status);
+			
+			 $.ajax({
+				url: "statusCh.ad",
+				type:"get",
+				data:{"status":status, "mid":mid},
+				success:function(data){
+					btn.value = status;
+					
+				},
+				error:function(){
+					
+				}
+			}); 
+			
+		}
 	</script>
 	
 </body>

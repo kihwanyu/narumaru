@@ -8,6 +8,7 @@
 	<resultMap type="Neighbor" id="neighborResultSet">
 		<id property="nno" column="NNO"/>
 		<result property="mno" column="MNO"/>
+		<result property="user_mno" column="USER_MNO"/>
 		<result property="email" column="EMAIL"/>
 		<result property="nicName" column="NICNAME"/>
 		<result property="profileName" column="PROFILENAME"/>
@@ -15,6 +16,11 @@
 		<result property="nm_title" column="NM_TITLE"/>
 		<result property="result" column="RESULT"/>
  	</resultMap>
+ 	
+	<select id="selectNeighbor" resultType="_int">
+		SELECT COUNT(*) FROM NEIGHBOR WHERE MNO = #{mno} AND NEIGHBOR_MNO = #{user_mno}
+	</select>
+ 	
  	<select id="getNeighborListCount" resultType="_int" parameterType="_int">
  		SELECT COUNT(N.NNO)
 		FROM NEIGHBOR N
@@ -46,9 +52,11 @@
 		WHERE NM.NM_CATEGORY=2 AND N.NEIGHBOR_MNO!=#{mno} 
 		ORDER BY RESULT ASC, N.NNO DESC
 	</select>
+	
 	<insert id="myPageNeighborInsert">
 		INSERT INTO NEIGHBOR VALUES (SEQ_NEIGHBOR_NO.NEXTVAL, #{mno}, #{user_mno})
 	</insert>
+	
 	<delete id="myPageNeighborDelete">
 		DELETE FROM NEIGHBOR WHERE MNO=#{mno} AND NEIGHBOR_MNO=#{user_mno}
 	</delete>

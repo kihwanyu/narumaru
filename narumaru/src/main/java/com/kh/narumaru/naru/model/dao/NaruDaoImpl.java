@@ -75,19 +75,24 @@ public class NaruDaoImpl implements NaruDao{
 	}
 
 	@Override
-	public void insertNeighbor(int nmno, int mid, SqlSessionTemplate sqlSession) {
+	public int insertNeighbor(int nmno, int mid, SqlSessionTemplate sqlSession) {
 		Neighbor nb = new Neighbor();
 		
-		nb.setUser_mno(mid);
-		nb.setMno(sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno));
+		int ownerMno = sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno);
+				
+		nb.setMno(mid);
+		nb.setUser_mno(ownerMno);
 		
-		sqlSession.insert("Naru.insertNeighbor", nb);
+		sqlSession.insert("Neighbor.myPageNeighborInsert", nb);
+		
+		return ownerMno;
 	}
 
 	@Override
 	public ArrayList<Narumaru> selectNeighborList(int nmno, SqlSessionTemplate sqlSession) {
 		//해당 나루의 주인을 찾아옴
 		int mno = sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno);
+		
 		//해당 나루의 이웃들을 가져옴
 		ArrayList<Narumaru> list = (ArrayList)sqlSession.selectList("Narumaru.selectNeighborList", mno);
 		
@@ -98,10 +103,18 @@ public class NaruDaoImpl implements NaruDao{
 	public void deleteNeighbor(int nmno, int mid, SqlSessionTemplate sqlSession) {
 		Neighbor nb = new Neighbor();
 		
-		nb.setUser_mno(mid);
-		nb.setMno(sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno));
+		nb.setUser_mno(sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno));
+		nb.setMno(mid);
 		
-		sqlSession.delete("Naru.deleteNeighbor", nb);
+		sqlSession.delete("Neighbor.myPageNeighborDelete", nb);
+	}
+
+	//mno로 그사람의 나루를 가져온다
+	@Override
+	public int checkNaruByMno(int mno, SqlSessionTemplate sqlSession) {
+		int nmno = sqlSession.selectOne("Narumaru.checkNaruByMno", mno);
+		
+		return nmno;
 	}
 
 }

@@ -12,11 +12,11 @@
 	<div class="marginAuto innerMenu">
 		<div class="leftArea">
 			<div class="maruProfile">
-				<img src="resources/images/profile_defalt.png" class="size100per">
+				<img src="resources/memberprofile/${owner.profileName}" class="size100per">
 			</div>
 			<br>
 			<div class="maruName" style="cursor:default;">
-				<h2>${ nm.nmTitle }</h2>
+				<h3>${ nm.nmTitle }</h3>
 			</div><br>
 			<div class="maruMember" style="cursor:default;">
 				<div class="inlineBlock">
@@ -27,20 +27,20 @@
 			<div class="maruSetting">
 			<hr>
 			<br>
-			<c:if test="${isOwner}">
-				<label class="btn_label" for="open-pop2" style="margin-bottom:10px;">나루 설정</label>
-				<label class="btn_label" onclick="toWrite()">글 작성</label>			
+			<c:if test="${isOwner == loginUser.mid}">
+				<label class="btn btn-info" for="open-pop2">나루 설정</label>
+				<label class="btn btn-info" onclick="toWrite()">글 작성</label>			
 			</c:if>
-			<c:if test="${!isOwner && isNeighbor == 0}">
-				<label class="btn_label" onclick="addNeighbor()" style="margin-bottom:10px;">이웃 추가</label>
+			<c:if test="${isOwner != loginUser.mid && isNeighbor == 0}">
+				<label class="btn btn-info" onclick="addNeighbor()" style="margin-bottom:10px;">이웃 추가</label>
 			</c:if>
-			<c:if test="${!isOwner && isNeighbor >= 1}">
-				<label class="btn_label" onclick="deleteNeighbor()" style="margin-bottom:10px;">이웃</label>
+			<c:if test="${isOwner != loginUser.mid && isNeighbor >= 1}">
+				<label class="btn btn-info" onclick="deleteNeighbor()" style="margin-bottom:10px;">이웃</label>
 			</c:if>
 			</div>
 		</div>
 		
-		<div class="floatRight rightArea">
+		<div class="floatRight rightArea" style="border:0;">
 			<div class="rightMenu chat">
 				<div class="rightTitle">이 나루의 이웃</div>
 				<div class="neighborContent">
@@ -48,7 +48,7 @@
 						<label>아직 이웃이 없습니다.</label>
 					</c:if>
 					<c:forEach var="i" items="${neList}">
-						<label class="pointer" onclick="location.href='boardListAll.bo?nmno=${i.nmno}'">${i.nmTitle}</label>
+						<label class="pointer" onclick="location.href='boardListAll.bo?nmno=${i.nmno}'">${i.nmTitle}</label><br>
 					</c:forEach>
 				</div>
 			</div>
@@ -70,7 +70,7 @@
 				data:{"nmno":${nm.nmno}},
 				success:function(data){
 					for(var i in data){
-						var href = "location.href='boardListAll.bo?nmno=" + data[i].nmno + "'";
+						var href = "location.href='boardListCategory.bo?nmno=" + data[i].nmno + "&cano=" + data[i].cano + "'";
 						$(".categoryContent").append("<label class='pointer' onclick=" + href + ">" + data[i].caName + "</label><br>");
 					}
 				},

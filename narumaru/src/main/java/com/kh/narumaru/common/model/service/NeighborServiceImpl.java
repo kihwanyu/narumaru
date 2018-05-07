@@ -40,13 +40,18 @@ public class NeighborServiceImpl implements NeighborService {
 	public void myPageNeighborInsert(Neighbor n) throws NeighborInsertException {
 		
 		nd.myPageNeighborInsert(sqlSession, n);
-		
+
 	}
 
 	@Override
 	public void myPageNeighborDelete(Neighbor n) throws NeighborDeleteException {
 		
 		nd.myPageNeighborDelete(sqlSession, n);
+	}
+
+	@Override
+	public ArrayList<Neighbor> selectNeighborListAjax(int mno) {
+		return nd.selectNeighborListAjax(mno, sqlSession);
 	}
 
 }

@@ -19,4 +19,6 @@ public interface NeighborDao {
 
 	void myPageNeighborDelete(SqlSessionTemplate sqlSession, Neighbor n) throws NeighborDeleteException;
 
+	ArrayList<Neighbor> selectNeighborListAjax(int mno, SqlSessionTemplate sqlSession);
+
 }

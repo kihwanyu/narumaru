@@ -25,6 +25,18 @@ public class NarumaruDaoImpl implements NarumaruDao {
 		
 		return list;
 	}
+	
+	@Override
+	public ArrayList<Board> selectCategoryBoardList(int nmno, int categoryNo) {
+		
+		Board b = new Board();
+		b.setNmno(nmno);
+		b.setCano(categoryNo);
+		
+		ArrayList<Board> list = (ArrayList)sqlSession.selectList("Board.selectCategoryBoardList", b);
+		
+		return list;
+	}
 
 	@Override
 	public Narumaru insertNarumaru(SqlSessionTemplate sqlSession, Narumaru nm) throws NarumaruException {
@@ -50,15 +62,11 @@ public class NarumaruDaoImpl implements NarumaruDao {
 	}
 
 	@Override
-	public boolean checkNarumaruOwner(int nmno, Member loginUser) {
-		
-		boolean isOwner = false;
+	public int checkNarumaruOwner(int nmno, Member loginUser) {
 		
 		int ownerMno = sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno);
 		
-		if(loginUser.getMid() == ownerMno) isOwner = true;
-		
-		return isOwner;
+		return ownerMno;
 	}
 	
 	@Override
@@ -67,10 +75,10 @@ public class NarumaruDaoImpl implements NarumaruDao {
 		
 		int ownerMno = sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno);
 		
-		n.setMno(ownerMno);
-		n.setUser_mno(loginUser.getMid());
+		n.setMno(loginUser.getMid());
+		n.setUser_mno(ownerMno);
 		
-		int resultNeighbor = sqlSession.selectOne("Naru.selectNeighbor", n);
+		int resultNeighbor = sqlSession.selectOne("Neighbor.selectNeighbor", n);
 		
 		//1개 이상 리턴되면 이웃을 걸어놨다는 뜻
 		return resultNeighbor;
