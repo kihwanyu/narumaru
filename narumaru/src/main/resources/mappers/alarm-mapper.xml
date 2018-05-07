@@ -104,7 +104,7 @@
 		LEFT JOIN NARUMARU N ON(A.SEND_NMNO=N.NMNO)
         LEFT JOIN BOARD B ON(A.SEND_BNO=B.BNO)
 		WHERE RECEIVE_MNO=#{mno}
-		ORDER BY A.ANO DESC
+		ORDER BY A.STATUS DESC, A.ANO DESC
 	</select>
 	<update id="alarmStatusUpdate" parameterType="_int">
 		UPDATE ALARM SET STATUS=0 WHERE ANO=#{ano}
