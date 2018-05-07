@@ -53,6 +53,7 @@
 					<br>
 					<label id="boardCreateDate">${b.createDate} ${b.caname}</label>
 					</div>
+					<c:if test="${b.mno eq loginUser.mid}"> <%-- 작성자만 수정버튼 --%>
 					<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">
 						<img src="resources/images/menu.png" class="modifyMenu size100per">
 						<div class="sub boardSub">
@@ -63,6 +64,7 @@
 							</ul>
 						</div>
 					</div>
+					</c:if>
 				</div>
 				<div class="boardContent">${fn:replace(b.bContent,nr,br)}</div>
 				<%-- 이하 히든 컨텐츠, 구매 여부를 체크함 --%>
@@ -93,13 +95,13 @@
 				<div class="boardfoot">
 					<hr>
 					<ul class="footUl">
-						<li class="showSub emotionBtn" onclick="submenuOpen(this);"><span>이모티콘</span>
+						<!-- <li class="showSub emotionBtn" onclick="submenuOpen(this);"><span>이모티콘</span>
 							<div class="sub emotionSub">이모티콘</div>
-						</li>
+						</li> -->
 						<li class="insertReplyShow" onclick="replyOpen(this);"><span>댓글보기(${b.comments})</span></li>
-						<li class="showSub shereBtn" onclick="submenuOpen(this);"><span>공유하기</span>
+						<!-- <li class="showSub shereBtn" onclick="submenuOpen(this);"><span>공유하기</span>
 							<div class="sub shereSub">개발중인 기능입니다</div>
-						</li>
+						</li> -->
 					</ul>
 				</div>
 				<div class="insertReply">
@@ -113,7 +115,7 @@
 					<c:forEach var="j" items="${colist}">
 						<c:if test="${j.targetBno eq b.bno}">
 							<div class="replyArea">
-								<div class="writerPhoto" style="width:40px; height:40px;"><img src="resources/images/profile_defalt.png" class="size100per"></div>
+								<div class="writerPhoto" style="width:40px; height:40px;"><img src="resources/memberprofile/${b.profileName}" class="size100per"></div>
 								<label style="font-size:0.9em;">${j.bWriter}</label><br><label style="font-size:0.9em;">${j.createDate}</label>
 								<div class="replyContent" style="clear:both;">${j.bContent}</div>
 							</div>
@@ -450,6 +452,7 @@
 								+'<br>'
 								+'<label id="boardCreateDate">${b.createDate} ${b.caname}</label>'
 								+'</div>'
+								<c:if test="${b.mno eq loginUser.mid}">
 								+'	<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">'
 								+'		<img src="resources/images/menu.png" class="modifyMenu size100per">'
 								+'			<div class="sub boardSub">'
@@ -461,6 +464,7 @@
 								+'			</div>'
 								+'	</div>'
 								+'</div>'
+								</c:if>
 								+'<div class="boardContent">${fn:replace(b.bContent, nr, "<br>")}</div>'
 								<c:if test="${b.bHidden ne null}">
 									<c:set var="canView" value="false"/>
@@ -485,12 +489,12 @@
 								+'<div class="boardfoot">'
 								+'	<hr>'
 								+'	<ul class="footUl">'
-								+'		<li class="showSub emotionBtn" onclick="submenuOpen(this);"><span>이모티콘</span>'
+/* 								+'		<li class="showSub emotionBtn" onclick="submenuOpen(this);"><span>이모티콘</span>'
 								+'			<div class="sub emotionSub">이모티콘</div>'
-								+'		</li>'
+								+'		</li>' */
 								+'			<li class="insertReplyShow" onclick="replyOpen(this);"><span>댓글보기(${b.comments})</span></li>'
-								+'		<li class="showSub shereBtn" onclick="submenuOpen(this);"><span>공유하기</span>'
-								+'			<div class="sub shereSub">개발중인 기능입니다</div>'
+/* 								+'		<li class="showSub shereBtn" onclick="submenuOpen(this);"><span>공유하기</span>'
+								+'			<div class="sub shereSub">개발중인 기능입니다</div>' */
 								+'		</li>'
 								+'	</ul>'
 								+'</div>'
@@ -505,7 +509,7 @@
 								<c:forEach var="j" items="${colist}">
 									<c:if test="${j.targetBno eq b.bno}">
 								+	'<div class="replyArea">'
-								+		'<div class="writerPhoto" style="width:40px; height:40px;"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
+								+		'<div class="writerPhoto" style="width:40px; height:40px;"><img src="resources/memberprofile/${b.profileName}" class="size100per"></div>'
 								+		'<label style="font-size:0.9em;">${j.bWriter}</label><br><label style="font-size:0.9em;">${j.createDate}</label>'
 								+		'<div class="replyContent" style="clear:both;">${j.bContent}</div>'
 								+	'</div>'
@@ -514,6 +518,9 @@
 								+'	</div>'
 								+'</div>'
 								)
+								
+								//글배경색
+								$(".board").css({"background":"${theme.board}"});
 		        	/* } */
 		        	</c:forEach>
 		        	
@@ -549,12 +556,12 @@
 			
 			var d = new Date();
 			var strDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
-			
+
 			$(replyArea).append('<div class="replyArea">'
-					+ '<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
-					+ '<label>${loginUser.nickName}</label><br><label>' + strDate + '</label>'
-					+ '<div class="replyContent" style="clear:both;">'+ comment +' </div>'
-					+ '</div>');
+					+	'<div class="writerPhoto" style="width:40px; height:40px;"><img src="resources/memberprofile/${owner.profileName}" class="size100per"></div>'
+					+	'<label style="font-size:0.9em;">${loginUser.nickName}</label><br><label style="font-size:0.9em;">' + strDate + '</label>'
+					+	'<div class="replyContent" style="clear:both;">'+ comment +'</div>'
+					+'</div>');
 			
 			$.ajax({
 				url:'insertComment.nm',
