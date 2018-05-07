@@ -147,10 +147,10 @@
 					<label class="modal_close" for="open-pop2"></label>
 				</div>
 				<label class="btn btn-info" id="updateThemeBtn" onclick="defaultModifyBtn()" style="margin-bottom:15px;">수정완료</label>
-				<div class="row">
+<!-- 				<div class="row">
 					<label class="modal-leftlabel">나루 대표사진</label>
 					<input type="file" style="width:70%; float:right;" name="">
-				</div>
+				</div> -->
 				<div class="row">
 					<label class="modal-leftlabel">나루 제목</label>
 					<input type="text" style="width:79.1%; float:right; height:25px;" name="nmTitle" value="${nm.nmTitle}">

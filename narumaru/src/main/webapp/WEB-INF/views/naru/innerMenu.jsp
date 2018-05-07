@@ -48,7 +48,7 @@
 						<label>아직 이웃이 없습니다.</label>
 					</c:if>
 					<c:forEach var="i" items="${neList}">
-						<label class="pointer" onclick="location.href='boardListAll.bo?nmno=${i.nmno}'">${i.nmTitle}</label>
+						<label class="pointer" onclick="location.href='boardListAll.bo?nmno=${i.nmno}'">${i.nmTitle}</label><br>
 					</c:forEach>
 				</div>
 			</div>
