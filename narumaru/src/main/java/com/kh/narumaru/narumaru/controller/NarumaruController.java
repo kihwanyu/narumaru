@@ -189,7 +189,7 @@ public class NarumaruController {
 	@RequestMapping(value = "searchBoard.nm")
 	public ModelAndView searchBoard(String search, Board b, ModelAndView mv, HttpServletRequest request){
 		System.out.println("조회하는 나루마루번호 " + b.getNmno());
-		
+		System.out.println(b);  
 		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
 		
 		System.out.println(loginUser);
