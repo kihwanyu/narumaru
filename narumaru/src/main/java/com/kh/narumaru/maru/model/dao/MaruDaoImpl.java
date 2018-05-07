@@ -124,7 +124,7 @@ public class MaruDaoImpl implements MaruDao{
 		if(result <= 0){
 			throw new invateRejectException("초대 거절 실패");
 		}
-				
+	}		
 
 	public MaruMember insertInvatemember(int nmno, String email) throws MaruException {
 		MaruMember mm = new MaruMember();

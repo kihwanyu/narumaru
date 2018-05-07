@@ -200,7 +200,7 @@ public class NarumaruController {
 		Narumaru nm = nms.selectNarumaruOne(b.getNmno());
 		Theme theme = nms.selectThemeOne(b.getNmno());
 		
-		boolean isOwner = nms.checkNarumaruOwner(b.getNmno(), loginUser);
+		int isOwner = nms.checkNarumaruOwner(b.getNmno(), loginUser);
 
 		mv.addObject("nm", nm);
 		mv.addObject("list", list);

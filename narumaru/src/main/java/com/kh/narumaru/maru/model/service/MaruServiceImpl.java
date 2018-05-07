@@ -87,7 +87,7 @@ public class MaruServiceImpl implements MaruService{
 	@Override
 	public void invateReject(int ino) throws invateRejectException{
 		md.invateReject(sqlSession, ino);
-
+	}
 	public MaruMember insertInvatemember(int nmno, String email) throws MaruException {
 		MaruMember mm = md.insertInvatemember(nmno, email);
 		return mm;

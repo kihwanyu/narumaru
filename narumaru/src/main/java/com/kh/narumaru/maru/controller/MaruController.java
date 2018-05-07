@@ -205,7 +205,7 @@ public class MaruController {
 	@RequestMapping("invateAccept.ma")
 	public ModelAndView invateAccept(HttpServletResponse response, ModelAndView mv, int ino, int nmno){
 		
-		try {
+		/*try {
 			//ms.invateAccept(ino);
 			
 			mv.setViewName("redirect:/invitedMaruView.me");
@@ -213,9 +213,9 @@ public class MaruController {
 			mv.addObject("message", e.getMessage());
 			mv.setViewName("common/erroPage");
 		}
-		
+		*/
 		return mv;
-		
+	}
 
 	@RequestMapping("insertInvatemember.ma")
 	public ModelAndView insertInvatemember(ModelAndView mv, int nmno, String email){
