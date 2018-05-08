@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -188,17 +189,24 @@
         </footer>
         <!-- footer content -->
     <script type="text/javascript">
+    console.log('${Chart}' + "1");
+    console.log('${totalAge}' + "2")
    	 if ($('#mybarChart2').length ){ 
 		  
 		  var ctx = document.getElementById("mybarChart2");
 		  var mybarChart = new Chart(ctx, {
 			type: 'bar',
 			data: {
-			  labels: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+			  labels: [
+					<c:forEach begin="0" end="${fn:length(Chart)-1}" varStatus="chart">
+						"${Chart[chart.index].ASD}",
+					</c:forEach>
+				  ],
 			  datasets: [{
 				label: '2018년 수익그래프',
 				backgroundColor: "#26B99A",
 				data: [51, 30, 40, 28, 92, 50, 45]
+					
 			  }]/*, {
 				label: '# of Votes',
 				backgroundColor: "#03586A",
@@ -219,6 +227,7 @@
 		  
 		} 
    	 
+   	 
    	if ($('#canvasDoughnut2').length ){ 
 		  
 		  var ctx = document.getElementById("canvasDoughnut2");
@@ -231,7 +240,11 @@
 			  "50대 이상"
 			],
 			datasets: [{
-			  data: [70, 200, 300, 180, 100],
+			  data: [
+				<c:forEach items="${totalAge}" var="totalAge" >
+      				<c:out value="${totalAge}"/>,
+    			</c:forEach>
+    		],
 			  backgroundColor: [
 				"#455C73",
 				"#9B59B6",

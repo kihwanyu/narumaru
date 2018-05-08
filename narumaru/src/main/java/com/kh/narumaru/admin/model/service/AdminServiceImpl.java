@@ -135,4 +135,22 @@ public class AdminServiceImpl implements AdminService {
 	public void statusCh(Member m) throws Exception {
 		ad.statusCh(m);
 	}
+
+	@Override
+	public ArrayList moneyView() {
+		ArrayList moneyView = ad.moneyView();
+		return moneyView;
+	}
+
+	@Override
+	public void moneyStatusCh(int WNO) throws Exception {
+		ad.moneyStatusCh(WNO);
+		
+	}
+
+	@Override
+	public ArrayList Chart() {
+		ArrayList Chart = ad.Chart();
+		return Chart;
+	}
 }

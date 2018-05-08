@@ -27,6 +27,9 @@ public interface AdminService {
 	ArrayList selectChCount();//채널 수 조회
 	ArrayList<Narumaru> naruView();//나루목록조회
 	void statusCh(Member m) throws Exception;//회원상태 변경
+	ArrayList moneyView();//환급신청뷰
+	void moneyStatusCh(int WNO) throws Exception;//환급신청
+	ArrayList Chart();//수익분석 차트
 
   
 }

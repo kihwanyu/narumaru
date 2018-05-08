@@ -158,9 +158,25 @@ public class AdminController {
 	}
 	
 	@RequestMapping("adMoneyView.ad")
-	public String showmAdminMoneyView(){
+	public ModelAndView showmAdminMoneyView(ModelAndView mv){
+		ArrayList moneyView = as.moneyView();
 		
-		return "admin/adMoneyView";
+		System.out.println(moneyView);
+		
+		mv.addObject("moneyView", moneyView);
+		mv.setViewName("admin/adMoneyView");
+		
+		return mv;
+	}
+	
+	@RequestMapping("moneyStatusCh.ad")
+	public void moneyStatusCh(int WNO, HttpServletResponse response){
+		try {
+			as.moneyStatusCh(WNO);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@RequestMapping("adRevenueView.ad")
@@ -173,6 +189,10 @@ public class AdminController {
 		ArrayList totalAge = as.totalAge();
 		System.out.println("totalAge" + totalAge);
 		mv.addObject("totalAge", totalAge);
+		
+		ArrayList Chart = as.Chart();
+		System.out.println("Chart" + Chart);
+		mv.addObject("Chart", Chart);
 		
 		mv.setViewName("admin/adRevenueView");
 		

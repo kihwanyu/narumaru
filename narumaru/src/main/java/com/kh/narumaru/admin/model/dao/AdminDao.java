@@ -30,6 +30,9 @@ public interface AdminDao {
 	ArrayList selectChCount();//채널수 조회
 	ArrayList<Narumaru> naruView();//나루 조회
 	void statusCh(Member m) throws Exception;//회원상태 수정
+	ArrayList moneyView();//환급신청뷰
+	void moneyStatusCh(int WNO) throws Exception;//환급신청
+	ArrayList Chart();//수익분석차트
 	
 	
 	
