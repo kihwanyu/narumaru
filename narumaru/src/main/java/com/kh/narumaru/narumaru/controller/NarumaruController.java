@@ -631,9 +631,10 @@ public class NarumaruController {
 	@RequestMapping("searchNarumaruBoard.nm")
 	public ModelAndView searchNarumaruBoard(String searchCondition, ModelAndView mv){
 		ArrayList<Board> blist = nms.searchNarumaruBoard(searchCondition);
+		System.out.println("blist : " + blist);
 		ArrayList<Narumaru> nmlist = nms.searchNarumaru(searchCondition);
-		ArrayList<Narumaru> narulist = nms.searchNarumaru(searchCondition);
-		ArrayList<Narumaru> marulist = nms.searchNarumaru(searchCondition);
+		ArrayList<Narumaru> narulist = new ArrayList<Narumaru>();
+		ArrayList<Narumaru> marulist = new ArrayList<Narumaru>();
 		
 		int naruCount = 0;
 		int maruCount = 0;
@@ -650,8 +651,8 @@ public class NarumaruController {
 		}
 		
 		mv.addObject("blist", blist);
-		mv.addObject("marulist", nmlist);
-		mv.addObject("narulist", nmlist);
+		mv.addObject("marulist", marulist);
+		mv.addObject("narulist", narulist);
 		mv.addObject("naruCount", naruCount);
 		mv.addObject("maruCount", maruCount);
 		mv.addObject("searchCondition", searchCondition);
