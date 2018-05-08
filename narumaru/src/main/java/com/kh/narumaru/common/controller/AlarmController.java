@@ -34,6 +34,9 @@ public class AlarmController {
 		/*INSERT INTO ALARM_TYPE VALUES (100,'관리자-공지사항');
 		INSERT INTO ALARM_TYPE VALUES (101,'관리자-QA 답변');
 		
+		INSERT INTO ALARM_TYPE VALUES (102,'관리자-입금 완료');
+		INSERT INTO ALARM_TYPE VALUES (103,'마루-환급 거부');
+		
 		INSERT INTO ALARM_TYPE VALUES (200,'나루-게시글 댓글');
 		INSERT INTO ALARM_TYPE VALUES (201,'나루-게시글 등록');
 		INSERT INTO ALARM_TYPE VALUES (202,'나루-이웃 신청');
@@ -45,7 +48,10 @@ public class AlarmController {
 		INSERT INTO ALARM_TYPE VALUES (302,'마루-회원 초대');
 		INSERT INTO ALARM_TYPE VALUES (303,'마루-회원 가입신청');
 		INSERT INTO ALARM_TYPE VALUES (304,'마루-회원 가입승인');
-		INSERT INTO ALARM_TYPE VALUES (305,'마루-회원 가입소개');*/
+		INSERT INTO ALARM_TYPE VALUES (305,'마루-회원 가입소개');
+		
+		
+		*/
 		
 		/*INSERT INTO ALARM VALUES(SEQ_ANO.NEXTVAL, 100, sysdate, 1, null, null, 1, default);
 		INSERT INTO ALARM VALUES(SEQ_ANO.NEXTVAL, 101, sysdate, 1, null, null, 1, default);
