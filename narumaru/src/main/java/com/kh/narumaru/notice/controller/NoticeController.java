@@ -11,10 +11,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -332,19 +334,19 @@ public class NoticeController {
 				session.setAttribute("loginUser", loginUser);
 				
 				response.getWriter().print("true");
-			} /*catch (IOException e) {
+			} catch (IOException e2) {
 				try {
 					response.getWriter().print("false");
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				e.printStackTrace();
-			} catch (questionInsertException e) {
+				e2.printStackTrace();
+			} catch (questionInsertException e3) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e3.printStackTrace();
+				}
 			}
-			}*/	
 			return "notice/noticeSuccess";
 		}
 		
