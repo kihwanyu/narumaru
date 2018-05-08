@@ -158,4 +158,16 @@ public class AdminServiceImpl implements AdminService {
 		ArrayList Chart = ad.Chart();
 		return Chart;
 	}
+
+	@Override
+	public void moneyStop(int WNO) throws Exception {
+		ad.moneyStop(WNO);
+		
+	}
+
+	@Override
+	public ArrayList<Integer> sendUser(int WNO) {
+		ArrayList<Integer> sendUser = ad.sendUser(WNO);
+		return sendUser;
+	}
 }

@@ -35,6 +35,8 @@ public interface AdminDao {
 	ArrayList moneyView();//환급신청뷰
 	void moneyStatusCh(int WNO) throws Exception;//환급신청
 	ArrayList Chart();//수익분석차트
+	void moneyStop(int wNO) throws Exception;//환급거부
+	ArrayList<Integer> sendUser(int WNO);//환급알림
 
 	
 	

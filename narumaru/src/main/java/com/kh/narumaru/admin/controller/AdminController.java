@@ -32,6 +32,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.kh.narumaru.admin.model.service.AdminService;
 import com.kh.narumaru.admin.model.vo.Admin;
+import com.kh.narumaru.common.model.exception.alarmRequestException;
+import com.kh.narumaru.common.model.service.AlarmService;
+import com.kh.narumaru.common.model.vo.Alarm;
 import com.kh.narumaru.notice.model.vo.Notice;
 
 
@@ -47,7 +50,9 @@ public class AdminController {
 
 	@Autowired
 	private AdminService as;
-
+	@Autowired
+	private AlarmService als;
+	
 	@RequestMapping(value="adMain.ad")
 	public ModelAndView showAdminMainView(ModelAndView mv){
 		HashMap EnrollDateList = as.selectEnrollDateList();
@@ -165,6 +170,8 @@ public class AdminController {
 	public ModelAndView showmAdminMoneyView(ModelAndView mv){
 		ArrayList moneyView = as.moneyView();
 		
+		
+		
 		System.out.println(moneyView);
 		
 		mv.addObject("moneyView", moneyView);
@@ -177,6 +184,57 @@ public class AdminController {
 	public void moneyStatusCh(int WNO, HttpServletResponse response){
 		try {
 			as.moneyStatusCh(WNO);
+			
+			ArrayList<Alarm> alarmList = new ArrayList<>();
+			// 보낼 유저의 번호를 구한다.
+			ArrayList<Integer> sendUser = as.sendUser(WNO);
+			
+			/*Controller에서 Alarm객체에 값을 채운 후 Service로 보내주세요.*/
+			for(int i = 0; i < sendUser.size(); i++){
+				Alarm a = new Alarm();
+				a.setReceive_mno(sendUser.get(i));
+				a.setAtno(102);
+				alarmList.add(a);
+			}
+			
+			System.out.println("alarmList : " + alarmList);
+			
+			try {
+				als.alarmRequest(alarmList);
+			} catch (alarmRequestException e) {
+				e.printStackTrace();
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("moneyStop.ad")
+	public void moneyStop(int WNO, HttpServletResponse response){
+		System.out.println(WNO);
+		
+		ArrayList<Alarm> alarmList = new ArrayList<>();
+		// 보낼 유저의 번호를 구한다.
+		ArrayList<Integer> sendUser = as.sendUser(WNO);
+		
+		/*Controller에서 Alarm객체에 값을 채운 후 Service로 보내주세요.*/
+		for(int i = 0; i < sendUser.size(); i++){
+			Alarm a = new Alarm();
+			a.setSend_mno(sendUser.get(i));
+			a.setAtno(103);
+			alarmList.add(a);
+		}
+		
+		try {
+			als.alarmRequest(alarmList);
+		} catch (alarmRequestException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			as.moneyStop(WNO);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

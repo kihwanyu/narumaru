@@ -202,4 +202,23 @@ public class AdminDaoImpl implements AdminDao{
 		ArrayList Chart = (ArrayList) sqlSession.selectList("Admin.Chart");
 		return Chart;
 	}
+
+
+	@Override
+	public void moneyStop(int WNO) throws Exception {
+		int result = sqlSession.update("Admin.moneyStop", WNO);
+		
+		if(result < 0){
+			throw new Exception("실패");
+		}
+		System.out.println("dao : " + result);
+	}
+
+
+	@Override
+	public ArrayList<Integer> sendUser(int WNO) {
+		ArrayList<Integer> sendUser = (ArrayList)sqlSession.selectList("Admin.sendUser",WNO);
+		System.out.println("sendUser : " + sendUser);
+		return sendUser;
+	}
 }
