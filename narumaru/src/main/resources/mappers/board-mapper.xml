@@ -27,6 +27,7 @@
 		<result property="isOpen" column="IS_OPEN"/>
 		<result property="needPoint" column="NEED_POINT"/>
 		<result property="comments" column="COMMENTS"/>
+		<result property="nmTitle" column="NM_TITLE"/>
 	</resultMap>
 	
 	<resultMap type="Notice" id="noticeResultSet">
@@ -172,13 +173,14 @@
 	
 	<select id="selectChannelBoardList" resultMap="boardResultSet" parameterType="_int">
 		SELECT BNO, B_TNO, B_TYPE, B_TITLE, M.PROFILENAME, B_CONTENT, B_HIDDEN, B.MNO, M.NICNAME, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, B.NMNO, B.CANO, 
-      CASE WHEN C.CANAME IS NULL THEN '미분류' ELSE C.CANAME END AS CANAME , CNO, B_LEVEL, TARGET_BNO, IS_OPEN, NEED_POINT,
-       (SELECT COUNT(*) FROM BOARD WHERE TARGET_BNO = B.BNO) AS COMMENTS
-      FROM BOARD B
-      JOIN MEMBER M ON(B.MNO = M.MNO)
-       LEFT JOIN CATEGORY C ON(B.CANO = C.CANO)
-      WHERE B.CNO = #{cno} AND B.STATUS = 'Y' AND (B_TYPE = 200 OR B_TYPE = 100)
-      ORDER BY BNO DESC
+	      CASE WHEN C.CANAME IS NULL THEN '미분류' ELSE C.CANAME END AS CANAME , B.CNO, B.B_LEVEL, B.TARGET_BNO, B.IS_OPEN, B.NEED_POINT,
+	       (SELECT COUNT(*) FROM BOARD WHERE TARGET_BNO = B.BNO) AS COMMENTS, NM.NM_TITLE
+	      FROM BOARD B
+	      JOIN MEMBER M ON(B.MNO = M.MNO)
+	      LEFT JOIN CATEGORY C ON(B.CANO = C.CANO)
+	      JOIN NARUMARU NM ON(B.NMNO = NM.NMNO)
+	      WHERE B.CNO = #{cno} AND B.STATUS = 'Y' AND (B_TYPE = 200 OR B_TYPE = 100)
+	      ORDER BY BNO DESC
 	</select>
 </mapper>
 
