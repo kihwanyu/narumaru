@@ -112,9 +112,9 @@
 	</update>
 	
 	<insert id="insertNotice" parameterType="Notice">
-		INSERT INTO BOARD VALUES(SEQ_BNO.NEXTVAL, NULL, #{noType} , #{noTitle}, #{noContent}, NULL, 2, SYSDATE, SYSDATE, DEFAULT, 1,NULL,NULL,NULL,NULL,NULL,NULL )
+		INSERT INTO BOARD VALUES(SEQ_BNO.NEXTVAL, NULL, #{noType} , #{noTitle}, #{noContent}, NULL, #{writerId}, SYSDATE, SYSDATE, DEFAULT, 1,NULL,NULL,NULL,NULL,NULL,NULL )
 	</insert>
-	
+	<!--  -->
 	<select id="noticeSelectList" resultMap ="noticeResultSet">
 		SELECT * FROM BOARD
 		WHERE STATUS = 'Y'
@@ -167,9 +167,40 @@
 	
 	<insert id="questionFileInsert" parameterType="Notice">
 		INSERT INTO FILET
-		VALUES(SEQ_AT_NO.NEXTVAL, #{fileName}, ? , SYSDATE, NULL,NULL,NULL, Y ,NULL,NULL,NULL,NULL )
+		VALUES(SEQ_AT_NO.NEXTVAL, #{orFileName}, #{chFileName}, NULL, SYSDATE, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, SEQ_BNO.CURRVAL)
 	</insert>
+
+	<select id="questionSelectList" parameterType = "Notice">
+		SELECT *
+		FROM BOARD
+		WHERE B_TYPE = 900
+		ORDER BY BNO ASC
+		
+	</select>
 	
+	<select id ="selectNotice" resultMap="noticeResultSet" parameterType = "_int">
+		SELECT BNO
+		FROM( SELECT ROWNUM, BNO
+			  FROM BOARD
+			  WHERE B_TYPE = 700
+			 
+			)
+		WHERE ROWNUM=1
+	</select>
+	
+	<select id="selectNoticeListCount" resultType = "_int" parameterType ="_int">
+		SELECT COUNT(*) FROM BOARD WHERE B_TYPE = 700
+
+	</select>
+
+	<select id="SearchFAQList" resultType="hashmap">
+		SELECT * 
+		FROM BOARD
+		WHERE B_TYPE LIKE '80%'
+		AND (B_TITLE LIKE '%'||#{keyWord}||'%' OR 
+			 B_CONTENT LIKE '%'||#{keyWord}||'%')
+	</select>
+
 	<select id="selectChannelBoardList" resultMap="boardResultSet" parameterType="_int">
 		SELECT BNO, B_TNO, B_TYPE, B_TITLE, M.PROFILENAME, B_CONTENT, B_HIDDEN, B.MNO, M.NICNAME, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, B.NMNO, B.CANO, 
       CASE WHEN C.CANAME IS NULL THEN '미분류' ELSE C.CANAME END AS CANAME , CNO, B_LEVEL, TARGET_BNO, IS_OPEN, NEED_POINT,

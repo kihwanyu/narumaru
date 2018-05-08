@@ -6,7 +6,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+
+import javax.servlet.http.HttpSession;
+
 import javax.servlet.http.HttpServletResponse;
+
 
 import java.util.Date;
 import java.util.HashMap;
@@ -21,7 +25,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -214,12 +218,24 @@ public class AdminController {
 		return "admin/adDeclareDetail";
 	}
 
-	
-	// 관리자 1:1 문의 게시판
-	@RequestMapping(value="adAnswer.ad")
-	public String showAdminAnswerView(){
-		
-		return "admin/adAnswer";
+	//
+	// 관리자 1:1 문의 게시판 조회
+	@RequestMapping(value="adminAnswer.ad")
+	public ModelAndView showAdminAnswerView(Notice n, 
+			ModelAndView mv, SessionStatus status){
+
+			System.out.println("adminController showAdminAnswerView");
+			
+			ArrayList<Notice> nlist = as.adminAnswer(n);
+			System.out.println("adminController showAdminAnswerView noList : " + nlist);
+			
+			mv.addObject("nlist",nlist);
+			
+			
+			mv.setViewName("admin/adAnswer");
+			
+			
+			return mv;
 	}
 	
 	//관리자 공지글쓰기 페이지로 이동
@@ -239,22 +255,27 @@ public class AdminController {
 	// 기능
 		// 공지 or FAQ 글쓰기
 		@RequestMapping(value="adAnnounce.ad")
-		public String insertNotice(Notice n, Model model,
-				HttpServletRequest request,@RequestParam(name="subType") int subType){
+		public String insertNotice(Notice n, Model model
+				, HttpServletRequest request,@RequestParam(name="subType") int subType
+				, HttpSession session ){
+			
+			Member loginUser = (Member) session.getAttribute("loginUser");
 			
 			if(n.getNoType() == 800){
 				n.setNoType(subType);
 			}
-
-			System.out.println("AdminController notice subType : "  + n +", " + subType);
+			n.setWriterId(loginUser.getMid());
+			
+			System.out.println("AdminController notice  : "  + n );
 
 			
 			as.insertNotice(n, subType);
 			
 			
-			return "main/main";
+			return "admin/adSuccess";
 			
 			
 		}
-	
+		
+		
 }
