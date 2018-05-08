@@ -20,10 +20,12 @@
 		<result property="status" column="STATUS"/>
 		<result property="nmno" column="NMNO"/>
 		<result property="cano" column="CANO"/>
+		<result property="caname" column="CANAME"/>
 		<result property="cno" column="CNO"/>
 		<result property="bLevel" column="B_LEVEL"/>
 		<result property="targetBno" column="TARGET_BNO"/>
 		<result property="isOpen" column="IS_OPEN"/>
+		<result property="needPoint" column="NEED_POINT"/>
 		<result property="comments" column="COMMENTS"/>
 	</resultMap>
 	
@@ -39,13 +41,26 @@
 	</resultMap>
 	
 	<select id="selectBoardList" resultMap="boardResultSet" parameterType="_int">
-		SELECT BNO, B_TNO, B_TYPE, B_TITLE, M.PROFILENAME, B_CONTENT, B_HIDDEN, B.MNO, M.NICNAME, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, NMNO, CANO, CNO, B_LEVEL, TARGET_BNO, IS_OPEN, NEED_POINT,
-    	(SELECT COUNT(*) FROM BOARD WHERE TARGET_BNO = B.BNO) AS COMMENTS
-		FROM BOARD B
-		JOIN MEMBER M ON(B.MNO = M.MNO)
-		WHERE NMNO = #{nmno} AND B.STATUS = 'Y' AND (B_TYPE = 200 OR B_TYPE = 100)
-		ORDER BY BNO DESC
-	</select>
+      SELECT BNO, B_TNO, B_TYPE, B_TITLE, M.PROFILENAME, B_CONTENT, B_HIDDEN, B.MNO, M.NICNAME, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, B.NMNO, B.CANO, 
+      CASE WHEN C.CANAME IS NULL THEN '미분류' ELSE C.CANAME END AS CANAME , CNO, B_LEVEL, TARGET_BNO, IS_OPEN, NEED_POINT,
+       (SELECT COUNT(*) FROM BOARD WHERE TARGET_BNO = B.BNO) AS COMMENTS
+      FROM BOARD B
+      JOIN MEMBER M ON(B.MNO = M.MNO)
+       LEFT JOIN CATEGORY C ON(B.CANO = C.CANO)
+      WHERE B.NMNO = #{nmno} AND B.STATUS = 'Y' AND (B_TYPE = 200 OR B_TYPE = 100)
+      ORDER BY BNO DESC
+   </select>
+   
+   <select id="selectCategoryBoardList" resultMap="boardResultSet" parameterType="Board">
+      SELECT BNO, B_TNO, B_TYPE, B_TITLE, M.PROFILENAME, B_CONTENT, B_HIDDEN, B.MNO, M.NICNAME, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, B.NMNO, B.CANO, 
+      CASE WHEN C.CANAME IS NULL THEN '미분류' ELSE C.CANAME END AS CANAME , CNO, B_LEVEL, TARGET_BNO, IS_OPEN, NEED_POINT,
+       (SELECT COUNT(*) FROM BOARD WHERE TARGET_BNO = B.BNO) AS COMMENTS
+      FROM BOARD B
+      JOIN MEMBER M ON(B.MNO = M.MNO)
+       LEFT JOIN CATEGORY C ON(B.CANO = C.CANO)
+      WHERE B.NMNO = #{nmno} AND B.CANO = #{cano} AND B.STATUS = 'Y' AND (B_TYPE = 200 OR B_TYPE = 100)
+      ORDER BY BNO DESC
+   </select>
 	
 	<select id="selectCommentList" resultMap="boardResultSet" parameterType="_int">
 		SELECT BNO, B_TNO, B_TYPE, B_TITLE, B_CONTENT, B_HIDDEN, b.MNO, M.NICNAME, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, NMNO, CANO, CNO, B_LEVEL, TARGET_BNO, IS_OPEN, NEED_POINT
@@ -123,17 +138,28 @@
 	<update id= "updateNoticeCommit" parameterType = "Notice">
 		UPDATE BOARD
 		SET B_TITLE = #{noTitle}, B_CONTENT =#{noContent}, MODIFY_DATE = SYSDATE 
-		WHERE BNO = #{nid}
-		
-	
+		WHERE BNO = #{nid}	
 	</update>
 	
+
+	<select id="getBoardWriter" resultType="_int">
+		SELECT MNO FROM BOARD WHERE BNO=#{targetBno}
+	</select>
+
 	<delete id ="deleteNotice" parameterType="_int" >
 		DELETE FROM BOARD
-		WHERE BNO = #{nid}
+		WHERE BNO = #{nid}  
 	</delete>
 	
-	
+	<select id="searchBoard" resultMap="boardResultSet">
+		SELECT BNO, B_TNO, B_TYPE, B_TITLE, M.PROFILENAME, B_CONTENT, B_HIDDEN, B.MNO, M.NICNAME, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, NMNO, CANO, CNO, B_LEVEL, TARGET_BNO, IS_OPEN, NEED_POINT,
+    	(SELECT COUNT(*) FROM BOARD WHERE TARGET_BNO = B.BNO) AS COMMENTS
+		FROM BOARD B
+		JOIN MEMBER M ON(B.MNO = M.MNO)
+		WHERE NMNO = #{nmno} AND B.STATUS = 'Y' AND (B_TITLE LIKE '%' || #{bContent} || '%' OR B_CONTENT LIKE '%' || #{bContent} || '%' OR M.NICNAME LIKE '%' || #{bContent} || '%')
+		ORDER BY BNO DESC
+	</select>
+
 	<insert id="questionInsert" parameterType="Notice">
 		INSERT INTO BOARD
 		VALUES(SEQ_BNO.NEXTVAL, NULL, #{noType}, #{noTitle}, #{noContent}, NULL, #{writerId}, SYSDATE,SYSDATE, DEFAULT, 1 ,NULL,NULL,NULL,NULL,NULL,NULL )
@@ -143,7 +169,7 @@
 		INSERT INTO FILET
 		VALUES(SEQ_AT_NO.NEXTVAL, #{orFileName}, #{chFileName}, NULL, SYSDATE, NULL, NULL, NULL, 'Y', NULL, NULL, NULL, SEQ_BNO.CURRVAL)
 	</insert>
-	
+
 	<select id="questionSelectList" parameterType = "Notice">
 		SELECT *
 		FROM BOARD
@@ -174,9 +200,17 @@
 		AND (B_TITLE LIKE '%'||#{keyWord}||'%' OR 
 			 B_CONTENT LIKE '%'||#{keyWord}||'%')
 	</select>
-	
-	
-	
+
+	<select id="selectChannelBoardList" resultMap="boardResultSet" parameterType="_int">
+		SELECT BNO, B_TNO, B_TYPE, B_TITLE, M.PROFILENAME, B_CONTENT, B_HIDDEN, B.MNO, M.NICNAME, B.CREATE_DATE, B.MODIFY_DATE, B.STATUS, B.NMNO, B.CANO, 
+      CASE WHEN C.CANAME IS NULL THEN '미분류' ELSE C.CANAME END AS CANAME , CNO, B_LEVEL, TARGET_BNO, IS_OPEN, NEED_POINT,
+       (SELECT COUNT(*) FROM BOARD WHERE TARGET_BNO = B.BNO) AS COMMENTS
+      FROM BOARD B
+      JOIN MEMBER M ON(B.MNO = M.MNO)
+       LEFT JOIN CATEGORY C ON(B.CANO = C.CANO)
+      WHERE B.CNO = #{cno} AND B.STATUS = 'Y' AND (B_TYPE = 200 OR B_TYPE = 100)
+      ORDER BY BNO DESC
+	</select>
 </mapper>
 
 

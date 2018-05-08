@@ -21,12 +21,6 @@
 		<result property="board" column="BOARD"/>
 	</resultMap>
 	
-	<resultMap type="Neighbor" id="NeighborResultSet">
-		<id property="nno" column="NNO"/>
-		<result property="mno" column="MNO"/>
-		<result property="neighborMno" column="NEIGHBOR_MNO"/>
-	</resultMap>
-	
 	<select id="selectCategoryAll" resultMap="CategoryResultSet" parameterType="_int">
 		SELECT * FROM CATEGORY WHERE NMNO = #{nmno} AND STATUS = 'Y'
 	</select>
@@ -51,17 +45,6 @@
 		SELECT * FROM THEME WHERE NMNO = #{nmno}
 	</select>
 	
-	<insert id="insertNeighbor">
-		INSERT INTO NEIGHBOR VALUES(SEQ_NEIGHBOR_NO.NEXTVAL,#{mno},#{neighborMno})
-	</insert>
-	
-	<select id="selectNeighbor" resultType="_int">
-		SELECT COUNT(*) FROM NEIGHBOR WHERE MNO = #{mno} AND NEIGHBOR_MNO = #{neighborMno}
-	</select>
-	
-	<delete id="deleteNeighbor">
-		DELETE FROM NEIGHBOR WHERE MNO = #{mno} AND NEIGHBOR_MNO = #{neighborMno}
-	</delete>
 </mapper>
 
 

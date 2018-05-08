@@ -25,7 +25,7 @@
 				<div class="floatRight pointer maruMemberInvateView">
 					초대
 				</div>
-				<c:if test='${ nm.isOpen ne "비공개"}'>
+				<c:if test='${ nm.isOpen ne "비공개" }'>
 					<div style="margin-top:10px; text-align:center; background:black; color:white;" class="pointer" id="insertMaruMember">
 						가입하기
 					</div> 
@@ -38,7 +38,7 @@
 		</div>
 		
 		<div class="floatRight rightArea">
-			<div class="rightMenu chat">
+			<!-- <div class="rightMenu chat">
 				<div class="rightTitle">
 					채팅
 					<div class="pointer floatRight newChat">새 채팅<div class="sub chatSub"><ul><li>비공개 채팅</li><li>공개 채팅</li></ul></div></div>
@@ -47,9 +47,9 @@
 					<div class="chatPhoto"></div>
 					<label>채팅방 이름</label>
 				</div>
-			</div>
+			</div> -->
 			
-			<div class="rightMenu album" style="top:200px;">
+			<div class="rightMenu album" style="top:50px;">
 				<div class="rightTitle">
 					앨범
 					<div class="floatRight pointer moreAlbum"><a href="showMaruAlbum.ma">더보기</a></div>
@@ -106,6 +106,38 @@
 				console.log(data);
 				var $select = $(".countMaruMember");
 				$select.html(data);
+			},
+			error:function(data){
+				console.log("실패");
+			}			
+		});
+	});
+	
+	$(function(){
+		var nmno = ${ nm.nmno };
+		$.ajax({
+			url:"selectMaruMemberList.ma",
+			type:"get",
+			data:{"nmno":nmno},
+			success:function(data){
+				console.log(data);
+				var isMember = false;
+				for(var i = 0; i < data.length; i++){
+					console.log(data[i]);
+					if(data[i].MNO == ${loginUser.mid}){
+						isMember =true;
+					}			
+				}
+				console.log(isMember);
+				if(!isMember){
+						$(".wrap").empty();
+						$(".wrap").append("<div style='width:500px; padding-top:50px;'><h1>회원만 내용을 볼 수 있습니다.<h1><img style='width:100%;' src='resources/images/smile.png'></div>");
+					if('${ nm.isOpen }'=='비공개'){
+						alert("마루의 회원이 아닙니다");
+						location.href="goHome.nm";	
+					}				
+				}
+				
 			},
 			error:function(data){
 				console.log("실패");

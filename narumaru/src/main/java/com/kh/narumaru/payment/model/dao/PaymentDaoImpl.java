@@ -33,21 +33,40 @@ public class PaymentDaoImpl implements PaymentDao {
 	@Override
 	public int myPointInquiry(SqlSessionTemplate sqlSession, Payment p) throws PaymentInsertException {
 		
-		int result = 0;
+		Integer temp = 0;
+		
 		int myPaymentPoint = 0;
 		int myRefundPoint = 0;
-		// 결제 내역이 없을 경우. CHAEK 하기위해서 이용.
-		Payment paymentResult = sqlSession.selectOne("Payment.selectPayment",p);
-		Withdraw withdrawResult = sqlSession.selectOne("Payment.selectRefund",p);
-		System.out.println("paymentResult : "+paymentResult);
-		if(paymentResult != null){
-			myPaymentPoint = sqlSession.selectOne("Payment.myPaymentPointInquiry", p);
-		} 
-		if(withdrawResult != null){
-			myRefundPoint = sqlSession.selectOne("Payment.myRefundPointInquiry", p);
+		int myUsingPoint = 0;
+		int myRevenuePoint = 0;
+		
+		temp = sqlSession.selectOne("Payment.myPaymentPointInquiry", p);
+		
+		if(temp != null){
+			myPaymentPoint = temp;
 		}
-		result = myPaymentPoint - myRefundPoint;
-		return result;
+		
+		temp = sqlSession.selectOne("Payment.myRefundPointInquiry", p);
+		
+		if(temp != null){
+			myRefundPoint = temp;
+		}
+		
+		temp = sqlSession.selectOne("Payment.getUserPointTotal",p);
+		
+		if(temp != null){
+			myUsingPoint = temp;
+		}
+		
+		temp = sqlSession.selectOne("Payment.getRevenueTotal",p);
+		
+		if(temp != null){
+			myRevenuePoint = temp;
+		}
+		
+		int total = myPaymentPoint - myRefundPoint - myUsingPoint + myRevenuePoint;
+		
+		return total;
 	}
 
 	@Override
@@ -64,7 +83,6 @@ public class PaymentDaoImpl implements PaymentDao {
 
 	@Override
 	public ArrayList<Payment> selectPaymentList(SqlSessionTemplate sqlSession, PageInfo pi) throws PaymentListSelectException {
-		int result = 0;
 		ArrayList<Payment> pList = null;
 		// 결제 내역이 없을 경우. CHAEK 하기위해서 이용.
 		Payment paymentResult = sqlSession.selectOne("Payment.selectPayment", pi);
@@ -81,21 +99,41 @@ public class PaymentDaoImpl implements PaymentDao {
 
 	@Override
 	public int myPointInquiry(SqlSessionTemplate sqlSession, int mno) throws PaymentListSelectException {
-		int result = 0;
+		Integer temp = 0;
+		
 		int myPaymentPoint = 0;
 		int myRefundPoint = 0;
-		// 결제 내역이 없을 경우. CHAEK 하기위해서 이용.
-		Payment paymentResult = sqlSession.selectOne("Payment.selectPayment",mno);
-		Withdraw withdrawResult = sqlSession.selectOne("Payment.selectRefund",mno);
-		System.out.println("paymentResult : "+paymentResult);
-		if(paymentResult != null){
-			myPaymentPoint = sqlSession.selectOne("Payment.myPaymentPointInquiry", mno);
-		} 
-		if(withdrawResult != null){
-			myRefundPoint = sqlSession.selectOne("Payment.myRefundPointInquiry", mno);
+		int myUsingPoint = 0;
+		int myRevenuePoint = 0;
+		
+		temp = sqlSession.selectOne("Payment.myPaymentPointInquiry", mno);
+		
+		if(temp != null){
+			myPaymentPoint = temp;
 		}
-		result = myPaymentPoint - myRefundPoint;
-		return result;
+		
+		temp = sqlSession.selectOne("Payment.myRefundPointInquiry", mno);
+		
+		if(temp != null){
+			myRefundPoint = temp;
+		}
+		
+		temp = sqlSession.selectOne("Payment.getUserPointTotal",mno);
+		
+		if(temp != null){
+			myUsingPoint = temp;
+		}
+		
+		temp = sqlSession.selectOne("Payment.getRevenueTotal",mno);
+		
+		if(temp != null){
+			myRevenuePoint = temp;
+		}
+		
+		int total = myPaymentPoint - myRefundPoint - myUsingPoint + myRevenuePoint;
+		
+		return total;
+		
 	}
 
 	@Override

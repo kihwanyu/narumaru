@@ -47,6 +47,12 @@
 	<select id="checkNarumaruOwner" resultType="_int" parameterType="_int">
 		SELECT MNO FROM MARU_MEMBER WHERE NMNO = #{nmno} AND CON_LEVEL = 0
 	</select>
+	
+	<select id="checkNaruByMno" resultType="_int" parameterType="_int">
+		SELECT NM.NMNO FROM NARUMARU NM
+		JOIN (SELECT NMNO FROM MARU_MEMBER WHERE MNO = #{mno} AND CON_LEVEL = 0) M ON (M.NMNO = NM.NMNO)
+		WHERE NM.NM_CATEGORY = 2
+	</select>
 
 	<insert id="insertNarumaru" useGeneratedKeys="true" keyProperty="nmno">
 		<selectKey keyProperty="nmno" resultType="int" order="BEFORE">
@@ -56,7 +62,7 @@
 	</insert>
 	
 	<insert id="insertNarumaruBoard">
-		INSERT INTO BOARD VALUES(SEQ_BNO.NEXTVAL, (SELECT MAX(B_TNO)+1 FROM BOARD WHERE NMNO = #{nmno}), #{bType}, #{bTitle}, #{bContent}, #{bHidden}, #{mno}, SYSDATE, SYSDATE, 'Y', #{nmno}, #{cano}, #{cno}, #{bLevel}, #{targetBno}, #{isOpen}, 100)
+		INSERT INTO BOARD VALUES(SEQ_BNO.NEXTVAL, (SELECT MAX(B_TNO)+1 FROM BOARD WHERE NMNO = #{nmno}), #{bType}, #{bTitle}, #{bContent}, #{bHidden}, #{mno}, SYSDATE, SYSDATE, 'Y', #{nmno}, #{cano}, #{cno}, #{bLevel}, #{targetBno}, #{isOpen}, #{needPoint})
 	</insert>
 	
 	<insert id="insertComment">
@@ -72,7 +78,7 @@
 	</insert>
 	
 	<select id="selectNeighborList" resultMap="NarumaruResultSet" parameterType="_int">
-		SELECT * FROM NARUMARU WHERE NMNO IN(SELECT NMNO FROM MARU_MEMBER WHERE MNO IN (SELECT NEIGHBOR_MNO FROM NEIGHBOR WHERE MNO = #{mno}))
+		SELECT * FROM NARUMARU WHERE NMNO IN(SELECT NMNO FROM MARU_MEMBER WHERE MNO IN (SELECT NEIGHBOR_MNO FROM NEIGHBOR WHERE MNO = #{mno})) AND NM_CATEGORY = 2
 	</select>
 </mapper>
 

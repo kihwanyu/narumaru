@@ -38,5 +38,7 @@ public interface MemberDao {
 
 	void sendUpdatePwd(SqlSessionTemplate sqlSession, Member m);
 
+	Member selectMemberOne(int mno);
+
 
 }

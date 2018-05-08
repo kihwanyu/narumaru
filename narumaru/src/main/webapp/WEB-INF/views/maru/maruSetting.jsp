@@ -22,10 +22,14 @@
 				<hr>
 				<div class="maruMaster">
 					<div class="writerPhoto">사진</div>
-					<label>이름</label>
+					<label>마루명 : </label><label style="align:center;"> ${ nm.nmTitle }</label><br>
+					<label>생성일 : </label><label style="align:center;"> ${ nm.createDate }</label><br>
+					<label>마루소개 : </label><label style="align:center;"> ${ nm.nmIntro }</label><br>
+					<label>공개상태 : </label><label style="align:center;"> ${ nm.isOpen }</label>
 				</div>
-				<hr>
+				
 				<div class="settingBody" style="clear:both">
+				<hr>
 					설정 내용
 				</div>
 			</div>

@@ -12,12 +12,21 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="resources/css/naruInsertBoard.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${contextPath}/resources/js/jscolor.js"></script>
 <style>
 	.replyArea{
 		border-bottom:1px solid lightgray;
 	}
 </style>
+<script type="text/javascript">
+	/* $(function(){
+		$(".boardCreateDate").text("");
+	}); */
+</script>
+
 </head>
 <body id="thisisbody">
 	<jsp:include page="../common/topmenu.jsp"/>
@@ -41,31 +50,61 @@
 			<c:forEach var="b" begin="${beginPage}" end="${newPage}" items="${ list }" varStatus="i">
 			<div class="board">
 				<div class="boardInfo">
-					<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
-					<div style="display:inline-block;"><label>${b.bTitle}</label><br><label>${b.createDate}</label></div>
+					<div style="display:inline-block;"><label style="font-size:1.3em;"><b>${b.bTitle}</b></label>
+					<br>
+					<label id="boardCreateDate">${b.createDate} ${b.caname}</label>
+					</div>
 					<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">
 						<img src="resources/images/menu.png" class="modifyMenu size100per">
 						<div class="sub boardSub">
 							<ul>
+								<c:if test="${b.mno eq loginUser.mid}"> <%-- 작성자만 수정버튼 --%>
 								<li onclick="modifyBoard(${b.bno})">수정하기</li>
 								<li onclick="deleteBoard(${b.bno})">삭제하기</li>
-								<li>공유하기</li>
-								<li>신고하기</li>
+								</c:if>
+								<c:if test="${b.mno ne loginUser.mid}">
+								<li onclick="reportBoard(${b.bno})">신고하기</li>
+								</c:if>
 							</ul>
 						</div>
 					</div>
 				</div>
 				<div class="boardContent">${fn:replace(b.bContent,nr,br)}</div>
+				<%-- 이하 히든 컨텐츠, 구매 여부를 체크함 --%>
+				<c:if test="${b.bHidden ne null}">
+					<%-- 볼수 있는지 여부, break문이 불가능해서 forEach가 끝날때까지 false면 구매 안한걸로 간주함 --%>
+					<c:set var="canView" value="false"/>
+					<%-- 작성자일경우 --%>
+					<c:choose>
+						<c:when test="${b.mno eq loginUser.mid}">
+							<div class="boardContent" style="background:lightgray; margin:5px;">${fn:replace(b.bHidden,nr,br)}</div>
+							<c:set var="canView" value="true"/>
+						</c:when>
+						<%-- 작성자가 아니면 구매 여부 확인 --%>
+						<c:otherwise>
+							<c:forEach var="h" items="${hpayList}">
+								<c:if test="${h.bno eq b.bno}">
+									<div class="boardContent" style="background:lightgray; margin:5px;">${fn:replace(b.bHidden,nr,br)}</div>
+									<c:set var="canView" value="true"/>
+								</c:if>
+							</c:forEach>
+							<%-- 작성자도 아닌데 구매도 안했으면 --%>
+							<c:if test="${canView eq 'false'}">
+								<div class="boardContent" style="background:lightgray; margin:5px;">이하는 구매 후 열람이 가능한 컨텐츠입니다.<br><label class="btn btn-info" onclick="buyHidden(${b.bno}, ${b.needPoint})">구매 후 열람 (${b.needPoint}P)</label></div>
+							</c:if>
+						</c:otherwise>
+					</c:choose>
+				</c:if>
 				<div class="boardfoot">
 					<hr>
 					<ul class="footUl">
-						<li class="showSub emotionBtn" onclick="submenuOpen(this);"><span>이모티콘</span>
+						<!-- <li class="showSub emotionBtn" onclick="submenuOpen(this);"><span>이모티콘</span>
 							<div class="sub emotionSub">이모티콘</div>
-						</li>
+						</li> -->
 						<li class="insertReplyShow" onclick="replyOpen(this);"><span>댓글보기(${b.comments})</span></li>
-						<li class="showSub shereBtn" onclick="submenuOpen(this);"><span>공유하기</span>
+						<!-- <li class="showSub shereBtn" onclick="submenuOpen(this);"><span>공유하기</span>
 							<div class="sub shereSub">개발중인 기능입니다</div>
-						</li>
+						</li> -->
 					</ul>
 				</div>
 				<div class="insertReply">
@@ -73,14 +112,14 @@
 					<input type="text" name="insertReply" id="insertReply"
 						style="background: none; width: 400px; height: 40px; background:white;">
 					<button class="floatRight insertReplyBtn" onclick="addReply(this, ${b.bno})">
-						<img src="${contextPath }/resources/images/find.png"
+						<img src="${contextPath }/resources/images/Pen.png"
 							style="width: 35px; height: 35px;">
 					</button>
 					<c:forEach var="j" items="${colist}">
 						<c:if test="${j.targetBno eq b.bno}">
 							<div class="replyArea">
-								<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>
-								<label>${j.bWriter}</label><br><label>${j.createDate}</label>
+								<div class="writerPhoto" style="width:40px; height:40px;"><img src="resources/memberprofile/${b.profileName}" class="size100per"></div>
+								<label style="font-size:0.9em;">${j.bWriter}</label><br><label style="font-size:0.9em;">${j.createDate}</label>
 								<div class="replyContent" style="clear:both;">${j.bContent}</div>
 							</div>
 						</c:if>
@@ -104,17 +143,17 @@
 			<div class="modal_inner" id="modal_default">
 				<input type="hidden" name="nmno" value="${nm.nmno}">
 				<div class="row">
-					<label class="btn_label modify-basic"><b>기본</b></label>
-					<label class="btn_label modify-theme">테마</label>
-					<label class="btn_label modify-category">카테고리</label>
-					<label class="btn_label modify-neighbor">이웃</label>
+					<label class="btn btn-info modify-basic"><b>기본</b></label>
+					<label class="btn btn-info modify-theme">테마</label>
+					<label class="btn btn-info modify-category">카테고리</label>
+					<!-- <label class="btn btn-info modify-neighbor">이웃</label> -->
 					<label class="modal_close" for="open-pop2"></label>
 				</div>
-				<label class="btn_label" id="updateThemeBtn" onclick="defaultModifyBtn()" style="margin-bottom:15px;">수정완료</label>
-				<div class="row">
+				<label class="btn btn-info" id="updateThemeBtn" onclick="defaultModifyBtn()" style="margin-bottom:15px;">수정완료</label>
+<!-- 				<div class="row">
 					<label class="modal-leftlabel">나루 대표사진</label>
 					<input type="file" style="width:70%; float:right;" name="">
-				</div>
+				</div> -->
 				<div class="row">
 					<label class="modal-leftlabel">나루 제목</label>
 					<input type="text" style="width:79.1%; float:right; height:25px;" name="nmTitle" value="${nm.nmTitle}">
@@ -130,13 +169,13 @@
 	 		<input type="hidden" name="nmno" value="${nm.nmno}">
 			<div class="modal_inner" id="modal_theme" style="display:none;">
 				<div class="row">
-					<label class="btn_label modify-basic">기본</label>
-					<label class="btn_label modify-theme"><b>테마</b></label>
-					<label class="btn_label modify-category">카테고리</label>
-					<label class="btn_label modify-neighbor">이웃</label>
+					<label class="btn btn-info modify-basic">기본</label>
+					<label class="btn btn-info modify-theme"><b>테마</b></label>
+					<label class="btn btn-info modify-category">카테고리</label>
+					<!-- <label class="btn btn-info modify-neighbor">이웃</label> -->
 					<label class="modal_close" for="open-pop2"></label>
 				</div>
-				<label class="btn_label" id="updateThemeBtn" onclick="themeModifyBtn()" style="margin-bottom:15px;">수정완료</label>
+				<label class="btn btn-info" id="updateThemeBtn" onclick="themeModifyBtn()" style="margin-bottom:15px;">수정완료</label>
 				<div class="row">
 					<label class="modal-leftlabel">테마 색상</label>
 					<input name="themeValue" class="jscolor {valueElement:'chosen-value', onFineChange:'setTextColor(this)'}" style="width:79.1%; float:right; height:25px;" id="chosen-value" value="${theme.color}}">
@@ -160,23 +199,23 @@
 		 	 <!-- 카테고리 -->
 		 	 <div class="modal_inner" id="modal_category" style="display:none;">
 				<div class="row">
-					<label class="btn_label modify-basic">기본</label>
-					<label class="btn_label modify-theme">테마</label>
-					<label class="btn_label modify-category">카테고리</label>
-					<label class="btn_label modify-neighbor">이웃</label>
+					<label class="btn btn-info modify-basic">기본</label>
+					<label class="btn btn-info modify-theme">테마</label>
+					<label class="btn btn-info modify-category">카테고리</label>
+					<!-- <label class="btn btn-info modify-neighbor">이웃</label> -->
 					<label class="modal_close" for="open-pop2"></label>
 				</div>
-				<label class="btn_label" id="addCateBtn" style="margin-bottom:15px;">카테고리 추가</label>
-				<label class="btn_label" id="updateCateBtn" style="margin-bottom:15px;">수정완료</label>
+				<label class="btn btn-info" id="addCateBtn" style="margin-bottom:15px;">카테고리 추가</label>
+				<label class="btn btn-info" id="updateCateBtn" style="margin-bottom:15px;">수정완료</label>
 			 </div>
 		 </form>
 		 <!-- 이웃목록 -->
-		 <div class="modal_inner" id="modal_neighbor" style="display:none;">
+		 <%-- <div class="modal_inner" id="modal_neighbor" style="display:none;">
 			<div class="row">
-				<label class="btn_label modify-basic">기본</label>
-				<label class="btn_label modify-theme">테마</label>
-				<label class="btn_label modify-category">카테고리</label>
-				<label class="btn_label modify-neighbor">이웃</label>
+				<label class="btn btn-info modify-basic">기본</label>
+				<label class="btn btn-info modify-theme">테마</label>
+				<label class="btn btn-info modify-category">카테고리</label>
+				<label class="btn btn-info modify-neighbor">이웃</label>
 				<label class="modal_close" for="open-pop2"></label>
 			</div>
 			<c:forEach var="i" begin="1" end="4">
@@ -185,12 +224,44 @@
 				<span style="top:5px; position:relative;"><a href="#">${i}번째 마루</a></span>
 			</div>
 			</c:forEach>
-		 </div>
+		 </div> --%>
 	</div>
 	
 	<script>
 		var added = 0;
-	
+		//내가 최근에 방문한 나루
+		$(function(){
+			//localStorage.clear();
+			
+			var nmno1 = localStorage.getItem("nmno1");
+			var nmno2 = localStorage.getItem("nmno2");
+			var nmno3 = localStorage.getItem("nmno3");
+			var temp = 0;
+			var nmno = ${nm.nmno};
+			//console.log("localStorage start : "+ localStorage.getItem("nmno"));
+			/* 하나라도 null 이존재한다면 */
+			if(nmno1 != null && nmno1 != null && nmno1 != null){
+				/* 세개의 변수 중 nmno와 같은 값을 가지고 있는 변수가 있다면 */
+				if(nmno1 != nmno && nmno2 != nmno && nmno3 != nmno){
+					nmno3 = nmno2;
+					nmno2 = nmno1;
+					nmno1 = nmno;
+				}
+			} else {
+				nmno3 = nmno2;
+				nmno2 = nmno1;
+				nmno1 = nmno;
+			}
+			
+			localStorage.setItem("nmno1", nmno1);
+			localStorage.setItem("nmno2", nmno2);
+			localStorage.setItem("nmno3", nmno3);
+	  		
+			console.log("localStorage end : "+ localStorage.getItem("nmno1"));
+			console.log("localStorage end : "+ localStorage.getItem("nmno2"));
+			console.log("localStorage end : "+ localStorage.getItem("nmno3"));
+		});
+		
 	  	$(function(){
 	  		//설정해둔 카테고리 리스트 불러오기
 	  		$.ajax({
@@ -263,23 +334,42 @@
 			})
 		})
 		
+		//게시글 구매요청
+		function buyHidden(bno, needPoint){
+	  		if(confirm(needPoint + "포인트로 이 컨텐츠를 구매하시겠습니까?")){
+	  			$.ajax({
+					url:'buyHidden.na',
+					type:'get',
+					data: {"bno":bno},
+					success:function(data){
+						alert(data);
+	  					window.location.reload();
+					},
+					error:function(data){
+						alert("컨텐츠 구매에 실패했습니다. 관리자에게 문의해주세요. \n에러코드 : E-N1");
+					}
+				})
+	  		}
+	  	}
+		
+		//테마 수정
 		function themeModifyBtn(){
 	  		$("#themeModify").submit();
 	  	}
 	  	
+	  	//일반 수정
 	  	function defaultModifyBtn(){
 	  		$("#defaultModify").submit();
 	  	}
 		
+	  	//카테고리 삭제
 		function deleteCategory(btn){
-	  		console.log("버튼눌름");
 	  		var categoryName = $(btn).parent().find(":text").val();
 	  		console.log(categoryName);
 	  		$(btn).parent().find(":text").val(":none:");
 	  		console.log(categoryName);
 	  		$(btn).parent().hide();
 	  		
-	  		console.log("3");
 	  		$.ajax({
 				url:'disableCategory.na',
 				type:'get',
@@ -291,7 +381,6 @@
 					console.log(data);
 				}
 			})
-			console.log("4");
 	  	}
 	  </script>
 	
@@ -362,32 +451,55 @@
 		        	/* for(var i = 0; i < newPage; i++){ */
 		        		$(".content").append('<div class="board">'
 								+'<div class="boardInfo">'
-								+'<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
-								+'<label>${b.bTitle}</label><br><label>${b.createDate}</label>'
+								+'<div style="display:inline-block;"><label style="font-size:1.3em;"><b>${b.bTitle}</b></label>'
+								+'<br>'
+								+'<label id="boardCreateDate">${b.createDate} ${b.caname}</label>'
+								+'</div>'
 								+'	<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">'
 								+'		<img src="resources/images/menu.png" class="modifyMenu size100per">'
 								+'			<div class="sub boardSub">'
 								+'				<ul>'
+													<c:if test="${b.mno eq loginUser.mid}">
 								+'					<li onclick="modifyBoard(${b.bno})">수정하기</li>'
 								+'					<li onclick="deleteBoard(${b.bno})">삭제하기</li>'
-								+'					<li>주소복사</li>'
-								+'					<li>공유하기</li>'
-								+'					<li>북마크</li>'
-								+'					<li>신고하기</li>'
+													</c:if>
+													<c:if test="${b.mno ne loginUser.mid}">
+								+'					<li onclick="reportBoard(${b.bno})">신고하기</li>'
+													</c:if>
 								+'				</ul>'
 								+'			</div>'
 								+'	</div>'
 								+'</div>'
 								+'<div class="boardContent">${fn:replace(b.bContent, nr, "<br>")}</div>'
+								<c:if test="${b.bHidden ne null}">
+									<c:set var="canView" value="false"/>
+									<c:choose>
+										<c:when test="${b.mno eq loginUser.mid}">
+								+			'<div class="boardContent" style="background:lightgray; margin:5px;">${fn:replace(b.bHidden,nr,br)}</div>'
+											<c:set var="canView" value="true"/>
+										</c:when>
+										<c:otherwise>
+											<c:forEach var="h" items="${hpayList}">
+												<c:if test="${h.bno eq b.bno}">
+								+					'<div class="boardContent" style="background:lightgray; margin:5px;">${fn:replace(b.bHidden,nr,br)}</div>'
+													<c:set var="canView" value="true"/>
+												</c:if>
+											</c:forEach>
+											<c:if test="${canView eq 'false'}">
+								+				'<div class="boardContent" style="background:lightgray; margin:5px;">이하는 구매 후 열람이 가능한 컨텐츠입니다.<br><label class="btn btn-info" onclick="buyHidden(${b.bno}, ${b.needPoint})">구매 후 열람 (${b.needPoint}P)</label></div>'
+											</c:if>
+										</c:otherwise>
+									</c:choose>
+								</c:if>
 								+'<div class="boardfoot">'
 								+'	<hr>'
 								+'	<ul class="footUl">'
-								+'		<li class="showSub emotionBtn" onclick="submenuOpen(this);"><span>이모티콘</span>'
+/* 								+'		<li class="showSub emotionBtn" onclick="submenuOpen(this);"><span>이모티콘</span>'
 								+'			<div class="sub emotionSub">이모티콘</div>'
-								+'		</li>'
+								+'		</li>' */
 								+'			<li class="insertReplyShow" onclick="replyOpen(this);"><span>댓글보기(${b.comments})</span></li>'
-								+'		<li class="showSub shereBtn" onclick="submenuOpen(this);"><span>공유하기</span>'
-								+'			<div class="sub shereSub">개발중인 기능입니다</div>'
+/* 								+'		<li class="showSub shereBtn" onclick="submenuOpen(this);"><span>공유하기</span>'
+								+'			<div class="sub shereSub">개발중인 기능입니다</div>' */
 								+'		</li>'
 								+'	</ul>'
 								+'</div>'
@@ -396,14 +508,14 @@
 								+'	<input type="text" name="insertReply"'
 								+'		style="background: none; width: 400px; height: 40px; background:white;">'
 								+'	<button class="floatRight insertReplyBtn" onclick="addReply(this, ${b.bno})">'
-								+'		<img src="${contextPath }/resources/images/find.png"'
+								+'		<img src="${contextPath }/resources/images/Pen.png"'
 								+'			style="width: 35px; height: 35px;">'
 								+'	</button>'
 								<c:forEach var="j" items="${colist}">
 									<c:if test="${j.targetBno eq b.bno}">
 								+	'<div class="replyArea">'
-								+		'<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
-								+		'<label>${j.bWriter}</label><br><label>${j.createDate}</label>'
+								+		'<div class="writerPhoto" style="width:40px; height:40px;"><img src="resources/memberprofile/${b.profileName}" class="size100per"></div>'
+								+		'<label style="font-size:0.9em;">${j.bWriter}</label><br><label style="font-size:0.9em;">${j.createDate}</label>'
 								+		'<div class="replyContent" style="clear:both;">${j.bContent}</div>'
 								+	'</div>'
 									</c:if>
@@ -411,11 +523,17 @@
 								+'	</div>'
 								+'</div>'
 								)
+								
+								//글배경색
+								$(".board").css({"background":"${theme.board}"});
 		        	/* } */
 		        	</c:forEach>
 		        	
 		        }
 			}, 2000);
+			
+			
+			
 		});
 		
 		function replyOpen(btn){
@@ -435,6 +553,13 @@
 			}
 		}
 		
+		function reportBoard(bno){
+			if(confirm("이 글을 신고하시겠습니까?")){
+				var reason = prompt("신고 사유를 작성해주세요.") ;
+				location.href="reportBoardOne.nm?bno="+ bno + "&nmno=${nm.nmno}&type=1&reason=" + reason;
+			}
+		}
+		
 		function addReply(btn, bno){
 			var replyArea = $(btn).parent();
 			var comment = $(btn).parent().find("#insertReply").val();
@@ -443,12 +568,12 @@
 			
 			var d = new Date();
 			var strDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
-			
+
 			$(replyArea).append('<div class="replyArea">'
-					+ '<div class="writerPhoto"><img src="resources/images/profile_defalt.png" class="size100per"></div>'
-					+ '<label>${loginUser.nickName}</label><br><label>' + strDate + '</label>'
-					+ '<div class="replyContent" style="clear:both;">'+ comment +' </div>'
-					+ '</div>');
+					+	'<div class="writerPhoto" style="width:40px; height:40px;"><img src="resources/memberprofile/${owner.profileName}" class="size100per"></div>'
+					+	'<label style="font-size:0.9em;">${loginUser.nickName}</label><br><label style="font-size:0.9em;">' + strDate + '</label>'
+					+	'<div class="replyContent" style="clear:both;">'+ comment +'</div>'
+					+'</div>');
 			
 			$.ajax({
 				url:'insertComment.nm',

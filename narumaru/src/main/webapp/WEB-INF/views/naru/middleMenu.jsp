@@ -47,7 +47,9 @@
 		float:left;
 		top:100px;
 		width:240px;
-		position:fixed;	
+		position:fixed;
+		box-shadow:1px 1px 10px #000;
+		padding:10px 0;
 	}
 	.maruProfile{
 		width:200px;
@@ -78,8 +80,9 @@
 		background:white;
 		margin-top:50px;
 		position:fixed;
+		box-shadow:1px 1px 10px #000;
 	}
-	.neighborContent{
+	.neighborContent, .categoryContent{
 		padding:10px;
 		border:1px solid lightgray;
 	}
@@ -111,6 +114,10 @@
 	.searchArea{	
 		background:white;	
 		padding:auto;
+	}
+	.board{
+		margin-bottom:20px;
+		box-shadow:1px 1px 10px #000;
 	}
 	.boardInsert{
 		background:white;
@@ -180,7 +187,7 @@
 	}
 	.footUl li{
 		float:left;
-		margin-left:50px;
+		margin-left:20px;
 		cursor:pointer;
 	}
 	.insertReply{
@@ -191,7 +198,6 @@
 		padding:10px;
 	}
 	.content > div{
-		margin-top:10px;
 		background:white;
 		border:1px solid lightgray;
 	}
@@ -217,6 +223,14 @@
   	}
   	#band_top{
 	  	border-bottom:1px solid lightgray;
+  	}
+  	.replyContent{
+  		margin-top:3px;
+  	}
+  	#boardCreateDate{
+  		font-size:0.9em; 
+  		color:gray;
+  		border-bottom:1px solid lightgray;
   	}
 </style>
 </head>

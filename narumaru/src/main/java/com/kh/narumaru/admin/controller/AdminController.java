@@ -6,7 +6,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+
 import javax.servlet.http.HttpSession;
+
+import javax.servlet.http.HttpServletResponse;
+
 
 import java.util.Date;
 import java.util.HashMap;
@@ -25,6 +29,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.narumaru.admin.model.service.AdminService;
 import com.kh.narumaru.admin.model.vo.Admin;
 import com.kh.narumaru.notice.model.vo.Notice;
@@ -72,6 +77,14 @@ public class AdminController {
 		System.out.println("금일 결제 금액" + payDaySysDate);
 		mv.addObject("payDaySysDate", payDaySysDate);
 		
+		ArrayList channel = as.selectChannel(); 
+		System.out.println("채널 목록" + channel);
+		mv.addObject("channel", channel);
+		
+		ArrayList chCount = as.selectChCount();
+		System.out.println("채널 수 : " + chCount);
+		mv.addObject("chCount", chCount);
+		
 		mv.setViewName("admin/adMain");
 		
 		return mv;
@@ -98,16 +111,37 @@ public class AdminController {
 		ArrayList<Member> memberView = as.memberView();
 		System.out.println(memberView);
 		
+		
 		mv.addObject("memberView", memberView);
 		mv.setViewName("admin/adMemberView");
 		
 		return mv;
 	}
 	
+	@RequestMapping("statusCh.ad")
+	public void statusCh(Member m, HttpServletResponse response){
+		try {
+			as.statusCh(m);
+			
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			new Gson().toJson("젠장", response.getWriter());
+		} catch (Exception e) {
+			
+		}
+		System.out.println("컨트롤러 멤버" + m);
+	}
+	
 	@RequestMapping("adNaruView.ad")
-	public String showAdminNaruView(){
-		   
-		return "admin/adNaruView";
+	public ModelAndView showAdminNaruView(Narumaru naru, ModelAndView mv){
+		ArrayList<Narumaru> na = as.naruView();
+		System.out.println(na);
+		
+		mv.addObject("na", na);
+		mv.setViewName("admin/adNaruView");
+		
+		
+		return mv;
 	}
 	
 	@RequestMapping("adMaruView.ad")
@@ -128,9 +162,25 @@ public class AdminController {
 	}
 	
 	@RequestMapping("adMoneyView.ad")
-	public String showmAdminMoneyView(){
+	public ModelAndView showmAdminMoneyView(ModelAndView mv){
+		ArrayList moneyView = as.moneyView();
 		
-		return "admin/adMoneyView";
+		System.out.println(moneyView);
+		
+		mv.addObject("moneyView", moneyView);
+		mv.setViewName("admin/adMoneyView");
+		
+		return mv;
+	}
+	
+	@RequestMapping("moneyStatusCh.ad")
+	public void moneyStatusCh(int WNO, HttpServletResponse response){
+		try {
+			as.moneyStatusCh(WNO);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@RequestMapping("adRevenueView.ad")
@@ -143,6 +193,10 @@ public class AdminController {
 		ArrayList totalAge = as.totalAge();
 		System.out.println("totalAge" + totalAge);
 		mv.addObject("totalAge", totalAge);
+		
+		ArrayList Chart = as.Chart();
+		System.out.println("Chart" + Chart);
+		mv.addObject("Chart", Chart);
 		
 		mv.setViewName("admin/adRevenueView");
 		
