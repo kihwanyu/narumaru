@@ -439,15 +439,19 @@
 							
 							var beforetime = moment(value.alarm_date, "YYYY-MM-DD h:mm:ss").fromNow();
 						
-							var $innerDiv = $("<div class='new-innerdiv'>");
+							if(value.status == 1){
+								$innerDiv =  $("<div class='new-innerdiv alarmBackground' onclick='clickNaruMaruFoward("+value.ano+","+value.send_nmno+");'>");
+							} else {
+								$innerDiv =  $("<div class='new-innerdiv' onclick='clickNaruMaruFoward("+value.ano+","+value.send_nmno+");'>");
+							}
 							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
-							var $alarmTitle = $("<div class='alarmTitle'>").text(value.b_title);
+							/* var $alarmTitle = $("<div class='alarmTitle'>").text(value.b_title); */
 							var $alarmComment = $("<div class='alarmComment'>").text(value.b_content);
 							var $alarmDate = $("<div class='alarmDate' align='right'>").text(beforetime);
 							
 							$innerDiv.append($innerDiv);
 							$innerDiv.append($alarmInfo);
-							$innerDiv.append($alarmTitle);
+							/* $innerDiv.append($alarmTitle); */
 							$innerDiv.append($alarmComment);
 							$innerDiv.append($alarmDate);
 							
@@ -466,13 +470,13 @@
 							var beforetime = moment(value.alarm_date, "YYYY-MM-DD h:mm:ss").fromNow();
 							
 							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
-							var $alarmTitle = $("<div class='alarmTitle'>").text(value.b_title);
+							/* var $alarmTitle = $("<div class='alarmTitle'>").text(value.b_title); */
 							var $alarmComment = $("<div class='alarmComment'>").text(value.b_content);
 							var $alarmDate = $("<div class='alarmDate' align='right'>").text(beforetime);
 							
 							$innerDiv.append($innerDiv);
 							$innerDiv.append($alarmInfo);
-							$innerDiv.append($alarmTitle);
+							/* $innerDiv.append($alarmTitle); */
 							$innerDiv.append($alarmComment);
 							$innerDiv.append($alarmDate);
 							

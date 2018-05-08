@@ -84,7 +84,15 @@
                         		<td>${moneyView.RESISTER_DATE}</td>
                         		<td>${moneyView.POINT}</td>
                         		<td>${moneyView.POINT-moneyView.AMOUNT}원</td>
-                        		<td>${moneyView.WITHDRAW_DATE}</td>
+                        		<c:choose>
+                        			<c:when test="${moneyView.STATUS eq '입금 완료'}">
+                        				<td>${moneyView.WITHDRAW_DATE}</td>
+                        			</c:when>
+                        			<c:otherwise>
+                        				<td></td>
+                        			</c:otherwise>
+                        		</c:choose>
+                        		
                         		<td>${moneyView.BANK_NAME}</td>
                         		<td>${moneyView.ACCOUNT_HOLDER}</td>
                         		<td>
