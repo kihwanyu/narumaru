@@ -265,6 +265,48 @@
 							$aArea.append($innerDiv);
 							$aArea.append("</div>");
 							break;
+						case 102: /* 관리자 - 환급 완료 */
+							var infoStr = "입금이 완료되었습니다.";
+							
+							if(value.status == 1){
+								$innerDiv =  $("<div class='new-innerdiv alarmBackground' onclick='clickRefundFoward("+value.ano+");'>");
+							} else {
+								$innerDiv =  $("<div class='new-innerdiv' onclick='clickRefundFoward("+value.ano+");'>");
+							}
+							
+							var beforetime = moment(value.alarm_date, "YYYY-MM-DD h:mm:ss").fromNow();
+							
+							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
+							var $alarmDate = $("<div class='alarmDate' align='right'>").text(beforetime);
+							
+							$innerDiv.append($innerDiv);
+							$innerDiv.append($alarmInfo);
+							$innerDiv.append($alarmDate);
+							
+							$aArea.append($innerDiv);
+							$aArea.append("</div>");
+							break;
+						case 103: /* 관리자 - 환급  취소 */
+							var infoStr = "환급 신청이 거절되었습니다.";
+							
+							if(value.status == 1){
+								$innerDiv =  $("<div class='new-innerdiv alarmBackground' onclick='clickRefundFoward("+value.ano+");'>");
+							} else {
+								$innerDiv =  $("<div class='new-innerdiv' onclick='clickRefundFoward("+value.ano+");'>");
+							}
+							
+							var beforetime = moment(value.alarm_date, "YYYY-MM-DD h:mm:ss").fromNow();
+							
+							var $alarmInfo = $("<div class='alarmInfo'>").text(infoStr);
+							var $alarmDate = $("<div class='alarmDate' align='right'>").text(beforetime);
+							
+							$innerDiv.append($innerDiv);
+							$innerDiv.append($alarmInfo);
+							$innerDiv.append($alarmDate);
+							
+							$aArea.append($innerDiv);
+							$aArea.append("</div>");
+							break;
 						case 200: /* 나루-게시글 댓글 */
 							var infoStr = value.send_nicname+"님이 " + value.b_title + " 게시글에 댓글을 작성했습니다.";
 							
@@ -294,7 +336,7 @@
 							var infoStr = value.send_nicname+"님이 게시글을 작성했습니다.";
 							
 							if(value.status == 1){
-								$innerDiv =  $("<div class='new-innerdiv alarmBackground' onclick='clickNaruMaruFoward("+value.ano+","+value.send_nmno+");'>");
+								$innerDiv =  $("<div class='new-innerdiv alarmBackground' onclick='clickNaruMaruFoward("+value.ano+");'>");
 							} else {
 								$innerDiv =  $("<div class='new-innerdiv' onclick='clickNaruMaruFoward("+value.ano+","+value.send_nmno+");'>");
 							}
@@ -606,6 +648,23 @@
 			
 			location.href = "boardListAll.bo?nmno="+nmno;
 		}
+		/* 마이페이지 환급 클릭 이벤트 */
+		function clickRefundFoward(ano){
+			$.ajax({
+				url:"alarmStatusUpdate.al",
+				data:{ano,ano},
+				type:"get",
+				success:function(data){
+					console.log("서버 전송 성공!");
+				},
+				error:function(data){
+					console.log("서버 전송 실패..");
+				},
+			});
+			
+			location.href = "refundView.me";
+			
+		}
 		/* 마이페이지 - 이웃 추가 이동 클릭 이벤트 */
 		function clickMyPageNeighborListFoward(ano){
 			$.ajax({
@@ -636,23 +695,7 @@
 				},
 			});
 			
-			location.href = "";
-		}
-		/* 나루 가입 목록 페이지 */
-		function clickMaruInitiationFoward(ano, nmno){
-			$.ajax({
-				url:"alarmStatusUpdate.al",
-				data:{ano,ano},
-				type:"get",
-				success:function(data){
-					console.log("서버 전송 성공!");
-				},
-				error:function(data){
-					console.log("서버 전송 실패..");
-				},
-			});
-			
-			location.href = "";
+			location.href = "naruRevenue.me";
 		}
 		/* 마이페이지 마루 초대받은 목록 페이지 */
 		function clickMyPageInvitationFoward(ano){
@@ -668,7 +711,7 @@
 				},
 			});
 			
-			location.href = "";
+			location.href = "invitedMaruView.me";
 		}
 		
 		function clickAlram(div){
