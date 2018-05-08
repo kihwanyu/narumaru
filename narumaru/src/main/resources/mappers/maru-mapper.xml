@@ -73,7 +73,7 @@
 	</delete>
 		
 	<insert id="insertInvatemember">
-		INSERT INTO INVATE_MEMBER VALUES(SEQ_INO.NEXTVAL, #{nmno}, #{mno}, DEFAULT)
+		INSERT INTO INVATE_MEMBER VALUES(SEQ_INO.NEXTVAL, #{nmno}, #{mno}, 'N')
 	</insert>
 	
 	<select id="selectInvatemember" parameterType="_int" resultType="hashmap">
