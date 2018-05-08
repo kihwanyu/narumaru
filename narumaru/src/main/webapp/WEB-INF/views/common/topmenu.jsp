@@ -161,6 +161,9 @@
 						  <a href="noticeSelectList.no" class="list-group-item">공지사항</a>
 						  <a href="question.no" class="list-group-item">1:1 문의</a>
 						  <a href="FAQ.no" class="list-group-item">FAQ</a>
+						  <c:if test="${loginUser.getMid() <= 6 }">
+						  <a href="adMain.ad" class="list-group-item">관리자페이지</a>
+						  </c:if>
 						  <a href="logout.me" class="list-group-item">로그아웃</a>
 						</div>
 	               </div>
