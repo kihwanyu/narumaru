@@ -8,6 +8,7 @@ import com.kh.narumaru.member.model.exception.nameChangeException;
 import com.kh.narumaru.member.model.exception.passwordChangeException;
 import com.kh.narumaru.member.model.exception.phoneChangeException;
 import com.kh.narumaru.member.model.exception.statusUpdateException;
+import com.kh.narumaru.member.model.vo.LogInfo;
 import com.kh.narumaru.member.model.vo.Member;
 
 public interface MemberService {
@@ -36,6 +37,6 @@ public interface MemberService {
 
 	void sendUpdatePwd(Member m2);
 
-	String findNation(String ip);
+	LogInfo selectNation(LogInfo li);
 
 }

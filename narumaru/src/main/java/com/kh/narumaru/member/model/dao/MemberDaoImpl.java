@@ -13,6 +13,7 @@ import com.kh.narumaru.member.model.exception.nameChangeException;
 import com.kh.narumaru.member.model.exception.passwordChangeException;
 import com.kh.narumaru.member.model.exception.phoneChangeException;
 import com.kh.narumaru.member.model.exception.statusUpdateException;
+import com.kh.narumaru.member.model.vo.LogInfo;
 import com.kh.narumaru.member.model.vo.Member;
 
 
@@ -162,6 +163,18 @@ public class MemberDaoImpl implements MemberDao{
 		m.setEmail(id);
 		
 		int result = sqlSession.update("Member.sendUpdatePwd2", m);
+		
+	}
+
+
+	@Override
+	public LogInfo selectNation(SqlSessionTemplate sqlSession,LogInfo li) {
+		
+		long userIp = li.getLongIp();
+		
+		sqlSession.selectOne("Member.selectNation", userIp);
+		
+		return li;
 		
 	}
 

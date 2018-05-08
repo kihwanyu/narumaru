@@ -11,7 +11,9 @@ import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 import java.util.StringTokenizer;
 
@@ -113,7 +115,7 @@ public class MemberController {
 		//session.invalidate();
 		status.setComplete();
 		
-		return "main/main";
+		return "main/mainLogin";
 	}
 	
 	
@@ -212,46 +214,31 @@ public class MemberController {
 		
 		System.out.println("controller Member : " + m);
 		
-		//System.out.println("암호 일치 여부 확인 : " + passwordEncoder.matches("pass01", "$2a$10$DEDHUZOux.CEoctwh7R3ZexGZEUaCn0y8MZO.zSHoxH7zRaQhHSUu"));
-		/*MemberService ms = new MemberServiceImpl();*/
-		/*request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
-        String userIp = request.getHeader("X-FORWARDED-FOR");
-		System.out.println("접속한 IP : " + userIp);*/
-		
 		if(m.getEmail().equals("")){
 			String nameError = "아이디 / 비밀번호를 입력하세요!!";
 			mv.addObject("message", nameError);
 			mv.setViewName("common/errorPage");
-			
 			return mv;
 			
 		}
-		
 		//아이피 받아오기
 		String ip = request.getHeader("X-Forwarded-For");
-		 
-        System.out.println(">>>> X-FORWARDED-FOR : " + ip);
- 
+       // System.out.println(">>>> X-FORWARDED-FOR : " + ip);
         if (ip == null) {
             ip = request.getHeader("Proxy-Client-IP");
-            //System.out.println(">>>> Proxy-Client-IP : " + ip);
         }
         if (ip == null) {
             ip = request.getHeader("WL-Proxy-Client-IP"); // 웹로직
-            //System.out.println(">>>> WL-Proxy-Client-IP : " + ip);
         }
         if (ip == null) {
             ip = request.getHeader("HTTP_CLIENT_IP");
-            //System.out.println(">>>> HTTP_CLIENT_IP : " + ip);
         }
         if (ip == null) {
             ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-            //System.out.println(">>>> HTTP_X_FORWARDED_FOR : " + ip);
         }
         if (ip == null) {
             ip = request.getRemoteAddr();
         }
-        
         System.out.println(">>>> Result : IP Address : "+ip);
 		
 		try {
@@ -261,6 +248,43 @@ public class MemberController {
 			System.out.println("loginUser : " + loginUser);
 			
 			//로그인포 객체 생성
+			li.setEmail(loginUser.getEmail());
+			li.setUserIp(ip);
+			
+			long time = System.currentTimeMillis(); 
+			SimpleDateFormat dayTime = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+			String str = dayTime.format(new Date(time));
+			System.out.println(str);
+			
+			li.setTime(str);
+			
+			//String nation = ms.loginNation(li.getUserIp());
+			
+			//String ParseIP = ms.parseIP(ip); 
+			
+			String[] o1 = new String[4];
+			
+			o1 = ip.split("\\.");
+			//ip = "174.36.207.186";
+			//o1 = ip.split("\\.");
+			/*for (int i = 0; i < o1.length; i++) {
+				System.out.println("노애미 아이피" + o1[i]);
+			}*/
+			
+			long intIp = 0;
+			
+			intIp = (Long.parseLong(o1[0])*16777216)
+		             + (Long.parseLong(o1[1])*65536)
+		             + (Long.parseLong(o1[2])*256)
+		             + Long.parseLong(o1[3]);
+			
+			
+			li.setLongIp(intIp);
+			
+			LogInfo li2 = ms.selectNation(li);
+			
+			//System.out.println("조회해온 국가" + nation);
+			System.out.println("로그객체 : " + li2);
 			
 			mv.addObject("loginUser", loginUser);
 			mv.setViewName("main/main");
@@ -273,6 +297,8 @@ public class MemberController {
 			mv.setViewName("common/errorPage");
 		}
 		return mv;
+		//return null;
+		
 	}
 	
 	@RequestMapping(value="insertMember.me", method=RequestMethod.POST)
@@ -326,8 +352,6 @@ public class MemberController {
 	//카카오 이메일 인증
 	@RequestMapping(value="kakaoLogin.me")
 	public ModelAndView kakaoLogin(HttpServletRequest request, HttpServletResponse response, ModelAndView mv){
-		
-		System.out.println("여기?????????????");
 		
 		String email = request.getParameter("email");
 		String nickname = request.getParameter("nickname");
@@ -793,7 +817,12 @@ public class MemberController {
 		return mv;
 	}
 	@RequestMapping(value="myLoginView.me")
-	public ModelAndView myLoginForward(ModelAndView mv){
+	public ModelAndView myLoginForward(HttpSession session,LogInfo li,ModelAndView mv){
+		
+		System.out.println("으흠..접속이되나");
+		
+		
+		
 		
 		mv.setViewName("mypage/myPage_loginRecord");
 		

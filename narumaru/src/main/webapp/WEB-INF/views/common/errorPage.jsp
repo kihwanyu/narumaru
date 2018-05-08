@@ -22,6 +22,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<h1 align="center">ERROR PAGE</h1>
+
 	<h1 align="center">${message }</h1>
 	
 	<div style="width:500px; height:500px;" class="im2">

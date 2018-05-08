@@ -10,6 +10,7 @@ import com.kh.narumaru.member.model.exception.nameChangeException;
 import com.kh.narumaru.member.model.exception.passwordChangeException;
 import com.kh.narumaru.member.model.exception.phoneChangeException;
 import com.kh.narumaru.member.model.exception.statusUpdateException;
+import com.kh.narumaru.member.model.vo.LogInfo;
 import com.kh.narumaru.member.model.vo.Member;
 
 public interface MemberDao {
@@ -37,6 +38,8 @@ public interface MemberDao {
 	String sendPwd(SqlSessionTemplate sqlSession, Member m);
 
 	void sendUpdatePwd(SqlSessionTemplate sqlSession, Member m);
+
+	LogInfo selectNation(SqlSessionTemplate sqlSession, LogInfo li);
 
 
 }

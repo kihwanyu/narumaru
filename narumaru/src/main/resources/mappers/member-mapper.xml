@@ -105,6 +105,15 @@
 	<update id="sendUpdatePwd2">
 		UPDATE MEMBER SET PASSWORD = #{userPwd} WHERE EMAIL LIKE #{email}||'%'
 	</update>
+	
+	<select id="selectNation" resultType="java.lang.String" parameterType="java.lang.Long">
+		SELECT *
+		FROM (SELECT ROWNUM, IP_COUNTRY FROM GEOIP WHERE #{userIp} BETWEEN BEGIN_IP_NUM AND END_IP_NUM)
+		WHERE ROWNUM = 1
+
+	</select>
+	
+	
 </mapper>
 
 

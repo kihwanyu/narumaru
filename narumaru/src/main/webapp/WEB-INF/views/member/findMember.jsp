@@ -271,7 +271,7 @@
            <br><br><br>
        	  <div align="center">
 	       	  <label class="btn_label idBtn btn btn-default" for="open-pop" onclick="searchEmail();">이메일 찾기</label>
-    	   	  <label class="btn_label btn btn-default">메인으로 돌아기기</label>
+    	   	  <label class="btn_label btn btn-default" onclick="location.href='${contextPath}/index.jsp'">메인으로 돌아기기</label>
        	  </div>
 	</div>
 	<br><br><br><br>
@@ -290,7 +290,7 @@
            <br><br><br>
            <div align="center">
        	   <label class="btn_label passBtn btn btn-default" for="open-pop2" onclick="searchPwd();">비밀번호 찾기</label>
-       	   <label class="btn_label btn btn-default">메인으로 돌아가기</label>
+       	   <label class="btn_label btn btn-default" onclick="location.href='${contextPath}/index.jsp'">메인으로 돌아가기</label>
            
            </div>
 	</div>
@@ -365,7 +365,7 @@
 			<label class="modal-pass_bg" for="open-pop2"></label>
 			<div class="modal-pass_inner" align="center">
 				<label class="modal-pass_close" for="open-pop2"></label>
-				<h2 style="padding-bottom: 40px;">비밀번호확 확인</h2>
+				<h2 style="padding-bottom: 40px;">비밀번호 확인</h2>
 				
 				<h3 id="findPassword" style="vertical-align: middle;"></h3>
 				
