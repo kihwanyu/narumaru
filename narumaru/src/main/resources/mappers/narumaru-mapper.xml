@@ -14,6 +14,8 @@
 		<result property="createDate" column="CREATE_DATE"/>
 		<result property="isOpen" column="IS_OPEN"/>
 		<result property="status" column="STATUS"/>
+		<result property="memberCount" column="MEMBER_COUNT"/>
+		<result property="memberRank" column="MEMBER_RANK"/>
 	</resultMap> 
 	
 	<resultMap type="Board" id="boardResultSet2">
@@ -79,6 +81,42 @@
 	
 	<select id="selectNeighborList" resultMap="NarumaruResultSet" parameterType="_int">
 		SELECT * FROM NARUMARU WHERE NMNO IN(SELECT NMNO FROM MARU_MEMBER WHERE MNO IN (SELECT NEIGHBOR_MNO FROM NEIGHBOR WHERE MNO = #{mno})) AND NM_CATEGORY = 2
+	</select>
+	
+	<select id="searchNarumaru" resultMap="NarumaruResultSet" parameterType="String">
+		SELECT NM.NMNO, NM.NM_CATEGORY, NM.CNO, NM.NM_TITLE, NM.NM_INTRO, NM.CREATE_DATE, NM.IS_OPEN, NM.STATUS,
+        M.PROFILENAME, M.NICNAME
+        FROM NARUMARU NM
+        JOIN MARU_MEMBER MA ON(NM.NMNO = MA.NMNO)
+        JOIN MEMBER M ON(MA.MNO = M.MNO)
+        WHERE NM_TITLE LIKE '%' || #{searchCondition} || '%'
+	</select>
+	
+	<select id="selectBestNaru" resultMap="NarumaruResultSet">
+		SELECT NMNO, NM_CATEGORY, CNO, NM_TITLE, NM_INTRO, CREATE_DATE, IS_OPEN, STATUS,
+        PROFILENAME, NICNAME, NEIGHBOR_COUNT,
+        ROW_NUMBER() OVER(ORDER BY NEIGHBOR_COUNT DESC) AS MEMBER_RANK
+        FROM (SELECT NM.NMNO, NM.NM_CATEGORY, NM.CNO, NM.NM_TITLE, NM.NM_INTRO, NM.CREATE_DATE, NM.IS_OPEN, NM.STATUS,
+        M.PROFILENAME, M.NICNAME, (SELECT COUNT(*) FROM NEIGHBOR WHERE NEIGHBOR_MNO = MA.MNO) AS NEIGHBOR_COUNT, ROWNUM
+        FROM NARUMARU NM
+        JOIN MARU_MEMBER MA ON(NM.NMNO = MA.NMNO)
+        JOIN MEMBER M ON(MA.MNO = M.MNO)
+        WHERE NM.NM_CATEGORY = 2
+        ORDER BY NEIGHBOR_COUNT DESC)
+        WHERE ROWNUM &lt;= 3
+	</select>
+	
+	<select id="selectBestMaru" resultMap="NarumaruResultSet">
+		SELECT NMNO, NM_CATEGORY, CNO, NM_TITLE, NM_INTRO, CREATE_DATE, IS_OPEN, STATUS,
+        PROFILENAME, NICNAME, MEMBER_COUNT, ROW_NUMBER() OVER(ORDER BY MEMBER_COUNT DESC) AS MEMBER_RANK
+        FROM(SELECT NM.NMNO, NM.NM_CATEGORY, NM.CNO, NM.NM_TITLE, NM.NM_INTRO, NM.CREATE_DATE, NM.IS_OPEN, NM.STATUS,
+        M.PROFILENAME, M.NICNAME, (SELECT COUNT(*) FROM MARU_MEMBER MA2 WHERE MA2.NMNO = NM.NMNO) AS MEMBER_COUNT, ROWNUM
+        FROM NARUMARU NM
+        JOIN MARU_MEMBER MA ON(NM.NMNO = MA.NMNO)
+        JOIN MEMBER M ON(MA.MNO = M.MNO)
+        WHERE NM.NM_CATEGORY = 1
+        ORDER BY MEMBER_COUNT DESC)
+        WHERE ROWNUM &lt;= 3
 	</select>
 </mapper>
 

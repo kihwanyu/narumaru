@@ -16,6 +16,7 @@ import com.kh.narumaru.member.model.exception.nameChangeException;
 import com.kh.narumaru.member.model.exception.passwordChangeException;
 import com.kh.narumaru.member.model.exception.phoneChangeException;
 import com.kh.narumaru.member.model.exception.statusUpdateException;
+import com.kh.narumaru.member.model.vo.LogInfo;
 import com.kh.narumaru.member.model.vo.Member;
 
 @Service
@@ -125,12 +126,11 @@ public class MemberServiceImpl implements MemberService{
 		return md.selectMemberOne(mno);
 	}
 
-	
 	@Override
-	public String findNation(String ip) {
-		// TODO Auto-generated method stub
-		return null;
+	public LogInfo selectNation(LogInfo li) {
+		return md.selectNation(sqlSession, li);
 	}
+
 
 }
 

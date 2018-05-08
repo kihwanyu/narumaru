@@ -8,7 +8,7 @@
 <!-- Meta, title, CSS, favicons, etc. -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
+<style>/*  */
 	.FAQsubMenu{
 		display:none;
 		width:200px;
@@ -77,7 +77,7 @@
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <div id="gender" class="btn-group" data-toggle="buttons">
                             <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                              <input type="radio" id = "Noticebtn" name="noType" value=700> &nbsp; 공지사항 &nbsp;
+                              <input type="radio" id = "Noticebtn" name="noType" value="700"> &nbsp; 공지사항 &nbsp;
                             </label>
                             <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
                               <input type="radio" id="FAQbtn" name="noType" value="800"> FAQ

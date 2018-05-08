@@ -138,6 +138,16 @@ public class AdminDaoImpl implements AdminDao{
 
 
 	@Override
+	public ArrayList<Notice> adminAnswer(Notice n) {
+		n.setNoType(900);
+		System.out.println("adminDao questionSelectLst n :" +n );
+		ArrayList<Notice> nlist = null;
+		nlist = (ArrayList)sqlSession.selectList("Admin.questionSelectList", n);
+		//
+		System.out.println("adminDao adminSelectList nlist"  + nlist);
+
+		return nlist;
+  }
 	public ArrayList selectChannel() {
 		ArrayList selectChannel = (ArrayList) sqlSession.selectList("Admin.selectChannel");
 		System.out.println("DAO채널 : " + selectChannel);
@@ -166,5 +176,30 @@ public class AdminDaoImpl implements AdminDao{
 			throw new Exception("회원상태수정실패");
 		}
 		System.out.println("dao : " + result);
+	}
+
+
+	@Override
+	public ArrayList moneyView() {
+		ArrayList moneyView = (ArrayList) sqlSession.selectList("Admin.selectMoneyView");
+		return moneyView;
+	}
+
+
+	@Override
+	public void moneyStatusCh(int WNO) throws Exception {
+		int result = sqlSession.update("Admin.moneyStatusCh", WNO);
+		if(result < 0){
+			throw new Exception("실패");
+		}
+		System.out.println("dao : " + result);
+		
+	}
+
+
+	@Override
+	public ArrayList Chart() {
+		ArrayList Chart = (ArrayList) sqlSession.selectList("Admin.Chart");
+		return Chart;
 	}
 }

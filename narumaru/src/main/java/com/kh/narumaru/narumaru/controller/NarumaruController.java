@@ -595,7 +595,6 @@ public class NarumaruController {
 	@RequestMapping("narumaruSelectOne.nm")
 	public void narumaruSelectOne(@RequestParam(value="nmno") int nmno, HttpServletRequest request, HttpServletResponse response){
 		
-		
 		Narumaru nm = nms.selectNarumaruOne(nmno); 
 		
 		response.setContentType("application/json");
@@ -612,4 +611,97 @@ public class NarumaruController {
 		}
 	}
 	
+	@RequestMapping("selectChannelBoardList.nm")
+	public void selectChannelBoardList(int cno, HttpServletRequest request, HttpServletResponse response){
+		ArrayList<Board> list = nms.selectChannelBoardList(cno);
+
+		try {
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			new Gson().toJson(list, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("searchNarumaruBoard.nm")
+	public ModelAndView searchNarumaruBoard(String searchCondition, ModelAndView mv){
+		ArrayList<Board> blist = nms.searchNarumaruBoard(searchCondition);
+		ArrayList<Narumaru> nmlist = nms.searchNarumaru(searchCondition);
+		ArrayList<Narumaru> narulist = nms.searchNarumaru(searchCondition);
+		ArrayList<Narumaru> marulist = nms.searchNarumaru(searchCondition);
+		
+		int naruCount = 0;
+		int maruCount = 0;
+		
+		for(Narumaru nm : nmlist){
+			if(nm.getNmCategory() == 1) {
+				maruCount++;
+				marulist.add(nm);
+			}
+			else {
+				naruCount++;
+				narulist.add(nm);
+			}
+		}
+		
+		mv.addObject("blist", blist);
+		mv.addObject("marulist", nmlist);
+		mv.addObject("narulist", nmlist);
+		mv.addObject("naruCount", naruCount);
+		mv.addObject("maruCount", maruCount);
+		mv.addObject("searchCondition", searchCondition);
+		mv.setViewName("maru/maruSearchResult");
+		
+		return mv;
+	}
+	
+	@RequestMapping("searchNarumaruBoardDetail.bo")
+	public ModelAndView searchNarumaruBoardDetail(String searchCondition, ModelAndView mv){
+		ArrayList<Board> blist = nms.searchNarumaruBoard(searchCondition);
+		
+		mv.addObject("blist", blist);
+		mv.addObject("searchCondition", searchCondition);
+		mv.setViewName("maru/maruSearchResultDetail");
+		
+		return mv;
+	}
+	
+	@RequestMapping("selectBestNaru.nm")
+	public void selectBestNaru(HttpServletRequest request, HttpServletResponse response){
+		try {
+			ArrayList<Narumaru> list = nms.selectBestNaru();
+			
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			new Gson().toJson(list, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("selectBestMaru.nm")
+	public void selectBestMaru(HttpServletRequest request, HttpServletResponse response){
+		try {
+			ArrayList<Narumaru> list = nms.selectBestMaru();
+			
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			new Gson().toJson(list, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

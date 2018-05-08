@@ -19,6 +19,17 @@
 		<result property="total_amount" column="TOTAL_AMOUNT"/>
 	</resultMap>
 	
+	<resultMap type="Notice" id="noticeResultSet">
+		<id property="nid" column="BNO"/>
+		<result property="noType" column="B_TYPE"/>
+		<result property="noTitle" column="B_TITLE"/>
+		<result property="noContent" column="B_CONTENT"/>
+		<result property="writerId" column="MNO"/>
+		<result property="createDate" column="CREATE_DATE"/>
+		<result property="modifyDate" column="MODIFY_DATE"/>
+		<result property="status" column="STATUS"/>		
+	</resultMap>
+	
 	<select id="selectEnroll1" resultType="_int">
 		SELECT COUNT(TO_CHAR(ENROLL_DATE,'RRRRMM')) FROM MEMBER GROUP BY TO_CHAR(ENROLL_DATE,'RRRRMM') ORDER BY TO_CHAR(ENROLL_DATE,'RRRRMM') ASC
 	</select>
@@ -32,7 +43,9 @@
 	</select>
 	
 	<select id="maruView" resultType="hashmap">
-		SELECT M.NM_TITLE, (SELECT E.EMAIL FROM MARU_MEMBER R JOIN MEMBER E ON (R.MNO = E.MNO) WHERE M.NMNO = R.NMNO AND R.CON_LEVEL = 0)AS MARUADMIN,(SELECT COUNT (*) FROM MARU_MEMBER MM WHERE STATUS = 'Y' GROUP BY MM.NMNO HAVING MM.NMNO = M.NMNO)AS MARUMAEMBER FROM NARUMARU M WHERE M.NM_CATEGORY = 1 AND STATUS = 'Y'
+		SELECT M.NM_TITLE, (SELECT E.EMAIL FROM MARU_MEMBER R JOIN MEMBER E ON (R.MNO = E.MNO) WHERE M.NMNO = R.NMNO AND R.CON_LEVEL = 0)AS MARUADMIN,
+                   (SELECT COUNT (*) FROM MARU_MEMBER MM WHERE MM.STATUS = 'Y' GROUP BY MM.NMNO HAVING MM.NMNO = M.NMNO)AS MARUMAEMBER 
+                   FROM NARUMARU M WHERE M.NM_CATEGORY = 1 AND M.STATUS = 'Y'
 	</select>
 	
 	<select id="totalMember" resultType="_int">
@@ -62,6 +75,12 @@
 		GROUP BY SUBSTR(TO_CHAR(FLOOR(MONTHS_BETWEEN(SYSDATE, BIRTHDAY)/12)), 0, 1)
 		ORDER BY SUBSTR(TO_CHAR(FLOOR(MONTHS_BETWEEN(SYSDATE, BIRTHDAY)/12)), 0, 1) ASC
 	</select>
+	<select id="questionSelectList" resultMap ="noticeResultSet">
+		SELECT * FROM BOARD
+		WHERE STATUS = 'Y'
+		AND B_TYPE = 900
+		ORDER BY BNO ASC
+	</select>
 	
 	<select id="selectChannel" resultType="hashmap">
 		SELECT CNAME FROM CHANNEL
@@ -82,4 +101,15 @@
 		UPDATE MEMBER SET STATUS = #{status} WHERE MNO = #{mid}
 	</update>
 	
+	<select id="selectMoneyView" resultType="hashmap">
+		SELECT * FROM WITHDRAW W JOIN BANK B ON (W.BCODE = B.BCODE)
+	</select>
+	
+	<update id="moneyStatusCh" parameterType="_int">
+		UPDATE WITHDRAW SET STATUS = '입금 완료', WITHDRAW_DATE = SYSDATE WHERE WNO = #{WNO}
+	</update>
+	
+	<select id="Chart" resultType="hashmap">
+		SELECT TO_CHAR(PAYDAY, 'RRRRMM') AS ASD, SUM(AMOUNT) AS AMOUNT FROM PAYMENT GROUP BY TO_CHAR(PAYDAY, 'RRRRMM') ORDER BY TO_CHAR(PAYDAY, 'RRRRMM') ASC
+	</select>
 </mapper>

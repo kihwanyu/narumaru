@@ -201,10 +201,44 @@ public class NarumaruDaoImpl implements NarumaruDao {
 		int result = sqlSession.update("Narumaru.updateDefault",nm);
 	}
 
-@Override
-public ArrayList<Board> searchBoard(Board b) {
-	ArrayList<Board> list = (ArrayList)sqlSession.selectList("Board.searchBoard", b);
-	return list;
-}
+	@Override
+	public ArrayList<Board> searchBoard(Board b) {
+		ArrayList<Board> list = (ArrayList)sqlSession.selectList("Board.searchBoard", b);
+		return list;
+	}
+	
+	@Override
+	public ArrayList<Board> selectChannelBoardList(int cno, SqlSessionTemplate sqlSession) {
+		ArrayList<Board> list = (ArrayList)sqlSession.selectList("Board.selectChannelBoardList", cno);
+		
+		return list;
+	}
+
+	@Override
+	public ArrayList<Board> searchNarumaruBoard(String searchCondition, SqlSessionTemplate sqlSession) {
+		System.out.println("searchCondition : " + searchCondition);
+		ArrayList<Board> list = (ArrayList)sqlSession.selectList("Board.searchNarumaruBoard", searchCondition);
+		
+		return list;
+	}
+
+	@Override
+	public ArrayList<Narumaru> searchNarumaru(String searchCondition, SqlSessionTemplate sqlSession) {
+		ArrayList<Narumaru> list = (ArrayList)sqlSession.selectList("Narumaru.searchNarumaru", searchCondition);
+		
+		return list;
+	}
+
+	@Override
+	public ArrayList<Narumaru> selectBestNaru(SqlSessionTemplate sqlSession) {
+		ArrayList<Narumaru> list = (ArrayList)sqlSession.selectList("Narumaru.selectBestNaru");
+		return list;
+	}
+
+	@Override
+	public ArrayList<Narumaru> selectBestMaru(SqlSessionTemplate sqlSession) {
+		ArrayList<Narumaru> list = (ArrayList)sqlSession.selectList("Narumaru.selectBestMaru");
+		return list;
+	}
 
 }

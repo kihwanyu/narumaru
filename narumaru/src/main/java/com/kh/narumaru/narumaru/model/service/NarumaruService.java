@@ -52,4 +52,14 @@ public interface NarumaruService {
 
 	ArrayList<Board> selectCategoryBoardList(int nmno, int categoryNo);
 
+	ArrayList<Board> selectChannelBoardList(int cno);
+
+	ArrayList<Board> searchNarumaruBoard(String searchCondition);
+
+	ArrayList<Narumaru> searchNarumaru(String searchCondition);
+
+	ArrayList<Narumaru> selectBestNaru();
+
+	ArrayList<Narumaru> selectBestMaru();
+
 }

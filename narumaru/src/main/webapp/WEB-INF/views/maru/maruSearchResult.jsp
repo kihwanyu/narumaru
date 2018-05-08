@@ -1,11 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style>
 	#band_middle{
 		margin-top:50px;
@@ -32,6 +35,7 @@
 		padding-left:20px;
 		font-size:15px;
 		padding-top:10px;
+		padding-bottom:30px;
 	}
 	#searchContents{
 		width:80%;
@@ -39,7 +43,10 @@
 		float:left;
 		margin-left:20px;
 		margin-top:15px;
-		font-size:14px;
+		font-size:1.3em;
+		overflow:hidden;
+		word-wrap:break-word; 
+		text-overflow: ellipsis;
 	}
 	#searchAcce{
 		height:35px;
@@ -59,7 +66,7 @@
 	}
 	#band_bottom{
 		width:100%;
-		height:850px;
+		height:100%px;;
 		background-color:#f7f8f9;
 	}
 	#binbb{
@@ -74,55 +81,112 @@
 	
 	<div id="band_middle">
 		<div id="binb">
-			<label>°Ô½Ã±Û °Ë»ö °á°ú</label><label style="float:right;">°¡ÀÔ ¸¶·ç¿¡¼­ °Ë»ö</label><img src="${contextPath}/resources/images/find.png" style="float:right;width:15px;height:15px;margin-top:3px;">
-			<br>
-			<div id="searchTop">
-				<div id="searchResultTitle">
-					<span>Á¦¸ñ</span>
-				</div>
-				<div>
-					<p id="searchContents">°Ë»öµÇ¼­³ª¿Â±Û¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©</p>
-					<img src="${contextPath}/resources/images/dummy.png" style="width:93px;height:93px;float:right;margin-top:15px;margin-right:20px;">
-				</div>
-				<div id="searchAcce">
-					<img src="${contextPath}/resources/images/smile.png" style="width:20px;height:20px;float:left;margin-top:5px;">
-					<img src="${contextPath}/resources/images/smile.png" style="width:20px;height:20px;position:relative;left:-10px;top:5px;">
-					<span style="margin-left:-10px; margin-top:-5px;">86</span>
-					<span style="">´ñ±Û</span> <span id="reply">12</span>
-				</div>
-				<div id="searchTopMaru">
-					<img src="${contextPath}/resources/images/cosmos.jpg" style="width:30px;height:30px;float:left;margin:15px; border-radius: 5px;">
-					<span><b>¹ºÁö´Â¸ğ¸£°Ú´Âµ¥ ¾Æ¹«´Â °³Â¼´Â ¸¶·ç</b></span>
-				</div>
-			</div> <!-- end of searchTop -->
-			
-			<div id="searchPage" align="center" style="margin-top:15px;">
-				<span style="border-bottom:1px solid black;">1</span>
-				<c:forEach var="i" begin="2" end="9">
-					<span style="color:lightgray;">${i}</span>
-				</c:forEach>
-				<span style="float:right;">°Ë»ö°á°ú ´õº¸±â ></span>
-			</div>
-			
+			<label>'${searchCondition}' ê²Œì‹œê¸€ ê²€ìƒ‰ ê²°ê³¼</label>
+			<c:if test="${blist.size() > 0 }">
+				<br>
+				<div id="searchTop"  onclick="goNarumaru(${blist[0].nmno})">
+					<div id="searchResultTitle">
+						<span>${blist[0].bTitle}</span> <span style="color:lightgray;">(${blist[0].createDate})</span>
+					</div>
+					<div>
+						<p id="searchContents">${blist[0].bContent}</p>
+						<%-- <img src="${contextPath}/resources/memberprofile/${blist[0].profileName}" style="width:93px;height:93px;float:right;margin-top:15px;margin-right:20px;"> --%>
+					</div>
+					<div id="searchAcce">
+						<span style="">ëŒ“ê¸€</span> <span id="reply">${blist[0].comments}</span><c:if test="${blist[0].bHidden ne null }"> <span style="color:gray">(ê²°ì œê°€ í¬í•¨ëœ ê¸€ì…ë‹ˆë‹¤.)</span></c:if>
+					</div>
+					<div id="searchTopMaru">
+						<img src="resources/memberprofile/${blist[0].profileName}" style="width:30px;height:30px;float:left;margin:15px; border-radius: 5px;">
+						<span><b>${blist[0].nmTitle}</b></span>
+					</div>
+				</div> <!-- end of searchTop -->
+				<span style="float:right;" onclick="searchDetail('${searchCondition}')">ê²€ìƒ‰ê²°ê³¼ ë”ë³´ê¸° ></span>
+			</c:if>
+			<c:if test="${blist.size() == 0 }">
+				<div id="searchTop">
+					'${searchCondition}' ê²€ìƒ‰ê²°ê³¼ê°€ ì—†ìŠµë‹ˆë‹¤.
+				</div> <!-- end of searchTop -->
+			</c:if>
 		</div> <!-- end of binb -->
 	</div> <!-- end of band_middle -->
 	
 	<div id="band_bottom">
 		<div id="binbb">
-			<span style="font-size:20px;">¸¶·ç 8</span>
+			<span style="font-size:20px;">ë§ˆë£¨ ${maruCount}</span>
 			
-			<c:forEach var="i" begin="1" end="8">
+			<%--ëª‡ê°œ í‘œì‹œí• ê±´ì§€ ì„¤ì • --%>
+			<c:set var="maruEnd" value="${maruCount - 1}"/>
+			<c:if test="${maruCount >= 3}">
+				<c:set var="maruEnd" value="3"/>
+			</c:if>
+			<c:if test="${maruCount > 0 }">
+				<c:forEach var="i" begin="0" end="${maruEnd}">
+					<div id="searchMaru" style="margin-top:40px;" onclick="goNarumaru(${marulist[i].nmno})">
+						<img src="resources/memberprofile/${marulist[i].profileName}" style="width:80px;height:80px; float:left;">
+						<ul style="margin-left:50px; line-height:25px;">
+							<li><b>${marulist[i].nmTitle}</b></li>
+							<li>${marulist[i].nmIntro}</li>
+							<!-- <li style="color:gray">ë©¤ë²„ xëª…</li> -->
+						</ul>
+					</div>
+				</c:forEach>
+				
+				<c:if test="${maruCount > 4 }">
+				<span style="float:right;" onclick="searchMaruDetail('${searchCondition}')">ê²€ìƒ‰ê²°ê³¼ ë”ë³´ê¸° ></span>
+				</c:if>
+			</c:if>
+			
+			<c:if test="${maruCount == 0 }">
 				<div id="searchMaru" style="margin-top:40px;">
-					<img src="${contextPath}/resources/images/cosmos.jpg" style="width:80px;height:80px; float:left;">
-					<ul style="margin-left:50px; line-height:25px;">
-						<li><b>¸¶·ç ÀÌ¸§ÀÔ´Ï´Ù</b></li>
-						<li>ÀÌ°÷¿¡ ¸¶·çÀÇ ¼³¸íÀÌ µé¾î°¥¼öµµ ¾Æ´Ò¼öµµ ÀÖ½À´Ï´Ù</li>
-						<li style="color:gray">¸â¹ö 1,024¸í / ¸®´õ : »ç ¶÷(27)</li>
-					</ul>
+					'${searchCondition}' ê²€ìƒ‰ ê²°ê³¼ê°€ ì—†ìŠµë‹ˆë‹¤.
 				</div>
-			</c:forEach>
+			</c:if>
 		</div>
 	</div>
+	<br>
+	<div id="band_bottom">
+		<div id="binbb">
+			<span style="font-size:20px;">ë‚˜ë£¨ ${naruCount}</span>
+			
+			<%--ëª‡ê°œ í‘œì‹œí• ê±´ì§€ ì„¤ì • --%>
+			<c:set var="naruEnd" value="${naruCount - 1}"/>
+			<c:if test="${naruCount >= 3}">
+				<c:set var="naruEnd" value="3"/>
+			</c:if>
+			<c:if test="${naruCount > 0 }">
+				<c:forEach var="i" begin="0" end="${naruEnd}">
+					<div id="searchMaru" style="margin-top:40px;" onclick="goNarumaru(${marulist[i].nmno})">
+						<img src="resources/memberprofile/${narulist[i].profileName}" style="width:80px;height:80px; float:left;">
+						<ul style="margin-left:50px; line-height:25px;">
+							<li><b>${narulist[i].nmTitle}</b></li>
+							<li>${narulist[i].nmIntro}</li>
+							<!-- <li style="color:gray">ì´ì›ƒ 512ëª…</li> -->
+						</ul>
+					</div>
+				</c:forEach>
+				
+				<c:if test="${naruCount > 4 }">
+				<span style="float:right;" onclick="searchNaruDetail('${searchCondition}')">ê²€ìƒ‰ê²°ê³¼ ë”ë³´ê¸° ></span>
+				</c:if>
+			</c:if>
+			
+			<c:if test="${naruCount == 0 }">
+				<div id="searchMaru" style="margin-top:40px;">
+					'${searchCondition}' ê²€ìƒ‰ ê²°ê³¼ê°€ ì—†ìŠµë‹ˆë‹¤.
+				</div>
+			</c:if>
+		</div>
+	</div>
+	
+	<script>
+		function searchDetail(str){
+			location.href="searchNarumaruBoardDetail.bo?searchCondition="+str;
+		}
+		
+		function goNarumaru(nmno){
+			location.href="boardListAll.bo?nmno=" + nmno;
+		}
+	</script>
 	
 </body>
 </html>

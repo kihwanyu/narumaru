@@ -11,15 +11,22 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.kh.narumaru.common.model.vo.PageInfo;
 import com.kh.narumaru.member.model.vo.Member;
 import com.kh.narumaru.notice.exception.NoticeDeleteException;
 import com.kh.narumaru.notice.exception.NoticeUpdateException;
+import com.kh.narumaru.notice.exception.questionInsertException;
+import com.kh.narumaru.notice.exception.searchFaqException;
 import com.kh.narumaru.notice.model.service.noticeService;
 import com.kh.narumaru.notice.model.vo.Notice;
 
@@ -41,18 +48,51 @@ public class NoticeController {
 	// 공지사항 조회하기 
 	@RequestMapping(value = "noticeSelectList.no")
 	public ModelAndView noticeSelectList(Notice n, 
-			ModelAndView mv, SessionStatus status){
+			ModelAndView mv, SessionStatus status, 
+			HttpServletRequest request){
 
 			System.out.println("noticeController noticeSelectList");
+			int currentPage;
+			int limit;
+			int maxPage;
+			int startPage;
+			int endPage;
 			
-			ArrayList<Notice> noList = ns.noticeSelectList(n);
-			System.out.println("noticeController noticeSelectList noList : " + noList);
+			currentPage =1;
+			limit = 10;
+			//
+			if(request.getParameter("currentPage") != null){
+				currentPage = Integer.parseInt(request.getParameter("currentPage"));
+				
+			}
 			
-			mv.addObject("noList",noList);
-			status.setComplete();
+	
+			int listCount;
+			System.out.println("noticeController noticeSelectList getLstCount");
 			
+			listCount = ns.getListCount(currentPage);
+			
+			maxPage = (int)((double)listCount / limit + 0.9);
+			startPage = ((int)((double)currentPage / limit + 0.9) - 1)*limit + 1;
+			endPage = startPage + limit -1;
+			if(maxPage<endPage){
+				endPage = maxPage;
+			}
+			
+			PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage, currentPage);
+			
+			ArrayList<Notice> nlist = ns.noticeSelectList(n);
+			
+			
+			
+			mv.addObject("nlist", nlist);
+			mv.addObject("pi", pi);
+			
+			mv.setViewName("mypage/myPage_pointPayment");	
+			System.out.println("noticeController noticeSelectList noList : " + nlist);
+			
+			mv.addObject("noList",nlist);
 			mv.setViewName("notice/NoticeList");
-			
 			
 			return mv;
 				
@@ -68,7 +108,7 @@ public class NoticeController {
 		System.out.println("noticeController showNoticeDetailView n : " + n);
 		
 		mv.addObject("n" ,n);
-		status.setComplete();
+		
 		
 		mv.setViewName("notice/noticeDetail");
 		
@@ -87,7 +127,6 @@ public class NoticeController {
 		
 		mv.addObject("n", n);
 		
-		status.setComplete();
 		
 		mv.setViewName("notice/noticeUpdate");
 		
@@ -141,12 +180,37 @@ public class NoticeController {
 			
 			
 			mv.addObject("nlist", nlist);
-			status.setComplete();
+			
 			
 			mv.setViewName("notice/FAQ");
 			
 			return mv;
 		}
+		
+		//FAQ 검색하기
+		@RequestMapping(value = "searchFaqList.no")
+		public void showSearchFAQListView(String keyWord, HttpServletResponse response){
+			System.out.println("noticeController showSearchFAQListView keyword : " + keyWord);
+			
+			
+			try {
+
+				ArrayList<Notice> nlist = ns.SearchFAQList(keyWord);
+				System.out.println("noticeController showSearchFAQListView nlist : " + nlist);
+				
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				new Gson().toJson(nlist, response.getWriter());
+				
+			} catch (JsonIOException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (searchFaqException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		
 		
 		//Faq Detail 
@@ -159,7 +223,7 @@ public class NoticeController {
 			System.out.println("noticeController showFaqDetailView n : " + n);
 			
 			mv.addObject("n" ,n);
-			status.setComplete();
+			
 			
 			mv.setViewName("notice/faqDetail");
 			
@@ -178,7 +242,6 @@ public class NoticeController {
 			
 			mv.addObject("n", n);
 			
-			status.setComplete();
 			
 			mv.setViewName("notice/faqUpdate");
 			
@@ -193,71 +256,105 @@ public class NoticeController {
 			System.out.println("noticecontroller question");
 			Member loginUser = (Member) request.getSession().getAttribute("loginUser");
 			
-			System.out.println("NoticeController questionView loginUser.getMid() n : " + loginUser.getMid() + " / " + n);
-			System.out.println("question : " + question.getOriginalFilename());
 			
-			Member m = new Member();
+			System.out.println("noticecontroller question");
+			
+			
+			
+			return "notice/question";
+		}
+		
+		//1:1 문의하기 삽입
+		@RequestMapping(value ="questionForm.no", method=RequestMethod.POST)
+		public String showquestionFormView(HttpServletRequest request
+				, @RequestParam(name="orFileName") MultipartFile question 
+				, MultipartRequest multipartRequest
+				, HttpSession session, HttpServletResponse response){
+			
+	
+			System.out.println("noticecontroller questionForm question : "  + question);
+			//Member loginUser = (Member) request.getSession().getAttribute("loginUser");
+			Member loginUser = (Member) session.getAttribute("loginUser");
+			
+			Notice n = new Notice();
+			
+			
+			System.out.println("request : " + request.getParameter("noContent"));
+			
+			
+			System.out.println("NoticeController questionForm loginUser.getMid() : " + loginUser.getMid());
+			System.out.println("NoticeController questionForm question.getOriginalFilename : " + question.getOriginalFilename());
+			
+			
 			String message ="";
 			
 			String root = request.getSession().getServletContext().getRealPath("resources");
 			String filePath = root + "\\question";
-			String fileName = "";
-			System.out.println(filePath);
-			
-		
-			
-			
-			
+			String orfileName = "";
+			String chfileName= "";
+			System.out.println("NoticeController questionForm filePath : " + filePath);
 			
 			try {
+				System.out.println("NoticeController questionForm Try 나오니 ?");
 				
-				File deleteFile = new File(filePath + "\\" + n.getFileName());
+				File deleteFile = new File(filePath + "\\" + n.getOrFileName());
 				deleteFile.delete();
 				
-				fileName = question.getOriginalFilename();
+				orfileName = question.getOriginalFilename();
 				
-				int dot = fileName.lastIndexOf(".");
+				int dot = orfileName.lastIndexOf(".");
 				
-				String ext = fileName.substring(dot);
+				String ext = orfileName.substring(dot);
 				
-				fileName = String.valueOf(loginUser.getMid()) + loginUser.getNickName()+ ext;
+				chfileName = String.valueOf(loginUser.getMid()) + loginUser.getNickName()+ ext;
 				
 				
-				n.setNid(n.getNid());
+				
+				n.setNoType(900);
+				n.setNoTitle(request.getParameter("noTitle"));
+				n.setNoContent(request.getParameter("noContent"));
 				n.setWriterId(loginUser.getMid());
-				n.setFileName(fileName);
+				n.setOrFileName(orfileName);
+				n.setChFileName(chfileName);
 				
-				question.transferTo(new File(filePath + "\\" + fileName ));
+				System.out.println("noticeController questionForm n : " + n);
+				
+				question.transferTo(new File(filePath + "\\" + chfileName ));
 			
 			
-			
+			////
 			
 			} catch (IllegalStateException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			
-			
-			
-		
-		
-				
+			try{
 				ns.questionInsert(n);
 				session.removeAttribute("loginUser");
 				session.setAttribute("loginUser", loginUser);
 				
 				response.getWriter().print("true");
-			} /*catch (IOException e) {
+			} catch (IOException e2) {
 				try {
 					response.getWriter().print("false");
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				e.printStackTrace();
-			}*/
+				e2.printStackTrace();
+			} catch (questionInsertException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+				}
+			}
+			return "notice/noticeSuccess";
+		}
+		
+		//성공에이지
+		@RequestMapping(value ="success.no")
+		public String showSuccessView(){
 			
-			
-			return "notice/question";
+			return "notice/noticeSuccess";
 		}
 	
 }

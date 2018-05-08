@@ -14,7 +14,6 @@ public class AfterAdvice {
 	
 	@After("allPointcut()")
 	public void finallyLog(){
-		System.out.println("어드바이스");
 		
 	}
 	

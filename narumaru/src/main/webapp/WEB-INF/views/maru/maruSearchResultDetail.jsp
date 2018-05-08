@@ -1,11 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style>
 	#band_middle{
 		margin-top:50px;
@@ -32,6 +35,7 @@
 		padding-left:20px;
 		font-size:15px;
 		padding-top:10px;
+		padding-bottom:30px;
 	}
 	#searchContents{
 		width:80%;
@@ -39,7 +43,10 @@
 		float:left;
 		margin-left:20px;
 		margin-top:15px;
-		font-size:14px;
+		font-size:1.3em;
+		overflow:hidden;
+		word-wrap:break-word; 
+		text-overflow: ellipsis;
 	}
 	#searchAcce{
 		height:35px;
@@ -74,32 +81,32 @@
 	
 	<div id="band_middle">
 		<div id="binb">
-			<label>░╘╜├▒█ ░╦╗Ў ░с░·</label><label style="float:right;">░б└╘ ╕╢╖ч┐б╝н ░╦╗Ў</label><img src="${contextPath}/resources/images/find.png" style="float:right;width:15px;height:15px;margin-top:3px;">
-			<br>
-			<c:forEach var="i" begin="1" end="8">
-				<div id="searchTop">
+			<label>'${searchCondition}' ъ▓МьЛЬъ╕А ъ▓АьГЙ ъ▓░ъ│╝ ${blist.size()}</label>
+			<c:forEach var="b" items="${blist}">
+				<br>
+				<div id="searchTop"  onclick="goNarumaru(${b.nmno})">
 					<div id="searchResultTitle">
-						<span>┴ж╕ё</span>
+						<span>${b.bTitle}</span> <span style="color:lightgray;">(${b.createDate})</span>
 					</div>
 					<div>
-						<p id="searchContents">░╦╗Ў╡╟╝н│к┐┬▒█дйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдйдй</p>
-						<img src="${contextPath}/resources/images/dummy.png" style="width:93px;height:93px;float:right;margin-top:15px;margin-right:20px;">
+						<p id="searchContents">${b.bContent}</p>
+						<%-- <img src="${contextPath}/resources/memberprofile/${blist[0].profileName}" style="width:93px;height:93px;float:right;margin-top:15px;margin-right:20px;"> --%>
 					</div>
 					<div id="searchAcce">
-						<img src="${contextPath}/resources/images/smile.png" style="width:20px;height:20px;float:left;margin-top:5px;">
-						<img src="${contextPath}/resources/images/smile.png" style="width:20px;height:20px;position:relative;left:-10px;top:5px;">
-						<span style="margin-left:-10px; margin-top:-5px;">86</span>
-						<span style="">┤ё▒█</span> <span id="reply">12</span>
+						<span style="">ыМУъ╕А</span> <span id="reply">${b.comments}</span> <c:if test="${b.bHidden ne null }"><span style="color:gray">(ъ▓░ьаЬъ░А эПмэХиыРЬ ъ╕АьЮЕыЛИыЛд.)</span></c:if>
 					</div>
 					<div id="searchTopMaru">
-						<img src="${contextPath}/resources/images/cosmos.jpg" style="width:30px;height:30px;float:left;margin:15px; border-radius: 5px;">
-						<span><b>╣║┴Ў┤┬╕Ё╕г░┌┤┬╡е ╛╞╣л┤┬ ░│┬╝┤┬ ╕╢╖ч</b></span>
+						<img src="resources/memberprofile/${b.profileName}" style="width:30px;height:30px;float:left;margin:15px; border-radius: 5px;">
+						<span><b>${b.nmTitle}</b></span>
 					</div>
 				</div> <!-- end of searchTop -->
 			</c:forEach>
-			
 		</div> <!-- end of binb -->
 	</div> <!-- end of band_middle -->
-	
+	<script>
+		function goNarumaru(nmno){
+			location.href="boardListAll.bo?nmno=" + nmno;
+		}
+	</script>
 </body>
 </html>
