@@ -209,6 +209,8 @@
 			data:{"mno":mno},
 			success:function(data){
 				console.log(data);
+				
+				console.log(data.length + "가 랭스");
 				$("#maruCount").html(data.length);
 				for(var i = 0; i < data.length; i++){
 					console.log(data[i]);
@@ -220,7 +222,9 @@
 						'<p style="text-align:center; padding: 5px; font-size: 15px;">'+data[i].NM_TITLE+'</p>'+
 						'</div>'
 					);
+					
 				}
+				
 				
 			},
 			error:function(data){
@@ -238,12 +242,21 @@
 			success:function(data){
 				$("#bestNaruImg1").attr("src","resources/memberprofile/"+ data[0].profileName)
 				$("#bestNaru1").html(data[0].nmTitle);
+				$("#bestNaru1").parent().bind("click", function(){
+					location.href="boardListAll.bo?nmno="+data[0].nmno;
+				})
 				
 				$("#bestNaruImg2").attr("src","resources/memberprofile/"+ data[1].profileName)
 				$("#bestNaru2").html(data[1].nmTitle);
+				$("#bestNaru2").parent().bind("click", function(){
+					location.href="boardListAll.bo?nmno="+data[1].nmno;
+				})
 				
 				$("#bestNaruImg3").attr("src","resources/memberprofile/"+ data[2].profileName)
 				$("#bestNaru3").html(data[2].nmTitle);
+				$("#bestNaru3").parent().bind("click", function(){
+					location.href="boardListAll.bo?nmno="+data[2].nmno;
+				})
 			},
 			error:function(data){
 				console.log("베스트나루 읽기 실패");
@@ -257,12 +270,21 @@
 			success:function(data){
 				$("#bestMaruImg1").attr("src","resources/memberprofile/"+ data[0].profileName)
 				$("#bestMaru1").html(data[0].nmTitle);
+				$("#bestMaru1").parent().bind("click", function(){
+					location.href="boardListAll.bo?nmno="+data[0].nmno;
+				})
 				
 				$("#bestMaruImg2").attr("src","resources/memberprofile/"+ data[1].profileName)
 				$("#bestMaru2").html(data[1].nmTitle);
+				$("#bestMaru2").parent().bind("click", function(){
+					location.href="boardListAll.bo?nmno="+data[1].nmno;
+				})
 				
 				$("#bestMaruImg3").attr("src","resources/memberprofile/"+ data[2].profileName)
 				$("#bestMaru3").html(data[2].nmTitle);
+				$("#bestMaru3").parent().bind("click", function(){
+					location.href="boardListAll.bo?nmno="+data[2].nmno;
+				})
 			},
 			error:function(data){
 				console.log("베스트나루 읽기 실패");
@@ -276,7 +298,6 @@
 			data:{"mno":mno},
 			success:function(data){
 				console.log(data);
-				$("#maruCount").html(data.length);
 				for(var i = 0; i < data.length; i++){
 					console.log(data[i]);
 					$("#neighborList").append(
