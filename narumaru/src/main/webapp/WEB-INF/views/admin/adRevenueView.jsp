@@ -189,8 +189,6 @@
         </footer>
         <!-- footer content -->
     <script type="text/javascript">
-    console.log('${Chart}' + "1");
-    console.log('${totalAge}' + "2")
    	 if ($('#mybarChart2').length ){ 
 		  
 		  var ctx = document.getElementById("mybarChart2");
