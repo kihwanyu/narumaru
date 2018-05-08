@@ -18,11 +18,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
+import com.kh.narumaru.common.model.exception.alarmRequestException;
+import com.kh.narumaru.common.model.service.AlarmService;
+import com.kh.narumaru.common.model.vo.Alarm;
+import com.kh.narumaru.declaration.model.service.DeclarationService;
 import com.kh.narumaru.maru.exception.MaruException;
 import com.kh.narumaru.maru.model.service.MaruService;
 import com.kh.narumaru.maru.model.vo.MaruMember;
 import com.kh.narumaru.member.model.exception.selectChanelException;
 import com.kh.narumaru.member.model.service.ChannelService;
+import com.kh.narumaru.member.model.service.MemberService;
 import com.kh.narumaru.member.model.vo.Channel;
 import com.kh.narumaru.member.model.vo.Member;
 import com.kh.narumaru.naru.model.service.NaruService;
@@ -31,11 +36,13 @@ import com.kh.narumaru.narumaru.exception.NarumaruException;
 import com.kh.narumaru.narumaru.model.service.NarumaruService;
 import com.kh.narumaru.narumaru.model.vo.Board;
 import com.kh.narumaru.narumaru.model.vo.Narumaru;
+import com.kh.narumaru.payment.model.service.UsePointService;
+import com.kh.narumaru.payment.model.vo.UsePoint;
 
 @Controller
 @SessionAttributes("nm")
 public class NarumaruController {
-	
+	/**/
 	@Autowired
 	private NarumaruService nms;
 	@Autowired
@@ -43,7 +50,15 @@ public class NarumaruController {
 	@Autowired
 	private MaruService ms;
 	@Autowired
+	private AlarmService as;
+	@Autowired
 	private NaruService ns;
+	@Autowired
+	private MemberService mems;
+	@Autowired
+	private UsePointService us;
+	@Autowired
+	private DeclarationService ds;
 	
 	@RequestMapping("goHome.nm")
 	public String goHome(){
@@ -84,20 +99,26 @@ public class NarumaruController {
 			
 			list.add(newB);
 		}		
-		boolean isOwner = nms.checkNarumaruOwner(nmno, loginUser);
+		int isOwner = nms.checkNarumaruOwner(nmno, loginUser);
+		System.out.println("isOwner : " + isOwner);
+		Member owner = mems.selectMemberOne(isOwner);
+		
+		System.out.println("owner : " + owner);
 		
 		mv.addObject("nm", nm);
 		mv.addObject("list", list);
 		mv.addObject("colist", colist);
 		mv.addObject("isOwner", isOwner);
+		mv.addObject("owner",owner);
 
 		if(nm.getNmCategory() ==2){
 			Theme theme = nms.selectThemeOne(nmno); // 나루의 테마
 			int isNeighbor = nms.checkNeighbor(nmno, loginUser); // 이웃 여부
 			ArrayList<Narumaru> neighborList = ns.selectNeighborList(nmno); // 해당 나루의 이웃 리스트
-			
+			ArrayList<UsePoint> hpayList = us.selectUsePoint(loginUser.getMid()); // 로그인 유저의 구매리스트
 			mv.addObject("theme", theme);
 			mv.addObject("isNeighbor",isNeighbor);
+			mv.addObject("hpayList",hpayList);
 			mv.addObject("neList",neighborList);
 			
 			mv.setViewName("naru/naruBoard"); 
@@ -108,6 +129,95 @@ public class NarumaruController {
 		
 		return mv;
 	}
+	
+	@RequestMapping(value = "boardListCategory.bo")
+	public ModelAndView showCategoryBoardList(int nmno, int cano, ModelAndView mv, HttpServletRequest request){
+		System.out.println("조회하는 나루마루번호 " + nmno);
+		
+		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+		
+		System.out.println(loginUser);
+		
+		ArrayList<Board> list = nms.selectCategoryBoardList(nmno, cano);
+		ArrayList<Board> colist = nms.selectCommentList(nmno);
+		Narumaru nm = nms.selectNarumaruOne(nmno);
+		if(list.size() == 0){
+			Board newB = new Board();
+			newB.setbWriter("");
+			newB.setbType(0);
+			newB.setNmno(nmno);
+			newB.setStatus("Y");
+			newB.setNeedPoint(0);
+			newB.setCreateDate("");
+			newB.setbTno(0);
+			newB.setBno(0);
+			newB.setCano(0);
+			newB.setCno(0);
+			newB.setIsOpen("all"); 
+			newB.setComments(0);
+			newB.setbLevel(0);
+			newB.setbContent("아직 카테고리에 글이 없습니다.");				
+			
+			list.add(newB);
+		}		
+		int isOwner = nms.checkNarumaruOwner(nmno, loginUser);
+		
+		mv.addObject("nm", nm);
+		mv.addObject("list", list);
+		mv.addObject("colist", colist);
+		mv.addObject("isOwner", isOwner);
+
+		if(nm.getNmCategory() ==2){
+			Theme theme = nms.selectThemeOne(nmno); // 나루의 테마
+			int isNeighbor = nms.checkNeighbor(nmno, loginUser); // 이웃 여부
+			ArrayList<Narumaru> neighborList = ns.selectNeighborList(nmno); // 해당 나루의 이웃 리스트
+			ArrayList<UsePoint> hpayList = us.selectUsePoint(loginUser.getMid()); // 로그인 유저의 구매리스트
+			mv.addObject("theme", theme);
+			mv.addObject("isNeighbor",isNeighbor);
+			mv.addObject("hpayList",hpayList);
+			mv.addObject("neList",neighborList);
+			
+			mv.setViewName("naru/naruBoard"); 
+		}else{
+			mv.setViewName("maru/maruBoard"); 
+		}
+		
+		
+		return mv;
+	}
+	
+	@RequestMapping(value = "searchBoard.nm")
+	public ModelAndView searchBoard(String search, Board b, ModelAndView mv, HttpServletRequest request){
+		System.out.println("조회하는 나루마루번호 " + b.getNmno());
+		System.out.println(b);  
+		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+		
+		System.out.println(loginUser);
+		b.setbLevel(0);
+		ArrayList<Board> list = nms.searchBoard(b);
+		b.setbLevel(1);
+		ArrayList<Board> colist = nms.searchBoard(b);
+		Narumaru nm = nms.selectNarumaruOne(b.getNmno());
+		Theme theme = nms.selectThemeOne(b.getNmno());
+		
+		int isOwner = nms.checkNarumaruOwner(b.getNmno(), loginUser);
+
+		mv.addObject("nm", nm);
+		mv.addObject("list", list);
+		mv.addObject("colist", colist);
+		mv.addObject("isOwner", isOwner);
+		mv.addObject("theme", theme);
+		if(nm.getNmCategory() ==2){
+			mv.setViewName("naru/naruBoard"); 
+		}else{
+			mv.setViewName("maru/maruBoard"); 
+		}
+		
+		
+		return mv;
+	}
+	
+	
 	
 	@RequestMapping(value = "selectNarumaruName.bo")
 	public void selectNarumaruName(HttpServletResponse response, int nmno, String bWriter, String bContent, String createDate){
@@ -180,7 +290,7 @@ public class NarumaruController {
 		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
 		
 		try {
-			boolean isOwner = nms.checkNarumaruOwner(nmno, loginUser);
+			int isOwner = nms.checkNarumaruOwner(nmno, loginUser);
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			new Gson().toJson(isOwner, response.getWriter());
@@ -263,10 +373,19 @@ public class NarumaruController {
 
 		if(nms.selectNarumaruType(nmno) == 1){
 			// 마루일때
-			bType = 200;
+			
+			if(targetBno!=0){
+				bType = 201;
+			}else{
+				bType = 200;
+			}
 		}else{
 			// 나루일때
-			bType = 100;
+			if(targetBno!=0){
+				bType = 101;
+			}else{
+				bType = 100;
+			}
 		}
 		b.setbType(bType);
 		b.setMno(loginUser.getMid());
@@ -276,7 +395,35 @@ public class NarumaruController {
 		b.setbLevel(bLevel);
 		b.setTargetBno(targetBno);
 		b.setbType(bType);
+		b.setNeedPoint(needPoint);
 		nms.insertNarumaruBoard(b);
+		
+		if(targetBno!=0){
+			ArrayList<Alarm> alarm = new ArrayList<>();
+			// 보낼 유저의 번호를 구한다. 
+			ArrayList<Integer> sendUser = null;
+			sendUser = new ArrayList<>();
+			sendUser.add(b.getMno());
+			
+			int oriWriterMo = nms.getBoardWriter(b);
+			
+			//Controller에서 Alarm객체에 값을 채운 후 Service로 보내주세요.
+			for(int i = 0; i < sendUser.size(); i++){
+				alarm.add(new Alarm());
+				alarm.get(i).setReceive_mno(oriWriterMo);
+				alarm.get(i).setSend_mno(sendUser.get(i));
+				alarm.get(i).setSend_bno(b.getTargetBno());
+				alarm.get(i).setAtno(300);
+				alarm.get(i).setSend_nmno(nmno);
+				System.out.println(alarm);
+			}
+			
+			try {
+				as.alarmRequest(alarm);
+			} catch (alarmRequestException e) {
+				e.printStackTrace();
+			}
+		}
 		
 		return "redirect:/boardListAll.bo?nmno="+nmno;
 	}
@@ -358,12 +505,48 @@ public class NarumaruController {
 		b.setNeedPoint(0);
 		
 		nms.insertComment(b);
+		
+		ArrayList<Alarm> alarm = new ArrayList<>();
+		// 보낼 유저의 번호를 구한다.
+		ArrayList<Integer> sendUser = null;
+		sendUser = new ArrayList<>();
+		sendUser.add(b.getMno());
+		
+		int oriWriterMo = nms.getBoardWriter(b);
+		
+		//Controller에서 Alarm객체에 값을 채운 후 Service로 보내주세요.
+		for(int i = 0; i < sendUser.size(); i++){
+			alarm.add(new Alarm());
+			alarm.get(i).setReceive_mno(oriWriterMo);
+			alarm.get(i).setSend_mno(sendUser.get(i));
+			alarm.get(i).setSend_bno(b.getTargetBno());
+			alarm.get(i).setAtno(300);
+			alarm.get(i).setSend_nmno(nmno);
+			System.out.println(alarm);
+		}
+		
+		try {
+			as.alarmRequest(alarm);
+		} catch (alarmRequestException e) {
+			e.printStackTrace();
+		}
 		System.out.println("인서트됨");
 	}
 	
 	@RequestMapping("deleteBoardOne.nm")
 	public String deleteBoardOne(int bno, int nmno, int type) throws NarumaruException{
 		nms.deleteBoardOne(bno);
+		
+		if(type == 1) return "redirect:/boardListAll.bo?nmno="+nmno;
+		else return "redirect:myboardView.me";
+	}
+	
+	@RequestMapping("reportBoardOne.nm")
+	public String reportBoardOne(int bno, int nmno, int type, String reason, HttpServletRequest request) throws NarumaruException{
+		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+		int mno = loginUser.getMid();
+		
+		ds.reportBoardOne(mno, bno, reason, nmno);
 		
 		if(type == 1) return "redirect:/boardListAll.bo?nmno="+nmno;
 		else return "redirect:myboardView.me";
@@ -409,4 +592,47 @@ public class NarumaruController {
 		return "redirect:/boardListAll.bo?nmno="+nmno;
 	}
 	
+	@RequestMapping("narumaruSelectOne.nm")
+	public void narumaruSelectOne(@RequestParam(value="nmno") int nmno, HttpServletRequest request, HttpServletResponse response){
+		
+		
+		Narumaru nm = nms.selectNarumaruOne(nmno); 
+		
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		
+		try {
+			new Gson().toJson(nm, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("selectChannelBoardList.nm")
+	public void selectChannelBoardList(int cno, HttpServletRequest request, HttpServletResponse response){
+		ArrayList<Board> list = nms.selectChannelBoardList(cno);
+
+		try {
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			new Gson().toJson(list, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("searchNarumaruBoard.nm")
+	public String searchNarumaruBoard(String searchCondition){
+		System.out.println(searchCondition);
+		
+		return "maru/maruSearchResult";
+	}
 }

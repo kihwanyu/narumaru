@@ -16,7 +16,7 @@
 		display:inline-block;
 	}
 	
-	.FAQcontent li, .noTitle{
+	.FAQcontent li, .noTitle, #searchLi{
 		border:1px solid gray;
 		background:white;
 		width:792px;
@@ -25,7 +25,21 @@
 		
 		
 	}
-	
+	#searchLi{
+		/* margin-left:40px; */
+		list-style:none;
+		
+		
+	}
+	#searchDiv{
+		border: 1px solid gray;
+    	background: white;
+    	width: 792px;
+    	height: 80px;
+	    font-size: 20px;
+	    text-align: center;
+	    padding-top: 20px;
+	}
 	.noTitle{
 		width:792px;
 		margin-left: 40px;
@@ -37,12 +51,12 @@
 	}
 	
 	 
-	 .FAQcontent li{
+	 .FAQcontent li, #searchLi{
 	 	cursor:pointer;
 	 	padding: 20px;	 	
 	 }
 	 
-	 .FAQcontent li:hover{
+	 .FAQcontent li:hover, #searchLi:hover{
 	 	background:#FCC3C0;
 	 	font-weight: bold;	
 	 }
@@ -51,10 +65,27 @@
 		margin-bottom:20px;
 		
 	 } 
-	 .keyWordSearch{
-	 	 width: 730px;
+	 .keyWordSearchText{
+	 	 width: 640px;
 	 
 	 }
+	 #keyWordSearchBtn{
+	 	height: 35px;
+	    background: #8C8E8D;
+	    color: white;
+	    width: 90px;
+	    border: 1px solid #8c8e8d;
+	 	
+	 }
+	 
+	 #keyWordSearchBtn:hover{
+	 	width:92px;
+	 	height:37px;
+	 	background:#007bff;
+	 	border:1px solid #007bff; 	
+	 	cursor:pointer;
+	 }
+	 
 	 .Qsearch{
 	 	font-size:15px;
 	 	margin-left:50px;
@@ -148,21 +179,83 @@
 			<div class = "FAQCategory">
 				<div class = "Qsearch">
 					<img class ="QsearchImg" src="${ contextPath }/resources/images/Magnifier.png"/>
-					<input type = "text" class ="keyWordSearch" placeholder="검색어를 입력해주세요"/>
+					<input type = "text" class ="keyWordSearchText" placeholder="키워드를 입력해주세요"/>
+					<button id ="keyWordSearchBtn" onclick ="searchKeyword();"> 검색하기 </button>
 				</div>
+				<script type="text/javascript">
+				
+				function searchKeyword(){
+					$.ajax({
+						url:"searchFaqList.no",
+						type:"post",
+						data:{"keyWord":$(".keyWordSearchText").val()},
+						
+						success:function(data){
+							console.log("성공 ");
+							console.log(data);
+							
+							$(".searchContent").empty();
+							$(".tabcontent").css('display','none');
+							$("#searchContent").css('display','block');
+							if(data ==0){
+								$(".searchContent").append(
+										'<div id = "searchDiv">'+	
+										'<p>"'+ $(".keyWordSearchText").val() +'" 에 대한 검색 결과가 없습니다! </p>'+
+										
+										'</div>'
+								);
+							} else{
+								for(var i = 0; i < data.length; i++){
+									$(".searchContent").append(	
+										
+										'<li id= "searchLi">'+
+											'<a href = "faqDetail.no?bno='+data[i].BNO+'">'+
+											'<p>' +data[i].B_TITLE +'</p>'+
+											'<p>' +  data[i].CREATE_DATE +'</p>'+
+											'</a>'+
+										'</li>'
+									);
+								};
+							}
+						},
+						error:function(data){
+							console.log("실패");
+							console.log(data);
+							
+						}
+					});
+				};
+			
+				
+					
+				
+				</script>
 				<div class="tab">
 					  <button class="tablinks faq801" onclick="openCity(event, 'commonQuestion')">자주 묻는 질문</button>
 					  <button class="tablinks faq802" onclick="openCity(event, 'JoinLogin')">회원가입, 로그인 질문</button>
-					  <button class="tablinks faq803 " onclick="openCity(event, 'newAlram')">알림, 새소식</button>
+					  <button class="tablinks faq803" onclick="openCity(event, 'newAlram')">알림, 새소식</button>
 				</div>
 				<div class="tab">
 					  <button class="tablinks faq804" onclick="openCity(event, 'narumaruSetting')">나루마루 설정</button>
 					  <button class="tablinks faq805" onclick="openCity(event, 'maruMember')">마루 멤버</button>
 					  <button class="tablinks faq806" onclick="openCity(event, 'etc')">기타</button>
+					 <!--  <button class="tablinks faq804" onclick="openCity(event, 'searchContent')">검색</button> -->
+					 
 				</div>
 				
+				<div id="searchContent" class="tabcontent">
+					  <div>
+						<div class ="noTitle">
+							<label> 검색 내용 </label>
+						</div>
+						 
+						<ul class="FAQcontent searchContent">
+	
+						</ul>
+					</div>
+				</div>
 				
-				<div id="commonQuestion" class="tabcontent" style="display:block;">
+				<div id="commonQuestion" class="tabcontent" ><!-- style="display:block;" -->
 					  <div>
 						<div  class ="noTitle">
 							<label> 자주 묻는 질문</label>
@@ -172,14 +265,14 @@
 							<c:forEach items ="${ nlist }" var="Notice">
 								<c:if test="${ Notice.noType == 801}" >
 								<li>
-									<a href = "noticeDetail.no?bno=${Notice.nid}">
+									<a href = "faqDetail.no?bno=${Notice.nid}">
 									<p>${ Notice.noTitle }</p>
 									<p>${ Notice.createDate }</p>
 									</a>
 								</li>
 								</c:if>
 							</c:forEach>
-							
+							<!--  -->
 							<li>
 								<p>Naru Maru 6.3 업데이트 소식.</p>
 								<p>2018년 3월 23일 오후 2:00</p>
@@ -213,7 +306,7 @@
 							<c:forEach items ="${ nlist }" var="Notice">
 								<c:if test="${ Notice.noType == 802}" >
 								<li>
-									<a href = "noticeDetail.no?bno=${Notice.nid}">
+									<a href = "faqDetail.no?bno=${Notice.nid}">
 									<p>${ Notice.noTitle }</p>
 									<p>${ Notice.createDate }</p>
 									</a>
@@ -253,7 +346,7 @@
 							<c:forEach items ="${ nlist }" var="Notice">
 								<c:if test="${ Notice.noType == 803}" >
 								<li>
-									<a href = "noticeDetail.no?bno=${Notice.nid}">
+									<a href = "faqDetail.no?bno=${Notice.nid}">
 									<p>${ Notice.noTitle }</p>
 									<p>${ Notice.createDate }</p>
 									</a>
@@ -294,7 +387,7 @@
 							<c:forEach items ="${ nlist }" var="Notice">
 								<c:if test="${ Notice.noType == 804}" >
 								<li>
-									<a href = "noticeDetail.no?bno=${Notice.nid}">
+									<a href = "faqDetail.no?bno=${Notice.nid}">
 									<p>${ Notice.noTitle }</p>
 									<p>${ Notice.createDate }</p>
 									</a>
@@ -335,7 +428,7 @@
 							<c:forEach items ="${ nlist }" var="Notice">
 								<c:if test="${ Notice.noType == 805}" >
 								<li>
-									<a href = "noticeDetail.no?bno=${Notice.nid}">
+									<a href = "faqDetail.no?bno=${Notice.nid}">
 									<p>${ Notice.noTitle }</p>
 									<p>${ Notice.createDate }</p>
 									</a>
@@ -376,7 +469,7 @@
 							<c:forEach items ="${ nlist }" var="Notice">
 								<c:if test="${ Notice.noType == 806}" >
 								<li>
-									<a href = "noticeDetail.no?bno=${Notice.nid}">
+									<a href = "faqDetail.no?bno=${Notice.nid}">
 									<p>${ Notice.noTitle }</p>
 									<p>${ Notice.createDate }</p>
 									</a>
@@ -407,6 +500,7 @@
 					</div>
 				</div>
 			</div>
+			
 			
 			
 			<script>

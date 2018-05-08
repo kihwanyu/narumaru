@@ -20,7 +20,7 @@
 		display:inline-block;
 	}
 	
-	.NoticeServiceView ul li, .noTitle{
+	.noticeContent li, .noTitle{
 		border:1px solid gray;
 		background:white;
 		width:792px;
@@ -53,6 +53,13 @@
 		margin-bottom:20px;
 		
 	 } 
+	 .pagination li{
+	 	width:30px;
+	 	height:30px;
+	 	background:white;
+	 	border:1px solid black;
+	 	text-align:center;
+	 }
 </style>
 </head>
 <c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application" />
@@ -102,6 +109,74 @@
 					<o>2018년 3월 23일 오후 2:00</o>
 				</li>
 			</ul>
+			<!--  -->
+			<!-- 페이지 처리 -->
+			<c:set var="currentPage" value="${pi.currentPage }"/>
+			<c:set var="limit" value="${pi.limit }"/>
+			<c:set var="startPage" value="${pi.startPage }"/>
+			<c:set var="endPage" value="${pi.endPage }"/>
+			<c:set var="maxPage" value="${pi.maxPage }"/>
+							
+			<c:set var="backNextPageVal" value="${currentPage/limit }" />
+			<c:set var="backNextTemp" value="${backNextPageVal-0.9 }"/>
+			<fmt:parseNumber var="backNextTemp" integerOnly="true" value="${backNextTemp }"/> 
+			<!-- int 형변환 -->
+			<c:set var="backNextpage" value="${backNextTemp*limit+1 }"/>
+			<!-- int 형변환 -->
+			<fmt:parseNumber var="backNextpage" integerOnly="true" value="${backNextpage }"/> 
+			<c:set var="forwardNextPageVal" value="${currentPage/limit }"/>
+			<c:set var="forwardNextTemp" value="${forwardNextPageVal+0.9 }"/>
+			<!-- int 형변환 -->
+			<fmt:parseNumber var="forwardNextTemp" integerOnly="true" value="${forwardNextTemp }"/> 							
+			<c:set var="forwardNextpage"  value="${forwardNextTemp*limit+1 }"/>
+			<!-- int 형변환 -->
+			<fmt:parseNumber var="forwardNextpage" integerOnly="true" value="${forwardNextpage }"/>  
+			<div class="pagingArea">
+					<ul class="pagination">
+					<li><a href="noticeSelectList.no?currentPage=1"><<</a></li>
+					<c:choose>
+						<c:when test="${currentPage <= 1 }">
+							<li class="active"><a href="#"><</a></li>
+						</c:when>
+						<c:otherwise>
+							<c:choose>
+								<c:when test="${backNextpage < 1 }">
+									<li ><a href="noticeSelectList.no?currentPage=1"><</a></li>
+								</c:when>
+								<c:otherwise>
+									<li><a href="noticeSelectList.no?currentPage=${backNextpage }"><</a></li>
+								</c:otherwise>
+							</c:choose>
+						</c:otherwise>
+					</c:choose>
+					<c:forEach var="p" begin="${startPage }" end="${endPage }" step="1">
+						<c:choose>
+							<c:when test="${p == currentPage }">
+								<li class="active"><a href="#">${p }</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><a href="noticeSelectList.no?currentPage=${p }">${p }</a></li>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+					<c:choose>
+						<c:when test="${currentPage >= maxPage }">
+							<li class="active"><a href="#">></a></li>	
+						</c:when>
+						<c:otherwise>
+							<c:choose>
+								<c:when test="${forwardNextpage > maxPage }">
+									<li><a href="noticeSelectList.no?currentPage=${maxPage }">></a></li>
+								</c:when>
+								<c:otherwise>
+									<li><a href="noticeSelectList.no?currentPage=${forwardNextpage }">></a></li>
+								</c:otherwise>
+							</c:choose>
+						</c:otherwise>
+					</c:choose>
+					<li><a href="noticeSelectList.no?currentPage=${maxPage }">>></a></li>
+				</ul>
+			</div>
 		</div>	
 
 	

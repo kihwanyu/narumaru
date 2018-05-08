@@ -20,18 +20,21 @@ public class Board implements java.io.Serializable {
 	private String status;
 	private int nmno;
 	private int cano;
+	private String caname;
 	private int cno;
 	private int bLevel;
 	private int targetBno;
 	private String isOpen;
 	private int needPoint;
 	private int comments;
+	private String nmTitle;
 	
 	public Board(){}
 
 	public Board(int bno, int bTno, int bType, String profileName, String bTitle, String bContent, String bHidden,
-			int mno, String bWriter, String createDate, Date modifyDate, String status, int nmno, int cano, int cno,
-			int bLevel, int targetBno, String isOpen, int needPoint, int comments) {
+			int mno, String bWriter, String createDate, Date modifyDate, String status, int nmno, int cano,
+			String caname, int cno, int bLevel, int targetBno, String isOpen, int needPoint, int comments,
+			String nmTitle) {
 		super();
 		this.bno = bno;
 		this.bTno = bTno;
@@ -47,12 +50,14 @@ public class Board implements java.io.Serializable {
 		this.status = status;
 		this.nmno = nmno;
 		this.cano = cano;
+		this.caname = caname;
 		this.cno = cno;
 		this.bLevel = bLevel;
 		this.targetBno = targetBno;
 		this.isOpen = isOpen;
 		this.needPoint = needPoint;
 		this.comments = comments;
+		this.nmTitle = nmTitle;
 	}
 
 	public int getBno() {
@@ -167,6 +172,14 @@ public class Board implements java.io.Serializable {
 		this.cano = cano;
 	}
 
+	public String getCaname() {
+		return caname;
+	}
+
+	public void setCaname(String caname) {
+		this.caname = caname;
+	}
+
 	public int getCno() {
 		return cno;
 	}
@@ -200,7 +213,7 @@ public class Board implements java.io.Serializable {
 	}
 
 	public int getNeedPoint() {
-		return needPoint; 
+		return needPoint;
 	}
 
 	public void setNeedPoint(int needPoint) {
@@ -215,13 +228,22 @@ public class Board implements java.io.Serializable {
 		this.comments = comments;
 	}
 
+	public String getNmTitle() {
+		return nmTitle;
+	}
+
+	public void setNmTitle(String nmTitle) {
+		this.nmTitle = nmTitle;
+	}
+
 	@Override
 	public String toString() {
 		return "Board [bno=" + bno + ", bTno=" + bTno + ", bType=" + bType + ", profileName=" + profileName
 				+ ", bTitle=" + bTitle + ", bContent=" + bContent + ", bHidden=" + bHidden + ", mno=" + mno
 				+ ", bWriter=" + bWriter + ", createDate=" + createDate + ", modifyDate=" + modifyDate + ", status="
-				+ status + ", nmno=" + nmno + ", cano=" + cano + ", cno=" + cno + ", bLevel=" + bLevel + ", targetBno="
-				+ targetBno + ", isOpen=" + isOpen + ", needPoint=" + needPoint + ", comments=" + comments + "]";
+				+ status + ", nmno=" + nmno + ", cano=" + cano + ", caname=" + caname + ", cno=" + cno + ", bLevel="
+				+ bLevel + ", targetBno=" + targetBno + ", isOpen=" + isOpen + ", needPoint=" + needPoint
+				+ ", comments=" + comments + ", nmTitle=" + nmTitle + "]";
 	}
 
 	

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.narumaru.naru.model.exception.NaruException;
 import com.kh.narumaru.naru.model.vo.Category;
-import com.kh.narumaru.naru.model.vo.Neighbor;
+import com.kh.narumaru.common.model.vo.Neighbor;
 import com.kh.narumaru.naru.model.vo.Theme;
 import com.kh.narumaru.narumaru.model.vo.Narumaru;
 
@@ -75,13 +75,17 @@ public class NaruDaoImpl implements NaruDao{
 	}
 
 	@Override
-	public void insertNeighbor(int nmno, int mid, SqlSessionTemplate sqlSession) {
+	public int insertNeighbor(int nmno, int mid, SqlSessionTemplate sqlSession) {
 		Neighbor nb = new Neighbor();
 		
+		int ownerMno = sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno);
+				
 		nb.setMno(mid);
-		nb.setNeighborMno(sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno));
+		nb.setUser_mno(ownerMno);
 		
-		sqlSession.insert("Naru.insertNeighbor", nb);
+		sqlSession.insert("Neighbor.myPageNeighborInsert", nb);
+		
+		return ownerMno;
 	}
 
 	@Override
@@ -99,10 +103,18 @@ public class NaruDaoImpl implements NaruDao{
 	public void deleteNeighbor(int nmno, int mid, SqlSessionTemplate sqlSession) {
 		Neighbor nb = new Neighbor();
 		
+		nb.setUser_mno(sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno));
 		nb.setMno(mid);
-		nb.setNeighborMno(sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno));
 		
-		sqlSession.delete("Naru.deleteNeighbor", nb);
+		sqlSession.delete("Neighbor.myPageNeighborDelete", nb);
+	}
+
+	//mno로 그사람의 나루를 가져온다
+	@Override
+	public int checkNaruByMno(int mno, SqlSessionTemplate sqlSession) {
+		int nmno = sqlSession.selectOne("Narumaru.checkNaruByMno", mno);
+		
+		return nmno;
 	}
 
 }

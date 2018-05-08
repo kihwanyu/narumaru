@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.narumaru.admin.model.vo.Admin;
 import com.kh.narumaru.notice.model.vo.Notice;
+
+
 import com.kh.narumaru.member.model.vo.Member;
 import com.kh.narumaru.narumaru.model.vo.Narumaru;
 @Repository
@@ -132,5 +134,72 @@ public class AdminDaoImpl implements AdminDao{
 	public ArrayList totalAge() {
 		ArrayList totalAge = (ArrayList) sqlSession.selectList("Admin.totalAge");
 		return totalAge;
+	}
+
+
+	@Override
+	public ArrayList<Notice> adminAnswer(Notice n) {
+		n.setNoType(900);
+		System.out.println("adminDao questionSelectLst n :" +n );
+		ArrayList<Notice> nlist = null;
+		nlist = (ArrayList)sqlSession.selectList("Admin.questionSelectList", n);
+		//
+		System.out.println("adminDao adminSelectList nlist"  + nlist);
+
+		return nlist;
+  }
+	public ArrayList selectChannel() {
+		ArrayList selectChannel = (ArrayList) sqlSession.selectList("Admin.selectChannel");
+		System.out.println("DAO채널 : " + selectChannel);
+		return selectChannel;
+	}
+
+
+	@Override
+	public ArrayList selectChCount() {
+		ArrayList chCount = (ArrayList) sqlSession.selectList("Admin.selectchCount");
+		return chCount;
+	}
+
+
+	@Override
+	public ArrayList<Narumaru> naruView() {
+		ArrayList<Narumaru> naruView = (ArrayList) sqlSession.selectList("Admin.selectNaruView");
+		return naruView;
+	}
+
+
+	@Override
+	public void statusCh(Member m) throws Exception {
+		int result = sqlSession.update("Admin.changeStatus", m);
+		if(result < 0){
+			throw new Exception("회원상태수정실패");
+		}
+		System.out.println("dao : " + result);
+	}
+
+
+	@Override
+	public ArrayList moneyView() {
+		ArrayList moneyView = (ArrayList) sqlSession.selectList("Admin.selectMoneyView");
+		return moneyView;
+	}
+
+
+	@Override
+	public void moneyStatusCh(int WNO) throws Exception {
+		int result = sqlSession.update("Admin.moneyStatusCh", WNO);
+		if(result < 0){
+			throw new Exception("실패");
+		}
+		System.out.println("dao : " + result);
+		
+	}
+
+
+	@Override
+	public ArrayList Chart() {
+		ArrayList Chart = (ArrayList) sqlSession.selectList("Admin.Chart");
+		return Chart;
 	}
 }

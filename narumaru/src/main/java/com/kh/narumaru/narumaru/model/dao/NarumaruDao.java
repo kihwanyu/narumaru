@@ -18,7 +18,7 @@ public interface NarumaruDao {
 
 	Narumaru selectNarumaruOne(int nmno);
 
-	boolean checkNarumaruOwner(int nmno, Member loginUser);
+	int checkNarumaruOwner(int nmno, Member loginUser);
 
 	Board insertNarumaruBoard(SqlSessionTemplate sqlSession, Board b) throws NarumaruException;
 
@@ -42,7 +42,17 @@ public interface NarumaruDao {
 
 	Theme selectThemeOne(int nmno);
 
+	int getBoardWriter(Board b);
+  
 	void updateDefault(Narumaru nm, SqlSessionTemplate sqlSession);
 
 	int checkNeighbor(int nmno, Member loginUser);
+
+
+	ArrayList<Board> searchBoard(Board b);
+
+	ArrayList<Board> selectCategoryBoardList(int nmno, int categoryNo);
+
+	ArrayList<Board> selectChannelBoardList(int cno, SqlSessionTemplate sqlSession);
+
 } 

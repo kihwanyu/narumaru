@@ -6,7 +6,7 @@
 <head>
 <meta charset=UTF-8>
 <title>Insert title here</title>
-<!-- Bootstrap -->
+<!-- Bootstrap --><!--  -->
 <link href="${ contextPath }/resources/admin/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 <!-- Font Awesome -->
 <link href="${ contextPath }/resources/admin/font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -55,6 +55,9 @@
 				<div class="menu_section">
 					<h3>Menu</h3>
 					<ul class="nav side-menu">
+						<li><a href = "goHome.nm" ><i class="fa fa-home"></i> 나루마루 로 이동 <span class="fa fa-chevron-down"></span></a>
+							
+						
 						<li><a><i class="fa fa-home"></i> 나루마루 관리 <span class="fa fa-chevron-down"></span></a>
 							<ul class="nav child_menu">
 								<li><a href="adMemberView.ad"> 회원 관리 </a></li>
@@ -69,8 +72,9 @@
 							<ul class="nav child_menu">
 								<li><a href="adAnnouncement.ad"> 공지 글쓰기 </a></li>
 								<li><a href="noticeSelectList.no"> 공지사항 </a></li>
-								<li><a href="FAQSelectList.no"> FAQ </a></li>
-								<li><a href="adAnswerSelectList.ad"> 1:1 문의 </a></li>
+								<li><a href="FAQ.no"> FAQ </a></li>
+								<li><a href="adminAnswer.ad"> 1:1 문의 </a></li>
+						
 								
 							</ul></li>
 

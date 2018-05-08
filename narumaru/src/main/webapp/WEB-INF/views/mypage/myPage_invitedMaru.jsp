@@ -27,60 +27,99 @@
 					초대받은 마루
 				</div>		
 				<ul class="list-group">
-					<li class="list-group-item">
-						<div style="height: 40px; width: 40px; float: left; margin-right: 20px;">
-							<img alt="profile_maru" src="resources/images/defalt_group.png" height="100%" width="100%">
-						</div>
-						<div style="float: right;">
-							<input type="button" value="수락" class="btn btn-default">
-							<input type="button" value="거절" class="btn btn-default">
-						</div>
-						<div style="padding-top: 10px; padding-bottom: 10px;">
-							마루 이름
-						</div>
-					</li>
-					<li class="list-group-item">
-						<div style="height: 40px; width: 40px; float: left; margin-right: 20px;">
-							<img alt="profile_maru" src="resources/images/defalt_group.png" height="100%" width="100%">
-						</div>
-						<div style="float: right;">
-							<input type="button" value="수락" class="btn btn-default">
-							<input type="button" value="거절" class="btn btn-default">
-						</div>
-						<div style="padding-top: 10px; padding-bottom: 10px;">
-							마루 이름
-						</div>
-					</li>
-					<li class="list-group-item">
-						<div style="height: 40px; width: 40px; float: left; margin-right: 20px;">
-							<img alt="profile_maru" src="resources/images/defalt_group.png" height="100%" width="100%">
-						</div>
-						<div style="float: right;">
-							<input type="button" value="수락" class="btn btn-default">
-							<input type="button" value="거절" class="btn btn-default">
-						</div>
-						<div style="padding-top: 10px; padding-bottom: 10px;">
-							마루 이름
-						</div>
-					</li>
+					<c:forEach items="${InvateMemberList }" var="InvateMember">
+						<li class="list-group-item">
+							<div style="height: 40px; width: 40px; float: left; margin-right: 20px;">
+								<img alt="profile_maru" src="resources/images/defalt_group.png" height="100%" width="100%">
+							</div>
+							<div style="float: right;">
+								<input type="button" value="수락" class="btn btn-default" onclick="invateAccept(${InvateMember.ino}, ${InvateMember.nmno});">
+								<input type="button" value="거절" class="btn btn-default" onclick="invateReject(${InvateMember.ino});">
+							</div>
+							<div style="padding-top: 10px; padding-bottom: 10px;">
+								${InvateMember.nm_title } 초대자  : ${InvateMember.maru_manager }
+							</div>
+						</li>
+					</c:forEach>
 				</ul>
-				<div align="center" style="color: gray;">
+				<!-- 페이지 처리 -->
+				<c:set var="currentPage" value="${pi.currentPage }"/>
+				<c:set var="limit" value="${pi.limit }"/>
+				<c:set var="startPage" value="${pi.startPage }"/>
+				<c:set var="endPage" value="${pi.endPage }"/>
+				<c:set var="maxPage" value="${pi.maxPage }"/>
+				
+				<c:set var="backNextPageVal" value="${currentPage/limit }" />
+				<c:set var="backNextTemp" value="${backNextPageVal-0.9 }"/>
+				<fmt:parseNumber var="backNextTemp" integerOnly="true" value="${backNextTemp }"/> 
+				<!-- int 형변환 -->
+				<c:set var="backNextpage" value="${backNextTemp*limit+1 }"/>
+				<!-- int 형변환 -->
+				<fmt:parseNumber var="backNextpage" integerOnly="true" value="${backNextpage }"/> 
+				<c:set var="forwardNextPageVal" value="${currentPage/limit }"/>
+				<c:set var="forwardNextTemp" value="${forwardNextPageVal+0.9 }"/>
+				<!-- int 형변환 -->
+				<fmt:parseNumber var="forwardNextTemp" integerOnly="true" value="${forwardNextTemp }"/> 							
+				<c:set var="forwardNextpage"  value="${forwardNextTemp*limit+1 }"/>
+				<!-- int 형변환 -->
+				<fmt:parseNumber var="forwardNextpage" integerOnly="true" value="${forwardNextpage }"/>  
+				<div class="pagingArea" align="center">
 					<ul class="pagination">
-						<li><a href="#"><<</a></li>
-						<li><a href="#"><</a></li>
-						<li><a href="#">1</a></li>
-						<li class="active"><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-						<li><a href="#">></a></li>
-						<li><a href="#">>></a></li>
+					<li><a href="invitedMaruView.me?currentPage=1"><<</a></li>
+					<c:choose>
+						<c:when test="${currentPage <= 1 }">
+							<li class="active"><a href="#"><</a></li>
+						</c:when>
+						<c:otherwise>
+							<c:choose>
+								<c:when test="${backNextpage < 1 }">
+									<li><a href="invitedMaruView.me?currentPage=1"><</a></li>
+								</c:when>
+								<c:otherwise>
+									<li><a href="invitedMaruView.me?currentPage=${backNextpage }"><</a></li>
+								</c:otherwise>
+							</c:choose>
+						</c:otherwise>
+					</c:choose>
+					<c:forEach var="p" begin="${startPage }" end="${endPage }" step="1">
+						<c:choose>
+							<c:when test="${p == currentPage }">
+								<li class="active"><a href="#">${p }</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><a href="invitedMaruView.me?currentPage=${p }">${p }</a></li>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+					<c:choose>
+						<c:when test="${currentPage >= maxPage }">
+							<li class="active"><a href="#">></a></li>	
+						</c:when>
+						<c:otherwise>
+							<c:choose>
+								<c:when test="${forwardNextpage > maxPage }">
+									<li><a href="invitedMaruView.me?currentPage=${maxPage }">></a></li>
+								</c:when>
+								<c:otherwise>
+									<li><a href="invitedMaruView.me?currentPage=${forwardNextpage }">></a></li>
+								</c:otherwise>
+							</c:choose>
+						</c:otherwise>
+					</c:choose>
+					<li><a href="invitedMaruView.me?currentPage=${maxPage }">>></a></li>
 					</ul>
 				</div>
 			</div>
 		</div>
 		
 		<jsp:include page="../common/myPage_RightSideBar.jsp"/>
-		<!--  -->
+		<script type="text/javascript">
+			function invateAccept(ino, nmno){
+				location.href ="invateAccept.ma?ino="+ino+"&nmno="+nmno;
+			}
+			function invateReject(ino){
+				location.href ="invateReject.ma?ino="+ino;
+			}
+		</script>
 	</body>
 </html>

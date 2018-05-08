@@ -16,7 +16,7 @@ public interface NarumaruService {
 
 	Narumaru selectNarumaruOne(int nmno);
 
-	boolean checkNarumaruOwner(int nmno, Member loginUser);
+	int checkNarumaruOwner(int nmno, Member loginUser);
 
 	Board insertNarumaruBoard(Board b) throws NarumaruException;
 
@@ -41,7 +41,17 @@ public interface NarumaruService {
 
 	Theme selectThemeOne(int nmno);
 
+	int getBoardWriter(Board b); 
+
 	void updateDefault(Narumaru nm);
 
-	int checkNeighbor(int nmno, Member loginUser); 
+	int checkNeighbor(int nmno, Member loginUser);
+
+
+	ArrayList<Board> searchBoard(Board b); 
+
+	ArrayList<Board> selectCategoryBoardList(int nmno, int categoryNo);
+
+	ArrayList<Board> selectChannelBoardList(int cno);
+
 }

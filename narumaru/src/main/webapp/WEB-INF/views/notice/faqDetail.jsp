@@ -112,11 +112,19 @@
 									
 								<script>
 									$(".NoticeDelete").click(function(){
-										
+										if(confirm("게시물을 삭제하시겠습니까?") == true){
+											location.href= "noticeDelete.no?bno=${n.nid}";
+										}else{
+											return;
+										}
+									
 									});
 									
 									$(".NoticeUpdate").click(function(){
-										location.href= "faqUpdate.no?bno=${n.nid}";
+										
+											location.href= "faqUpdate.no?bno=${n.nid}";
+										
+										
 									});
 								</script>
 								

@@ -2,8 +2,11 @@ package com.kh.narumaru.maru.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.narumaru.common.model.vo.PageInfo;
 import com.kh.narumaru.maru.exception.MaruException;
+import com.kh.narumaru.maru.exception.invateRejectException;
 import com.kh.narumaru.maru.model.vo.MaruMember;
+import com.kh.narumaru.narumaru.model.vo.InvateMember;
 import com.kh.narumaru.narumaru.model.vo.Narumaru;
 
 public interface MaruService {
@@ -20,4 +23,22 @@ public interface MaruService {
 	ArrayList selectMaruList(int mno) throws MaruException;
 
 	Narumaru selectOneMaru(int nmno) throws MaruException;
+
+	int getMaruMaster(int nmno);
+
+
+	int getInvitedMaruCount(int mno);
+
+	ArrayList<InvateMember> selectInvitedMaruCount(PageInfo pi);
+
+	void invateReject(int ino) throws invateRejectException;
+
+	MaruMember insertInvatemember(int nmno, String email) throws MaruException;
+
+	ArrayList selectInvateMemberList(int nmno)  throws MaruException;
+
+	void invateAccept(int ino, MaruMember m) throws invateRejectException;
+
+	ArrayList<Integer> selectMaruMemberMno(MaruMember m);
+
 }

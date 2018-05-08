@@ -39,7 +39,10 @@ public interface MemberDao {
 
 	void sendUpdatePwd(SqlSessionTemplate sqlSession, Member m);
 
+
 	LogInfo selectNation(SqlSessionTemplate sqlSession, LogInfo li);
+
+	Member selectMemberOne(int mno);
 
 
 }

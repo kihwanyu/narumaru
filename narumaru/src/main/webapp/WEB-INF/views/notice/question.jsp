@@ -99,50 +99,12 @@
 				<label><img src= "${ contextPath }/resources/images/Pen.png"> 1대1 문의 등록하기</label>
 			</div>
 			
-			<form action="" method="">
-				<ul class = "noticeContent">
-					<li>
-						<div class = "requiredQuestion">
-						<p>* 답변받을 이메일  </p>
-						
-						<input type = "text" > @ <input type ="text" id ="emailTail" >
-						<select class = "mySelfT1">
-							<option>naver.com</option>
-							<option>daum.com</option>
-							<option>nate.com</option>
-							<option>gmail.com</option>
-							<option class = "mySelf1">직접입력</option>
-						</select>
-						</div>
-					</li>
-					
-					<li>
-						<div class = "requiredQuestion QuestionT">
-						<p>	* 휴대폰 번호 : 	</p> 
-						<select class ="phoneHead">
-							<option>010</option>
-							<option>011</option>
-							<option>070</option>
-						</select>
-						
-						- <input type ="text" class= "phoneMiddle"> 
-						- <input type ="text" class= "phoneTail">
-						
-						</div>
-					</li>
-					
-					<li>
-						<div class = "requiredQuestion QuestionT">
-							<p>* 나루마루 로그인 시 ID </p>
-							
-							<input type = "text" class = "loginId">
-						</div>
-					</li>
-					
+			<form action="questionForm.no" method="post" enctype="multipart/form-data">
+				<ul class = "noticeContent">	
 					<li>
 						<div class = "QuestionT">
-							<p> 나루 or 마루 명 :</p>
-							<input type = "text" class ="narumaruName">
+							<p> 문의 명 :</p>
+							<input type = "text" name ="noTitle" id="faqTitle" class ="narumaruName">
 							
 						</div>
 					</li>
@@ -150,14 +112,14 @@
 					<li>
 						<div class = "QuestionT">
 							<p>문의 내용 </p>
-							<textarea rows="5" cols="103" style="resize:none;"></textarea>
+							<textarea style="width:565PX;resize: none;height:185PX;" name ="noContent" id="faqContent"></textarea>
 						</div>
 					</li>
 					
 					<li>
 						
 						<p>파일첨부 </p> 
-						<input type = "file">
+						<input type = "file" name="orFileName">
 					</li>
 					
 					<li>
@@ -172,6 +134,7 @@
 								
 							<input type ="checkbox" id="agree" > <label for="agree" > 동의합니다. </label>
 							
+							
 							</div>
 						</div>
 					</li>
@@ -179,29 +142,29 @@
 					
 				</ul>
 				<div class ="btnDiv">
-					<input type = "submit" class ="submBtn" value = "문의하기">&nbsp;&nbsp;
+					<input type ="submit" class ="submBtn" onclick="return submBtn();" value = "문의하기">&nbsp;&nbsp;
 					<input type = "reset" class= "rseBtn" value = "메인으로 "> 
 				</div>
+				<!--  -->
+				<script>
+				function submBtn(){
+					
+						if ($(faqTitle).val() !="" && $(faqContent).val() != "" 
+							&& $('input:checkbox').is(":checked") == true){
+							return true;
+						}
+						
+						if ($('input:checkbox').is(":checked") == false){
+						   alert("정보 제공동의 및 정보 제 3자 제공 동의에 체크를 해주세요.");
+						   return false;
+						}
+					
+					
+				}
+				</script>
 			</form>
 		</div>	
-		<script>
-			$(function(){
-				
-				$(".mySelfT1").change( function(){
-					
-					var emailTail = $(this).val();
-					if(emailTail !== "직접입력"){
-						$("#emailTail").val(emailTail).css({"display":"none"});					
-					}
-					else if (emailTail === "직접입력"){
-						$("#emailTail").val("").css({"display":"inline-block"});
-						
-					}
-				});
-				
-			});
-			
-		</script>
+		
 		
 </body>
 </html>

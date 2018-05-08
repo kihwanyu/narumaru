@@ -115,7 +115,6 @@
 		<div id="container" style="margin-top: 50px;">
 		<c:set var="pageValue" value="pointPaymentList" scope="request" />
 		<jsp:include page="../common/myPage_LeftSideBar.jsp"/>	
-			
 			<div id="contents">
 				<div style="margin-top: 5px; margin-bottom: 10px; color: black;" align="right">
 				</div>
@@ -222,76 +221,36 @@
 								<li><a href="pointPaymentView.me?currentPage=${maxPage }">>></a></li>
 								</ul>
 							</div>
-								
-							</div>
-							<div align="right">
-								<input type="button" id="payment-view-btn" value="결제하기" class="btn btn-default"> 
+							<div style="margin: 20px;">
+								<input type="button" id="payment-view-btn" class="btn btn-default" value="결제하기">
 							</div>
 				        </div>
 				         <!-- #tab1 -->
 				        <div id="tab2" class="tab_content" style="color: black;">
 				        	<div>
-								<table class="table">
+								<table class="table" id="userPointTable">
 									<thead>
 										<tr>
-											<th width="30%">사용일</th>
-											<th width="20%">구분</th>
-											<th width="30%">사용 내용</th>
+											<th width="40%" colspan="2">사용일</th>
+											<th width="40%">사용 내용</th>
 											<th width="20%">사용 포인트</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>2017.04.10 AM 09:00</td>
-											<td>포인트 사용</td>
-											<td>결제선 - 고강호(300P)</td>
-											<td>300P</td>
-										</tr>
-										<tr>
-											<td>2017.04.10 AM 09:00</td>
-											<td>포인트 사용</td>
-											<td>결제선 - 고강호(300P)</td>
-											<td>300P</td>
-										</tr>
-										<tr>
-											<td>2017.04.10 AM 09:00</td>
-											<td>포인트 사용</td>
-											<td>결제선 - 고강호(300P)</td>
-											<td>300P</td>
-										</tr>
-										<tr>
-											<td>2017.04.10 AM 09:00</td>
-											<td>포인트 사용</td>
-											<td>결제선 - 고강호(300P)</td>
-											<td>300P</td>
-										</tr>
-										<tr>
-											<td>2017.04.10 AM 09:00</td>
-											<td>포인트 사용</td>
-											<td>결제선 - 고강호(300P)</td>
-											<td>300P</td>
-										</tr>
+										
 									</tbody>
 									<tfoot>
 										<tr>
 											<td colspan="2"></td>
-											<td>사용 포인트 : </td>
-											<td>40,000</td>
+											<td align="center">사용 포인트 : </td>
+											<td id="userPoint"></td>
 										</tr>
 									</tfoot>
 								</table>
 							</div>    
-							<div style="color: gray; margin-left: 120px;">
-								<ul class="pagination">
-									<li><a href="#"><<</a></li>
-									<li><a href="#"><</a></li>
-									<li><a href="#">1</a></li>
-									<li class="active"><a href="#">2</a></li>
-									<li><a href="#">3</a></li>
-									<li><a href="#">4</a></li>
-									<li><a href="#">5</a></li>
-									<li><a href="#">></a></li>
-									<li><a href="#">>></a></li>
+							<div style="color: gray;">
+								<ul class="pagination" id="pointPageArea">
+									
 								</ul>
 							</div>
 				       	</div>
@@ -299,11 +258,178 @@
 				    </div>
 				</div>
 			</div>
-		</div>
 				
 		<jsp:include page="../common/myPage_RightSideBar.jsp"/>
-		
+		<!-- numeral 라이브러리 -->
+		<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 		<script type="text/javascript">
+		$(function(){
+			var currentPage = 1;
+			var arr = [];
+			userPointRequest(currentPage);
+			
+			function userPointRequest(currentPage){
+				$.ajax({
+					url:"usinghistoryView.pa",
+					data:{currentPage,currentPage},
+					type:"get",
+					success:function(data){
+						console.log("서버 전송 성공!");
+						console.log(data);
+						
+						var totalPoint = numeral(data.userPointTotal).format('0,0');
+						
+						var $tableBody = $("#userPointTable tbody");
+						
+						$tableBody.html('');
+						
+						$.each(data.uList, function(index, value){
+							console.log("amount" + value.amount);
+							var point = numeral(value.amount).format('0,0');
+							
+							var $tr = $("<tr>"); // tr태그로 만들어주는것을 $tr에 저장
+							var $pDate = $("<td colspan='2'>").text(value.pDate);
+							var $pContent = $("<td>").text(value.pContent+" - "+value.saller_name);
+							var $amount = $("<td>").text(point + " P");
+							
+							// 어펜드
+							$tr.append($pDate);
+							$tr.append($pContent);
+							$tr.append($amount);
+							$tableBody.append($tr);
+						});
+						
+						currentPage = data.pi.currentPage;
+						console.log("currentPage : " + currentPage);
+						var limit = data.pi.limit;
+						var startPage = data.pi.startPage;
+						var endPage = data.pi.endPage;
+						var maxPage = data.pi.maxPage;
+						
+						var backNextPageVal = currentPage/limit;
+						var backNextTemp = backNextPageVal-0.9;
+						var backNextPage = backNextTemp*limit+1;
+						var forwardNextPageVal = currentPage/limit;
+						var forwardNextTemp = forwardNextPageVal+0.9;
+						var forwardNextPage = forwardNextTemp*limit+1;
+						
+						var $pointPageArea = $("#pointPageArea");
+						
+						$pointPageArea.html("");
+						
+						var $leftTwoLi = $("<li>");
+						var $leftTwoA = $("<a>").text("<<").click(function(){
+							userPointPageing(1);
+						});
+						
+						$leftTwoLi.append($leftTwoA);
+						$pointPageArea.append($leftTwoLi);
+						var $leftOwnLi;
+						var $LEFTOwnA;
+						if(currentPage <= 1){
+							$leftOwnLi = $("<li>").attr("class","active");
+							$LEFTOwnA = $("<a>").attr("href","#").text("<");
+						} else {
+							if(backNextPage < 1){
+								$leftOwnLi = $("<li>");
+								$LEFTOwnA = $("<a>").text("<").click(function(){
+									userPointPageing(1);
+								});
+							} else {
+								$leftOwnLi = $("<li>");
+								$LEFTOwnA = $("<a>").text("<").click(function(){
+									userPointPageing(currentPage);
+								});
+							}
+						}
+						
+						$leftOwnLi.append($LEFTOwnA);
+						$pointPageArea.append($leftOwnLi);
+						
+						var $numberLi;
+						var $numberA;
+						
+						for(var i = startPage; i <= endPage; i++){
+							$numberLi = null;
+							$numberA = null;
+							if(i == currentPage){
+								$numberLi = $("<li>").attr("class","active");
+								$numberA = $("<a>").text(i);
+							} else {
+								$numberLi = $("<li>");
+								$numberA = $("<a>").attr("id","page"+i).text(i);
+							}
+							
+							$numberLi.append($numberA);
+							$pointPageArea.append($numberLi);
+							
+							
+							/* 클로저 */
+							if(i != currentPage){
+							 	arr[i] = function(id){
+									return function(){
+										return id;
+									}
+								}(i);
+								
+							}
+						}
+						/* 클로저 */
+						
+						for(index in arr){
+							console.log(index);
+							$("#page"+index).on('click', function(index){
+								return function(){
+									userPointPageing(index);
+								}
+							}(index));
+						}
+						
+						var $rightLi;
+						var $rightA;
+						
+						if(currentPage >= maxPage){
+							$rightLi = $("<li>").attr("class","active");
+							$rightA = $("<a>").attr("onclick","#").text(">");
+						} else {
+							if(forwardNextPage > maxPage){
+								$rightLi = $("<li>");
+								$rightA = $("<a>").text(">").click(function(){
+									userPointPageing(maxPage);
+								});
+							} else {
+								$rightLi = $("<li>");
+								$rightA = $("<a>").text(">").click(function(){
+									userPointPageing(forwardNextPage);
+								});;
+							}
+						}
+						
+						$rightLi.append($rightA);
+						$pointPageArea.append($rightLi);
+						
+						var $rightTwoLi = $("<li>");
+						var $rightTwoA = $("<a>").text(">>").click(function(){
+							userPointPageing(maxPage);
+						});
+						
+						$rightTwoLi.append($rightTwoA);
+						$pointPageArea.append($rightTwoLi);
+						
+						$("#userPoint").text(totalPoint+" P");
+					},
+					error:function(data){
+						console.log("서버 전송 실패..");
+					},
+				});
+			}
+			function userPointPageing(currentPage){
+				userPointRequest(currentPage);
+			}
+		});
+		
+		
+		
 		$(function(){
 			$(".tab_content").hide();
 		    $(".tab_content:first").show();

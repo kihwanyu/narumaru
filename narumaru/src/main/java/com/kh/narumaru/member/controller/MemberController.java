@@ -13,7 +13,10 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
 import java.util.Date;
+import java.util.HashMap;
+
 import java.util.Random;
 import java.util.StringTokenizer;
 
@@ -56,8 +59,12 @@ import com.kh.narumaru.payment.model.service.BankSevice;
 import com.kh.narumaru.payment.model.service.PaymentService;
 import com.kh.narumaru.payment.model.vo.Bank;
 import com.kh.narumaru.payment.model.vo.Payment;
+import com.kh.narumaru.payment.model.vo.Stats;
+import com.kh.narumaru.payment.model.vo.UsePoint;
 import com.kh.narumaru.payment.model.vo.Withdraw;
 import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.kh.narumaru.common.model.service.NeighborService;
+import com.kh.narumaru.common.model.vo.Neighbor;
 import com.kh.narumaru.common.model.vo.PageInfo;
 import com.kh.narumaru.maru.model.service.MaruService;
 import com.kh.narumaru.maru.model.vo.MaruMember;
@@ -77,6 +84,7 @@ import com.kh.narumaru.member.model.vo.Channel;
 import com.kh.narumaru.member.model.vo.MChannel;
 import com.kh.narumaru.member.model.vo.Member;
 import com.kh.narumaru.narumaru.model.service.NarumaruService;
+import com.kh.narumaru.narumaru.model.vo.InvateMember;
 import com.kh.narumaru.narumaru.model.vo.Narumaru;
 import com.kh.narumaru.payment.model.exception.PaymentListSelectException;
 import com.kh.narumaru.payment.model.service.PaymentService;
@@ -102,6 +110,8 @@ public class MemberController {
 	private PaymentService ps; 
 	@Autowired
 	private BankSevice bs;
+	@Autowired
+	private NeighborService nc;
 	
 	@RequestMapping(value="findMember.me")
 	public String findMember(){
@@ -287,7 +297,11 @@ public class MemberController {
 			System.out.println("로그객체 : " + li2);
 			
 			mv.addObject("loginUser", loginUser);
-			mv.setViewName("main/main");
+			if(loginUser.getMid() <= 6){
+				mv.setViewName("redirect:/adMain.ad");
+			}else{
+				mv.setViewName("main/main");
+			}
 			
 		} catch (LoginException e) {
 			//model.addAttribute("message", e.getMessage());
@@ -806,16 +820,7 @@ public class MemberController {
 		
 		return mv;
 	}
-	@RequestMapping(value="myboardView.me")
-	public ModelAndView myBoardForward(ModelAndView mv){
-		int b_type = 100; /*나루 초기값*/
-		
-		
-		
-		mv.setViewName("mypage/myPage_myboard");
-		
-		return mv;
-	}
+	
 	@RequestMapping(value="myLoginView.me")
 	public ModelAndView myLoginForward(HttpSession session,LogInfo li,ModelAndView mv){
 		
@@ -829,8 +834,43 @@ public class MemberController {
 		return mv;
 	}
 	@RequestMapping(value="invitedMaruView.me")
-	public ModelAndView invitedMaruForward(ModelAndView mv){
+	public ModelAndView invitedMaruForward(ModelAndView mv, HttpSession session
+											, @RequestParam(defaultValue="1") int currentPage){
 		
+		Member loginUser = (Member) session.getAttribute("loginUser");
+		
+		int mno = loginUser.getMid();	
+		
+		//페이징처리
+		int limit;
+		int maxPage;
+		int startPage;
+		int endPage;
+		
+		/*limit = 10;*/
+		limit = 5;
+		
+		int listCount = 0;
+		
+		listCount = mas.getInvitedMaruCount(mno);
+		
+		System.out.println("listCount : " + listCount);
+		
+		maxPage = (int)((double)listCount / limit + 0.9);
+		startPage = ((int)((double)currentPage / limit + 0.9) - 1)*limit + 1;
+		endPage = startPage + limit -1;
+		if(maxPage<endPage){
+			endPage = maxPage;
+		}
+		
+		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage, mno);
+		
+		ArrayList<InvateMember> InvateMemberList = mas.selectInvitedMaruCount(pi);
+		
+		System.out.println("InvateMemberList : " + InvateMemberList);
+		
+		mv.addObject("InvateMemberList", InvateMemberList);
+		mv.addObject("pi", pi);
 		mv.setViewName("mypage/myPage_invitedMaru");
 		
 		return mv;
@@ -842,9 +882,116 @@ public class MemberController {
 		
 		return mv;
 	}
-	@RequestMapping(value="naruNeighborListView.me")
-	public ModelAndView NaruNeighborListForward(ModelAndView mv){
+	@RequestMapping(value="naruRevenue.me")
+	public ModelAndView naruRevenueForward(ModelAndView mv, HttpSession session
+											, @RequestParam(defaultValue="1") int currentPage
+											, @RequestParam(defaultValue="2018") int year){
 		
+		Member loginUser = (Member) session.getAttribute("loginUser");
+		
+		int mno = loginUser.getMid();	
+		
+		//페이징처리
+		int limit;
+		int maxPage;
+		int startPage;
+		int endPage;
+		
+		/*limit = 10;*/
+		limit = 5;
+		
+		int listCount = 0;
+		
+		listCount = ps.getRevenueListCount(mno);
+		
+		System.out.println("listCount : " + listCount);
+		
+		maxPage = (int)((double)listCount / limit + 0.9);
+		startPage = ((int)((double)currentPage / limit + 0.9) - 1)*limit + 1;
+		endPage = startPage + limit -1;
+		if(maxPage<endPage){
+			endPage = maxPage;
+		}
+		
+		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage, mno);
+		
+		ArrayList<UsePoint> uList = ps.selectRevenueList(pi);
+		
+		ArrayList<String> beingYearList = ps.getBeingYearList(mno);
+		
+		Stats s = new Stats();
+		
+		s.setMno(mno);
+		s.setYear(year);
+		
+		ArrayList<Stats> sList = ps.selectYearMonthRevenueStats(s);
+		
+		int count = 0;
+		
+		String[] statsArr = new String[12];
+		
+		for(int i = 0; i < statsArr.length; i++){
+			System.out.println("i : " + i);
+			System.out.println("count : " + count);
+			if(count < sList.size()&&i==Integer.valueOf(sList.get(count).getMonth())-1){
+				statsArr[i] = String.valueOf(sList.get(count).getAmount());
+				count++;
+			}else {
+				statsArr[i] = "0";
+			}
+		}
+		
+		int revenuePoint = ps.getRevenueTotalPoint(mno);
+		
+		mv.addObject("uList", uList);
+		mv.addObject("pi", pi);
+		mv.addObject("statsArr",statsArr);
+		mv.addObject("year",year);
+		mv.addObject("revenuePoint",revenuePoint);
+		mv.addObject("beingYearList", beingYearList);
+		mv.setViewName("mypage/myPage_NaruRevenueList");
+		
+		return mv;
+		
+	}
+	
+	@RequestMapping(value="naruNeighborListView.me")
+	public ModelAndView NaruNeighborListForward(ModelAndView mv, HttpSession session, @RequestParam(defaultValue="1") int currentPage){
+		
+		Member loginUser = (Member) session.getAttribute("loginUser");
+		
+		int mno = loginUser.getMid();	
+		
+		//페이징처리
+		int limit;
+		int maxPage;
+		int startPage;
+		int endPage;
+		
+		/*limit = 10;*/
+		limit = 5;
+		
+		int listCount = 0;
+		
+		listCount = nc.getNeighborListCount(mno);
+		
+		System.out.println("listCount : " + listCount);
+		
+		maxPage = (int)((double)listCount / limit + 0.9);
+		startPage = ((int)((double)currentPage / limit + 0.9) - 1)*limit + 1;
+		endPage = startPage + limit -1;
+		if(maxPage<endPage){
+			endPage = maxPage;
+		}
+		
+		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage, mno);
+		
+		ArrayList<Neighbor> nList = nc.selectNeighborList(pi);
+		
+		System.out.println("nList : " + nList);
+		
+		mv.addObject("nList", nList);
+		mv.addObject("pi", pi);
 		mv.setViewName("mypage/myPage_NaruNeighborList");
 		
 		return mv;
@@ -892,6 +1039,12 @@ public class MemberController {
 			mv.addObject("message", e.getMessage());
 			mv.setViewName("common/errorPage");
 		}
+		return mv;
+	}
+	@RequestMapping(value="myboardView.me")
+	public ModelAndView myBoardForward(ModelAndView mv){
+		mv.setViewName("mypage/myPage_myboard"); 
+		
 		return mv;
 	}
 	@RequestMapping(value="refundView.me")

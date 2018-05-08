@@ -111,4 +111,51 @@ public class AdminServiceImpl implements AdminService {
 		
 		return totalAge;
 	}
+	///
+	@Override
+
+	public ArrayList<Notice> adminAnswer(Notice n) {
+		
+		return ad.adminAnswer(n);
+	}
+	public ArrayList selectChannel() {
+		ArrayList selectChannel = ad.selectChannel();
+		System.out.println("채널 : " + selectChannel);
+		return selectChannel;
+	}
+
+	@Override
+	public ArrayList selectChCount() {
+		ArrayList chCount = ad.selectChCount();
+		return chCount;
+	}
+
+	@Override
+	public ArrayList<Narumaru> naruView() {
+		ArrayList<Narumaru> naruView = ad.naruView();
+		return naruView;
+	}
+
+	@Override
+	public void statusCh(Member m) throws Exception {
+		ad.statusCh(m);
+	}
+
+	@Override
+	public ArrayList moneyView() {
+		ArrayList moneyView = ad.moneyView();
+		return moneyView;
+	}
+
+	@Override
+	public void moneyStatusCh(int WNO) throws Exception {
+		ad.moneyStatusCh(WNO);
+		
+	}
+
+	@Override
+	public ArrayList Chart() {
+		ArrayList Chart = ad.Chart();
+		return Chart;
+	}
 }

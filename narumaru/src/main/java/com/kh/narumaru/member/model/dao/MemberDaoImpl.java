@@ -176,6 +176,9 @@ public class MemberDaoImpl implements MemberDao{
 		
 		return li;
 		
+
+	public Member selectMemberOne(int mno) {
+		return (Member)sqlSession.selectOne("Member.selectMemberOne", mno);
 	}
 
 }

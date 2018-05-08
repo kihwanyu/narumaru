@@ -112,8 +112,10 @@
 		WHERE ROWNUM = 1
 
 	</select>
-	
-	
+
+	<select id="selectMemberOne" resultMap="memberResultSet" parameterType="_int">
+		SELECT * FROM MEMBER WHERE MNO = #{mno}
+	</select>
 </mapper>
 
 

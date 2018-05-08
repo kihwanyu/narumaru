@@ -39,4 +39,6 @@ public interface MemberService {
 
 	LogInfo selectNation(LogInfo li);
 
+	Member selectMemberOne(int mno);
+
 }

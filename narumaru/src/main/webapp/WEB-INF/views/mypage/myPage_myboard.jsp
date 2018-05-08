@@ -116,7 +116,7 @@
 			
 			<div id="contents">
 			<div style="margin-top: 5px; margin-bottom: 10px; color: black;" align="right">
-				<select>
+				<select id="narumaruSelect">
 					<option>나루</option>
 					<option>마루</option>
 				</select>
@@ -192,129 +192,261 @@
 		<jsp:include page="../common/myPage_RightSideBar.jsp"/>
 		<script type="text/javascript">
 		
-		//글 리스트 불러오기
+		//글 리스트 불러오는 부분		
 		$(function(){
-			$.ajax({
-				url:'selectBoardListAjax.bo',
-				type:'post',
-				success:function(data){
-					var list = data["list"];
-					var colist = data["colist"];
-					
-					var tempI = 0; // number 대용
-					
-					console.log(colist);
-					
-					//작성한 댓글 리스트 추가
-					for(var co in colist){
-						if(colist[co].mno == ${loginUser.mid}){
-							$.ajax({
-								url:'selectNarumaruName.bo',
-								type:'post',
-								data:{"nmno":colist[co].nmno,"bWriter":colist[co].bWriter,"bContent":colist[co].bContent,"createDate":colist[co].createDate},
-								success:function(data){
-										$("#comment-contants").append('<li class="board-li" style="color: black;">'
-							            	+	'<div style="margin-bottom: 20px;">'
-							           		+	'<div style="margin-top: 20px; margin-left: 20px;">'
-							           		+		'<span><font size="3px">' + data["bWriter"] + '</font>&nbsp;&nbsp;<font color="darkgray">댓글</font></span>'
-							           		+	'</div>' 
-							            	+	'</div>'
-							            	+	'<br>'
-							            	+	'<div style="margin-bottom: 20px; padding-left: 20px; padding-right: 20px;">'
-							            	+		'<div style="padding-bottom: 10px;">' + data["bContent"] + '</div>'
-							            	+		'<div style="padding-bottom: 10px; color: darkgray; text-align: right;">' + data["createDate"] + '</div>'
-							            	+		'<div style="border-top: solid 1px darkgray; padding-top: 40px; font-size: 15px;">'
-							            	+			data["nmName"]
-							            	+		'</div>'
-											+		'<br>'
-							            	+	'</div>'
-											+'</li>');
-								},
-								error:function(){
-									}
-							});
-						}
-					}
-					
-					for(var b in list){
-						// 나루 글이 아니면 다음껄로
-						if(list[b].bType != 100) continue;
-						else if(tempI > 10) break;
-						//ㄴ 최초 10개의 글만 불러오게 만듬.
-						
-						// 추가될 댓글 스트링
-						var str = '';
-						var tempJ = 0; // number 대용
-						
-						for(var co in colist){
-							if(colist[co].targetBno == list[b].bno){
-								var strTemp = '<div id="comments' + tempI + '" style="margin-top:20px; padding-top: 10px; border-top: solid 1px gray; display: none;" >'
-								+			'<div style="margin-bottom: 20px; -webkit-box-shadow: 1px 1px 5px gray; -moz-box-shadow: 1px 1px 5px gray; padding-top: 20px; padding-bottom: 20px;">'
-						        +    			'<div style="width: 40px; height: 40px; float: left; margin-right: 10px; " >'
-						        +    				'<img src="resources/images/profile_defalt.png" style="width: 100%; height: 100%">'
-						        +    			'</div>'
-						        +    			'<div style="float: right; width: 40px; height: 40px; margin-right: 20px;" onclick="clickMenuComment(' + tempJ +');">'
-								+					'<img alt="" src="resources/images/menu.png" style="width: 100%; height: 100%;">'			            			
-						        +   				'<div id="board-comment-menu-down' + tempJ++ +'" class="board-menu-down">'
-								+						'<ul>'
-								+							'<li><a href="#">댓글 수정 </a></li>'
-								+							'<li><a href="#">댓글 삭제 </a></li>'
-								+						'</ul>'
-								+					'</div>'
-						        +    			'</div>'
-						        +    			'<div style="margin-top: 10px; padding-bottom:10px; border: solid 1px white;">'
-							    +    				'<span>' + colist[co].bWriter + '<br><br></span>'
-						        +    				'<div style="padding-left: 10px; padding-right: 10px;">' + colist[co].bContent + '</div>'
-						        +    				'<span style="float: right;">' + colist[co].createDate + '<br></span> '
-						        +    			'</div>'
-						        +    		'</div>'
-						        +    	'</div>';
-						        
-						        str += strTemp;
+			$("#narumaruSelect").change(function(){
+				var narumaru = $("#narumaruSelect").val();
+				
+				$("#board-contants").html("");
+				$("#comment-contants").html("");
+				
+				if(narumaru == "나루"){
+					$.ajax({
+						url:'selectBoardListAjax.bo',
+						type:'post',
+						success:function(data){
+							var list = data["list"];
+							var colist = data["colist"];
+							
+							var tempI = 0; // number 대용
+							
+							console.log(colist);
+							
+							//작성한 댓글 리스트 추가
+							for(var co in colist){
+								if(colist[co].mno == ${loginUser.mid}){
+									$.ajax({
+										url:'selectNarumaruName.bo',
+										type:'post',
+										data:{"nmno":colist[co].nmno,"bWriter":colist[co].bWriter,"bContent":colist[co].bContent,"createDate":colist[co].createDate},
+										success:function(data){
+											if(colist[co].bType == 101){
+												$("#comment-contants").append('<li class="board-li" style="color: black;">'
+									            	+	'<div style="margin-bottom: 20px;">'
+									           		+	'<div style="margin-top: 20px; margin-left: 20px;">'
+									           		+		'<span><font size="3px">' + data["bWriter"] + '</font>&nbsp;&nbsp;<font color="darkgray">댓글</font></span>'
+									           		+	'</div>' 
+									            	+	'</div>'
+									            	+	'<br>'
+									            	+	'<div style="margin-bottom: 20px; padding-left: 20px; padding-right: 20px;">'
+									            	+		'<div style="padding-bottom: 10px;">' + data["bContent"] + '</div>'
+									            	+		'<div style="padding-bottom: 10px; color: darkgray; text-align: right;">' + data["createDate"] + '</div>'
+									            	+		'<div style="border-top: solid 1px darkgray; padding-top: 40px; font-size: 15px;">'
+									            	+			data["nmName"]
+									            	+		'</div>'
+													+		'<br>'
+									            	+	'</div>'
+													+'</li>');
+											}
+										},
+										error:function(){
+											}
+									});
+								}
 							}
+							
+							for(var b in list){
+								// 나루 글이 아니면 다음껄로
+								if(list[b].bType != 100) continue;
+								else if(tempI > 10) break;
+								//ㄴ 최초 10개의 글만 불러오게 만듬.
+								
+								// 추가될 댓글 스트링
+								var str = '';
+								var tempJ = 0; // number 대용
+								
+								for(var co in colist){
+									if(colist[co].targetBno == list[b].bno){
+										var strTemp = '<div id="comments' + tempI + '" style="margin-top:20px; padding-top: 10px; border-top: solid 1px gray; display: none;" >'
+										+			'<div style="margin-bottom: 20px; -webkit-box-shadow: 1px 1px 5px gray; -moz-box-shadow: 1px 1px 5px gray; padding-top: 20px; padding-bottom: 20px;">'
+								        +    			'<div style="width: 40px; height: 40px; float: left; margin-right: 10px; " >'
+								        +    				'<img src="resources/images/profile_defalt.png" style="width: 100%; height: 100%">'
+								        +    			'</div>'
+								        +    			'<div style="float: right; width: 40px; height: 40px; margin-right: 20px;" onclick="clickMenuComment(' + tempJ +');">'
+										+					'<img alt="" src="resources/images/menu.png" style="width: 100%; height: 100%;">'			            			
+								        +   				'<div id="board-comment-menu-down' + tempJ++ +'" class="board-menu-down">'
+										+						'<ul>'
+										+							'<li><a href="#">댓글 수정 </a></li>'
+										+							'<li><a href="#">댓글 삭제 </a></li>'
+										+						'</ul>'
+										+					'</div>'
+								        +    			'</div>'
+								        +    			'<div style="margin-top: 10px; padding-bottom:10px; border: solid 1px white;">'
+									    +    				'<span>' + colist[co].bWriter + '<br><br></span>'
+								        +    				'<div style="padding-left: 10px; padding-right: 10px;">' + colist[co].bContent + '</div>'
+								        +    				'<span style="float: right;">' + colist[co].createDate + '<br></span> '
+								        +    			'</div>'
+								        +    		'</div>'
+								        +    	'</div>';
+								        
+								        str += strTemp;
+									}
+								}
+								
+								$("#board-contants").append('<li class="board-li" style="color: black;">'
+						            +	'<div class="board-li-title">' + list[b].bTitle + '</div>'
+					            	+	'<div style="margin-bottom: 20px;">'
+					            	+		'<div style="width: 40px; height: 40px; float: left; margin-right: 10px;">'
+					            	+			'<img src="resources/images/profile_defalt.png" style="width: 100%; height: 100%">'
+					            	+		'</div>'
+					            	+		'<div style="float: right; width: 40px; height: 40px; margin-right: 20px;" onclick="clickMenu(' + tempI +');">'
+									+			'<img alt="" src="resources/images/menu.png" style="width: 100%; height: 100%;">'		            			
+					            	+			'<div id="board-menu-down' + tempI +'" class="board-menu-down">'
+									+				'<ul>'
+									+					'<li><a onclick="modifyBoard(' + list[b].bno +', ' + list[b].nmno +')">글 수정 </a></li>'
+									+					'<li><a href="#">공지등록</a></li>'
+									+					'<li><a onclick="deleteBoard(' + list[b].bno +', ' + list[b].nmno +')">삭제</a></li>'
+									+				'</ul>'
+									+			'</div>'
+					            	+		'</div>'
+					            	+		'<div style="margin-top: 20px;">'
+					            	+			'<span>' + list[b].bWriter + '<br></span>'
+					            	+			'<span>' + list[b].createDate + '</span>'
+					            	+		'</div>'
+					            	+	'</div>'
+					            	+	'<div style="margin-bottom: 20px; padding-bottom: 10px; padding-left: 20px; padding-right: 20px;">'
+					            	+		'<div style="padding-bottom: 10px;">' + list[b].bContent + '</div>'
+					            	+		'<div style="padding-top: 10px; border-top: solid 1px gray;">'
+									+			'<div style="float: left;">'
+									+				'댓글<img src="resources/images/comments_down.png" id="commentToggle" height="20px;" width="20px;" onclick="commentViews(this,' + tempI++ + ');">'
+									+			'</div>'
+									+		'</div>'
+									+		'<br>'
+									+ str
+									+	'</div>'
+									+'</li>');
+							}
+						},
+						error:function(data){
 						}
-						
-						$("#board-contants").append('<li class="board-li" style="color: black;">'
-				            +	'<div class="board-li-title">' + list[b].bTitle + '</div>'
-			            	+	'<div style="margin-bottom: 20px;">'
-			            	+		'<div style="width: 40px; height: 40px; float: left; margin-right: 10px;">'
-			            	+			'<img src="resources/images/profile_defalt.png" style="width: 100%; height: 100%">'
-			            	+		'</div>'
-			            	+		'<div style="float: right; width: 40px; height: 40px; margin-right: 20px;" onclick="clickMenu(' + tempI +');">'
-							+			'<img alt="" src="resources/images/menu.png" style="width: 100%; height: 100%;">'		            			
-			            	+			'<div id="board-menu-down' + tempI +'" class="board-menu-down">'
-							+				'<ul>'
-							+					'<li><a onclick="modifyBoard(' + list[b].bno +', ' + list[b].nmno +')">글 수정 </a></li>'
-							+					'<li><a href="#">공지등록</a></li>'
-							+					'<li><a onclick="deleteBoard(' + list[b].bno +', ' + list[b].nmno +')">삭제</a></li>'
-							+				'</ul>'
-							+			'</div>'
-			            	+		'</div>'
-			            	+		'<div style="margin-top: 20px;">'
-			            	+			'<span>' + list[b].bWriter + '<br></span>'
-			            	+			'<span>' + list[b].createDate + '</span>'
-			            	+		'</div>'
-			            	+	'</div>'
-			            	+	'<div style="margin-bottom: 20px; padding-bottom: 10px; padding-left: 20px; padding-right: 20px;">'
-			            	+		'<div style="padding-bottom: 10px;">' + list[b].bContent + '</div>'
-			            	+		'<div style="padding-top: 10px; border-top: solid 1px gray;">'
-							+			'<div style="float: left;">'
-							+				'댓글<img src="resources/images/comments_down.png" id="commentToggle" height="20px;" width="20px;" onclick="commentViews(this,' + tempI++ + ');">'
-							+			'</div>'
-							+		'</div>'
-							+		'<br>'
-							+ str
-							+	'</div>'
-							+'</li>');
-					}
-				},
-				error:function(data){
+					})	
+				}else if(narumaru == "마루"){
+					$(function(){
+						$.ajax({
+							url:'selectBoardListAjax.bo',
+							type:'post',
+							success:function(data){
+								var list = data["list"];
+								var colist = data["colist"];
+								
+								var tempI = 0; // number 대용
+								
+								console.log(colist);
+								
+								//작성한 댓글 리스트 추가
+								for(var co in colist){
+									if(colist[co].mno == ${loginUser.mid}){
+										$.ajax({
+											url:'selectNarumaruName.bo',
+											type:'post',
+											data:{"nmno":colist[co].nmno,"bWriter":colist[co].bWriter,"bContent":colist[co].bContent,"createDate":colist[co].createDate},
+											success:function(data){
+												if(colist[co].bType == 201){
+													$("#comment-contants").append('<li class="board-li" style="color: black;">'
+										            	+	'<div style="margin-bottom: 20px;">'
+										           		+	'<div style="margin-top: 20px; margin-left: 20px;">'
+										           		+		'<span><font size="3px">' + data["bWriter"] + '</font>&nbsp;&nbsp;<font color="darkgray">댓글</font></span>'
+										           		+	'</div>' 
+										            	+	'</div>'
+										            	+	'<br>'
+										            	+	'<div style="margin-bottom: 20px; padding-left: 20px; padding-right: 20px;">'
+										            	+		'<div style="padding-bottom: 10px;">' + data["bContent"] + '</div>'
+										            	+		'<div style="padding-bottom: 10px; color: darkgray; text-align: right;">' + data["createDate"] + '</div>'
+										            	+		'<div style="border-top: solid 1px darkgray; padding-top: 40px; font-size: 15px;">'
+										            	+			data["nmName"]
+										            	+		'</div>'
+														+		'<br>'
+										            	+	'</div>'
+														+'</li>');
+												}
+											},
+											error:function(){
+												}
+										});
+									}
+								}
+								
+								for(var b in list){
+									// 마루 글이 아니면 다음껄로
+									if(list[b].bType != 200) continue;
+									else if(tempI > 10) break;
+									//ㄴ 최초 10개의 글만 불러오게 만듬.
+									
+									// 추가될 댓글 스트링
+									var str = '';
+									var tempJ = 0; // number 대용
+									
+									for(var co in colist){
+										if(colist[co].targetBno == list[b].bno){
+											var strTemp = '<div id="comments' + tempI + '" style="margin-top:20px; padding-top: 10px; border-top: solid 1px gray; display: none;" >'
+											+			'<div style="margin-bottom: 20px; -webkit-box-shadow: 1px 1px 5px gray; -moz-box-shadow: 1px 1px 5px gray; padding-top: 20px; padding-bottom: 20px;">'
+									        +    			'<div style="width: 40px; height: 40px; float: left; margin-right: 10px; " >'
+									        +    				'<img src="resources/images/profile_defalt.png" style="width: 100%; height: 100%">'
+									        +    			'</div>'
+									        +    			'<div style="float: right; width: 40px; height: 40px; margin-right: 20px;" onclick="clickMenuComment(' + tempJ +');">'
+											+					'<img alt="" src="resources/images/menu.png" style="width: 100%; height: 100%;">'			            			
+									        +   				'<div id="board-comment-menu-down' + tempJ++ +'" class="board-menu-down">'
+											+						'<ul>'
+											+							'<li><a href="#">댓글 수정 </a></li>'
+											+							'<li><a href="#">댓글 삭제 </a></li>'
+											+						'</ul>'
+											+					'</div>'
+									        +    			'</div>'
+									        +    			'<div style="margin-top: 10px; padding-bottom:10px; border: solid 1px white;">'
+										    +    				'<span>' + colist[co].bWriter + '<br><br></span>'
+									        +    				'<div style="padding-left: 10px; padding-right: 10px;">' + colist[co].bContent + '</div>'
+									        +    				'<span style="float: right;">' + colist[co].createDate + '<br></span> '
+									        +    			'</div>'
+									        +    		'</div>'
+									        +    	'</div>';
+									        
+									        str += strTemp;
+										}
+									}
+									
+									$("#board-contants").append('<li class="board-li" style="color: black;">'
+							            +	'<div class="board-li-title">' + list[b].bTitle + '</div>'
+						            	+	'<div style="margin-bottom: 20px;">'
+						            	+		'<div style="width: 40px; height: 40px; float: left; margin-right: 10px;">'
+						            	+			'<img src="resources/images/profile_defalt.png" style="width: 100%; height: 100%">'
+						            	+		'</div>'
+						            	+		'<div style="float: right; width: 40px; height: 40px; margin-right: 20px;" onclick="clickMenu(' + tempI +');">'
+										+			'<img alt="" src="resources/images/menu.png" style="width: 100%; height: 100%;">'		            			
+						            	+			'<div id="board-menu-down' + tempI +'" class="board-menu-down">'
+										+				'<ul>'
+										+					'<li><a onclick="modifyBoard(' + list[b].bno +', ' + list[b].nmno +')">글 수정 </a></li>'
+										+					'<li><a href="#">공지등록</a></li>'
+										+					'<li><a onclick="deleteBoard(' + list[b].bno +', ' + list[b].nmno +')">삭제</a></li>'
+										+				'</ul>'
+										+			'</div>'
+						            	+		'</div>'
+						            	+		'<div style="margin-top: 20px;">'
+						            	+			'<span>' + list[b].bWriter + '<br></span>'
+						            	+			'<span>' + list[b].createDate + '</span>'
+						            	+		'</div>'
+						            	+	'</div>'
+						            	+	'<div style="margin-bottom: 20px; padding-bottom: 10px; padding-left: 20px; padding-right: 20px;">'
+						            	+		'<div style="padding-bottom: 10px;">' + list[b].bContent + '</div>'
+						            	+		'<div style="padding-top: 10px; border-top: solid 1px gray;">'
+										+			'<div style="float: left;">'
+										+				'댓글<img src="resources/images/comments_down.png" id="commentToggle" height="20px;" width="20px;" onclick="commentViews(this,' + tempI++ + ');">'
+										+			'</div>'
+										+		'</div>'
+										+		'<br>'
+										+ str
+										+	'</div>'
+										+'</li>');
+								}
+							},
+							error:function(data){
+							}
+						})
+					});
 				}
 			})
-		});
-		
-		
-		$(function(){
+			
+			$("#narumaruSelect").trigger("change");
+			
 			var boardCheack = 1;
 			$(".tab_content").hide();
 		    $(".tab_content:first").show();
