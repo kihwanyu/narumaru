@@ -145,7 +145,7 @@
 					<input type ="submit" class ="submBtn" onclick="return submBtn();" value = "문의하기">&nbsp;&nbsp;
 					<input type = "reset" class= "rseBtn" value = "메인으로 "> 
 				</div>
-				
+				<!--  -->
 				<script>
 				function submBtn(){
 					

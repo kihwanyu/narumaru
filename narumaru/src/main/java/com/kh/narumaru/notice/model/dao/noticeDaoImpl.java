@@ -19,7 +19,7 @@ import com.kh.narumaru.payment.model.vo.Payment;
 public class noticeDaoImpl implements noticeDao{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	
+	//
 	
 
 	@Override

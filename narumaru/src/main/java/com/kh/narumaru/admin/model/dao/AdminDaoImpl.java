@@ -141,7 +141,7 @@ public class AdminDaoImpl implements AdminDao{
 		System.out.println("adminDao questionSelectLst n :" +n );
 		ArrayList<Notice> nlist = null;
 		nlist = (ArrayList)sqlSession.selectList("Admin.questionSelectList", n);
-		
+		//
 		System.out.println("adminDao adminSelectList nlist"  + nlist);
 
 		return nlist;

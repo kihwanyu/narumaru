@@ -13,7 +13,7 @@ public interface noticeService {
 	ArrayList<Notice> noticeSelectList(Notice n);
 
 	Notice showNoticeDetailView(int bno);
-
+//
 	ArrayList<Notice> faqSelectList(Notice n);
 
 	

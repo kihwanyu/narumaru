@@ -99,7 +99,7 @@
 	<insert id="insertNotice" parameterType="Notice">
 		INSERT INTO BOARD VALUES(SEQ_BNO.NEXTVAL, NULL, #{noType} , #{noTitle}, #{noContent}, NULL, #{writerId}, SYSDATE, SYSDATE, DEFAULT, 1,NULL,NULL,NULL,NULL,NULL,NULL )
 	</insert>
-	
+	<!--  -->
 	<select id="noticeSelectList" resultMap ="noticeResultSet">
 		SELECT * FROM BOARD
 		WHERE STATUS = 'Y'

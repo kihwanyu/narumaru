@@ -111,4 +111,10 @@ public class AdminServiceImpl implements AdminService {
 		
 		return totalAge;
 	}
+
+	@Override
+	public ArrayList<Notice> adminAnswer(Notice n) {
+		
+		return ad.adminAnswer(n);
+	}
 }

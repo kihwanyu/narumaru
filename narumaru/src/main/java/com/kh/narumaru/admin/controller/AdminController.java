@@ -164,7 +164,7 @@ public class AdminController {
 		return "admin/adDeclareDetail";
 	}
 
-	
+	//
 	// 관리자 1:1 문의 게시판 조회
 	@RequestMapping(value="adminAnswer.ad")
 	public ModelAndView showAdminAnswerView(Notice n, 

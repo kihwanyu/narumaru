@@ -73,7 +73,7 @@ public class noticeServiceImpl implements noticeService {
 		
 		return nd.faqSelectList(n);
 	}
-		
+	//	
 	//FAQ 키워드 검색
 	@Override
 	public ArrayList<Notice> SearchFAQList(String keyWord) throws searchFaqException {

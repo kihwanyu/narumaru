@@ -73,7 +73,7 @@
 		GROUP BY SUBSTR(TO_CHAR(FLOOR(MONTHS_BETWEEN(SYSDATE, BIRTHDAY)/12)), 0, 1)
 		ORDER BY SUBSTR(TO_CHAR(FLOOR(MONTHS_BETWEEN(SYSDATE, BIRTHDAY)/12)), 0, 1) ASC
 	</select>
-	
+	<!--  -->
 	<select id="questionSelectList" resultMap ="noticeResultSet">
 		SELECT * FROM BOARD
 		WHERE STATUS = 'Y'

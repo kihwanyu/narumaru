@@ -11,7 +11,7 @@ import com.kh.narumaru.notice.exception.searchFaqException;
 import com.kh.narumaru.notice.model.vo.Notice;
 
 public interface noticeDao {
-
+//
 	ArrayList<Notice> noticeSelectList(Notice n);
 
 	Notice showNoticeDetailView(int bno);

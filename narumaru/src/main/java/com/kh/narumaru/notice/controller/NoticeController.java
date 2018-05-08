@@ -64,7 +64,7 @@ public class NoticeController {
 			
 			currentPage =1;
 			limit = 10;
-			
+			//
 			if(request.getParameter("currentPage") != null){
 				currentPage = Integer.parseInt(request.getParameter("currentPage"));
 				

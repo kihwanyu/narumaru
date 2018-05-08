@@ -13,7 +13,7 @@ public class Notice implements java.io.Serializable{
 	private String status;
 	private String orFileName;
 	private String chFileName;
-	
+	//
 	public Notice(){
 		super();
 	}

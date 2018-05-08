@@ -4,5 +4,5 @@ public class searchFaqException extends Exception{
 	public searchFaqException(String msg){
 		super(msg);
 	}
-
+//
 }
