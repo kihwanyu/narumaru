@@ -133,4 +133,17 @@ public class AdminDaoImpl implements AdminDao{
 		ArrayList totalAge = (ArrayList) sqlSession.selectList("Admin.totalAge");
 		return totalAge;
 	}
+
+
+	@Override
+	public ArrayList<Notice> adminAnswer(Notice n) {
+		n.setNoType(900);
+		System.out.println("adminDao questionSelectLst n :" +n );
+		ArrayList<Notice> nlist = null;
+		nlist = (ArrayList)sqlSession.selectList("Admin.questionSelectList", n);
+		
+		System.out.println("adminDao adminSelectList nlist"  + nlist);
+
+		return nlist;
+	}
 }

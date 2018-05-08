@@ -99,12 +99,12 @@
 				<label><img src= "${ contextPath }/resources/images/Pen.png"> 1대1 문의 등록하기</label>
 			</div>
 			
-			<form action="question.no" method="post">
+			<form action="questionForm.no" method="post" enctype="multipart/form-data">
 				<ul class = "noticeContent">	
 					<li>
 						<div class = "QuestionT">
 							<p> 문의 명 :</p>
-							<input type = "text" name ="noTitle" class ="narumaruName">
+							<input type = "text" name ="noTitle" id="faqTitle" class ="narumaruName">
 							
 						</div>
 					</li>
@@ -112,14 +112,14 @@
 					<li>
 						<div class = "QuestionT">
 							<p>문의 내용 </p>
-							<textarea rows="5" cols="103" style="resize:none;" name ="noContent"></textarea>
+							<textarea style="width:565PX;resize: none;height:185PX;" name ="noContent" id="faqContent"></textarea>
 						</div>
 					</li>
 					
 					<li>
 						
 						<p>파일첨부 </p> 
-						<input type = "file" name="fileName">
+						<input type = "file" name="orFileName">
 					</li>
 					
 					<li>
@@ -134,6 +134,7 @@
 								
 							<input type ="checkbox" id="agree" > <label for="agree" > 동의합니다. </label>
 							
+							
 							</div>
 						</div>
 					</li>
@@ -141,9 +142,26 @@
 					
 				</ul>
 				<div class ="btnDiv">
-					<input type = "submit" class ="submBtn" value = "문의하기">&nbsp;&nbsp;
+					<input type ="submit" class ="submBtn" onclick="return submBtn();" value = "문의하기">&nbsp;&nbsp;
 					<input type = "reset" class= "rseBtn" value = "메인으로 "> 
 				</div>
+				
+				<script>
+				function submBtn(){
+					
+						if ($(faqTitle).val() !="" && $(faqContent).val() != "" 
+							&& $('input:checkbox').is(":checked") == true){
+							return true;
+						}
+						
+						if ($('input:checkbox').is(":checked") == false){
+						   alert("정보 제공동의 및 정보 제 3자 제공 동의에 체크를 해주세요.");
+						   return false;
+						}
+					
+					
+				}
+				</script>
 			</form>
 		</div>	
 		

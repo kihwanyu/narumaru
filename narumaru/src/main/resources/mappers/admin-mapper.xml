@@ -19,6 +19,17 @@
 		<result property="total_amount" column="TOTAL_AMOUNT"/>
 	</resultMap>
 	
+	<resultMap type="Notice" id="noticeResultSet">
+		<id property="nid" column="BNO"/>
+		<result property="noType" column="B_TYPE"/>
+		<result property="noTitle" column="B_TITLE"/>
+		<result property="noContent" column="B_CONTENT"/>
+		<result property="writerId" column="MNO"/>
+		<result property="createDate" column="CREATE_DATE"/>
+		<result property="modifyDate" column="MODIFY_DATE"/>
+		<result property="status" column="STATUS"/>		
+	</resultMap>
+	
 	<select id="selectEnroll1" resultType="_int">
 		SELECT COUNT(TO_CHAR(ENROLL_DATE,'RRRRMM')) FROM MEMBER GROUP BY TO_CHAR(ENROLL_DATE,'RRRRMM') ORDER BY TO_CHAR(ENROLL_DATE,'RRRRMM') ASC
 	</select>
@@ -63,4 +74,10 @@
 		ORDER BY SUBSTR(TO_CHAR(FLOOR(MONTHS_BETWEEN(SYSDATE, BIRTHDAY)/12)), 0, 1) ASC
 	</select>
 	
+	<select id="questionSelectList" resultMap ="noticeResultSet">
+		SELECT * FROM BOARD
+		WHERE STATUS = 'Y'
+		AND B_TYPE = 900
+		ORDER BY BNO ASC
+	</select>
 </mapper>

@@ -72,7 +72,7 @@
 			<button type="button" class="btn btn-primary" onclick = "location.href='noticeSelectList.no'" > 공지사항 </button>
 			<button type="button" class="btn btn-primary" onclick = "location.href='FAQ.no'"> FAQ </button>
 			<button type="button" class="btn btn-primary" onclick = "location.href='question.no'"> 1:1 문의 </button>
-			
+			<button type="button" class="btn btn-primary" onclick = "location.href='success.no'"> 성공페이지 </button>
 			
 		</div>
 	</div>	

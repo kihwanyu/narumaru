@@ -73,7 +73,8 @@
 								<li><a href="adAnnouncement.ad"> 공지 글쓰기 </a></li>
 								<li><a href="noticeSelectList.no"> 공지사항 </a></li>
 								<li><a href="FAQSelectList.no"> FAQ </a></li>
-								<li><a href="adAnswerSelectList.ad"> 1:1 문의 </a></li>
+								<li><a href="adminAnswer.ad"> 1:1 문의 </a></li>
+						
 								
 							</ul></li>
 
