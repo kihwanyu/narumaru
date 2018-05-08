@@ -15,13 +15,217 @@
 		<result property="merchantUid" column="MERCHANT_UID"/>
 		<result property="payName" column="PAY_NAME"/>
 		<result property="buyerName" column="BUYER_NAME"/>
-		<result property="buyerAddr" column="BUYER_ADDR"/>
-		<result property="buyerPostcode" column="BUYER_POSTCODE"/>
 		<result property="applyNum" column="APPLY_NUM"/>
 		<result property="buyerEmail" column="BUYER_EMAIL"/>
 		<result property="status" column="STATUS"/>
-		<result property="payday" column="PAYDAY"/>
+		<result property="payDay" column="PAYDAY"/>
+		<result property="point" column="POINT"/>
+ 	</resultMap>
+	
+	<resultMap type="Bank" id="bankResultSet">
+		<id property="bcode" column="BCODE"/>
+		<result property="bank_name" column="BANK_NAME"/>
 	</resultMap>
 	
+	<resultMap type="Withdraw" id="withdrawResultSet">
+		<id property="wno" column="WNO"/>
+		<result property="resister_date" column="RESISTER_DATE"/>
+		<result property="resister_dateStr" column="RESISTER_DATESTR"/>
+		<result property="withdraw_date" column="WITHDRAW_DATE"/>
+		<result property="withdraw_dateStr" column="WITHDRAW_DATESTR"/>
+		<result property="mno" column="MNO"/>
+		<result property="point" column="POINT"/>
+		<result property="amount" column="AMOUNT"/>
+		<result property="bcode" column="BCODE"/>
+		<result property="account_number" column="ACCOUNT_NUMBER"/>
+		<result property="account_holder" column="ACCOUNT_HOLDER"/>
+		<result property="status" column="STATUS"/>
+	</resultMap>
 	
+	<resultMap type="UsePoint" id="usingHistoryResultSet">
+		<id property="pno" column="PNO"></id>
+		<result property="pContent" column="PCONTENT"/>
+		<result property="pDate" column="PDATE"/>
+		<result property="mno" column="MNO"/>
+		<result property="saller_no" column="SELLER_NO"/>
+		<result property="saller_name" column="SELLER_NAME"/>
+		<result property="buyer_no" column="BUYER_NO"/>
+		<result property="buyer_name" column="BUYER_NAME"/>
+		<result property="amount" column="AMOUNT"/>
+		<result property="bno" column="BNO"/>
+		<result property="nmno" column="NMNO"/>
+		<result property="nm_title" column="NM_TITLE"/>
+	</resultMap>
+	
+	<resultMap type="Stats" id="statsResultSet">
+		<result property="month" column="MONTH"/>
+		<result property="amount" column="AMOUNT"/>
+	</resultMap>
+	<insert id="paymentInsert">
+		INSERT INTO PAYMENT VALUES(SEQ_PAY_NO.NEXTVAL, #{mno}, #{impUid}
+									, #{amount}, #{payPg}, #{payMethod}
+									, #{merchantUid}, #{payName}, #{buyerName}
+									, #{applyNum}, #{buyerEmail}, 'Y', SYSDATE, #{point})
+	</insert>
+	<select id="myPaymentPointInquiry" resultType="_int" parameterType="_int">
+		SELECT SUM(POINT) FROM PAYMENT WHERE MNO=#{mno}
+	</select>
+	<select id="myRefundPointInquiry" resultType="_int" parameterType="_int">
+		SELECT SUM(POINT) FROM WITHDRAW WHERE MNO=#{mno}
+	</select>
+	<select id="selectPaymentListCount" resultType="_int" parameterType="_int">
+		SELECT COUNT(*) FROM PAYMENT WHERE MNO=#{mno}
+	</select>
+	<select id="selectPaymentList" resultMap="paymentResultSet">
+		SELECT AMOUNT, PAY_METHOD, POINT, TO_CHAR(payDay, 'yyyy-mm-dd PM hh:mi:ss') AS payDay FROM PAYMENT 
+		WHERE MNO=#{mno} ORDER BY PAY_NO DESC
+	</select>
+	<select id="selectPayment" resultMap="paymentResultSet" parameterType="_int">
+		SELECT PAY_NO 
+		FROM(
+		SELECT ROWNUM ,PAY_NO 
+		FROM PAYMENT 
+		WHERE MNO=#{mno}) 
+		WHERE ROWNUM=1
+	</select>
+	<select id="selectAllBankList" resultMap="bankResultSet">
+		SELECT * FROM BANK
+	</select>
+	<insert id="refundInsert">
+		INSERT INTO WITHDRAW VALUES (SEQ_WNO.NEXTVAL, SYSDATE, null, #{mno}, #{point}, #{amount}, #{bcode}, #{account_number}, #{account_holder}, '입금 대기')
+	</insert>
+	<select id="selectRefund" resultMap="withdrawResultSet" parameterType="_int">
+		SELECT WNO 
+		FROM(
+		SELECT ROWNUM ,WNO 
+		FROM WITHDRAW 
+		WHERE MNO=#{mno}) 
+		WHERE ROWNUM=1
+	</select>
+	<select id="selectRefundListCount" resultType="_int" parameterType="_int">
+		SELECT COUNT(*) FROM WITHDRAW WHERE MNO=#{mno}
+	</select>
+	<select id="selectRefundList" resultMap="withdrawResultSet">
+		SELECT TO_CHAR(RESISTER_DATE, 'yyyy-mm-dd PM hh:mi:ss') AS RESISTER_DATESTR
+			, WNO, POINT, AMOUNT, STATUS
+			, TO_CHAR(WITHDRAW_DATE, 'yyyy-mm-dd PM hh:mi:ss') AS WITHDRAW_DATESTR 
+		FROM WITHDRAW 
+		WHERE MNO=#{mno} ORDER BY WNO DESC
+	</select>
+	<select id="deleteWithdraw" parameterType="_int">
+		DELETE FROM WITHDRAW WHERE WNO=#{wno}
+	</select>
+
+	<insert id="insertUsePoint" parameterType="UsePoint">
+		INSERT INTO USINGHISTORY VALUES(SEQ_PNO.NEXTVAL, #{pContent}, SYSDATE, #{mno}, #{amount}, #{bno})
+	</insert>	
+	
+	<select id="selectUsePoint" resultMap="usingHistoryResultSet" parameterType="_int">
+		SELECT * FROM USINGHISTORY WHERE MNO = #{mno}
+	</select>
+	
+	<select id="getUsingHistoryListCount" resultType="_int" parameterType="_int">
+		SELECT COUNT(*) FROM USINGHISTORY WHERE MNO = #{mno}
+	</select>
+	
+	<select id="selectUseHistoryList" resultMap="usingHistoryResultSet" parameterType="_int">
+		SELECT U.PNO
+		,U.PCONTENT
+		,TO_CHAR(U.PDATE, 'yyyy-mm-dd PM hh:mi:ss') AS PDATE
+		,B.NEED_POINT AS AMOUNT
+		,U.BNO
+		,M.MNO AS SELLER_NO
+		,M.NICNAME AS SELLER_NAME
+		,MM.NMNO
+		,NM.NM_TITLE
+		FROM USINGHISTORY U
+		JOIN BOARD B ON(U.BNO=B.BNO)
+		JOIN MEMBER M ON(B.MNO=M.MNO)
+		JOIN MARU_MEMBER MM ON(M.MNO=MM.MNO)
+		JOIN NARUMARU NM ON(MM.NMNO=NM.NMNO)
+		WHERE NM.NM_CATEGORY=2 AND U.MNO=#{mno}
+		ORDER BY U.PNO DESC
+	</select>
+	
+	<select id="getUserPointTotal" resultType="_int" parameterType="_int">
+		SELECT SUM(B.NEED_POINT) AS AMOUNT
+		FROM USINGHISTORY U
+		JOIN BOARD B ON(U.BNO=B.BNO)
+		JOIN MEMBER M ON(B.MNO=M.MNO)
+		JOIN MARU_MEMBER MM ON(M.MNO=MM.MNO)
+		JOIN NARUMARU NM ON(MM.NMNO=NM.NMNO)
+		WHERE NM.NM_CATEGORY=2 AND U.MNO=#{mno}
+	</select>
+	
+	<select id="selectRevenueList" resultMap="usingHistoryResultSet" parameterType="_int">
+	SELECT U.PNO
+	,U.PCONTENT
+	,TO_CHAR(U.PDATE, 'yyyy-mm-dd PM hh:mi:ss') AS PDATE
+	,B.NEED_POINT AS AMOUNT
+	,U.BNO
+	,M1.MNO AS BUYER_NO
+	,M1.NICNAME AS BUYER_NAME
+	FROM USINGHISTORY U
+    JOIN MEMBER M1 ON(U.MNO=M1.MNO)
+	JOIN BOARD B ON(U.BNO=B.BNO)
+	JOIN MEMBER M2 ON(B.MNO=M2.MNO)
+	JOIN MARU_MEMBER MM ON(M2.MNO=MM.MNO)
+	JOIN NARUMARU NM ON(MM.NMNO=NM.NMNO)
+	WHERE NM.NM_CATEGORY=2 AND B.MNO=#{mno}
+	ORDER BY U.PNO DESC
+	</select>
+	
+	<select id="getRevenueListCount" resultType="_int" parameterType="_int">
+		SELECT COUNT(*) 
+        FROM USINGHISTORY U
+        JOIN BOARD B ON(U.BNO=B.BNO)
+        WHERE B.MNO = #{mno}
+	</select>
+	
+	<select id="getBeingYear" resultType="String" parameterType="_int">
+		SELECT YEAR
+		FROM (
+		SELECT U.PNO
+		,TO_CHAR(U.PDATE, 'yyyy') AS YEAR
+		FROM USINGHISTORY U
+		JOIN MEMBER M1 ON(U.MNO=M1.MNO)
+		JOIN BOARD B ON(U.BNO=B.BNO)
+		JOIN MEMBER M2 ON(B.MNO=M2.MNO)
+		JOIN MARU_MEMBER MM ON(M2.MNO=MM.MNO)
+		JOIN NARUMARU NM ON(MM.NMNO=NM.NMNO)
+		WHERE NM.NM_CATEGORY=2 AND B.MNO=#{mno})
+		GROUP BY YEAR
+		ORDER BY YEAR DESC
+	</select>
+	
+	<select id="selectYearMonthRevenueStats" resultMap="statsResultSet">
+	SELECT TO_NUMBER(MONTH) AS MONTH, SUM(AMOUNT) AS AMOUNT
+	FROM(
+	SELECT TO_CHAR(PDATE, 'MM') AS MONTH 
+	,AMOUNT
+	FROM(
+	SELECT U.PDATE
+	,TO_CHAR(U.PDATE, 'yyyy') AS YEAR
+	,B.NEED_POINT AS AMOUNT
+	FROM USINGHISTORY U
+	JOIN BOARD B ON(U.BNO=B.BNO)
+	JOIN MEMBER M ON(B.MNO=M.MNO)
+	JOIN MARU_MEMBER MM ON(M.MNO=MM.MNO)
+	JOIN NARUMARU NM ON(MM.NMNO=NM.NMNO)
+	WHERE NM.NM_CATEGORY=2 AND B.MNO=#{mno})
+	WHERE YEAR LIKE #{year})
+	GROUP BY MONTH
+	ORDER BY MONTH ASC
+	</select>
+	
+	<select id="getRevenueTotal" resultType="_int" parameterType="_int">
+		SELECT
+		SUM(B.NEED_POINT) AS AMOUNT
+		FROM USINGHISTORY U
+		JOIN BOARD B ON(U.BNO=B.BNO)
+		JOIN MEMBER M ON(B.MNO=M.MNO)
+		JOIN MARU_MEMBER MM ON(M.MNO=MM.MNO)
+		JOIN NARUMARU NM ON(MM.NMNO=NM.NMNO)
+		WHERE NM.NM_CATEGORY=2 AND B.MNO=#{mno}
+	</select>
 </mapper>
