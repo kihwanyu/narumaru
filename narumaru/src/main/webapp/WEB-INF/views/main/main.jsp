@@ -117,9 +117,9 @@
 						<img src="${contextPath }/resources/images/gold.png" style="width:100%;height:100%;">
 					</div>
 					<div align="center" style="width: 130px; height: 130px; padding: 10px;">
-						<img src="${contextPath }/resources/images/defalt_group.png" style="width:100%;height:100%;">
+						<img id="bestNaruImg1" src="${contextPath }/resources/images/defalt_group.png" style="width:100%;height:100%;">
 					</div>
-					<div align="center">
+					<div align="center" id="bestNaru1">
 						나루/마루 이름
 					</div>
 				</div>
@@ -128,9 +128,9 @@
 						<img src="${contextPath }/resources/images/silver.png" style="width:100%;height:100%;">
 					</div>
 					<div align="center" style="width: 130px; height: 130px; padding: 10px;">
-						<img src="${contextPath }/resources/images/defalt_group.png" style="width:100%;height:100%;">
+						<img id="bestNaruImg2" src="${contextPath }/resources/images/defalt_group.png" style="width:100%;height:100%;">
 					</div>
-					<div align="center">
+					<div align="center" id="bestNaru2">
 						나루/마루 이름
 					</div>
 				</div>
@@ -139,9 +139,9 @@
 						<img src="${contextPath }/resources/images/bronz.png" style="width:100%;height:100%;">
 					</div>
 					<div align="center" style="width: 130px; height: 130px; padding: 10px;">
-						<img src="${contextPath }/resources/images/defalt_group.png" style="width:100%;height:100%;">
+						<img id="bestNaruImg3" src="${contextPath }/resources/images/defalt_group.png" style="width:100%;height:100%;">
 					</div>
-					<div align="center">
+					<div align="center" id="bestNaru3">
 						나루/마루 이름
 					</div>
 				</div>
@@ -158,9 +158,9 @@
 						<img src="${contextPath }/resources/images/gold.png" style="width:100%;height:100%;">
 					</div>
 					<div align="center" style="width: 130px; height: 130px; padding: 10px;">
-						<img src="${contextPath }/resources/images/defalt_group.png" style="width:100%;height:100%;">
+						<img id="bestMaruImg1" src="${contextPath }/resources/images/defalt_group.png" style="width:100%;height:100%;">
 					</div>
-					<div align="center">
+					<div align="center" id="bestMaru1">
 						나루/마루 이름
 					</div>
 				</div>
@@ -169,9 +169,9 @@
 						<img src="${contextPath }/resources/images/silver.png" style="width:100%;height:100%;">
 					</div>
 					<div align="center" style="width: 130px; height: 130px; padding: 10px;">
-						<img src="${contextPath }/resources/images/defalt_group.png" style="width:100%;height:100%;">
+						<img id="bestMaruImg2" src="${contextPath }/resources/images/defalt_group.png" style="width:100%;height:100%;">
 					</div>
-					<div align="center">
+					<div align="center" id="bestMaru2">
 						나루/마루 이름
 					</div>
 				</div>
@@ -180,9 +180,9 @@
 						<img src="${contextPath }/resources/images/bronz.png" style="width:100%;height:100%;">
 					</div>
 					<div align="center" style="width: 130px; height: 130px; padding: 10px;">
-						<img src="${contextPath }/resources/images/defalt_group.png" style="width:100%;height:100%;">
+						<img id="bestMaruImg3" src="${contextPath }/resources/images/defalt_group.png" style="width:100%;height:100%;">
 					</div>
-					<div align="center">
+					<div align="center" id="bestMaru3">
 						나루/마루 이름
 					</div>
 				</div>
@@ -229,6 +229,44 @@
 		});
 		$("#narumaru-create-div").click(function(){
 			location.href="maruInsertView.ma";
+		});
+		
+		//베스트 나루
+		$.ajax({
+			url:"selectBestNaru.nm",
+			type:"get",
+			success:function(data){
+				$("#bestNaruImg1").attr("src","resources/memberprofile/"+ data[0].profileName)
+				$("#bestNaru1").html(data[0].nmTitle);
+				
+				$("#bestNaruImg2").attr("src","resources/memberprofile/"+ data[1].profileName)
+				$("#bestNaru2").html(data[1].nmTitle);
+				
+				$("#bestNaruImg3").attr("src","resources/memberprofile/"+ data[2].profileName)
+				$("#bestNaru3").html(data[2].nmTitle);
+			},
+			error:function(data){
+				console.log("베스트나루 읽기 실패");
+			}			
+		});
+		
+		//베스트 마루
+		$.ajax({
+			url:"selectBestMaru.nm",
+			type:"get",
+			success:function(data){
+				$("#bestMaruImg1").attr("src","resources/memberprofile/"+ data[0].profileName)
+				$("#bestMaru1").html(data[0].nmTitle);
+				
+				$("#bestMaruImg2").attr("src","resources/memberprofile/"+ data[1].profileName)
+				$("#bestMaru2").html(data[1].nmTitle);
+				
+				$("#bestMaruImg3").attr("src","resources/memberprofile/"+ data[2].profileName)
+				$("#bestMaru3").html(data[2].nmTitle);
+			},
+			error:function(data){
+				console.log("베스트나루 읽기 실패");
+			}			
 		});
 		
 		//이웃목록 불러오기

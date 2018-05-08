@@ -229,4 +229,16 @@ public class NarumaruDaoImpl implements NarumaruDao {
 		return list;
 	}
 
+	@Override
+	public ArrayList<Narumaru> selectBestNaru(SqlSessionTemplate sqlSession) {
+		ArrayList<Narumaru> list = (ArrayList)sqlSession.selectList("Narumaru.selectBestNaru");
+		return list;
+	}
+
+	@Override
+	public ArrayList<Narumaru> selectBestMaru(SqlSessionTemplate sqlSession) {
+		ArrayList<Narumaru> list = (ArrayList)sqlSession.selectList("Narumaru.selectBestMaru");
+		return list;
+	}
+
 }

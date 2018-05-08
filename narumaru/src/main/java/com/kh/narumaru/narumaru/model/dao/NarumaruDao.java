@@ -59,4 +59,8 @@ public interface NarumaruDao {
 
 	ArrayList<Narumaru> searchNarumaru(String searchCondition, SqlSessionTemplate sqlSession);
 
+	ArrayList<Narumaru> selectBestNaru(SqlSessionTemplate sqlSession);
+
+	ArrayList<Narumaru> selectBestMaru(SqlSessionTemplate sqlSession);
+
 } 
