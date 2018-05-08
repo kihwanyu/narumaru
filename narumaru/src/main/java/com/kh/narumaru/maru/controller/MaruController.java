@@ -268,14 +268,15 @@ public class MaruController {
 			/*Controller에서 Alarm객체에 값을 채운 후 Service로 보내주세요.*/
 			for(int i = 0; i < sendUser.size(); i++){
 				alarm.add(new Alarm());
-				alarm.get(i).setAtno(302);
+				alarm.get(i).setAtno(303);
+				alarm.get(i).setSend_nmno(nmno);
 				alarm.get(i).setSend_mno(sendUser.get(i));
 				alarm.get(i).setReceive_mno(mm.getMno());
 			}
 			
 			as.alarmRequest(alarm);
 			
-			mv.setViewName("maru/maruMemberInsert");	
+			mv.setViewName("maru/maruMemberInvate");	
 		} catch (MaruException e) {
 			mv.addObject("message", e.getMessage());
 			mv.setViewName("common/errorPage");	
