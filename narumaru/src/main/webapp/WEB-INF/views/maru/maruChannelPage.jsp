@@ -78,15 +78,22 @@
 				data:{"cno":cno},
 				success:function(data){
 					for(var i in data){
+						var str = "";
+
+						if(data[i].bHidden != null){
+							str = "(결제가 포함된 글입니다.)"
+						}
+						
+						
 						$(".board-list").append('<div class="board-inner">'
-							+'<div class="board-context">'
+							+'<div class="board-context" onclick="goNarumaru(' + data[i].nmno +')">'
 								+'<img src="resources/memberprofile/' + data[i].profileName + '" style="width:90%; height:50%;">'
-								+'<br>'
-								+data[i].bTitle
-								+'<br><br>'
-								+data[i].bContent
-								+'<br><br>'
+								+'<div id="board-titlearea" style="margin:15px 0;">' + data[i].bTitle + '</div>'
+								+'<div id="board-contentarea" style="height:80px; width:100%; word-wrap:break-word;">' + data[i].bContent + '</div>'
 								+'댓글 수 ' + data[i].comments
+								+ '<br>' + '<label style="color:gray;">' + str + '</label>'
+								+'<hr style="margin-bottom:10px;">'
+								+'<b>' + data[i].nmTitle +'</b>'
 							+'</div>'
 						+'</div>')
 					}
@@ -114,6 +121,10 @@
 			
 			boardReload(0);
 		})
+		
+		function goNarumaru(nmno){
+			location.href='boardListAll.bo?nmno=' + nmno;
+		}
 	</script>
 	
 </body>
