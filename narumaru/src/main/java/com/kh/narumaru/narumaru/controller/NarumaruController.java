@@ -670,4 +670,38 @@ public class NarumaruController {
 		
 		return mv;
 	}
+	
+	@RequestMapping("selectBestNaru.nm")
+	public void selectBestNaru(HttpServletRequest request, HttpServletResponse response){
+		try {
+			ArrayList<Narumaru> list = nms.selectBestNaru();
+			
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			new Gson().toJson(list, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("selectBestMaru.nm")
+	public void selectBestMaru(HttpServletRequest request, HttpServletResponse response){
+		try {
+			ArrayList<Narumaru> list = nms.selectBestMaru();
+			
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			new Gson().toJson(list, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
