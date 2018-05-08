@@ -1,5 +1,7 @@
 package com.kh.narumaru.member.model.service;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -7,6 +9,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.kh.narumaru.common.model.vo.PageInfo;
 import com.kh.narumaru.member.model.dao.MemberDao;
 import com.kh.narumaru.member.model.exception.LoginException;
 import com.kh.narumaru.member.model.exception.ProfileChangeException;
@@ -129,6 +132,23 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public LogInfo selectNation(LogInfo li) {
 		return md.selectNation(sqlSession, li);
+	}
+
+	@Override
+	public void insertLogInfo(LogInfo li2) {
+		
+		md.insertLogInfo(sqlSession, li2);
+		
+	}
+
+	@Override
+	public int getLoginCount(int mno) {
+		return md.getLoginCount(sqlSession, mno);
+	}
+
+	@Override
+	public ArrayList<LogInfo> getLoginListCount(PageInfo pi) {
+		return md.getLoginListCount(sqlSession, pi);
 	}
 
 

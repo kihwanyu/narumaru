@@ -1,10 +1,14 @@
 package com.kh.narumaru.member.model.dao;
 
+import java.util.ArrayList;
+
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import com.kh.narumaru.common.model.vo.PageInfo;
 import com.kh.narumaru.member.model.exception.LoginException;
 import com.kh.narumaru.member.model.exception.ProfileChangeException;
 import com.kh.narumaru.member.model.exception.birthdayChangeException;
@@ -179,6 +183,40 @@ public class MemberDaoImpl implements MemberDao{
 
 	public Member selectMemberOne(int mno) {
 		return (Member)sqlSession.selectOne("Member.selectMemberOne", mno);
+	}
+
+
+	@Override
+	public void insertLogInfo(SqlSessionTemplate sqlSession, LogInfo li2) {
+		
+		sqlSession.insert("Member.insertLogInfo", li2);
+		System.out.println("로그인인포 인서트 완료");
+		
+	}
+
+	@Override
+	public int getLoginCount(SqlSessionTemplate sqlSession, int mno) {
+		
+		int count = 0;
+		
+		Integer result = sqlSession.selectOne("Member.getLoginCount", mno);
+		
+		if(result != null){
+			count = result;
+		}
+		return count;
+		
+	}
+
+	@Override
+	public ArrayList<LogInfo> getLoginListCount(SqlSessionTemplate sqlSession, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		
+		ArrayList<LogInfo> list = (ArrayList)sqlSession.selectList("Member.getLoginListCount", pi, rowBounds);
+		
+		return list;
 	}
 
 }

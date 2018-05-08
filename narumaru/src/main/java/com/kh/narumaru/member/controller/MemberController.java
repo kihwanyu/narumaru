@@ -3,6 +3,7 @@ package com.kh.narumaru.member.controller;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -11,6 +12,8 @@ import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -122,7 +125,6 @@ public class MemberController {
 	@RequestMapping(value="logout.me", method=RequestMethod.GET)
 	public String logout(/*HttpSession session*/SessionStatus status){
 		
-		//session.invalidate();
 		status.setComplete();
 		
 		return "main/mainLogin";
@@ -288,15 +290,19 @@ public class MemberController {
 		             + (Long.parseLong(o1[2])*256)
 		             + Long.parseLong(o1[3]);
 			
-			
 			li.setLongIp(intIp);
 			
 			LogInfo li2 = ms.selectNation(li);
 			
-			//System.out.println("조회해온 국가" + nation);
 			System.out.println("로그객체 : " + li2);
 			
+			li2.setMno(loginUser.getMid());
+			li2.setSuccess_value("KR");
+			
+			ms.insertLogInfo(li2);
+			
 			mv.addObject("loginUser", loginUser);
+			
 			if(loginUser.getMid() <= 6){
 				mv.setViewName("redirect:/adMain.ad");
 			}else{
@@ -311,7 +317,6 @@ public class MemberController {
 			mv.setViewName("common/errorPage");
 		}
 		return mv;
-		//return null;
 		
 	}
 	
@@ -822,17 +827,50 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="myLoginView.me")
-	public ModelAndView myLoginForward(HttpSession session,LogInfo li,ModelAndView mv){
+	public ModelAndView myLoginForward(HttpSession session,LogInfo li,ModelAndView mv, @RequestParam(defaultValue="1") int currentPage){
 		
 		System.out.println("으흠..접속이되나");
 		
+		Member loginUser = (Member) session.getAttribute("loginUser");
 		
+		int mno = loginUser.getMid();	
 		
+		//페이징처리
+		int limit;
+		int maxPage;
+		int startPage;
+		int endPage;
 		
+		/*limit = 10;*/
+		limit = 5;
+		
+		int listCount = 0;
+		
+		listCount = ms.getLoginCount(mno);
+		
+		System.out.println("listCount : " + listCount);
+		
+		maxPage = (int)((double)listCount / limit + 0.9);
+		startPage = ((int)((double)currentPage / limit + 0.9) - 1)*limit + 1;
+		endPage = startPage + limit -1;
+		if(maxPage<endPage){
+			endPage = maxPage;
+		}
+		
+		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage, mno);
+		
+		ArrayList<LogInfo> loginList = ms.getLoginListCount(pi);
+		
+		System.out.println("loginList : " + loginList);
+		
+		mv.addObject("loginList", loginList);
+		mv.addObject("pi", pi);
 		mv.setViewName("mypage/myPage_loginRecord");
 		
 		return mv;
 	}
+	
+	
 	@RequestMapping(value="invitedMaruView.me")
 	public ModelAndView invitedMaruForward(ModelAndView mv, HttpSession session
 											, @RequestParam(defaultValue="1") int currentPage){

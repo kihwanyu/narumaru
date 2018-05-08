@@ -35,35 +35,84 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>2018.04.10 AM 5:00</td>
-							<td>192.168.45.1</td>
-							<td>KO</td>
-						</tr>
-						<tr>
-							<td>2018.04.10 AM 5:00</td>
-							<td>192.168.45.1</td>
-							<td>KO</td>
-						</tr>
-						<tr>
-							<td>2018.04.10 AM 5:00</td>
-							<td>192.168.45.1</td>
-							<td>KO</td>
-						</tr>
+						
+						<c:forEach items="${loginList }" var="loginList">
+											<tr>
+												<td>${loginList.time }</td>
+												<td>${loginList.userIp }</td>
+												<td>${loginList.success_value }</td>
+											</tr>
+										</c:forEach>
 					</tbody>
 				</table>
 				<div align="center" style="color: gray;">
-					<ul class="pagination">
-						<li><a href="#"><<</a></li>
-						<li><a href="#"><</a></li>
-						<li><a href="#">1</a></li>
-						<li class="active"><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-						<li><a href="#">></a></li>
-						<li><a href="#">>></a></li>
-					</ul>
+					<!-- 페이지 처리 -->
+							<c:set var="currentPage" value="${pi.currentPage }"/>
+							<c:set var="limit" value="${pi.limit }"/>
+							<c:set var="startPage" value="${pi.startPage }"/>
+							<c:set var="endPage" value="${pi.endPage }"/>
+							<c:set var="maxPage" value="${pi.maxPage }"/>
+							
+							<c:set var="backNextPageVal" value="${currentPage/limit }" />
+							<c:set var="backNextTemp" value="${backNextPageVal-0.9 }"/>
+							<fmt:parseNumber var="backNextTemp" integerOnly="true" value="${backNextTemp }"/> 
+							<!-- int 형변환 -->
+							<c:set var="backNextpage" value="${backNextTemp*limit+1 }"/>
+							<!-- int 형변환 -->
+							<fmt:parseNumber var="backNextpage" integerOnly="true" value="${backNextpage }"/> 
+							<c:set var="forwardNextPageVal" value="${currentPage/limit }"/>
+							<c:set var="forwardNextTemp" value="${forwardNextPageVal+0.9 }"/>
+							<!-- int 형변환 -->
+							<fmt:parseNumber var="forwardNextTemp" integerOnly="true" value="${forwardNextTemp }"/> 							
+							<c:set var="forwardNextpage"  value="${forwardNextTemp*limit+1 }"/>
+							<!-- int 형변환 -->
+							<fmt:parseNumber var="forwardNextpage" integerOnly="true" value="${forwardNextpage }"/>  
+							<div class="pagingArea">
+								<ul class="pagination">
+								<li><a href="myLoginView.me?currentPage=1"><<</a></li>
+								<c:choose>
+									<c:when test="${currentPage <= 1 }">
+										<li class="active"><a href="#"><</a></li>
+									</c:when>
+									<c:otherwise>
+										<c:choose>
+											<c:when test="${backNextpage < 1 }">
+												<li><a href="myLoginView.me?currentPage=1"><</a></li>
+											</c:when>
+											<c:otherwise>
+												<li><a href="myLoginView.me?currentPage=${backNextpage }"><</a></li>
+											</c:otherwise>
+										</c:choose>
+									</c:otherwise>
+								</c:choose>
+								<c:forEach var="p" begin="${startPage }" end="${endPage }" step="1">
+									<c:choose>
+										<c:when test="${p == currentPage }">
+											<li class="active"><a href="#">${p }</a></li>
+										</c:when>
+										<c:otherwise>
+											<li><a href="myLoginView.me?currentPage=${p }">${p }</a></li>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+								<c:choose>
+									<c:when test="${currentPage >= maxPage }">
+										<li class="active"><a href="#">></a></li>	
+									</c:when>
+									<c:otherwise>
+										<c:choose>
+											<c:when test="${forwardNextpage > maxPage }">
+												<li><a href="myLoginView.me?currentPage=${maxPage }">></a></li>
+											</c:when>
+											<c:otherwise>
+												<li><a href="myLoginView.me?currentPage=${forwardNextpage }">></a></li>
+											</c:otherwise>
+										</c:choose>
+									</c:otherwise>
+								</c:choose>
+								<li><a href="myLoginView.me?currentPage=${maxPage }">>></a></li>
+								</ul>
+							</div>
 				</div>
 			</div>
 		</div>
