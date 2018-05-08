@@ -208,7 +208,8 @@
 			type:"get",
 			data:{"mno":mno},
 			success:function(data){
-				console.log(data);
+				console.log(data.length);
+				
 				$("#maruCount").html(data.length);
 				for(var i = 0; i < data.length; i++){
 					console.log(data[i]);

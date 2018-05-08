@@ -317,7 +317,7 @@ public class NarumaruController {
 	}
 	
 	@RequestMapping("insertNarumaruBoard.nm")
-	public String insertNaruBoard( int nmno, HttpServletRequest request, @RequestParam(name="file", required=false) MultipartFile file) throws NarumaruException{
+	public String insertNaruBoard( int nmno, HttpServletRequest request, @RequestParam(name="files", required=false) MultipartFile file) throws NarumaruException{
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String filePath = root + "\\uploadFiles";
 		

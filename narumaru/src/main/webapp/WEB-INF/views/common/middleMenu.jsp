@@ -37,8 +37,8 @@
 	.innerTopUl li{
 		/* border:1px solid black; */
 		color:white;
-		margin-right:20px;
-		margin-left:20px;
+		/* margin-right:20px; */
+		margin-left:100px;
 	}
 	.innerTopUl li:hover {
 		font-size: 1.5em;
@@ -182,7 +182,7 @@
 	}
 	.footUl li{
 		float:left;
-		margin-left:50px;
+		margin-left:120px;
 		cursor:pointer;
 	}
 	.insertReply{
@@ -223,6 +223,9 @@
   	.note-editor{
   		z-index:0;
   	}
+  	.modal-backdrop{
+  		display:none;
+  	}
 </style>
 </head>
 <body>
@@ -230,7 +233,7 @@
 		<div class="marginAuto innerTopMenu">
 			<ul class="ul innerTopUl marginAuto">
 				<li><a href="boardListAll.bo?nmno=${ nm.nmno }">전체글</a></li>
-				<li><a href="showMaruAlbum.ma">사진첩</a></li>
+				<!-- <li><a href="showMaruAlbum.ma">사진첩</a></li> -->
 				<li><a href="showMaruCalendar.ma">일정</a></li>
 				<li><a href="showMaruMember.ma">멤버</a></li>
 			</ul>
