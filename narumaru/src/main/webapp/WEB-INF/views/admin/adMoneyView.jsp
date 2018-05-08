@@ -68,29 +68,29 @@
                     <table id="datatable" class="table table-striped table-bordered">
                       <thead>
                         <tr>
-                          <th>실명</th>
-                          <th>은행</th>
-                          <th>계좌번호</th>
-                          <th>예금주</th>
-                          <th>결제일</th>
-                          <th>환급금액</th>
+                          <th>신청일</th>
+                          <th>출금포인트</th>
+                          <th>지급액</th>
+                          <th>입금일</th>
+                          <th>신청은행</th>
+                          <th>신청자</th>
                           <th>환급신청여부</th>
-                          <th>환급결정</th>
                         </tr>
                       </thead>
 
 
                       <tbody>
-                        <tr>
-                          <td>유기환</td>
-                          <td>신한은행</td>
-                          <td>110</td>
-                          <td>유기환</td>
-                          <td>2011/04/25</td>
-                          <td>1</td>
-                          <td>N</td>
-                          <td><button onclick="">N</button></td>
-                        </tr>
+                        <c:forEach items="${moneyView}" var="moneyView">
+                        	<tr>
+                        		<td>${moneyView.RESISTER_DATE}</td>
+                        		<td>${moneyView.POINT}</td>
+                        		<td>${moneyView.POINT-moneyView.AMOUNT}원</td>
+                        		<td>${moneyView.WITHDRAW_DATE}</td>
+                        		<td>${moneyView.BANK_NAME}</td>
+                        		<td>${moneyView.ACCOUNT_HOLDER}</td>
+                        		<td><input type="button" value="${moneyView.STATUS }" onclick="moneyStatus(this, ${moneyView.WNO});"></td>
+                        	</tr>
+                        </c:forEach>
                       </tbody>
                     </table>
                   </div>
@@ -109,6 +109,32 @@
         </footer>
     <!-- /footer content -->
 	<!-- 이럴수가!!  -->
+	<script type="text/javascript">
+		function moneyStatus(btn, WNO){
+			console.log(btn.value);
+			var status = btn.value;
+			console.log(status);
+			
+			if(btn.value == "입금 대기"){
+				status = '입금 완료';
+			}else{
+				status = '입금 대기';
+			}
+			
+			 $.ajax({
+				url: "moneyStatusCh.ad",
+				type:"get",
+				data:{"WNO":WNO},
+				success:function(data){
+					btn.value = status;
+				},
+				error:function(){
+					
+				}
+			}); 
+			
+		}
+	</script>
 	
 </body>
 </html>

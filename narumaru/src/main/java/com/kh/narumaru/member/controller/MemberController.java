@@ -272,8 +272,9 @@ public class MemberController {
 			mv.addObject("loginUser", loginUser);
 			if(loginUser.getMid() <= 6){
 				mv.setViewName("redirect:/adMain.ad");
+			}else{
+				mv.setViewName("main/main");
 			}
-			mv.setViewName("main/main");
 			
 		} catch (LoginException e) {
 			//model.addAttribute("message", e.getMessage());
