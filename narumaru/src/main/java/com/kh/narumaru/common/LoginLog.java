@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.kh.narumaru.member.model.vo.LogInfo;
 import com.kh.narumaru.member.model.vo.Member;
 
 @Repository
@@ -18,15 +19,15 @@ public class LoginLog {
 	
 	private static final Logger logger = LoggerFactory.getLogger(LoginLog.class);
 	
-	@Pointcut("execution(* com.kh.narumaru..*ServiceImpl.login*(..))")
+	@Pointcut("execution(* com.kh.narumaru..*ServiceImpl.selectN*(..))")
 	public void loginPointcut(){}
 	
 	@AfterReturning(pointcut="loginPointcut()", returning="returnObj")
 	public void logining(JoinPoint jp, Object returnObj){
-		if(returnObj instanceof Member){
-			Member m = (Member)returnObj;
-			
-			logger.info(new Date() + " : $" + m.getEmail() + "$님이 접속했습니다.");
+		if(returnObj instanceof LogInfo){
+			LogInfo m = (LogInfo)returnObj;
+			System.out.println("로그인로그?");
+			logger.info(new Date() + " :  #" + m.getUserIp() + "# $" + m.getEmail() + "$님이 접속했습니다.");
 		}
 		
 	}
