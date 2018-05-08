@@ -1,7 +1,10 @@
 package com.kh.narumaru.member.model.dao;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.narumaru.common.model.vo.PageInfo;
 import com.kh.narumaru.member.model.exception.LoginException;
 import com.kh.narumaru.member.model.exception.ProfileChangeException;
 import com.kh.narumaru.member.model.exception.birthdayChangeException;
@@ -44,5 +47,10 @@ public interface MemberDao {
 
 	Member selectMemberOne(int mno);
 
+	void insertLogInfo(SqlSessionTemplate sqlSession, LogInfo li2);
+
+	int getLoginCount(SqlSessionTemplate sqlSession, int mno);
+
+	ArrayList<LogInfo> getLoginListCount(SqlSessionTemplate sqlSession, PageInfo pi);
 
 }

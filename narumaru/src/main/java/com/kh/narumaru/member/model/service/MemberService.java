@@ -1,5 +1,8 @@
 package com.kh.narumaru.member.model.service;
 
+import java.util.ArrayList;
+
+import com.kh.narumaru.common.model.vo.PageInfo;
 import com.kh.narumaru.member.model.exception.LoginException;
 import com.kh.narumaru.member.model.exception.ProfileChangeException;
 import com.kh.narumaru.member.model.exception.birthdayChangeException;
@@ -40,5 +43,11 @@ public interface MemberService {
 	LogInfo selectNation(LogInfo li);
 
 	Member selectMemberOne(int mno);
+
+	void insertLogInfo(LogInfo li2);
+
+	int getLoginCount(int mno);
+
+	ArrayList<LogInfo> getLoginListCount(PageInfo pi);
 
 }

@@ -19,6 +19,15 @@
 		<result property="status" column="STATUS"/>
 	</resultMap> 
 	
+	<resultMap type="LogInfo" id="logResultSet">
+		<id property="lono" column="LONO"/>
+		<result property="email" column="EMAIL"/>
+		<result property="time" column="LOGIN_DATE"/>
+		<result property="mno" column="MNO"/>
+		<result property="userIp" column="IP_ADDRESS"/>
+		<result property="success_value" column="SUCCESS_VALUE"/>
+	</resultMap>
+	
 	<resultMap type="Channel" id="channelResultSet">
 		<id property="cno" column="CNO"/>
 		<result property="cname" column="CNAME"/>
@@ -116,6 +125,22 @@
 	<select id="selectMemberOne" resultMap="memberResultSet" parameterType="_int">
 		SELECT * FROM MEMBER WHERE MNO = #{mno}
 	</select>
+	
+	<insert id="insertLogInfo" parameterType="LogInfo">
+		INSERT INTO LOGININFO VALUES(SEQ_LONO.nextval, SYSDATE, #{mno}, #{userIp}, #{success_value})
+	</insert>
+	
+	<select id="getLoginCount" resultType="_int" parameterType="_int">
+		SELECT COUNT(*)
+		FROM LOGININFO
+		WHERE MNO = #{mno}
+	</select>
+	
+	<select id="getLoginListCount" resultMap="logResultSet" parameterType="_int">
+		SELECT * FROM LOGININFO WHERE MNO = #{mno} ORDER BY LONO DESC
+	</select>
+	
+	
 </mapper>
 
 
