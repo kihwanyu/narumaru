@@ -78,7 +78,6 @@ public class NaruController {
 	public String updatecategory(ModelAndView mv, int nmno, HttpServletRequest request) throws NaruException{
 		int i=0;
 		ArrayList<String> categorys = new ArrayList<String>(); 
-		
 		while(true){
 			String temp = "addedCategory" + i++;
 		

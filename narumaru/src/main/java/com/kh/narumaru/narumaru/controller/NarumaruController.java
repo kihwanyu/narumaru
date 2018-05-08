@@ -595,7 +595,6 @@ public class NarumaruController {
 	@RequestMapping("narumaruSelectOne.nm")
 	public void narumaruSelectOne(@RequestParam(value="nmno") int nmno, HttpServletRequest request, HttpServletResponse response){
 		
-		
 		Narumaru nm = nms.selectNarumaruOne(nmno); 
 		
 		response.setContentType("application/json");
@@ -630,9 +629,45 @@ public class NarumaruController {
 	}
 	
 	@RequestMapping("searchNarumaruBoard.nm")
-	public String searchNarumaruBoard(String searchCondition){
-		System.out.println(searchCondition);
+	public ModelAndView searchNarumaruBoard(String searchCondition, ModelAndView mv){
+		ArrayList<Board> blist = nms.searchNarumaruBoard(searchCondition);
+		ArrayList<Narumaru> nmlist = nms.searchNarumaru(searchCondition);
+		ArrayList<Narumaru> narulist = nms.searchNarumaru(searchCondition);
+		ArrayList<Narumaru> marulist = nms.searchNarumaru(searchCondition);
 		
-		return "maru/maruSearchResult";
+		int naruCount = 0;
+		int maruCount = 0;
+		
+		for(Narumaru nm : nmlist){
+			if(nm.getNmCategory() == 1) {
+				maruCount++;
+				marulist.add(nm);
+			}
+			else {
+				naruCount++;
+				narulist.add(nm);
+			}
+		}
+		
+		mv.addObject("blist", blist);
+		mv.addObject("marulist", nmlist);
+		mv.addObject("narulist", nmlist);
+		mv.addObject("naruCount", naruCount);
+		mv.addObject("maruCount", maruCount);
+		mv.addObject("searchCondition", searchCondition);
+		mv.setViewName("maru/maruSearchResult");
+		
+		return mv;
+	}
+	
+	@RequestMapping("searchNarumaruBoardDetail.bo")
+	public ModelAndView searchNarumaruBoardDetail(String searchCondition, ModelAndView mv){
+		ArrayList<Board> blist = nms.searchNarumaruBoard(searchCondition);
+		
+		mv.addObject("blist", blist);
+		mv.addObject("searchCondition", searchCondition);
+		mv.setViewName("maru/maruSearchResultDetail");
+		
+		return mv;
 	}
 }

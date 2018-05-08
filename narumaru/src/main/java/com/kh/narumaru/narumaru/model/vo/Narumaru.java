@@ -14,11 +14,13 @@ public class Narumaru implements java.io.Serializable{
 	private Date createDate;
 	private String isOpen;
 	private String status;
+	private String profileName;
+	private String ownerNickname;
 	
 	public Narumaru(){}
 
-	public Narumaru(int nmno, int nmCategory, int cno, String nmTitle, String nmIntro, Date createDate,
-			String isOpen, String status) {
+	public Narumaru(int nmno, int nmCategory, int cno, String nmTitle, String nmIntro, Date createDate, String isOpen,
+			String status, String profileName, String ownerNickname) {
 		super();
 		this.nmno = nmno;
 		this.nmCategory = nmCategory;
@@ -28,6 +30,8 @@ public class Narumaru implements java.io.Serializable{
 		this.createDate = createDate;
 		this.isOpen = isOpen;
 		this.status = status;
+		this.profileName = profileName;
+		this.ownerNickname = ownerNickname;
 	}
 
 	public int getNmno() {
@@ -94,12 +98,29 @@ public class Narumaru implements java.io.Serializable{
 		this.status = status;
 	}
 
+	public String getProfileName() {
+		return profileName;
+	}
+
+	public void setProfileName(String profileName) {
+		this.profileName = profileName;
+	}
+
+	public String getOwnerNickname() {
+		return ownerNickname;
+	}
+
+	public void setOwnerNickname(String ownerNickname) {
+		this.ownerNickname = ownerNickname;
+	}
+
 	@Override
 	public String toString() {
 		return "Narumaru [nmno=" + nmno + ", nmCategory=" + nmCategory + ", cno=" + cno + ", nmTitle=" + nmTitle
 				+ ", nmIntro=" + nmIntro + ", createDate=" + createDate + ", isOpen=" + isOpen + ", status=" + status
-				+ "]";
+				+ ", profileName=" + profileName + ", ownerNickname=" + ownerNickname + "]";
 	}
+	
 	
 	
 }

@@ -54,4 +54,8 @@ public interface NarumaruService {
 
 	ArrayList<Board> selectChannelBoardList(int cno);
 
+	ArrayList<Board> searchNarumaruBoard(String searchCondition);
+
+	ArrayList<Narumaru> searchNarumaru(String searchCondition);
+
 }
