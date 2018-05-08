@@ -249,8 +249,6 @@ public class NoticeController {
 		
 		//1:1 문의하기
 		@RequestMapping(value ="question.no")
-		public String showquestionView(){
-
 		public String showquestionView(@RequestParam(name="fileName", required=false) MultipartFile question
 				, HttpServletRequest request, HttpSession session, HttpServletResponse response, Notice n) throws IOException{
 			System.out.println("noticecontroller question");
@@ -322,7 +320,7 @@ public class NoticeController {
 				question.transferTo(new File(filePath + "\\" + chfileName ));
 			
 			
-			
+			////
 			
 			} catch (IllegalStateException | IOException e) {
 				// TODO Auto-generated catch block

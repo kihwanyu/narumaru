@@ -111,13 +111,13 @@ public class AdminServiceImpl implements AdminService {
 		
 		return totalAge;
 	}
-
+	///
 	@Override
 
 	public ArrayList<Notice> adminAnswer(Notice n) {
 		
 		return ad.adminAnswer(n);
-
+	}
 	public ArrayList selectChannel() {
 		ArrayList selectChannel = ad.selectChannel();
 		System.out.println("채널 : " + selectChannel);
