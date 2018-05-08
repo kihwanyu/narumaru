@@ -214,4 +214,19 @@ public class NarumaruDaoImpl implements NarumaruDao {
 		return list;
 	}
 
+	@Override
+	public ArrayList<Board> searchNarumaruBoard(String searchCondition, SqlSessionTemplate sqlSession) {
+		System.out.println("searchCondition : " + searchCondition);
+		ArrayList<Board> list = (ArrayList)sqlSession.selectList("Board.searchNarumaruBoard", searchCondition);
+		
+		return list;
+	}
+
+	@Override
+	public ArrayList<Narumaru> searchNarumaru(String searchCondition, SqlSessionTemplate sqlSession) {
+		ArrayList<Narumaru> list = (ArrayList)sqlSession.selectList("Narumaru.searchNarumaru", searchCondition);
+		
+		return list;
+	}
+
 }

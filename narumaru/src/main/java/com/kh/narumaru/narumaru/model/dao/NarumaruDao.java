@@ -55,4 +55,8 @@ public interface NarumaruDao {
 
 	ArrayList<Board> selectChannelBoardList(int cno, SqlSessionTemplate sqlSession);
 
+	ArrayList<Board> searchNarumaruBoard(String searchCondition, SqlSessionTemplate sqlSession);
+
+	ArrayList<Narumaru> searchNarumaru(String searchCondition, SqlSessionTemplate sqlSession);
+
 } 
