@@ -37,6 +37,8 @@ public interface AdminDao {
 	ArrayList Chart();//수익분석차트
 	void moneyStop(int wNO) throws Exception;//환급거부
 	ArrayList<Integer> sendUser(int WNO);//환급알림
+	ArrayList<Integer> getMemberMnoAll(SqlSessionTemplate sqlSession);
+	int selectBnoCurrentVal(SqlSessionTemplate sqlSession);
 
 	
 	

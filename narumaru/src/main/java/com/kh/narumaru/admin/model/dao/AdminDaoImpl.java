@@ -73,9 +73,9 @@ public class AdminDaoImpl implements AdminDao{
   }
 	@Override
 	public int insertNotice(SqlSessionTemplate sqlSession, Notice n, int subType) {
-		System.out.println("insertNotice Dao : " + n );
+		int result = sqlSession.insert("Board.insertNotice", n);
 		
-		return sqlSession.insert("Board.insertNotice", n);
+		return result;
 	}
 
 
@@ -221,4 +221,24 @@ public class AdminDaoImpl implements AdminDao{
 		System.out.println("sendUser : " + sendUser);
 		return sendUser;
 	}
+
+
+	@Override
+	public ArrayList<Integer> getMemberMnoAll(SqlSessionTemplate sqlSession) {
+		
+		ArrayList<Integer> list = (ArrayList)sqlSession.selectList("Admin.getMemberMnoAll");
+		
+		return list;
+	}
+
+
+	@Override
+	public int selectBnoCurrentVal(SqlSessionTemplate sqlSession) {
+		
+		int result = sqlSession.selectOne("Admin.selectBnoCurrentVal");
+		
+		return result;
+	}
+
+
 }
