@@ -7,8 +7,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet"/>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+<link rel="stylesheet" type="text/css" href="resources/css/naruInsertBoard.css">
 </head>
-<body>
+<body class="maruBody">
 	<jsp:include page="../common/topmenu.jsp"/>
 	<jsp:include page="../common/middleMenu.jsp"/>
 	<jsp:include page="../common/innerMenu.jsp"/>
