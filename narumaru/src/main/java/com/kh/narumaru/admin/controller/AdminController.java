@@ -327,9 +327,26 @@ public class AdminController {
 			System.out.println("AdminController notice  : "  + n );
 
 			
-			as.insertNotice(n, subType);
+			int bno = as.insertNotice(n, subType);
 			
+			ArrayList<Alarm> alarmList = new ArrayList<>();
+			// 보낼 유저의 번호를 구한다.
+			ArrayList<Integer> sendUser = as.getMemberMnoAll();
 			
+			/*Controller에서 Alarm객체에 값을 채운 후 Service로 보내주세요.*/
+			for(int i = 0; i < sendUser.size(); i++){
+				Alarm a = new Alarm();
+				a.setReceive_mno(sendUser.get(i));
+				a.setAtno(100);
+				a.setSend_bno(bno);
+				alarmList.add(a);
+			}
+			
+			try {
+				als.alarmRequest(alarmList);
+			} catch (alarmRequestException e) {
+				e.printStackTrace();
+			}
 			return "admin/adSuccess";
 			
 			

@@ -120,4 +120,10 @@
 	<select id="sendUser" resultType="java.lang.Integer" parameterType="_int">
 		SELECT MNO FROM WITHDRAW WHERE WNO = #{WNO} 
 	</select>
+	<select id="getMemberMnoAll" resultType="java.lang.Integer">
+		SELECT MNO FROM MEMBER
+	</select>
+	<select id="selectBnoCurrentVal" resultType="_int">
+		SELECT SEQ_BNO.CURRVAL FROM DUAL
+	</select>
 </mapper>
