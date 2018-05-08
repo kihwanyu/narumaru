@@ -11,8 +11,11 @@
 
   <c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application" />
 </head>
-
   <body class="nav-md">
+  <c:if test="${empty loginUser || loginUser.mid > 6}">
+ 	<c:set var="message" value="잘못된 경로로 접근하셨습니다." scope="request"/>
+ 	<jsp:forward page="../common/errorPage.jsp"></jsp:forward>
+  </c:if>
     <div class="container body">
       <div class="main_container">
         <jsp:include page = "../common/adMenubar.jsp"/> 
