@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 
 import javax.servlet.http.HttpSession;
-
+import javax.xml.ws.RequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 
@@ -222,7 +222,7 @@ public class AdminController {
 		/*Controller에서 Alarm객체에 값을 채운 후 Service로 보내주세요.*/
 		for(int i = 0; i < sendUser.size(); i++){
 			Alarm a = new Alarm();
-			a.setSend_mno(sendUser.get(i));
+			a.setReceive_mno(sendUser.get(i));
 			a.setAtno(103);
 			alarmList.add(a);
 		}
