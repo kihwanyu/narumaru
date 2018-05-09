@@ -140,6 +140,7 @@ public class NarumaruController {
 		
 		ArrayList<Board> list = nms.selectCategoryBoardList(nmno, cano);
 		ArrayList<Board> colist = nms.selectCommentList(nmno);
+		System.out.println("colist : " + colist);
 		Narumaru nm = nms.selectNarumaruOne(nmno);
 		if(list.size() == 0){
 			Board newB = new Board();
