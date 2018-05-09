@@ -102,6 +102,7 @@
         JOIN MARU_MEMBER MA ON(NM.NMNO = MA.NMNO)
         JOIN MEMBER M ON(MA.MNO = M.MNO)
         WHERE NM.NM_CATEGORY = 2
+        AND MA.CON_LEVEL = 0
         ORDER BY NEIGHBOR_COUNT DESC)
         WHERE ROWNUM &lt;= 3
 	</select>
@@ -115,6 +116,7 @@
         JOIN MARU_MEMBER MA ON(NM.NMNO = MA.NMNO)
         JOIN MEMBER M ON(MA.MNO = M.MNO)
         WHERE NM.NM_CATEGORY = 1
+        AND MA.CON_LEVEL = 0
         ORDER BY MEMBER_COUNT DESC)
         WHERE ROWNUM &lt;= 3
 	</select>
