@@ -2,10 +2,12 @@ package com.kh.narumaru.notice.model.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.narumaru.common.model.vo.PageInfo;
 import com.kh.narumaru.maru.exception.MaruException;
 import com.kh.narumaru.notice.exception.NoticeDeleteException;
 import com.kh.narumaru.notice.exception.NoticeUpdateException;
@@ -21,6 +23,7 @@ public class noticeDaoImpl implements noticeDao{
 	private SqlSessionTemplate sqlSession;
 	//
 	
+
 
 	@Override
 	public int getListCount(SqlSessionTemplate sqlSession, int currentPage) {
@@ -43,14 +46,17 @@ public class noticeDaoImpl implements noticeDao{
 		
 		return result;
 	}
-
 	//공지사항 전체 list 
 	@Override
-	public ArrayList<Notice> noticeSelectList(Notice n) {
+	public ArrayList<Notice> noticeSelectList(SqlSessionTemplate sqlSession ,Notice n, PageInfo pi) {
 		n.setNoType(700);
 		System.out.println("noticeDao noticeSelectLst n :" +n );
 		ArrayList<Notice> nlist = null;
-		nlist = (ArrayList)sqlSession.selectList("Board.noticeSelectList", n);
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		
+		nlist = (ArrayList)sqlSession.selectList("Board.noticeSelectList", n, rowBounds);
 		
 		System.out.println("noticeDao noticeSelectList nlist"  + nlist);
 
@@ -152,7 +158,11 @@ public class noticeDaoImpl implements noticeDao{
 			System.out.println("1번 insert");
 			
 			if(result >= 0 ){
-				sqlSession.insert("Board.questionFileInsert", n);
+				if(n.getChFileName() !=null && n.getOrFileName() != null){
+					sqlSession.insert("Board.questionFileInsert", n);
+					System.out.println("DAO file 등록");
+				} 
+			
 			}
 			else{
 				throw new questionInsertException("1:1 문의 등록 실패 ");

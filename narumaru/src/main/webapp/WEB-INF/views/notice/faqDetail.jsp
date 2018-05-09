@@ -103,13 +103,20 @@
 						<article>
 							<header>
 								<label>${ n.noTitle } </label>
-								
 								<!-- 관리자일 경우에만 보이도록 -->
+								<script>
+								$(function(){
+									console.log("mid: ${loginUser.mid}");
+
+								});
+								</script>
+								<c:if test="${ loginUser.mid <= 6 }">
 									<div style="float:right">
 										<input type = "button" class= "NoticeDelete" value= "삭제하기">
 										<input type = "button" class= "NoticeUpdate" value= "수정하기">
 									</div>
-									
+								</c:if>
+								
 								<script>
 									$(".NoticeDelete").click(function(){
 										if(confirm("게시물을 삭제하시겠습니까?") == true){
@@ -135,13 +142,13 @@
 							</header>
 							
 							<hr>
-							${fn:replace(n.noContent,nr,br)}
-					
-							<br><br>
+							
+${fn:replace(n.noContent,nr,br)}
+							
+							
 						</article>
 					</li>
-					
-					
+
 				</ul>
 		</div>	
 	

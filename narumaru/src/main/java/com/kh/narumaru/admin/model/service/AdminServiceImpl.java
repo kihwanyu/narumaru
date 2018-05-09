@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.kh.narumaru.admin.model.dao.AdminDao;
 import com.kh.narumaru.admin.model.vo.Admin;
 import com.kh.narumaru.notice.model.vo.Notice;
@@ -112,11 +111,11 @@ public class AdminServiceImpl implements AdminService {
 		return totalAge;
 	}
 	///
+	
 	@Override
-
-	public ArrayList<Notice> adminAnswer(Notice n) {
-		
-		return ad.adminAnswer(n);
+	public ArrayList<HashMap> adminAnswer() {
+		// TODO Auto-generated method stub
+		return ad.adminAnswer();
 	}
 	public ArrayList selectChannel() {
 		ArrayList selectChannel = ad.selectChannel();
@@ -158,4 +157,20 @@ public class AdminServiceImpl implements AdminService {
 		ArrayList Chart = ad.Chart();
 		return Chart;
 	}
+
+	@Override
+	public HashMap showAnswerDetailView(int bno) {
+		System.out.println("AdminService AnswerDetailView ");
+		
+		return ad.showAnswerDetailView(bno);
+		
+	}
+
+	@Override
+	public void adminSendEmail(String answerYN, int AnswerBno) {
+		System.out.println("adminService adminSend Email ");
+		ad.adminSendEmail(answerYN,AnswerBno);
+	}
+
+	
 }

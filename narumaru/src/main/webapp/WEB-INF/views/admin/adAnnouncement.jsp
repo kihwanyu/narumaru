@@ -12,8 +12,8 @@
 	.FAQsubMenu{
 		display:none;
 		width:200px;
-		height:100px;
-		background:yellow;
+		height:50px;
+		
 	}
 
 </style>
@@ -77,14 +77,14 @@
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <div id="gender" class="btn-group" data-toggle="buttons">
                             <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                              <input type="radio" id = "Noticebtn" name="noType" value="700"> &nbsp; 공지사항 &nbsp;
+                              <input type="radio" id = "Noticebtn" name="noType" value="700" checked="checked"> &nbsp; 공지사항 &nbsp;
                             </label>
                             <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
                               <input type="radio" id="FAQbtn" name="noType" value="800"> FAQ
                  			  
                             </label>
                             
-                            <div class="FAQsubMenu">
+                            <div class="FAQsubMenu"  style="margin-top: 40px;">
 	                            <select name="subType">
 	                 			  	<option value = 801> 자주묻는 질문</option>
 	                 			  	<option value = 802>로그인, 회원가입 질문</option>
@@ -190,13 +190,13 @@
                     </div>
                   </div>
 
-                  <div id="editor-one" class="editor-wrapper" contenteditable = "true" name="noContent">
-                  	<textarea style ="width:741px;height:231px;resize:none;" name="noContent" ></textarea>
                   
-                  </div>
-
-                  <textarea name="descr" id="descr" style="display:none;"></textarea>
-                  
+<textarea style ="width:741px;height:231px;resize:none;" name="noContent" >
+</textarea>
+                
+<!-- 
+<textarea name="descr" id="descr" style="display:none;"></textarea>
+                   -->
                   <br />
 
                   <div class="ln_solid"></div>

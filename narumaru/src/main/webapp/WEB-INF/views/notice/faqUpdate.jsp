@@ -113,22 +113,17 @@
 								<input type= "text" name="noTitle" style="width:635px" value="${ n.noTitle }">
 								
 								<!-- 관리자일 경우에만 보이도록 -->
+								
 									<div style="float:right">
 									
 										<input type = "submit" class= "NoticeUpdateCommit" value= "수정저장">
 									</div>
-									
-								
-								<%-- 
-								<p> 최초 작성 날짜: ${ n.createDate } </p>
-								<p> 마지막 수정 날짜 : ${ n.modifyDate }</p> --%>
-									
+
 							</header>
-							
 							<hr>
-							<textarea name="noContent" style="resize:none;width:710px;height:250px;">
-								${fn:replace(n.noContent,nr,br)}
-							</textarea>
+<textarea name="noContent" style="resize:none;width:710px;height:250px;">
+${fn:replace(n.noContent,nr,br)}
+</textarea>
 							<br><br>
 						</article>
 					</li>

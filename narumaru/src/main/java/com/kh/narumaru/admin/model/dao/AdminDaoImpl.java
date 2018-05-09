@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.narumaru.admin.model.vo.Admin;
+import com.kh.narumaru.notice.exception.searchFaqException;
 import com.kh.narumaru.notice.model.vo.Notice;
 
 
@@ -138,16 +139,17 @@ public class AdminDaoImpl implements AdminDao{
 
 
 	@Override
-	public ArrayList<Notice> adminAnswer(Notice n) {
-		n.setNoType(900);
-		System.out.println("adminDao questionSelectLst n :" +n );
-		ArrayList<Notice> nlist = null;
-		nlist = (ArrayList)sqlSession.selectList("Admin.questionSelectList", n);
+	public ArrayList<HashMap> adminAnswer() {
+		
+		System.out.println("adminDao questionSelectLst" );
+		ArrayList<HashMap> nlist = null;
+		nlist = (ArrayList)sqlSession.selectList("Admin.questionSelectList");
 		//
 		System.out.println("adminDao adminSelectList nlist"  + nlist);
 
 		return nlist;
   }
+	
 	public ArrayList selectChannel() {
 		ArrayList selectChannel = (ArrayList) sqlSession.selectList("Admin.selectChannel");
 		System.out.println("DAO채널 : " + selectChannel);
@@ -202,4 +204,32 @@ public class AdminDaoImpl implements AdminDao{
 		ArrayList Chart = (ArrayList) sqlSession.selectList("Admin.Chart");
 		return Chart;
 	}
+
+
+	@Override
+	public HashMap showAnswerDetailView(int bno) {
+		HashMap hlist = null;
+		System.out.println("adminDaoImpl showAnswerDetailView");
+		
+		hlist = (HashMap) sqlSession.selectOne("Admin.answerSelectListOne", bno);
+		System.out.println("noticeDaoImpl showAnswerDetailView  hlist" + hlist);
+		
+		return hlist;
+	}
+
+
+	@Override
+	public void adminSendEmail(String answerYN, int AnswerBno)  {
+		System.out.println("admin adminSendEmail answerYN : " +answerYN);
+		
+		Notice n = new Notice();
+		n.setStatus(answerYN);
+		n.setNid(AnswerBno);
+		
+		sqlSession.update("Admin.adminSendEmail", n);
+		
+	}
+
+
+	
 }

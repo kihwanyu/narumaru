@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 import javax.servlet.http.HttpServletRequest;
 
 import javax.servlet.http.HttpSession;
@@ -15,10 +16,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+
 import java.util.ArrayList;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,6 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 import com.kh.narumaru.admin.model.service.AdminService;
 import com.kh.narumaru.admin.model.vo.Admin;
 import com.kh.narumaru.notice.model.vo.Notice;
@@ -47,7 +52,9 @@ public class AdminController {
 
 	@Autowired
 	private AdminService as;
-
+	@Autowired
+	private JavaMailSender mailSender;
+	
 	@RequestMapping(value="adMain.ad")
 	public ModelAndView showAdminMainView(ModelAndView mv){
 		HashMap EnrollDateList = as.selectEnrollDateList();
@@ -219,24 +226,7 @@ public class AdminController {
 	}
 
 	//
-	// 관리자 1:1 문의 게시판 조회
-	@RequestMapping(value="adminAnswer.ad")
-	public ModelAndView showAdminAnswerView(Notice n, 
-			ModelAndView mv, SessionStatus status){
-
-			System.out.println("adminController showAdminAnswerView");
-			
-			ArrayList<Notice> nlist = as.adminAnswer(n);
-			System.out.println("adminController showAdminAnswerView noList : " + nlist);
-			
-			mv.addObject("nlist",nlist);
-			
-			
-			mv.setViewName("admin/adAnswer");
-			
-			
-			return mv;
-	}
+	
 	
 	//관리자 공지글쓰기 페이지로 이동
 	@RequestMapping(value="adAnnouncement.ad")
@@ -277,5 +267,94 @@ public class AdminController {
 			
 		}
 		
+		// 관리자 1:1 문의 게시판 조회
+		@RequestMapping(value="adminAnswer.ad")
+		public ModelAndView showAdminAnswerView(
+				ModelAndView mv, SessionStatus status){
+
+				System.out.println("adminController showAdminAnswerView");
+				
+				ArrayList<HashMap> nlist = as.adminAnswer();
+				System.out.println("adminController showAdminAnswerView noList : " + nlist);
+			
+				
+				mv.addObject("nlist",nlist);
+				
+				
+				mv.setViewName("admin/adAnswer");
+				
+				
+				return mv;
+		}
+		
+		// 1:1 문듸 답변하기 상세페이지
+		@RequestMapping(value = "adminanswerDetail.ad")
+		public ModelAndView showadminAnswerDetailView(ModelAndView mv,SessionStatus status, int bno){
+			
+			System.out.println("adminController showadminAnswerDetailView bno : " + bno);
+		
+			HashMap hlist = (HashMap) as.showAnswerDetailView(bno);
+			
+			System.out.println("nadminController showadminAnswerDetailView hlist : " + hlist);
+			
+			mv.addObject("hlist" ,hlist);
+			
+			
+			mv.setViewName("admin/adminanswerDetail");
+			
+			return mv;
+		}
+		
+		// 1:1 문의 답변하기 Form
+		@RequestMapping(value = "adAnswerForm.ad")
+		public ModelAndView adAnswerForm(ModelAndView mv, int bno, 
+				SessionStatus status){
+			/*
+			Member loginUser = (Member) request.getSession().getAttribute("loginUser");*/
+			
+			System.out.println("adminController showadminAnswerDetailView  bno : "  + bno);
+		
+			HashMap hlist = (HashMap) as.showAnswerDetailView(bno);
+			
+			System.out.println("nadminController showadminAnswerDetailView hlist : " + hlist);
+			
+			
+			mv.addObject("hlist" ,hlist);
+			
+			
+			mv.setViewName("admin/adminAnswerForm");
+			
+			return mv;
+		}
+		
+		//이메일로 전송하기 smtp
+		@RequestMapping(value ="adminEmailSend.ad")
+		public ModelAndView adminEmailSend(ModelAndView mv,HttpServletRequest request, HttpServletResponse response){
+			
+			String answerTitle = request.getParameter("answerTitle");
+			String answerContent = request.getParameter("answerContent");
+			String questionEmail = request.getParameter("email");
+			String AnswerYN = request.getParameter("stauts");
+			int AnswerBno = Integer.parseInt(request.getParameter("bno"));
+			
+			System.out.println("adminSendEmail AnswerYN AnswerBno : " + AnswerBno + " / " + AnswerYN);
+			as.adminSendEmail(AnswerYN,AnswerBno);
+			
+			System.out.println("adminController adminEmailSend answerTitle / answerContent : " +answerTitle +" / " + answerContent );
+			System.out.println("questionEmail : " + questionEmail);
+			
+			SimpleMailMessage message = new SimpleMailMessage();
+			
+			message.setFrom("wlgus12312@gmail.com");
+			message.setTo(questionEmail);
+			message.setSubject(answerTitle);
+			message.setText(answerContent);
+			
+			mailSender.send(message);
+		
+			mv.setViewName("admin/adSuccess");
+			
+			return mv;
+		}
 		
 }
