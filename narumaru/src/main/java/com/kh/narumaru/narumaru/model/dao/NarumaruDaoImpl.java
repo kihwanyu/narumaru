@@ -75,8 +75,8 @@ public class NarumaruDaoImpl implements NarumaruDao {
 		
 		int ownerMno = sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno);
 		
-		n.setMno(loginUser.getMid());
-		n.setUser_mno(ownerMno);
+		n.setMno(ownerMno);
+		n.setUser_mno(loginUser.getMid());
 		
 		int resultNeighbor = sqlSession.selectOne("Neighbor.selectNeighbor", n);
 		

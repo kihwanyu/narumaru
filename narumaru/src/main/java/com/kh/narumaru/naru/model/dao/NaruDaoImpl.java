@@ -78,10 +78,11 @@ public class NaruDaoImpl implements NaruDao{
 	public int insertNeighbor(int nmno, int mid, SqlSessionTemplate sqlSession) {
 		Neighbor nb = new Neighbor();
 		
+		System.out.println("인서트중 : " + nmno);
 		int ownerMno = sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno);
 				
-		nb.setMno(mid);
-		nb.setUser_mno(ownerMno);
+		nb.setMno(ownerMno);
+		nb.setUser_mno(mid);
 		
 		sqlSession.insert("Neighbor.myPageNeighborInsert", nb);
 		
@@ -103,8 +104,8 @@ public class NaruDaoImpl implements NaruDao{
 	public void deleteNeighbor(int nmno, int mid, SqlSessionTemplate sqlSession) {
 		Neighbor nb = new Neighbor();
 		
-		nb.setUser_mno(sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno));
-		nb.setMno(mid);
+		nb.setUser_mno(mid);
+		nb.setMno(sqlSession.selectOne("Narumaru.checkNarumaruOwner", nmno));
 		
 		sqlSession.delete("Neighbor.myPageNeighborDelete", nb);
 	}
