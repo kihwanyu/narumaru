@@ -488,13 +488,16 @@ public class NarumaruController {
 		
 		b.setbContent(bContent);
 		int bType = 0; 
+		int atno = 0;
 
 		if(nms.selectNarumaruType(nmno) == 1){
 			// 마루일때
 			bType = 201;
+			atno = 300;
 		}else{
 			// 나루일때
 			bType = 101;
+			atno = 200;
 		}
 		b.setbLevel(1);
 		b.setTargetBno(bno);
@@ -520,7 +523,7 @@ public class NarumaruController {
 			alarm.get(i).setReceive_mno(oriWriterMo);
 			alarm.get(i).setSend_mno(sendUser.get(i));
 			alarm.get(i).setSend_bno(b.getTargetBno());
-			alarm.get(i).setAtno(300);
+			alarm.get(i).setAtno(atno);
 			alarm.get(i).setSend_nmno(nmno);
 			System.out.println(alarm);
 		}
