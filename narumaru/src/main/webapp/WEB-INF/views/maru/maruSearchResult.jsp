@@ -155,7 +155,7 @@
 			</c:if>
 			<c:if test="${naruCount > 0 }">
 				<c:forEach var="i" begin="0" end="${naruEnd}">
-					<div id="searchMaru" style="margin-top:40px;" onclick="goNarumaru(${marulist[i].nmno})">
+					<div id="searchMaru" style="margin-top:40px;" onclick="goNarumaru(${narulist[i].nmno})">
 						<img src="resources/memberprofile/${narulist[i].profileName}" style="width:80px;height:80px; float:left;">
 						<ul style="margin-left:50px; line-height:25px;">
 							<li><b>${narulist[i].nmTitle}</b></li>
