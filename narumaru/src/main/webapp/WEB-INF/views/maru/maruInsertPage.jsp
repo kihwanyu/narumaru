@@ -25,7 +25,7 @@
 	    padding-top: 30px;
 	}
 	#middle-maruname{
-		height:850px;
+		height:700px;
 		
 	}
 	#middle-marucover{
@@ -83,7 +83,7 @@
 			<c:set var="channelArr">
 				문화/예술(100), 여행(200), 패션/뷰티(300), 팬클럽(400), 인문/과학(500), 동물(600), 나이(700), 방송/연예(800), 친목/모임(900), 종교/봉사(1000),
 				음악(1100) 경제(1200), IT/기술(1300), 게임(1400), 어학/외국어(1500), 만화(1600), 일상/이야기(1700), 스포츠/레저(1800), 건강(1900), 결혼/가정(2000),
-                           만화/애니메이션(2100), 정치/사회(2200), 교육/공부(2300), 취미/DIY(2400), 취업/자기개발(2500), 맛집/요리/생활(2600)
+                           정치/사회(2100), 교육/공부(2200), 취미/DIY(2300), 취업/자기개발(2400), 맛집/요리/생활(2500)
 			</c:set>
 			<input type="hidden" id="maru-channel">
 			<table id="channelList" style="float:left;">
@@ -98,7 +98,7 @@
 			</table>
 		</div> <!-- 마루 이름 -->
 		 
-		<div id="middle-marucover">
+		<%-- <div id="middle-marucover">
 			<img src="${contextPath}/resources/images/cosmos.jpg" style="float:left; width:300px; height:225px;">
 			
 			<div id="marucover-select" style="padding-left:20px; float:left;">
@@ -110,7 +110,7 @@
 				</c:if>
 				</c:forEach>
 			</div>
-		</div> <!-- 마루 대표사진 -->
+		</div> <!-- 마루 대표사진 --> --%>
 		
 		<div id="middle-marutype">
 			<h4>마루 공개 설정</h4>

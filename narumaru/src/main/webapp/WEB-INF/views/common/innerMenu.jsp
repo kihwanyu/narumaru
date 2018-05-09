@@ -13,9 +13,9 @@
 <body>
 	<div class="marginAuto innerMenu">
 		<div class="leftArea">
-			<div class="maruProfile">
+			<!-- <div class="maruProfile">
 				<img src="resources/images/profile_defalt.png" class="size100per">
-			</div>
+			</div> -->
 			<br>
 			<div class="maruName">
 				<h2>${ nm.nmTitle }</h2>

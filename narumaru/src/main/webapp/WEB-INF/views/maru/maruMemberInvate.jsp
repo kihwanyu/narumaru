@@ -21,7 +21,7 @@
 		<div class="marginAuto content">
 			<div class="invateContent">
 				<div class="invateTitle">멤버 초대</div>
-				<input type="text" id="invateMember" name="invateMember" placeholder="회원 아이디 입력" style="width:80%; display:inline-block; height:30px;"/>
+				<input type="email" id="invateMember" name="invateMember" placeholder="회원 아이디 입력" style="width:80%; display:inline-block; height:30px;"/>
 				<div id="invateMemberBtn" style="display:inline-block; height:35px; float:right; width:18%; text-align:center; background:black; cursor:pointer; color:white; border:1px lightgray solid;">초대하기</div>
 				<hr>
 				<div class="invateBody">
