@@ -56,8 +56,8 @@ public class AdminController {
 	@Autowired
 	private AdminService as;
 	@Autowired
-
 	private JavaMailSender mailSender;
+	@Autowired
 	private AlarmService als;
 
 	
