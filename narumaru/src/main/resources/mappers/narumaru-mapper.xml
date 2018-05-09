@@ -80,7 +80,7 @@
 	</insert>
 	
 	<select id="selectNeighborList" resultMap="NarumaruResultSet" parameterType="_int">
-		SELECT * FROM NARUMARU WHERE NMNO IN(SELECT NMNO FROM MARU_MEMBER WHERE MNO IN (SELECT NEIGHBOR_MNO FROM NEIGHBOR WHERE MNO = #{mno})) AND NM_CATEGORY = 2
+		SELECT * FROM NARUMARU WHERE NMNO IN(SELECT NMNO FROM MARU_MEMBER WHERE MNO IN (SELECT MNO FROM NEIGHBOR WHERE NEIGHBOR_MNO = #{mno})) AND NM_CATEGORY = 2
 	</select>
 	
 	<select id="searchNarumaru" resultMap="NarumaruResultSet" parameterType="String">
