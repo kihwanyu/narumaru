@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.narumaru.common.model.vo.PageInfo;
 import com.kh.narumaru.notice.exception.NoticeDeleteException;
 import com.kh.narumaru.notice.exception.NoticeUpdateException;
 import com.kh.narumaru.notice.exception.questionInsertException;
@@ -32,10 +33,10 @@ public class noticeServiceImpl implements noticeService {
 	
 	//공지사항 전체 list 보기
 	@Override
-	public ArrayList<Notice> noticeSelectList(Notice n) {
+	public ArrayList<Notice> noticeSelectList(Notice n, PageInfo pi) {
 		System.out.println("noticeService noticeSelectList ");
 		
-		return nd.noticeSelectList(n);
+		return nd.noticeSelectList(sqlSession, n, pi);
 	}
 
 
@@ -81,20 +82,23 @@ public class noticeServiceImpl implements noticeService {
 		return nd.SearchFAQList(keyWord);
 	}
 
-		//faq detail 조회하기 
-		@Override
-		public Notice showFaqDetailView(int bno) {
-			System.out.println("noticeService noticeSelectList ");
+	//faq detail 조회하기 
+	@Override
+	public Notice showFaqDetailView(int bno) {
+		System.out.println("noticeService noticeSelectList ");
 			
-			return nd.showFaqDetailView(bno);
-		}
+		return nd.showFaqDetailView(bno);
+	}
 
 
-		@Override
-		public void questionInsert(Notice n) throws questionInsertException {
-			// TODO Auto-generated method stub
-			
-		}
+	@Override
+	public void questionInsert(Notice n) throws questionInsertException {
+		System.out.println("NoticeService questionInsert");
+		
+		nd.questionInsert(n);
+		
+		
+	}
 
 
 		

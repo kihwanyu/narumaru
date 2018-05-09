@@ -75,12 +75,33 @@
 		GROUP BY SUBSTR(TO_CHAR(FLOOR(MONTHS_BETWEEN(SYSDATE, BIRTHDAY)/12)), 0, 1)
 		ORDER BY SUBSTR(TO_CHAR(FLOOR(MONTHS_BETWEEN(SYSDATE, BIRTHDAY)/12)), 0, 1) ASC
 	</select>
-	<select id="questionSelectList" resultMap ="noticeResultSet">
-		SELECT * FROM BOARD
-		WHERE STATUS = 'Y'
-		AND B_TYPE = 900
-		ORDER BY BNO ASC
+	
+	<!-- 1:1 질문리스트 게시판 조회 -->
+	<select id="questionSelectList" resultType ="hashmap">
+		SELECT B.BNO, B.B_TYPE, SUBSTR(B.B_TITLE,0,10) AS B_TITLE, SUBSTR(B.B_CONTENT,0,10) AS B_CONTENT
+			   ,B.MNO, B.CREATE_DATE, B.STATUS
+			   ,M.MNO, M.NICNAME, NVL((SELECT ORI_NAME FROM FILET WHERE B.BNO = BNO),'NULL') AS PHOTO_ORINAME
+       		   
+		FROM BOARD B JOIN MEMBER M ON (B.MNO = M.MNO)
+		WHERE B.B_TYPE = 900
+		ORDER BY B.CREATE_DATE DESC
 	</select>
+	
+	
+	<select id = "answerSelectListOne" parameterType = "_int" resultType ="hashmap">
+		SELECT B.BNO, B.B_TYPE, B.B_TITLE AS B_TITLE, B.B_CONTENT AS B_CONTENT
+			   ,B.MNO, B.CREATE_DATE, B.STATUS
+			   ,M.MNO, M.EMAIL, M.NICNAME 
+			   ,NVL((SELECT ORI_NAME FROM
+			   FILET WHERE B.BNO = BNO),'NULL') AS PHOTO_ORINAME
+			   ,NVL((SELECT CHA_NAME FROM
+			   FILET WHERE B.BNO = BNO),'NULL') AS PHOTO_CHANAME
+       		   
+		FROM BOARD B JOIN MEMBER M ON (B.MNO = M.MNO)
+		WHERE BNO = #{nid}
+		ORDER BY CREATE_DATE DESC
+	</select>
+	
 	
 	<select id="selectChannel" resultType="hashmap">
 		SELECT CNAME FROM CHANNEL
@@ -112,7 +133,13 @@
 	<select id="Chart" resultType="hashmap">
 		SELECT TO_CHAR(PAYDAY, 'RRRRMM') AS ASD, SUM(AMOUNT) AS AMOUNT FROM PAYMENT GROUP BY TO_CHAR(PAYDAY, 'RRRRMM') ORDER BY TO_CHAR(PAYDAY, 'RRRRMM') ASC
 	</select>
-	
+
+	<update id="adminSendEmail">
+		UPDATE BOARD
+		SET STATUS = 'N'
+		WHERE BNO = #{nid}
+	</update>
+  
 	<update id="moneyStop" parameterType="_int">
 		UPDATE WITHDRAW SET STATUS = '환급 거부', WITHDRAW_DATE = SYSDATE WHERE WNO = #{WNO}
 	</update>
@@ -126,4 +153,5 @@
 	<select id="selectBnoCurrentVal" resultType="_int">
 		SELECT SEQ_BNO.CURRVAL FROM DUAL
 	</select>
+
 </mapper>

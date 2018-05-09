@@ -24,7 +24,7 @@ public interface AdminService {
 	ArrayList RevenueMember();//결제회원 조회
 	ArrayList totalAge();//연령대 별 결제 금액
 
-	ArrayList<Notice> adminAnswer(Notice n);
+	ArrayList<HashMap> adminAnswer();
 	ArrayList selectChannel();//채널조회
 	ArrayList selectChCount();//채널 수 조회
 	ArrayList<Narumaru> naruView();//나루목록조회
@@ -32,8 +32,14 @@ public interface AdminService {
 	ArrayList moneyView();//환급신청뷰
 	void moneyStatusCh(int WNO) throws Exception;//환급신청
 	ArrayList Chart();//수익분석 차트
+
+	HashMap showAnswerDetailView(int bno);
+	void adminSendEmail(String answerYN, int answerBno);
+	
+
 	void moneyStop(int WNO) throws Exception;//환급거부
 	ArrayList<Integer> sendUser(int WNO);//환급 알림
 	ArrayList<Integer> getMemberMnoAll();
+
   
 }

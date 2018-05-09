@@ -67,72 +67,60 @@
                     <table id="datatable" class="table table-striped table-bordered">
                       <thead>
                         <tr>
+                          
                           <th>문의 날짜</th>
                           <th>문의 제목</th>
                           <th>문의 내용</th>
                           <th>문의자 </th>
+                          <th>첨부 이미지 </th>
                           <th>답변 여부</th>
+                          <th>상세보기</th>
                         </tr>
                       </thead>
 
 
                       <tbody>
-                        <tr>
-                          <td>Tiger Nixon</td>
-                          <td>System Architect</td>
-                          <td>Edinburgh</td>
-                          <td>61</td>
-                          <td>2011/04/25</td>
-                          
-                        </tr>
-                        <tr>
-                          <td>Garrett Winters</td>
-                          <td>Accountant</td>
-                          <td>Tokyo</td>
-                          <td>63</td>
-                          <td>2011/07/25</td>
-
-                        </tr>
-                        <tr>
-                          <td>Ashton Cox</td>
-                          <td>Junior Technical Author</td>
-                          <td>San Francisco</td>
-                          <td>66</td>
-                          <td>2009/01/12</td>
-
-                        </tr>
-                        <tr>
-                          <td>Cedric Kelly</td>
-                          <td>Senior Javascript Developer</td>
-                          <td>Edinburgh</td>
-                          <td>22</td>
-                          <td>2012/03/29</td>
-
-                        </tr>
-                        <tr>
-                          <td>Airi Satou</td>
-                          <td>Accountant</td>
-                          <td>Tokyo</td>
-                          <td>33</td>
-                          <td>2008/11/28</td>
-
-                        </tr>
-                        <tr>
-                          <td>Brielle Williamson</td>
-                          <td>Integration Specialist</td>
-                          <td>New York</td>
-                          <td>61</td>
-                          <td>2012/12/02</td>
-
-                        </tr>
-                        <tr>
-                          <td>Herrod Chandler</td>
-                          <td>Sales Assistant</td>
-                          <td>San Francisco</td>
-                          <td>59</td>
-                          <td>2012/08/06</td>
-
-                        </tr>
+	                  	<c:forEach items ="${ nlist }" var="Notice">
+  	                    	<tr>
+								
+								<td>${ Notice.CREATE_DATE }</td>
+								<td>${ Notice.B_TITLE }</td>
+								<td>
+									<%-- <c:if test="${ Notice.noContent.length >=10 }"> --%>
+										<%-- ${ --%> 
+											${ Notice.B_CONTENT }
+										
+										<!-- } -->
+									<%-- </c:if> --%>
+								
+								</td>
+								<td>${ Notice.NICNAME }</td>
+								<td>
+								<c:choose>
+									<c:when test="${ Notice.PHOTO_ORINAME eq 'NULL' }">
+										N
+									</c:when>
+									<c:otherwise>
+										Y
+									</c:otherwise>
+								</c:choose>
+								</td>
+								<td>
+									<c:choose>
+									<c:when test="${ Notice.STATUS eq 'Y' }">
+										N
+									</c:when>
+									<c:otherwise>
+										Y
+									</c:otherwise>
+								</c:choose>
+								</td>
+								<td><a href = "adminanswerDetail.ad?bno=${Notice.BNO}">자세히보기</a></td>	
+							</tr>
+						</c:forEach>
+								
+                       
+                       
 	                  </tbody>
                     </table>
                   </div>

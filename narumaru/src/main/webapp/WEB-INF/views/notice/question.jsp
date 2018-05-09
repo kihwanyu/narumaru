@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
 <title>:: naru? maru! :: 1:1 문의하기 </title>
 <style>
 	.NoticeServiceView{
@@ -69,6 +69,23 @@
 	 	text-align:center;
 	 	height:100px;
 	 }
+	 .submBtn, .rseBtn{
+	    width: 120px;
+   	    height: 37px;
+	 }
+	 .submBtn:hover{
+	 	 cursor:pointer;
+	    width:122px;
+	    height:39px;
+	    font-weight:bold;
+	 }
+	 
+	 
+	 .rseBtn:hover{
+	    cursor:pointer;
+	    width:122px;
+	    height:39px;
+	 }
 	 .submBtn{
 	 	background:#8C8E8D;
 	 	color:white;
@@ -76,7 +93,8 @@
 	 }
 	 .rseBtn{
 	 	background:lightgray;
-	 	border:1px solid white;
+	 	border:1px solid lightgray;
+	 	color:white;
 	 	
 	 }
 	 .loginId, .narumaruName{
@@ -127,12 +145,12 @@
 							<p> 개인정보<br> 수집동의 </p>
 							
 							<div class ="psCheckDiv">
-							<label> - 수집하는 개인정보 항목 : 이메일 주소, 휴대폰번호, 로그인 계정</label>
+							<label style="font-size:13px;"> - 수집하는 개인정보 항목 : 이메일 주소, 휴대폰번호, 로그인 계정</label>
 							<br>
 							<span> 작성해주시는 개인정보는 문의 접수 및 고객 불만 해결을 위해 일정 기간 보관됩니다.<br>
 								보관기간- 상담이력 5년 / 첨부파일: 1개월</span> <br><br>
 								
-							<input type ="checkbox" id="agree" > <label for="agree" > 동의합니다. </label>
+							<input type ="checkbox" id="agree" style="width:17px; height:17px;"> <label for="agree" style="font-size:15px"> 동의합니다. </label>
 							
 							
 							</div>

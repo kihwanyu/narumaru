@@ -126,7 +126,8 @@
 	</insert>
 	<!--  -->
 	<select id="noticeSelectList" resultMap ="noticeResultSet">
-		SELECT * FROM BOARD
+		SELECT *
+		FROM BOARD
 		WHERE STATUS = 'Y'
 		<choose>
 			<when test ="noType==700">
@@ -136,7 +137,7 @@
 				AND B_TYPE LIKE '80%'
 			</otherwise>
 		</choose>
-		ORDER BY BNO ASC
+		ORDER BY CREATE_DATE DESC
 	</select>
 	
 	<select id = "noticeSelectListOne" parameterType = "_int" resultMap = "noticeResultSet">

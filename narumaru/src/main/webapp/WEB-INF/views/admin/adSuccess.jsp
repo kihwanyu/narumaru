@@ -62,7 +62,7 @@
                   </div>
                   <div class="x_content">
                     <br />
-                  	<p style = "font-size:20px;text-align:center;margin-top:20px;"> 공지사항 글 등록이 완료 되었습니다. </p>
+                  	<p style = "font-size:20px;text-align:center;margin-top:20px;"> 글 등록이 완료 되었습니다. </p>
                   	
                   	<br><br><br><br>
                   	

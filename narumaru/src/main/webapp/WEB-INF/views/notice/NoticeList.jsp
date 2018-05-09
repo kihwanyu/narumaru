@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html >
 <html>
 <head>
@@ -77,37 +78,14 @@
 					<li>
 						<a href = "noticeDetail.no?bno=${Notice.nid}">
 						<p>${ Notice.noTitle }</p>
-						<p>${ Notice.createDate }</p>
+						
+						<p><fmt:parseDate value="${Notice.createDate }" var="noticePostDate" pattern="yyyy-MM-dd"/>
+						<fmt:formatDate value="${noticePostDate}" pattern="yyyy년  MM월  dd일"/></p>
+						
 						</a>
 					</li>
 				</c:forEach>
-			
-				
-				<li><a href = "noticeDetail.no">
-					<p>다국어 서비스 관련해 안내해드립니다.</p>
-					<o>2018년 4월 4일 오후 2:00</o>
-					</a>	
-				</li>
-					
-				<li>
-					<p>Naru Maru 6.3 업데이트 소식.</p>
-					<o>2018년 3월 23일 오후 2:00</o>
-				</li>
-				
-				<li>
-					<p>Naru Maru 4.3 업데이트 소식.</p>
-					<o>2018년 3월 23일 오후 2:00</o>
-				</li>
-				
-				<li>
-					<p>Naru Maru 3.3 업데이트 소식.</p>
-					<o>2018년 3월 23일 오후 2:00</o>
-				</li>
-				
-				<li>
-					<p>Naru Maru 1.1 업데이트 소식.</p>
-					<o>2018년 3월 23일 오후 2:00</o>
-				</li>
+	
 			</ul>
 			<!--  -->
 			<!-- 페이지 처리 -->

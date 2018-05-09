@@ -2,6 +2,7 @@ package com.kh.narumaru.notice.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.narumaru.common.model.vo.PageInfo;
 import com.kh.narumaru.notice.exception.NoticeDeleteException;
 import com.kh.narumaru.notice.exception.NoticeUpdateException;
 import com.kh.narumaru.notice.exception.questionInsertException;
@@ -9,8 +10,6 @@ import com.kh.narumaru.notice.exception.searchFaqException;
 import com.kh.narumaru.notice.model.vo.Notice;
 
 public interface noticeService {
-
-	ArrayList<Notice> noticeSelectList(Notice n);
 
 	Notice showNoticeDetailView(int bno);
 //
@@ -29,6 +28,8 @@ public interface noticeService {
 	int getListCount(int currentPage);
 
 	ArrayList<Notice> SearchFAQList(String keyWord) throws searchFaqException;
+
+	ArrayList<Notice> noticeSelectList(Notice n, PageInfo pi);
 
 
 }

@@ -105,10 +105,13 @@
 								<label>${ n.noTitle } </label>
 								
 								<!-- 관리자일 경우에만 보이도록 -->
+							
+								<%-- <c:if test="${ loginUser.mid <= 6 }"> --%>
 									<div style="float:right">
 										<input type = "button" class= "NoticeDelete" value= "삭제하기">
 										<input type = "button" class= "NoticeUpdate" value= "수정하기">
 									</div>
+								<%-- </c:if> --%>
 									
 								<script>
 									$(".NoticeDelete").click(function(){
