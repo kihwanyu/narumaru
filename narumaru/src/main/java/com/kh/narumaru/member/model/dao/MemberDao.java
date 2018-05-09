@@ -1,7 +1,10 @@
 package com.kh.narumaru.member.model.dao;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.narumaru.common.model.vo.PageInfo;
 import com.kh.narumaru.member.model.exception.LoginException;
 import com.kh.narumaru.member.model.exception.ProfileChangeException;
 import com.kh.narumaru.member.model.exception.birthdayChangeException;
@@ -10,6 +13,7 @@ import com.kh.narumaru.member.model.exception.nameChangeException;
 import com.kh.narumaru.member.model.exception.passwordChangeException;
 import com.kh.narumaru.member.model.exception.phoneChangeException;
 import com.kh.narumaru.member.model.exception.statusUpdateException;
+import com.kh.narumaru.member.model.vo.LogInfo;
 import com.kh.narumaru.member.model.vo.Member;
 
 public interface MemberDao {
@@ -38,7 +42,15 @@ public interface MemberDao {
 
 	void sendUpdatePwd(SqlSessionTemplate sqlSession, Member m);
 
+
+	LogInfo selectNation(SqlSessionTemplate sqlSession, LogInfo li);
+
 	Member selectMemberOne(int mno);
 
+	void insertLogInfo(SqlSessionTemplate sqlSession, LogInfo li2);
+
+	int getLoginCount(SqlSessionTemplate sqlSession, int mno);
+
+	ArrayList<LogInfo> getLoginListCount(SqlSessionTemplate sqlSession, PageInfo pi);
 
 }

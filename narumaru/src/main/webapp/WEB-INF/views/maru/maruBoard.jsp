@@ -22,6 +22,7 @@
 	<jsp:include page="../common/innerMenu.jsp"/>
 	<div class="wrap">	
 		<div class="dumi"></div>
+		
 		<div class="marginAuto content">
 			<div class="searchArea">
 				<input type="text" name="search" id="search" style="background:none; width:440px; height:40px;">
@@ -104,9 +105,6 @@
 				<div class="boardfoot">
 					<hr>
 					<ul class="footUl">
-						<li class="showSub emotionBtn" onclick="submenuOpen(this);"><span>이모티콘</span>
-							<div class="sub emotionSub">이모티콘</div>
-						</li>
 						<li class="insertReplyShow" onclick="replyOpen(this, ${ b.bno });"><span>댓글보기</span></li>
 						<li class="reportBtn" onclick="reportBoard(${ b.bno });"><span>신고하기</span></li>
 					</ul>
@@ -123,7 +121,7 @@
 						<c:if test="${!empty b2.profileName }">
 							<img style="width:100%; height:100%;" src="resources/memberprofile/${b2.profileName }" id="profileImg">
 						</c:if></div>
-								<label>${ b2.bWriter }</label> <label class="floatRight">${b2.createDate}</label>
+								<label>${ b2.bWriter }</label> <label class="writeDate floatRight">${b2.createDate}</label>
 								<div class="replyContent" style="clear:both;">${b2.bContent}</div>
 							</div>
 							<hr>
@@ -147,10 +145,13 @@
 			</c:forEach>	
 		
 		</div>
+		
 		<div align="center" class="loadingArea" style="display: none;">
 			<img alt="" src="resources/images/lodingImg.gif">
 		</div>
+		
 	</div>
+	
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet"/>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
@@ -231,7 +232,7 @@
 				    ['fontsize', ['fontsize']],
 				    ['color', ['color']],
 				    ['para', ['ul', 'ol', 'paragraph']],
-				    ['Insert',['picture'], ['video']],
+				    ['Insert',['picture']],
 				    ['mybutton', ['submit']]
 				  ],
 			buttons: {
@@ -251,7 +252,7 @@
 				    ['fontsize', ['fontsize']],
 				    ['color', ['color']],
 				    ['para', ['ul', 'ol', 'paragraph']],
-				    ['Insert',['picture'], ['video']],
+				    ['Insert',['picture']],
 				    ['mybutton', ['submit']]
 				  ],
 			buttons: {
@@ -263,6 +264,7 @@
 		console.log('리스트 ${ list.size() }')
 		summernote1();
 		summernote2();
+		beforetime();
 	});
 	
 	
@@ -280,6 +282,7 @@
 	$(document).scroll(function(){
 		summernote1();
 		summernote2();
+		
 		//더이상 가져올 글이 없으면 그냥 종료한다
 		if(isEnd) return;
 		
@@ -356,7 +359,7 @@
 				+'<c:if test="${!empty b.profileName }">'
 				+'	<img style="width:100%; height:100%;" src="resources/memberprofile/${b.profileName }" id="profileImg">'
 				+'</c:if></div>'
-				+'	<div style="display:inline-block;"><label>${b.bWriter}</label><br><label>${b.createDate}</label></div>'
+				+'	<div style="display:inline-block;"><label>${b.bWriter}</label><br><label class="writeDate">${b.createDate}</label></div>'
 				+'	<div class="showSub floatRight boardBtn" onclick="submenuOpen(this);">'
 				+'		<img src="resources/images/menu.png" class="modifyMenu size100per">'
 				+'		<div class="sub boardSub">'
@@ -397,9 +400,6 @@
 				+'<div class="boardfoot">'
 				+'	<hr>'
 				+'	<ul class="footUl">'
-				+'		<li class="showSub emotionBtn" onclick="submenuOpen(this);"><span>이모티콘</span>'
-				+'			<div class="sub emotionSub">이모티콘</div>'
-				+'		</li>'
 				+'		<li class="insertReplyShow" onclick="replyOpen(this, ${ b.bno });"><span>댓글보기</span></li>'
 				+'		<li class="reportBtn"  onclick="reportBoard(${ b.bno });"><span>신고하기</span></li>'
 				+'	</ul>'
@@ -416,7 +416,7 @@
 							+'<c:if test="${!empty b2.profileName }">'
 							+'	<img style="width:100%; height:100%;" src="resources/memberprofile/${b2.profileName }" id="profileImg">'
 							+'</c:if></div>'
-							+'	<label>${ b2.bWriter }</label> <label class="floatRight">${b2.createDate}</label>'
+							+'	<label>${ b2.bWriter }</label> <label class="writeDate floatRight">${b2.createDate}</label>'
 							+'	<div class="replyContent" style="clear:both;">${b2.bContent}</div>'
 							+'</div>' 
 							+'	<hr>'
@@ -437,10 +437,11 @@
 						+'</div>');
 	        	</c:if>
 	        	</c:forEach>
+	        	summernote1();
+	        	summernote2(); 
+	        	beforetime();
 	        }
 		}, 2000);
-	        	summernote1();
-	        	summernote2();
 	});
 		function replyOpen(btn, bno){
 			$(btn).parent().parent().siblings(".insertReply").toggle();			
@@ -448,20 +449,21 @@
 		function submenuOpen(btn){
 			$(btn).children(".sub").toggle();
 		}
-		$("#photoUpload").click(function(){
+		/* $("#photoUpload").click(function(){
 				$("#photo").click();
-		});
+		}); */
 		function modifyBoard(btn){  
 			$(btn).parents(".boardBtn").find("#myModal").modal();	
 			/* location.href="updateBoardOne.nm?bno="+bno + "&nmno=${nm.nmno}"; */
 		}
 		function deleteBoard(bno){
-			location.href="deleteBoardOne.nm?bno="+bno + "&nmno=${nm.nmno}";
+			location.href="deleteBoardOne.nm?bno="+bno + "&nmno=${nm.nmno}&type=1";
 		}
 		function reportBoard(bno){
 			var r = confirm("이 글을 신고하시겠습니까?");
 			if (r == true) {
-				
+				var reason = prompt("신고 사유를 작성해주세요.") ;
+				location.href="reportBoardOne.nm?bno="+ bno + "&nmno=${nm.nmno}&type=1&reason=" + reason;
 			}
 		}
 		$(".searchBtn").click(function(){
@@ -469,13 +471,24 @@
 			location.href="searchBoard.nm?nmno=${ nm.nmno}&bContent="+search;
 		});
 	
-		$(function(){
+		function beforetime(){
 			var writDateArr = $(".writeDate");
 			for(var i = 0; writDateArr.length > i; i++){
 				var date = writDateArr[i].innerHTML;
 				var beforetime = moment(date, "YYYY-MM-DD h:mm:ss").fromNow();
 				writDateArr[i].innerHTML = beforetime;
 			}
+		}
+		
+		$(function transTextArea(){
+			var textAreas = $(".summernote:not(:first)");
+					for(var i = 0; textAreas.length > i; i++){
+						var textArea = textAreas[i];
+						console.log(textArea.value);
+						/* textArea.nextSibling.children[2].children[2].children.value = textArea.value; */
+					
+						/* textAreas[i].next().children("note-editable").val(textAreas[i].val()); */
+					}
 		});
 
 	</script>

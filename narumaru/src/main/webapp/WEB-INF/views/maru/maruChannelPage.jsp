@@ -89,7 +89,7 @@
 							+'<div class="board-context" onclick="goNarumaru(' + data[i].nmno +')">'
 								+'<img src="resources/memberprofile/' + data[i].profileName + '" style="width:90%; height:50%;">'
 								+'<div id="board-titlearea" style="margin:15px 0;">' + data[i].bTitle + '</div>'
-								+'<div id="board-contentarea" style="height:80px; width:100%; word-wrap:break-word;">' + data[i].bContent + '</div>'
+								+'<div id="board-contentarea" style="height:80px; width:100%; word-wrap:break-word; text-overflow: ellipsis; overflow:hidden;">' + data[i].bContent + '</div>'
 								+'댓글 수 ' + data[i].comments
 								+ '<br>' + '<label style="color:gray;">' + str + '</label>'
 								+'<hr style="margin-bottom:10px;">'

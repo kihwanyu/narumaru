@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="resources/css/naruInsertBoard.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 <style>
-	.btn_label{
+	.btn btn-info{
 		height:40px;
 	}
 </style>
@@ -22,16 +22,14 @@
 		<input type="hidden" name="bno" value="${b.bno}">
 		<div class="maru-content">
 			<div class="board-option" align="center">
-				<span>여기에 볼드랑 뭐랑 이것저것 들어갈걸</span>
-				&nbsp;
-				<label class="btn_label" for="open-pop" onclick="checkHidden()">수정완료</label>
+				<label class="btn btn-info" for="open-pop" onclick="checkHidden()">수정완료</label>
 			</div>
 			<br>
 			<div class="board-div">
 				<div class="board-inner">
 					<b><input type="text" name="boardTitle" id="title-area" maxlength="50" placeholder="제목 없음" value="${b.bTitle}"></b>
 					<div id="content-area">
-						<textarea name="boardContent" onkeydown="resize(this)" id="content">${b.bContent}</textarea>
+						<textarea name="boardContent" class="summernote">${b.bContent}</textarea>
 					</div>
 					<div id="payline">
 					$ 결제선 ㅡ 아래쪽에 유료 컨텐츠를 작성하세요
@@ -87,13 +85,18 @@
 					</ul>
 				</div>
 				<div class="row" style="padding-top:15px;">
-					<label class="btn_label" for="open-pop" style="float:left; background:lightgray; margin-left:20px;">취소</label>
-					<label onclick="submitBtn()" class="btn_label" style="float:right; margin-right:20px;">수정완료</label>
+					<label class="btn btn-info" for="open-pop" style="float:left; background:lightgray; margin-left:20px;">취소</label>
+					<label onclick="submitBtn()" class="btn btn-info" style="float:right; margin-right:20px;">수정완료</label>
 				</div>
 		 	 </div>
 		</div>
 	</form>
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet"/>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet"/>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/lang/summernote-ko-KR.js"></script>
 	<script>
 		function submitBtn(){
 			$("#insertForm").submit();
@@ -116,9 +119,28 @@
 				$("#payamount").css({'display':''});
 			}
 		}
+		
+		
   </script>
   <script>
+  
+  function summernote() {
+		  $('.summernote').summernote({
+			  lang: 'ko-KR',
+			  toolbar: [
+				    ['style', ['bold', 'italic', 'underline', 'clear']],
+				    ['fontsize', ['fontsize']],
+				    ['color', ['color']],
+				    ['para', ['ul', 'ol', 'paragraph']],
+				    ['Insert',['picture'], ['video']],
+				    ['mybutton', ['submit']]
+				  ]
+		  });
+		}
+  
   	$(function(){
+  		summernote();
+  		
   		//카테고리랑 채널 불러오기
   		$.ajax({
 			url:"selectChannelList.nm",

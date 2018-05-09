@@ -133,5 +133,25 @@ public class NarumaruServiceImpl implements NarumaruService {
 	public ArrayList<Board> selectChannelBoardList(int cno) {
 		return nmd.selectChannelBoardList(cno, sqlSession);
 	}
+
+	@Override
+	public ArrayList<Board> searchNarumaruBoard(String searchCondition) {
+		return nmd.searchNarumaruBoard(searchCondition, sqlSession);
+	}
+
+	@Override
+	public ArrayList<Narumaru> searchNarumaru(String searchCondition) {
+		return nmd.searchNarumaru(searchCondition, sqlSession);
+	}
+
+	@Override
+	public ArrayList<Narumaru> selectBestNaru() {
+		return nmd.selectBestNaru(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Narumaru> selectBestMaru() {
+		return nmd.selectBestMaru(sqlSession);
+	}
   
 }

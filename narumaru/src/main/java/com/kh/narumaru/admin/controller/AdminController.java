@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 
 import javax.servlet.http.HttpSession;
-
+import javax.xml.ws.RequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 
@@ -37,6 +37,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.kh.narumaru.admin.model.service.AdminService;
 import com.kh.narumaru.admin.model.vo.Admin;
+import com.kh.narumaru.common.model.exception.alarmRequestException;
+import com.kh.narumaru.common.model.service.AlarmService;
+import com.kh.narumaru.common.model.vo.Alarm;
 import com.kh.narumaru.notice.model.vo.Notice;
 
 
@@ -53,7 +56,10 @@ public class AdminController {
 	@Autowired
 	private AdminService as;
 	@Autowired
+
 	private JavaMailSender mailSender;
+	private AlarmService als;
+
 	
 	@RequestMapping(value="adMain.ad")
 	public ModelAndView showAdminMainView(ModelAndView mv){
@@ -172,6 +178,8 @@ public class AdminController {
 	public ModelAndView showmAdminMoneyView(ModelAndView mv){
 		ArrayList moneyView = as.moneyView();
 		
+		
+		
 		System.out.println(moneyView);
 		
 		mv.addObject("moneyView", moneyView);
@@ -184,6 +192,57 @@ public class AdminController {
 	public void moneyStatusCh(int WNO, HttpServletResponse response){
 		try {
 			as.moneyStatusCh(WNO);
+			
+			ArrayList<Alarm> alarmList = new ArrayList<>();
+			// 보낼 유저의 번호를 구한다.
+			ArrayList<Integer> sendUser = as.sendUser(WNO);
+			
+			/*Controller에서 Alarm객체에 값을 채운 후 Service로 보내주세요.*/
+			for(int i = 0; i < sendUser.size(); i++){
+				Alarm a = new Alarm();
+				a.setReceive_mno(sendUser.get(i));
+				a.setAtno(102);
+				alarmList.add(a);
+			}
+			
+			System.out.println("alarmList : " + alarmList);
+			
+			try {
+				als.alarmRequest(alarmList);
+			} catch (alarmRequestException e) {
+				e.printStackTrace();
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("moneyStop.ad")
+	public void moneyStop(int WNO, HttpServletResponse response){
+		System.out.println(WNO);
+		
+		ArrayList<Alarm> alarmList = new ArrayList<>();
+		// 보낼 유저의 번호를 구한다.
+		ArrayList<Integer> sendUser = as.sendUser(WNO);
+		
+		/*Controller에서 Alarm객체에 값을 채운 후 Service로 보내주세요.*/
+		for(int i = 0; i < sendUser.size(); i++){
+			Alarm a = new Alarm();
+			a.setReceive_mno(sendUser.get(i));
+			a.setAtno(103);
+			alarmList.add(a);
+		}
+		
+		try {
+			als.alarmRequest(alarmList);
+		} catch (alarmRequestException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			as.moneyStop(WNO);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -259,9 +318,26 @@ public class AdminController {
 			System.out.println("AdminController notice  : "  + n );
 
 			
-			as.insertNotice(n, subType);
+			int bno = as.insertNotice(n, subType);
 			
+			ArrayList<Alarm> alarmList = new ArrayList<>();
+			// 보낼 유저의 번호를 구한다.
+			ArrayList<Integer> sendUser = as.getMemberMnoAll();
 			
+			/*Controller에서 Alarm객체에 값을 채운 후 Service로 보내주세요.*/
+			for(int i = 0; i < sendUser.size(); i++){
+				Alarm a = new Alarm();
+				a.setReceive_mno(sendUser.get(i));
+				a.setAtno(100);
+				a.setSend_bno(bno);
+				alarmList.add(a);
+			}
+			
+			try {
+				als.alarmRequest(alarmList);
+			} catch (alarmRequestException e) {
+				e.printStackTrace();
+			}
 			return "admin/adSuccess";
 			
 			

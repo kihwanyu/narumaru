@@ -74,9 +74,9 @@ public class AdminDaoImpl implements AdminDao{
   }
 	@Override
 	public int insertNotice(SqlSessionTemplate sqlSession, Notice n, int subType) {
-		System.out.println("insertNotice Dao : " + n );
+		int result = sqlSession.insert("Board.insertNotice", n);
 		
-		return sqlSession.insert("Board.insertNotice", n);
+		return result;
 	}
 
 
@@ -215,6 +215,23 @@ public class AdminDaoImpl implements AdminDao{
 		System.out.println("noticeDaoImpl showAnswerDetailView  hlist" + hlist);
 		
 		return hlist;
+
+	public void moneyStop(int WNO) throws Exception {
+		int result = sqlSession.update("Admin.moneyStop", WNO);
+		
+		if(result < 0){
+			throw new Exception("실패");
+		}
+		System.out.println("dao : " + result);
+	}
+
+
+	@Override
+	public ArrayList<Integer> sendUser(int WNO) {
+		ArrayList<Integer> sendUser = (ArrayList)sqlSession.selectList("Admin.sendUser",WNO);
+		System.out.println("sendUser : " + sendUser);
+		return sendUser;
+
 	}
 
 
@@ -232,4 +249,20 @@ public class AdminDaoImpl implements AdminDao{
 
 
 	
+
+	public ArrayList<Integer> getMemberMnoAll(SqlSessionTemplate sqlSession) {
+		
+		ArrayList<Integer> list = (ArrayList)sqlSession.selectList("Admin.getMemberMnoAll");
+		
+		return list;
+	}
+
+
+	@Override
+	public int selectBnoCurrentVal(SqlSessionTemplate sqlSession) {
+		
+		int result = sqlSession.selectOne("Admin.selectBnoCurrentVal");
+		
+		return result;
+	}
 }

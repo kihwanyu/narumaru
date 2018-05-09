@@ -74,21 +74,46 @@
                           <th>입금일</th>
                           <th>신청은행</th>
                           <th>신청자</th>
-                          <th>환급신청여부</th>
+                          <th>환급 상태</th>
+                          <th>환급여부</th>
                         </tr>
                       </thead>
-
-
                       <tbody>
                         <c:forEach items="${moneyView}" var="moneyView">
                         	<tr>
                         		<td>${moneyView.RESISTER_DATE}</td>
                         		<td>${moneyView.POINT}</td>
                         		<td>${moneyView.POINT-moneyView.AMOUNT}원</td>
-                        		<td>${moneyView.WITHDRAW_DATE}</td>
+                        		<c:choose>
+                        			<c:when test="${moneyView.STATUS eq '입금 완료'}">
+                        				<td>${moneyView.WITHDRAW_DATE}</td>
+                        			</c:when>
+                        			<c:otherwise>
+                        				<td></td>
+                        			</c:otherwise>
+                        		</c:choose>
+                        		
                         		<td>${moneyView.BANK_NAME}</td>
                         		<td>${moneyView.ACCOUNT_HOLDER}</td>
-                        		<td><input type="button" value="${moneyView.STATUS }" onclick="moneyStatus(this, ${moneyView.WNO});"></td>
+                        		<td>
+                        			<c:choose>
+                        				<c:when test="환급 거부">
+                        					<font color="red">${moneyView.STATUS }</font>
+                        				</c:when>
+                        				<c:when test="임금 완료">
+                        					<font color="blue">${moneyView.STATUS }</font>
+                        				</c:when>
+                        				<c:otherwise>
+                        					<font color="green">${moneyView.STATUS }</font>
+                        				</c:otherwise>
+                        			</c:choose>
+                        		</td>
+                        		<td>
+									<c:if test="${moneyView.STATUS eq '입금 대기' }">
+										<input type="button" id="moneyStatus${moneyView.WNO}" value="${moneyView.STATUS }" onclick="moneyStatus(this, ${moneyView.WNO});">
+	                        			<input type="button" id="moneyStop${moneyView.WNO}" value="환급거부" onclick="moneyStop(this, ${moneyView.WNO});">
+									</c:if>
+                        		</td>
                         	</tr>
                         </c:forEach>
                       </tbody>
@@ -117,16 +142,42 @@
 			
 			if(btn.value == "입금 대기"){
 				status = '입금 완료';
+				$("#moneyStop"+WNO).hide();
+				$("#moneyStatus"+WNO).hide();
 			}else{
 				status = '입금 대기';
-			}
-			
+			}			
 			 $.ajax({
 				url: "moneyStatusCh.ad",
 				type:"get",
 				data:{"WNO":WNO},
 				success:function(data){
 					btn.value = status;
+				},
+				error:function(){
+					
+				}
+			}); 
+			
+		}
+		
+		function moneyStop(btn, WNO){
+			console.log(btn.value);
+			var stop = btn.value;
+			console.log(stop);
+			
+			if(btn.value == "환급 거부"){
+				status = '환급 거부';
+			}else{
+				status = '입금 대기';
+			}
+			
+			 $.ajax({
+				url: "moneyStop.ad",
+				type:"get",
+				data:{"WNO":WNO},
+				success:function(data){
+					btn.value = stop;
 				},
 				error:function(){
 					

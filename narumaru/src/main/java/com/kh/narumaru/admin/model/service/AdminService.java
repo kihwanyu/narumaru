@@ -13,7 +13,7 @@ public interface AdminService {
 
 	ArrayList<Admin> showTotalView(ArrayList<Admin> a);
   public HashMap selectEnrollDateList();//월별 회원수 조회
-	void insertNotice(Notice n, int subType);
+	int insertNotice(Notice n, int subType);
 	ArrayList<Member> memberView();//회원목록 조회
 	Member memberRevenue();//결제
 	ArrayList<Narumaru> maruView();//마루조회
@@ -32,8 +32,14 @@ public interface AdminService {
 	ArrayList moneyView();//환급신청뷰
 	void moneyStatusCh(int WNO) throws Exception;//환급신청
 	ArrayList Chart();//수익분석 차트
+
 	HashMap showAnswerDetailView(int bno);
 	void adminSendEmail(String answerYN, int answerBno);
 	
+
+	void moneyStop(int WNO) throws Exception;//환급거부
+	ArrayList<Integer> sendUser(int WNO);//환급 알림
+	ArrayList<Integer> getMemberMnoAll();
+
   
 }

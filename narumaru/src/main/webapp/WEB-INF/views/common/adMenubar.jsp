@@ -87,7 +87,7 @@
 							</ul>
 						</li>
 						<li><a href="adDeclare.ad"><i class="fa fa-table"></i> 신고 게시판(자세히 보기)</a></li>
-						<li><a href="adLoginManagView.ad"><i class="fa fa-edit"></i> 로그인 기록 관리</a></li>
+						<!-- <li><a href="adLoginManagView.ad"><i class="fa fa-edit"></i> 로그인 기록 관리</a></li> -->
 					</ul>
 				</div>
 			</div>
@@ -98,15 +98,15 @@
 
 	<!-- top navigation -->
 	<div class="top_nav">
-		<div class="nav_menu">
+		<!-- <div class="nav_menu">
 			<nav>
 				<div class="nav toggle">
 					<a id="menu_toggle"><i class="fa fa-bars"></i></a>
 				</div>
 				<ul class="nav navbar-nav navbar-right">
-					<li class="">
+					<li class=""> -->
 						<!-- 우측상단 관리자 정보 설정 --> 
-						<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> 
+						<%-- <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> 
 						<img src="${ contextPath }/resources/images/Maneger.png" alt="">JY Kim <span class="fa fa-angle-down"></span>
 					</a>
 						<ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -125,7 +125,7 @@
 						href="javascript:;" class="dropdown-toggle info-number"
 						data-toggle="dropdown" aria-expanded="true"> <i
 							class="fa fa-envelope-o"></i> <span class="badge bg-green">6</span>
-					</a>
+					</a> --%>
 						<ul id="menu1" class="dropdown-menu list-unstyled msg_list"
 							role="menu">
 							<li><a> <span class="image"><img

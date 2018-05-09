@@ -55,8 +55,15 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 
-	public void insertNotice(Notice n, int subType) {
-		 ad.insertNotice(sqlSession, n, subType);
+	public int insertNotice(Notice n, int subType) {
+		
+		int result = ad.insertNotice(sqlSession, n, subType);
+		
+		if(result > 0){
+			result = ad.selectBnoCurrentVal(sqlSession); 
+		}
+		
+		return result;
   }
 
 	@Override
@@ -163,6 +170,10 @@ public class AdminServiceImpl implements AdminService {
 		System.out.println("AdminService AnswerDetailView ");
 		
 		return ad.showAnswerDetailView(bno);
+  }
+  @Override
+	public void moneyStop(int WNO) throws Exception {
+		ad.moneyStop(WNO);
 		
 	}
 
@@ -172,5 +183,15 @@ public class AdminServiceImpl implements AdminService {
 		ad.adminSendEmail(answerYN,AnswerBno);
 	}
 
-	
+	@Override
+	public ArrayList<Integer> sendUser(int WNO) {
+		ArrayList<Integer> sendUser = ad.sendUser(WNO);
+		return sendUser;
+	}
+
+	@Override
+	public ArrayList<Integer> getMemberMnoAll() {
+
+		return ad.getMemberMnoAll(sqlSession);
+	}
 }

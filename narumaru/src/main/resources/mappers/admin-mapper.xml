@@ -123,7 +123,7 @@
 	</update>
 	
 	<select id="selectMoneyView" resultType="hashmap">
-		SELECT * FROM WITHDRAW W JOIN BANK B ON (W.BCODE = B.BCODE)
+		SELECT * FROM WITHDRAW W JOIN BANK B ON (W.BCODE = B.BCODE) ORDER BY RESISTER_DATE DESC
 	</select>
 	
 	<update id="moneyStatusCh" parameterType="_int">
@@ -133,9 +133,25 @@
 	<select id="Chart" resultType="hashmap">
 		SELECT TO_CHAR(PAYDAY, 'RRRRMM') AS ASD, SUM(AMOUNT) AS AMOUNT FROM PAYMENT GROUP BY TO_CHAR(PAYDAY, 'RRRRMM') ORDER BY TO_CHAR(PAYDAY, 'RRRRMM') ASC
 	</select>
+
 	<update id="adminSendEmail">
 		UPDATE BOARD
 		SET STATUS = 'N'
 		WHERE BNO = #{nid}
 	</update>
+  
+	<update id="moneyStop" parameterType="_int">
+		UPDATE WITHDRAW SET STATUS = '환급 거부', WITHDRAW_DATE = SYSDATE WHERE WNO = #{WNO}
+	</update>
+	
+	<select id="sendUser" resultType="java.lang.Integer" parameterType="_int">
+		SELECT MNO FROM WITHDRAW WHERE WNO = #{WNO} 
+	</select>
+	<select id="getMemberMnoAll" resultType="java.lang.Integer">
+		SELECT MNO FROM MEMBER
+	</select>
+	<select id="selectBnoCurrentVal" resultType="_int">
+		SELECT SEQ_BNO.CURRVAL FROM DUAL
+	</select>
+
 </mapper>

@@ -11,8 +11,11 @@
 
   <c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application" />
 </head>
-
   <body class="nav-md">
+  <c:if test="${empty loginUser || loginUser.mid > 6}">
+ 	<c:set var="message" value="잘못된 경로로 접근하셨습니다." scope="request"/>
+ 	<jsp:forward page="../common/errorPage.jsp"></jsp:forward>
+  </c:if>
     <div class="container body">
       <div class="main_container">
         <jsp:include page = "../common/adMenubar.jsp"/> 
@@ -142,9 +145,6 @@
     </div>
     <script src="https://code.highcharts.com/highcharts.src.js"></script>
     <script type="text/javascript">
-    
-    	console.log('${Date}' + "1");
-    	console.log('${Count}' + "1");
     	//회원수 그래프 시작
     	$("#chart_plot_1").highcharts(
             {chart: {
@@ -260,12 +260,9 @@
     	
     	//마루 수 그래프 시작
     	var categories = [];
-    	
     	<c:forEach var="i" items="${channel}">
     		categories.push("${i.CNAME}");
     	</c:forEach>
-       console.log('${channel}' + '1');
-       console.log('${chCount}' + '123')
     	var colors = Highcharts.getOptions().colors,
     	categories,
     	data = [

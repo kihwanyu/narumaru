@@ -140,6 +140,7 @@ public class NarumaruController {
 		
 		ArrayList<Board> list = nms.selectCategoryBoardList(nmno, cano);
 		ArrayList<Board> colist = nms.selectCommentList(nmno);
+		System.out.println("colist : " + colist);
 		Narumaru nm = nms.selectNarumaruOne(nmno);
 		if(list.size() == 0){
 			Board newB = new Board();
@@ -317,7 +318,7 @@ public class NarumaruController {
 	}
 	
 	@RequestMapping("insertNarumaruBoard.nm")
-	public String insertNaruBoard( int nmno, HttpServletRequest request, @RequestParam(name="file", required=false) MultipartFile file) throws NarumaruException{
+	public String insertNaruBoard( int nmno, HttpServletRequest request, @RequestParam(name="files", required=false) MultipartFile file) throws NarumaruException{
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String filePath = root + "\\uploadFiles";
 		
@@ -488,13 +489,16 @@ public class NarumaruController {
 		
 		b.setbContent(bContent);
 		int bType = 0; 
+		int atno = 0;
 
 		if(nms.selectNarumaruType(nmno) == 1){
 			// 마루일때
 			bType = 201;
+			atno = 300;
 		}else{
 			// 나루일때
 			bType = 101;
+			atno = 200;
 		}
 		b.setbLevel(1);
 		b.setTargetBno(bno);
@@ -520,7 +524,7 @@ public class NarumaruController {
 			alarm.get(i).setReceive_mno(oriWriterMo);
 			alarm.get(i).setSend_mno(sendUser.get(i));
 			alarm.get(i).setSend_bno(b.getTargetBno());
-			alarm.get(i).setAtno(300);
+			alarm.get(i).setAtno(atno);
 			alarm.get(i).setSend_nmno(nmno);
 			System.out.println(alarm);
 		}
@@ -595,7 +599,6 @@ public class NarumaruController {
 	@RequestMapping("narumaruSelectOne.nm")
 	public void narumaruSelectOne(@RequestParam(value="nmno") int nmno, HttpServletRequest request, HttpServletResponse response){
 		
-		
 		Narumaru nm = nms.selectNarumaruOne(nmno); 
 		
 		response.setContentType("application/json");
@@ -630,9 +633,80 @@ public class NarumaruController {
 	}
 	
 	@RequestMapping("searchNarumaruBoard.nm")
-	public String searchNarumaruBoard(String searchCondition){
-		System.out.println(searchCondition);
+	public ModelAndView searchNarumaruBoard(String searchCondition, ModelAndView mv){
+		ArrayList<Board> blist = nms.searchNarumaruBoard(searchCondition);
+		System.out.println("blist : " + blist);
+		ArrayList<Narumaru> nmlist = nms.searchNarumaru(searchCondition);
+		ArrayList<Narumaru> narulist = new ArrayList<Narumaru>();
+		ArrayList<Narumaru> marulist = new ArrayList<Narumaru>();
 		
-		return "maru/maruSearchResult";
+		int naruCount = 0;
+		int maruCount = 0;
+		
+		for(Narumaru nm : nmlist){
+			if(nm.getNmCategory() == 1) {
+				maruCount++;
+				marulist.add(nm);
+			}
+			else {
+				naruCount++;
+				narulist.add(nm);
+			}
+		}
+		
+		mv.addObject("blist", blist);
+		mv.addObject("marulist", marulist);
+		mv.addObject("narulist", narulist);
+		mv.addObject("naruCount", naruCount);
+		mv.addObject("maruCount", maruCount);
+		mv.addObject("searchCondition", searchCondition);
+		mv.setViewName("maru/maruSearchResult");
+		
+		return mv;
+	}
+	
+	@RequestMapping("searchNarumaruBoardDetail.bo")
+	public ModelAndView searchNarumaruBoardDetail(String searchCondition, ModelAndView mv){
+		ArrayList<Board> blist = nms.searchNarumaruBoard(searchCondition);
+		
+		mv.addObject("blist", blist);
+		mv.addObject("searchCondition", searchCondition);
+		mv.setViewName("maru/maruSearchResultDetail");
+		
+		return mv;
+	}
+	
+	@RequestMapping("selectBestNaru.nm")
+	public void selectBestNaru(HttpServletRequest request, HttpServletResponse response){
+		try {
+			ArrayList<Narumaru> list = nms.selectBestNaru();
+			
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			new Gson().toJson(list, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("selectBestMaru.nm")
+	public void selectBestMaru(HttpServletRequest request, HttpServletResponse response){
+		try {
+			ArrayList<Narumaru> list = nms.selectBestMaru();
+			
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			new Gson().toJson(list, response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

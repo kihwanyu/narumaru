@@ -24,8 +24,8 @@
 	
 	<insert id="alarmRequest">
 		<choose>
-			<when test="atno == 100 or atno == 101">
-				INSERT INTO ALARM(ANO,
+			<when test="atno == 100">
+				INSERT INTO ALARM(ANO
 				,ATNO
 				,ALARM_DATE
 				,RECEIVE_MNO
@@ -33,6 +33,15 @@
 				,STATUS) 
 				VALUES(SEQ_ANO.NEXTVAL, #{atno}, sysdate
 						, #{receive_mno}, #{send_bno}, default)
+			</when>
+			<when test="atno == 101 or atno == 102 or atno == 103">
+				INSERT INTO ALARM(ANO
+				,ATNO
+				,ALARM_DATE
+				,RECEIVE_MNO
+				,STATUS) 
+				VALUES(SEQ_ANO.NEXTVAL, #{atno}, sysdate
+						, #{receive_mno}, default)
 			</when>
 			<when test="atno == 202 or atno == 203">
 				INSERT INTO ALARM(ANO

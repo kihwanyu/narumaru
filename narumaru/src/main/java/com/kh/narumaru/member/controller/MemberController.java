@@ -3,6 +3,7 @@ package com.kh.narumaru.member.controller;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -11,8 +12,14 @@ import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
+import java.util.Date;
 import java.util.HashMap;
+
 import java.util.Random;
 import java.util.StringTokenizer;
 
@@ -118,10 +125,9 @@ public class MemberController {
 	@RequestMapping(value="logout.me", method=RequestMethod.GET)
 	public String logout(/*HttpSession session*/SessionStatus status){
 		
-		//session.invalidate();
 		status.setComplete();
 		
-		return "main/main";
+		return "main/mainLogin";
 	}
 	
 	
@@ -220,46 +226,31 @@ public class MemberController {
 		
 		System.out.println("controller Member : " + m);
 		
-		//System.out.println("암호 일치 여부 확인 : " + passwordEncoder.matches("pass01", "$2a$10$DEDHUZOux.CEoctwh7R3ZexGZEUaCn0y8MZO.zSHoxH7zRaQhHSUu"));
-		/*MemberService ms = new MemberServiceImpl();*/
-		/*request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
-        String userIp = request.getHeader("X-FORWARDED-FOR");
-		System.out.println("접속한 IP : " + userIp);*/
-		
 		if(m.getEmail().equals("")){
 			String nameError = "아이디 / 비밀번호를 입력하세요!!";
 			mv.addObject("message", nameError);
 			mv.setViewName("common/errorPage");
-			
 			return mv;
 			
 		}
-		
 		//아이피 받아오기
 		String ip = request.getHeader("X-Forwarded-For");
-		 
-        System.out.println(">>>> X-FORWARDED-FOR : " + ip);
- 
+       // System.out.println(">>>> X-FORWARDED-FOR : " + ip);
         if (ip == null) {
             ip = request.getHeader("Proxy-Client-IP");
-            //System.out.println(">>>> Proxy-Client-IP : " + ip);
         }
         if (ip == null) {
             ip = request.getHeader("WL-Proxy-Client-IP"); // 웹로직
-            //System.out.println(">>>> WL-Proxy-Client-IP : " + ip);
         }
         if (ip == null) {
             ip = request.getHeader("HTTP_CLIENT_IP");
-            //System.out.println(">>>> HTTP_CLIENT_IP : " + ip);
         }
         if (ip == null) {
             ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-            //System.out.println(">>>> HTTP_X_FORWARDED_FOR : " + ip);
         }
         if (ip == null) {
             ip = request.getRemoteAddr();
         }
-        
         System.out.println(">>>> Result : IP Address : "+ip);
 		
 		try {
@@ -269,8 +260,49 @@ public class MemberController {
 			System.out.println("loginUser : " + loginUser);
 			
 			//로그인포 객체 생성
+			li.setEmail(loginUser.getEmail());
+			li.setUserIp(ip);
+			
+			long time = System.currentTimeMillis(); 
+			SimpleDateFormat dayTime = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+			String str = dayTime.format(new Date(time));
+			System.out.println(str);
+			
+			li.setTime(str);
+			
+			//String nation = ms.loginNation(li.getUserIp());
+			
+			//String ParseIP = ms.parseIP(ip); 
+			
+			String[] o1 = new String[4];
+			
+			o1 = ip.split("\\.");
+			//ip = "174.36.207.186";
+			//o1 = ip.split("\\.");
+			/*for (int i = 0; i < o1.length; i++) {
+				System.out.println("노애미 아이피" + o1[i]);
+			}*/
+			
+			long intIp = 0;
+			
+			intIp = (Long.parseLong(o1[0])*16777216)
+		             + (Long.parseLong(o1[1])*65536)
+		             + (Long.parseLong(o1[2])*256)
+		             + Long.parseLong(o1[3]);
+			
+			li.setLongIp(intIp);
+			
+			LogInfo li2 = ms.selectNation(li);
+			
+			System.out.println("로그객체 : " + li2);
+			
+			li2.setMno(loginUser.getMid());
+			li2.setSuccess_value("KR");
+			
+			ms.insertLogInfo(li2);
 			
 			mv.addObject("loginUser", loginUser);
+			
 			if(loginUser.getMid() <= 6){
 				mv.setViewName("redirect:/adMain.ad");
 			}else{
@@ -285,6 +317,7 @@ public class MemberController {
 			mv.setViewName("common/errorPage");
 		}
 		return mv;
+		
 	}
 	
 	@RequestMapping(value="insertMember.me", method=RequestMethod.POST)
@@ -338,8 +371,6 @@ public class MemberController {
 	//카카오 이메일 인증
 	@RequestMapping(value="kakaoLogin.me")
 	public ModelAndView kakaoLogin(HttpServletRequest request, HttpServletResponse response, ModelAndView mv){
-		
-		System.out.println("여기?????????????");
 		
 		String email = request.getParameter("email");
 		String nickname = request.getParameter("nickname");
@@ -796,12 +827,50 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="myLoginView.me")
-	public ModelAndView myLoginForward(ModelAndView mv){
+	public ModelAndView myLoginForward(HttpSession session,LogInfo li,ModelAndView mv, @RequestParam(defaultValue="1") int currentPage){
 		
+		System.out.println("으흠..접속이되나");
+		
+		Member loginUser = (Member) session.getAttribute("loginUser");
+		
+		int mno = loginUser.getMid();	
+		
+		//페이징처리
+		int limit;
+		int maxPage;
+		int startPage;
+		int endPage;
+		
+		/*limit = 10;*/
+		limit = 5;
+		
+		int listCount = 0;
+		
+		listCount = ms.getLoginCount(mno);
+		
+		System.out.println("listCount : " + listCount);
+		
+		maxPage = (int)((double)listCount / limit + 0.9);
+		startPage = ((int)((double)currentPage / limit + 0.9) - 1)*limit + 1;
+		endPage = startPage + limit -1;
+		if(maxPage<endPage){
+			endPage = maxPage;
+		}
+		
+		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage, mno);
+		
+		ArrayList<LogInfo> loginList = ms.getLoginListCount(pi);
+		
+		System.out.println("loginList : " + loginList);
+		
+		mv.addObject("loginList", loginList);
+		mv.addObject("pi", pi);
 		mv.setViewName("mypage/myPage_loginRecord");
 		
 		return mv;
 	}
+	
+	
 	@RequestMapping(value="invitedMaruView.me")
 	public ModelAndView invitedMaruForward(ModelAndView mv, HttpSession session
 											, @RequestParam(defaultValue="1") int currentPage){

@@ -7,6 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet"/>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
 </head>
 <body class="maruBody">
 	<jsp:include page="../common/topmenu.jsp"/>
@@ -18,19 +21,15 @@
 			<div class="memberList">
 				<div class="memberTitle">
 					<div class="inlineBlock memberCount">멤버</div>
-					<div class="floatRight invateMember">멤버 초대</div>
+					<%-- <div class="floatRight invateMember">멤버 초대</div>
 					<div class="searchArea">
 						<input type="text" name="search" style="background:none; width:440px; height:40px;">
 						<button class="floatRight searchBtn"><img src="${contextPath }/resources/images/find.png" style="width:35px; height:35px;"></button>
 					</div>
-					<hr>
+					<hr> --%>
 				</div>
-				<br>
 				<div class="memberContent">
-					<div class="memberHeader">
-						<div class="inlineBlock">멤버</div>
-						<div class="floatRight sort"><select><option>이름순</option><option>가입일순</option></select></div>
-					</div>
+
 					<div class="memberBody">
 						
 					</div>

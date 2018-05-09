@@ -26,7 +26,6 @@ public interface MaruService {
 
 	int getMaruMaster(int nmno);
 
-
 	int getInvitedMaruCount(int mno);
 
 	ArrayList<InvateMember> selectInvitedMaruCount(PageInfo pi);
