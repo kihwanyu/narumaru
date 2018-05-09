@@ -215,7 +215,7 @@ public class AdminDaoImpl implements AdminDao{
 		System.out.println("noticeDaoImpl showAnswerDetailView  hlist" + hlist);
 		
 		return hlist;
-
+	}
 	public void moneyStop(int WNO) throws Exception {
 		int result = sqlSession.update("Admin.moneyStop", WNO);
 		
