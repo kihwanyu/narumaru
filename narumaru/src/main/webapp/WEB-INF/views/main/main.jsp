@@ -308,6 +308,10 @@
 					);
 				}
 				
+				if(data.length == 0){
+					$("#neighborList").append('<div class="narumaruselect-div" style="vertical-align:center;">아직 이웃이 없습니다. 다양한 이웃을 추가해보세요!</div>');
+				}
+				
 			},
 			error:function(data){
 				console.log("실패");

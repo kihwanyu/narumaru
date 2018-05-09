@@ -20,6 +20,9 @@
 	.replyArea{
 		border-bottom:1px solid lightgray;
 	}
+	img{
+		max-width:460px;
+	}
 </style>
 <script type="text/javascript">
 	/* $(function(){
